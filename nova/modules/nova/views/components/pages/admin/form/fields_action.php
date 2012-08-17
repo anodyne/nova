@@ -174,9 +174,14 @@ function field($obj, $property, $default = false)
 									<tr id="value_<?php echo $v->id;?>">
 										<td><?php echo $v->content;?></td>
 										<td class="span2">
-											<div class="btn-group">
-												<a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $v->id;?>"><i class="icon-pencil icon-50"></i></a>
-												<a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $v->id;?>"><i class="icon-remove icon-50"></i></a>
+											<div class="btn-toolbar">
+												<div class="btn-group">
+													<a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $v->id;?>"><i class="icon-pencil icon-50"></i></a>
+												</div>
+
+												<div class="btn-group">
+													<a href="#" class="btn btn-mini btn-icon btn-danger value-action tooltip-top" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $v->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+												</div>
 											</div>
 										</td>
 										<td class="span1 reorder"></td>
@@ -193,14 +198,15 @@ function field($obj, $property, $default = false)
 
 	<div class="controls">
 		<br>
-		<?php echo Form::hidden('action', $action);?>
-		<?php echo Form::hidden('form_key', Uri::segment(4));?>
-		<?php echo Form::hidden('id', Uri::segment(5));?>
-		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 
 		<?php if (Uri::segment(5) == 0): ?>
 			<button class="btn next-tab"><?php echo lang('next', 1);?></button>
 		<?php endif;?>
 	</div>
+
+	<?php echo Form::hidden('action', $action);?>
+	<?php echo Form::hidden('form_key', Uri::segment(4));?>
+	<?php echo Form::hidden('id', Uri::segment(5));?>
+	<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 </form>

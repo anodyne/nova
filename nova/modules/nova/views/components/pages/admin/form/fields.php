@@ -54,10 +54,15 @@
 										</div>
 									</td>
 									<td class="span2">
-										<div class="btn-group">
-											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-50"></i></a>
+										<div class="btn-toolbar pull-right">
+											<div class="btn-group">
+												<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-50"></i></a>
+											</div>
+
 											<?php if (Sentry::user()->has_access('form.delete')): ?>
-												<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini btn-icon tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-50"></i></a>
+												<div class="btn-group">
+													<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini btn-icon btn-danger tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+												</div>
 											<?php endif;?>
 										</div>
 									</td>
@@ -106,10 +111,15 @@
 									</div>
 								</td>
 								<td class="span2">
-									<div class="btn-group">
-										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-50"></i></a>
+									<div class="btn-toolbar pull-right">
+										<div class="btn-group">
+											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-50"></i></a>
+										</div>
+
 										<?php if (Sentry::user()->has_access('form.delete')): ?>
-											<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini btn-icon tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-50"></i></a>
+											<div class="btn-group">
+												<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini btn-icon btn-danger tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+											</div>
 										<?php endif;?>
 									</div>
 								</td>
@@ -147,10 +157,15 @@
 							</div>
 						</td>
 						<td class="span2">
-							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-50"></i></a>
+							<div class="btn-toolbar pull-right">
+								<div class="btn-group">
+									<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key.'/'.$f->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$f->label;?>"><i class="icon-pencil icon-50"></i></a>
+								</div>
+
 								<?php if (Sentry::user()->has_access('form.delete')): ?>
-									<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini btn-icon tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-50"></i></a>
+									<div class="btn-group">
+										<a href="<?php echo Uri::create('admin/form/fields/'.$f->form_key);?>" class="btn btn-mini btn-icon btn-danger tooltip-top field-action" title="<?php echo lang('action.delete', 1).' '.$f->label;?>" data-action="delete" data-id="<?php echo $f->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+									</div>
 								<?php endif;?>
 							</div>
 						</td>

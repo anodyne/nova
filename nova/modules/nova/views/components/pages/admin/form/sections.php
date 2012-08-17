@@ -36,10 +36,15 @@
 							</p>
 						</td>
 						<td class="span2">
-							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><i class="icon-pencil icon-50"></i></a>
+							<div class="btn-toolbar pull-right">
+								<div class="btn-group">
+									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><i class="icon-pencil icon-50"></i></a>
+								</div>
+
 								<?php if (Sentry::user()->has_access('form.delete')): ?>
-									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-icon tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><i class="icon-remove icon-50"></i></a>
+									<div class="btn-group">
+										<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-icon btn-danger tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+									</div>
 								<?php endif;?>
 							</div>
 						</td>
@@ -69,10 +74,15 @@
 						</p>
 					</td>
 					<td class="span2">
-						<div class="btn-group">
-							<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><i class="icon-pencil icon-50"></i></a>
+						<div class="btn-toolbar pull-right">
+							<div class="btn-group">
+								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><i class="icon-pencil icon-50"></i></a>
+							</div>
+
 							<?php if (Sentry::user()->has_access('form.delete')): ?>
-								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-icon tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><i class="icon-remove icon-50"></i></a>
+								<div class="btn-group">
+									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-icon btn-danger tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+								</div>
 							<?php endif;?>
 						</div>
 					</td>
