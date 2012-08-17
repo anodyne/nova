@@ -33,16 +33,6 @@ class Model_Application extends \Model {
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => \Status::IN_PROGRESS),
-		'experience' => array(
-			'type' => 'text',
-			'null' => true),
-		'hear_about' => array(
-			'type' => 'string',
-			'constraint' => 50,
-			'null' => true),
-		'hear_about_detail' => array(
-			'type' => 'text',
-			'null' => true),
 		'sample_post' => array(
 			'type' => 'text',
 			'null' => true),
