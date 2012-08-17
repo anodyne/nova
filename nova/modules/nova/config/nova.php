@@ -23,7 +23,7 @@ return array(
 	'version_info' => NOVAPATH.'setup/assets/update/version.json',
 	//'version_info' => 'http://www.anodyne-productions.com/feeds/version_nova.json',
 	
-	'dev_install' => false,
+	'dev_install' => true,
 	
 	'environment' => \Fuel::DEVELOPMENT,
 );
