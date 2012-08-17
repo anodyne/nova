@@ -89,29 +89,11 @@
 				"position": {
 					required: true
 				},
-				"app[sample_post]": {
+				"sample_post": {
 					required: true
 				}
 			}
 		});
-	});
-	
-	// show the additional details field after where did you hear about us
-	$('#hearAbout').on('change', function(){
-
-		var selected = $('#hearAbout option:selected').val();
-
-		if (selected == "<?php echo lang('short.hear_about_us.member', 2);?>" ||
-				selected == "<?php echo lang('short.hear_about_us.org', 1);?>" ||
-				selected == "<?php echo lang('short.hear_about_us.ad', 1);?>" ||
-				selected == "<?php echo lang('short.hear_about_us.other', 1);?>")
-		{
-			$(this).closest('div.control-group').next().slideDown();
-		}
-		else
-		{
-			$(this).closest('div.control-group').next().slideUp();
-		}
 	});
 
 	// check the email address entered to see if it exists
@@ -185,15 +167,6 @@
 
 		// clear the confirm password field
 		$('[name="user[confirm_password]"]').val('');
-
-		// clear the simming experience field
-		$('[name="app[experience]"]').val('');
-
-		// clear the heard about us field
-		$('[name="app[hear_about]"]').val('');
-
-		// clear the heard about us detail field
-		$('[name="app[hear_about_detail]"]').val('');
 
 		// hide the alert block with instructions
 		$('#welcomeBack').hide();

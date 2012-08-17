@@ -305,6 +305,9 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			// get the user form
 			$this->_data->userForm = \NovaForm::build('user', $this->skin, $app->user->id, false);
 
+			// get the app form
+			$this->_data->appForm = \NovaForm::build('app', $this->skin, $app->id, false);
+
 			// get the sample post question
 			$this->_data->samplePost = \Markdown::parse(\Model_SiteContent::get_content('join_sample_post'));
 

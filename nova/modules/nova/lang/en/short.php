@@ -23,18 +23,6 @@ return array(
 
 	'forgot_password' => "Forgot your password? Don't worry, it happens to the best of us!",
 
-	'hear_about_us' => array(
-		'question' => "where did you hear about us?",
-		'detail' => "please specify",
-
-		'friend' => 'friend',
-		'member' => 'another member',
-		'org' => 'organization',
-		'ad' => 'advertisement',
-		'search' => 'internet search',
-		'other' => 'other',
-	),
-
 	'join' => array(
 		'user_info' => ":0 information (including :1 and :2) is only viewable by members of the :3 when they are logged in to the site. None of your information can be seen by visitors to the site or anyone who is not logged in.",
 		'user_found' => "Your :0 record was found. If you're trying to apply with a new :1, you can continue to the :1 section. If you're trying to re-activate an existing :1, please contact the :2.",

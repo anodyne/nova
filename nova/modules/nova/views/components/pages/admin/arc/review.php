@@ -166,26 +166,7 @@
 						</div>
 					</div>
 
-					<div class="control-group">
-						<label class="control-label"><?php echo lang('simming experience', 2);?></label>
-						<div class="controls">
-							<p><?php echo $app->experience;?></p>
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label"><?php echo lang('short.hear_about_us.question', 2);?></label>
-						<div class="controls">
-							<p>
-								<?php echo $app->hear_about;?>
-
-								<?php if ( ! empty($app->hear_about_detail)): ?>
-									<br>
-									<span class="muted"><?php echo $app->hear_about_detail;?></span>
-								<?php endif;?>
-							</p>
-						</div>
-					</div>
+					<?php echo $appForm;?>
 				</div>
 
 				<div class="span6"><?php echo $userForm;?></div>

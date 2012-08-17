@@ -67,6 +67,7 @@ class Model_Form_Data extends \Model {
 			case 'item':
 			case 'tour':
 			case 'specs':
+			case 'app':
 			default:
 				$field_column = 'item_id';
 			break;

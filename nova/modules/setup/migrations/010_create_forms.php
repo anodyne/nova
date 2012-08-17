@@ -20,6 +20,9 @@ class Create_forms
 			array(
 				'key' => 'user',
 				'name' => 'User Information'),
+			array(
+				'key' => 'app',
+				'name' => 'Application Information'),
 		);
 
 		foreach ($data as $value)
@@ -304,6 +307,23 @@ class Create_forms
 				'label' => 'Bio',
 				'placeholder' => 'Enter your bio information here',
 				'order' => 2),
+			array(
+				'form_key' => 'app',
+				'type' => 'textarea',
+				'html_name' => 'experience',
+				'html_id' => 'experience',
+				'html_rows' => 5,
+				'html_class' => 'span5',
+				'label' => 'Simming Experience',
+				'order' => 0),
+			array(
+				'form_key' => 'app',
+				'type' => 'select',
+				'html_name' => 'hear_about',
+				'html_id' => 'hear_about',
+				'html_class' => 'span5',
+				'label' => 'Where Did You Hear About Us?',
+				'order' => 1),
 		);
 
 		foreach ($data as $value)
@@ -421,6 +441,31 @@ class Create_forms
 				'value' => 'Neuter',
 				'content' => 'Neuter',
 				'order' => 4),
+			array(
+				'field_id' => 26,
+				'value' => 'Friend',
+				'content' => 'A Friend',
+				'order' => 1),
+			array(
+				'field_id' => 26,
+				'value' => 'Member',
+				'content' => 'A Member of the Game',
+				'order' => 2),
+			array(
+				'field_id' => 26,
+				'value' => 'Organization',
+				'content' => 'An Organization',
+				'order' => 3),
+			array(
+				'field_id' => 26,
+				'value' => 'Advertisement',
+				'content' => 'An Advertisement',
+				'order' => 4),
+			array(
+				'field_id' => 26,
+				'value' => 'Search',
+				'content' => 'An Internet Search',
+				'order' => 5),
 		);
 
 		foreach ($data as $value)

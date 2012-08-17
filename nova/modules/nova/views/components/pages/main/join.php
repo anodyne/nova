@@ -72,34 +72,7 @@ if ( ! function_exists('joinData'))
 						</div>
 					</div>
 
-					<div class="control-group">
-						<label class="control-label"><?php echo lang('simming experience', 2);?></label>
-						<div class="controls">
-							<textarea name="app[experience]" rows="5" class="span5"></textarea>
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label"><?php echo lang('short.hear_about_us.question', 2);?></label>
-						<div class="controls">
-							<select name="app[hear_about]" id="hearAbout" class="span5">
-								<option value=""></option>
-								<option value="<?php echo lang('short.hear_about_us.friend', 1);?>"><?php echo lang('short.hear_about_us.friend', 1);?></option>
-								<option value="<?php echo lang('short.hear_about_us.member', 2);?>"><?php echo lang('short.hear_about_us.member', 2);?></option>
-								<option value="<?php echo lang('short.hear_about_us.org', 1);?>"><?php echo lang('short.hear_about_us.org', 1);?></option>
-								<option value="<?php echo lang('short.hear_about_us.ad', 1);?>"><?php echo lang('short.hear_about_us.ad', 1);?></option>
-								<option value="<?php echo lang('short.hear_about_us.search', 2);?>"><?php echo lang('short.hear_about_us.search', 2);?></option>
-								<option value="<?php echo lang('short.hear_about_us.other', 1);?>"><?php echo lang('short.hear_about_us.other', 1);?></option>
-							</select>
-						</div>
-					</div>
-
-					<div class="control-group hide">
-						<label class="control-label"><?php echo lang('short.hear_about_us.detail', 2);?></label>
-						<div class="controls">
-							<input type="text" name="app[hear_about_detail]" class="span5">
-						</div>
-					</div>
+					<?php echo $appForm;?>
 				</div>
 
 				<div id="userForm" class="span6"><?php echo $user;?></div>
@@ -151,7 +124,7 @@ if ( ! function_exists('joinData'))
 				<div class="control-group">
 					<label class="control-label"><?php echo Markdown::parse($samplePostContent);?></label>
 					<div class="controls">
-						<textarea name="app[sample_post]" rows="15" class="span12"></textarea>
+						<textarea name="sample_post" rows="15" class="span12"></textarea>
 					</div>
 				</div>
 			</div>
@@ -159,9 +132,6 @@ if ( ! function_exists('joinData'))
 	</div>
 
 	<div class="controls">
-		<input type="hidden" name="user[id]" value="0">
-		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
-
 		<div class="btn-toolbar">
 			<div class="btn-group">
 				<button class="btn btn-primary" name="submit"><?php echo lang('action.submit', 1);?></button>
@@ -173,4 +143,7 @@ if ( ! function_exists('joinData'))
 			</div>
 		</div>
 	</div>
+
+	<input type="hidden" name="user[id]" value="0">
+	<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 </form>

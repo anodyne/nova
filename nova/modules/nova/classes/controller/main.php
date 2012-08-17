@@ -51,7 +51,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			// set the js data
 			$this->_js_data->skin = $this->skin;
 
-			if (\Input::post('submit') !== false)
+			if (isset($_POST['submit']))
 			{
 				if (\Security::check_token())
 				{
@@ -88,36 +88,39 @@ abstract class Controller_Main extends Controller_Base_Main
 						\Model_User::update_item($user->id, array('character_id' => $char->id));
 					}
 
-					// make sure we have all the app data we need
-					$appData = array_merge(\Input::post('app'), array(
-						'email' => $user->email,
-						'ip_address' => \Input::real_ip(),
-						'user_id' => $user->id,
-						'user_name' => $user->name,
-						'character_id' => $char->id,
-						'character_name' => $char->name(false, false),
-						'position_id' => (int) \Security::xss_clean(\Input::post('position')),
-					));
-
 					// create the application
-					\Model_Application::create_item($appData);
+					$createApp = \Model_Application::create_item(array(
+						'email' 			=> $user->email,
+						'ip_address' 		=> \Input::real_ip(),
+						'user_id' 			=> $user->id,
+						'user_name' 		=> $user->name,
+						'character_id' 		=> $char->id,
+						'character_name'	=> $char->name(false, false),
+						'position_id' 		=> (int) \Security::xss_clean(\Input::post('position')),
+						'sample_post' 		=> \Security::xss_clean(\Input::post('sample_post')),
+					), true);
 
 					// remove unnecessary items from the POST data
 					unset($_POST['submit']);
 					unset($_POST['user']);
 					unset($_POST['character']);
-					unset($_POST['app']);
+					unset($_POST['sample_post']);
 					unset($_POST['position']);
 
 					// dump the data into the table
 					foreach (\Input::post() as $field => $value)
 					{
+						// get the form key
+						$form_key = \Model_Form_Field::find($field)->form_key;
+
+						// insert the data
 						\Model_Form_Data::create_data(array(
-							'field_id' => $field,
-							'value' => $value,
-							'user_id' => $user->id,
-							'character_id' => $char->id,
-							'form_key' => \Model_Form_Field::find($field)->form_key
+							'field_id'		=> $field,
+							'value'			=> $value,
+							'user_id'		=> $user->id,
+							'character_id'	=> $char->id,
+							'item_id'		=> ($form_key == 'app') ? $createApp->id : 0,
+							'form_key'		=> $form_key
 						));
 					}
 
@@ -144,6 +147,9 @@ abstract class Controller_Main extends Controller_Base_Main
 
 			// build the user form (populate with data if the user is logged in)
 			$this->_data->user = \NovaForm::build('user', $this->skin, ((\Sentry::check()) ? \Sentry::user()->id : false));
+
+			// build the app form (populate with data if the user is logged in)
+			$this->_data->appForm = \NovaForm::build('app', $this->skin, ((\Sentry::check()) ? \Sentry::user()->id : false));
 
 			// pass the position along
 			$this->_data->position = $position;
@@ -265,10 +271,13 @@ abstract class Controller_Main extends Controller_Base_Main
 			->where('appReviews.status', \Status::IN_PROGRESS)
 			->get();
 
+			$user = \Model_User::find(1);
+			$password = \Str::random();
+
 		\Debug::dump(
-			$rev1[3],
-			$rev1[3]->user->email
-			//$rev2
+			'WKbgCCYvFb6rhPDp',
+			\Sentry_User::password_generate('WKbgCCYvFb6rhPDp'),
+			\Sentry::user()->atleast_level('user.read', 1)
 		);
 		
 		return;
