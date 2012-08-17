@@ -19,43 +19,14 @@ class Setup
 	 *
 	 * @internal
 	 * @return	bool
-	 * @throws	NovaSetupException
 	 */
 	public static function install()
 	{
 		// move to the latest migration
 		\Migrate::latest('setup', 'module');
 		
-		if (\Config::get('nova.dev_install'))
-		{
-			// pause the script for a few seconds to let the server breathe
-			sleep(3);
-			
-			// wipe out the data from inserting the data
-			unset($data);
-			
-			// load the file
-			include \Finder::search('assets/install', 'dev');
-			
-			$insert = array();
-			
-			foreach ($data as $value)
-			{
-				foreach ($$value as $k => $v)
-				{
-					// do the query
-					$result = \DB::insert($value)->set($v)->execute();
-
-					// capture whether it was successful or not
-					$insert[$value] = (is_array($result));
-				}
-			}
-			
-			if (in_array(false, $insert))
-			{
-				throw new \NovaSetupException('Dev data insert failed.');
-			}
-		}
+		// install the dev data
+		static::install_dev_data();
 		
 		// do the quick installs
 		\QuickInstall::module();
@@ -88,6 +59,56 @@ class Setup
 		\Model_SiteContent::get_section_content('message', 'login');
 		
 		return true;
+	}
+
+	/**
+	 * Install the development data into the database.
+	 *
+	 * @internal
+	 * @return	bool
+	 * @throws	NovaSetupException
+	 */
+	public static function install_dev_data()
+	{
+		if (\Config::get('nova.dev_install'))
+		{
+			// make sure we have a clean data variable
+			$data = false;
+			
+			// load the dev install data
+			include \Finder::search('assets/install', 'dev');
+			
+			// an array for tracking what did and didn't succeed
+			$insert = array();
+
+			// loop through the directory of data
+			foreach ($data as $d)
+			{
+				// now loop through the actual data
+				foreach ($$d['data'] as $k => $v)
+				{
+					try
+					{
+						// call the model's create method with the data from the dev file
+						$insert[$d['data']] = call_user_func_array(array($d['model'], $d['method']), array($v));
+					}
+					catch (\Database_Exception $e)
+					{
+						// we're just going to ignore any exceptions since this is a dev-only thing
+					}
+				}
+			}
+			
+			// if any of the dev data insert failed, throw an exception
+			if (in_array(false, $insert))
+			{
+				throw new \NovaSetupException('Dev data insert failed.');
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 	
 	/**
