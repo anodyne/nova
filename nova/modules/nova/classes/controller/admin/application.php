@@ -167,7 +167,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 								array('message' => \Security::xss_clean(\Input::post('content')))), 'text/html');
 						
 						// send the email
-						$mailer->send($message);
+						if (\Fuel::$env != \Fuel::DEVELOPMENT)
+						{
+							$mailer->send($message);
+						}
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
@@ -249,7 +252,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 								array('message' => \Security::xss_clean(\Input::post('message')))), 'text/html');
 						
 						// send the email
-						$mailer->send($message);
+						if (\Fuel::$env != \Fuel::DEVELOPMENT)
+						{
+							$mailer->send($message);
+						}
 
 						$this->_flash[] = array(
 							'status'	=> 'success',

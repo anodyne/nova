@@ -104,8 +104,8 @@ class NovaMail
 
 			// send the messages
 			$send = array(
-				'html' => (isset($html)) ? $mailer->send($html) : false,
-				'text' => (isset($text)) ? $mailer->send($text) : false,
+				'html' => (isset($html) and \Fuel::$env != \Fuel::DEVELOPMENT) ? $mailer->send($html) : false,
+				'text' => (isset($text) and \Fuel::$env != \Fuel::DEVELOPMENT) ? $mailer->send($text) : false,
 			);
 
 			return $send;
