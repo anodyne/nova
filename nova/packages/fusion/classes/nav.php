@@ -353,7 +353,7 @@ class Nav
 		if (\Sentry::check())
 		{
 			// get the user
-			$user = \Sentry::user(1);
+			$user = \Sentry::user();
 
 			// get the message count
 			$message_count = 0;
