@@ -21,6 +21,9 @@ body {
 .btn-icon {
 	font-size: 12px !important;
 }
+.btn-noclick:hover {
+	cursor: default;
+}
 
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
