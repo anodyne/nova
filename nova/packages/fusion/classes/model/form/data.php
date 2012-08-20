@@ -47,6 +47,18 @@ class Model_Form_Data extends \Model {
 			'null' => true),
 	);
 
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert')
+		),
+		'\\Orm\\Observer_UpdatedAt' => array(
+			'events' => array('before_save')
+		),
+	);
+
 	public static function get_data($type, $id)
 	{
 		switch ($type)
@@ -89,7 +101,7 @@ class Model_Form_Data extends \Model {
 		
 		foreach ($data as $key => $value)
 		{
-			$record->{$key} = $value;
+			$record->{$key} = \Security::xss_clean($value);
 		}
 		
 		$record->save();
@@ -133,8 +145,7 @@ class Model_Form_Data extends \Model {
 			$record = static::find()->where('field_id', $key)->where($field, $id)->get_one();
 			
 			// update the values
-			$record->value = $value;
-			$record->updated_at = time();
+			$record->value = \Security::xss_clean($value);
 			$retval = $record->save();
 			
 			$results[] = ($retval !== false) ? true : $retval;

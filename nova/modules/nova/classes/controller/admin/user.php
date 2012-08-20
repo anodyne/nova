@@ -128,4 +128,82 @@ class Controller_Admin_User extends Controller_Base_Admin
 
 		return;
 	}
+
+	public function action_edit($id)
+	{
+		\Sentry::allowed('user.update', true);
+
+		$this->_view = 'admin/user/edit';
+		$this->_js_view = 'admin/user/edit_js';
+
+		// sanitize the input
+		\Security::xss_clean($id);
+
+		if (\Sentry::user()->has_level('user.update', 2) or 
+				(\Sentry::user()->has_level('user.update', 1) and \Sentry::user()->id === $id))
+		{
+			if (\Input::method() == 'POST')
+			{
+				if (\Security::check_token())
+				{
+					// get the action
+					$action = \Security::xss_clean(\Input::post('action'));
+
+					/**
+					 * Update the basic user information.
+					 */
+					if ($action == 'basic')
+					{
+						// make sure we hash the password if it's being reset
+						if (\Input::post('basic.password', false) !== false)
+						{
+							$_POST['basic']['password'] = \Sentry_User::password_generate(\Security::xss_clean(\Input::post('basic.password')));
+						}
+
+						// update the user
+						\Model_User::update_item($id, \Input::post('basic'));
+
+						// clear some of the POST variables
+						unset($_POST['action']);
+						unset($_POST['basic']);
+						unset($_POST[\Config::get('security.csrf_token_key')]);
+
+						// update the user form
+						\Model_Form_Data::update_data('user', $id, \Input::post());
+
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|user info|action.updated]]', 1),
+						);
+					}
+				}
+				else
+				{
+					$this->_flash[] = array(
+						'status' => 'danger',
+						'message' => lang('error.csrf'),
+					);
+				}
+			}
+
+			// get the user
+			$this->_data->user = $user = \Model_User::find($id);
+
+			// get the user preferences
+			$this->_data->prefs = $user->preferences();
+
+			// get the user form
+			$this->_data->userForm = \NovaForm::build('user', $this->skin, $id);
+
+			// manually set the header
+			$this->_headers['edit'] = lang('action.edit user', 2).' &ndash; '.$user->name;
+
+			// manually set the title
+			$this->_titles['edit'] = lang('action.edit user', 2);
+		}
+		else
+		{
+			$this->response->redirect('admin/error/'.\Nova\Controller_Admin::NOT_ALLOWED);
+		}
+	}
 }

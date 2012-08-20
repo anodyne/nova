@@ -13,10 +13,12 @@ return array(
 	'admin' => 'admin',
 	'access_role' => 'access role',
 	'active' => 'active',
+	'admin' => 'admin',
 
 	'bio'	=> 'bio',
 	'base' => 'base',
 	'by' => 'by',
+	'basic' => 'basic',
 
 	'character'		=> 'character',
 	'characters'	=> 'characters',
@@ -37,6 +39,7 @@ return array(
 	'decision' => 'decision',
 
 	'email_address' => "email address",
+	'email_short' => 'email',
 	'experience' => 'experience',
 
 	'field' => "field",
@@ -47,6 +50,7 @@ return array(
 	'first' => 'first',
 	'final' => 'final',
 	'from' => 'from',
+	'format' => 'format',
 
 	'general' => 'general',
 	'game_master' => 'game master',
@@ -76,6 +80,7 @@ return array(
 	'link' => 'link',
 	'last' => 'last',
 	'location' => 'location',
+	'language' => 'language',
 
 	'message' => "message",
 	'my' => "my :thing",
@@ -83,6 +88,7 @@ return array(
 	'module' => 'module',
 	'modules' => 'modules',
 	'more' => 'more',
+	'main' => 'main',
 
 	'name' => "name",
 	'notification' => "notification",
@@ -140,6 +146,8 @@ return array(
 	'sample_post' => 'sample post',
 	'step' => 'step',
 	'status' => 'status',
+	'skin' => 'skin',
+	'skins' => 'skins',
 
 	'tab' => "tab",
 	'tabs' => "tabs",
@@ -149,6 +157,8 @@ return array(
 	'to' => 'to',
 	'this' => 'this',
 	'the' => 'the',
+	'timezone' => 'timezone',
+	'text' => 'text',
 
 	'user' => 'user',
 	'users' => 'users',
