@@ -17,23 +17,24 @@
 					<span class="muted"><?php echo $r->position->name;?></span>
 				</td>
 				<td class="span3">
-					<div class="btn-group">
-						<?php if (count($r->comments()) > 0): ?>
-							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small"><i class="icon-comment icon-50"></i> <?php echo count($r->comments());?></a>
-						<?php endif;?>
+					<div class="btn-toolbar pull-right">
+						<div class="btn-group">
+							<?php if (count($r->comments()) > 0): ?>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small tooltip-top" title="<?php echo lang('comments', 1);?>"><i class="icon-comment icon-50"></i> <?php echo count($r->comments());?></a>
+							<?php endif;?>
 
-						<?php if (count($r->votes('yes')) > 0): ?>
-							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-success"><i class="icon-thumbs-up icon-white"></i> <?php echo count($r->votes('yes'));?></a>
-						<?php endif;?>
+							<?php if (count($r->votes('yes')) > 0): ?>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-success tooltip-top" title="<?php echo lang('yes votes', 1);?>"><i class="icon-thumbs-up icon-white"></i> <?php echo count($r->votes('yes'));?></a>
+							<?php endif;?>
 
-						<?php if (count($r->votes('no')) > 0): ?>
-							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-danger"><i class="icon-thumbs-down icon-white"></i> <?php echo count($r->votes('no'));?></a>
-						<?php endif;?>
-					</div>
-				</td>
-				<td class="span1">
-					<div class="btn-group">
-						<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-small"><i class="icon-chevron-right icon-50"></i></a>
+							<?php if (count($r->votes('no')) > 0): ?>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-danger tooltip-top" title="<?php echo lang('no votes', 1);?>"><i class="icon-thumbs-down icon-white"></i> <?php echo count($r->votes('no'));?></a>
+							<?php endif;?>
+						</div>
+
+						<div class="btn-group">
+							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-small"><i class="icon-chevron-right icon-50"></i></a>
+						</div>
 					</div>
 				</td>
 			</tr>
