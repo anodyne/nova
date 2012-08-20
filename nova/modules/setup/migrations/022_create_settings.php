@@ -60,11 +60,11 @@ class Create_settings
 				'user_created' => (int) false),
 			array(
 				'key' => 'email_name',
-				'value' => '',
+				'value' => 'Nova',
 				'user_created' => (int) false),
 			array(
 				'key' => 'email_address',
-				'value' => '',
+				'value' => 'me@example.com',
 				'help' => "To avoid some email services marking emails from Nova as spam, use this email address to set a specific address. This defaults to an address that should prevent this issue.",
 				'user_created' => (int) false),
 			array(
