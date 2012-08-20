@@ -11,13 +11,12 @@ application/*
 #!app/views/titan/*
 #app/assets/common/*
 
-nova.sublime-project
-nova.sublime-workspace
-
 # General
 *~
 *.bak
 .htaccess
+*.sublime-project
+*.sublime-workspace
 
 # Windows-specific ignores
 Thumbs.db
