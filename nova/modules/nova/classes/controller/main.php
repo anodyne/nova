@@ -106,6 +106,7 @@ abstract class Controller_Main extends Controller_Base_Main
 					unset($_POST['character']);
 					unset($_POST['sample_post']);
 					unset($_POST['position']);
+					unset($_POST[\Config::get('security.csrf_token_key')]);
 
 					// dump the data into the table
 					foreach (\Input::post() as $field => $value)
