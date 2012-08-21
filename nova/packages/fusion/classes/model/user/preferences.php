@@ -57,7 +57,6 @@ class Model_User_Preferences extends \Model {
 			'is_firstlaunch'		=> (int) true,
 			'loa'					=> 'active',
 			'timezone'				=> 'UTC',
-			'daylight_savings'		=> (int) false,
 			'email_format'			=> 'html',
 			'language'				=> 'en',
 			
@@ -116,7 +115,7 @@ class Model_User_Preferences extends \Model {
 			if (array_key_exists($i->key, $data))
 			{
 				// update the value
-				$i->value = $data[$i->key];
+				$i->value = \Security::xss_clean($data[$i->key]);
 
 				// save the item
 				$i->save();
