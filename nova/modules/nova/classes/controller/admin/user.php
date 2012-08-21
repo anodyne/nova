@@ -176,6 +176,24 @@ class Controller_Admin_User extends Controller_Base_Admin
 							'message' => lang('[[short.flash.success|user info|action.updated]]', 1),
 						);
 					}
+
+					/**
+					 * Update the user preferences.
+					 */
+					if ($action == 'preferences')
+					{
+						// clear some of the POST variables
+						unset($_POST['action']);
+						unset($_POST[\Config::get('security.csrf_token_key')]);
+
+						// update the preferences
+						\Model_User_Preferences::update_user_preferences($id, \Input::post());
+
+						$this->_flash[] = array(
+							'status' => 'success',
+							'message' => lang('[[short.flash.success|user preferences|action.updated]]', 1),
+						);
+					}
 				}
 				else
 				{

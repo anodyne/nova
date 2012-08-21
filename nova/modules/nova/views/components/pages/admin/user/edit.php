@@ -85,25 +85,18 @@
 						<div class="control-group">
 							<label class="control-label"><?php echo lang('timezone', 1);?></label>
 							<div class="controls">
+								<?php echo NovaForm::timezones('timezone', $prefs['timezone'], array('class' => 'span4'));?>
 							</div>
 						</div>
 
-						<div class="control-group">
-							<label class="control-label"><?php echo lang('language', 1);?></label>
-							<div class="controls">
+						<?php if (count(File::read_dir(APPPATH.'lang', 1, null)) > 1): ?>
+							<div class="control-group">
+								<label class="control-label"><?php echo lang('language', 1);?></label>
+								<div class="controls">
+									<?php echo NovaForm::languages('language', $prefs['language'], array('class' => 'span4'));?>
+								</div>
 							</div>
-						</div>
-					</fieldset>
-
-					<fieldset>
-						<legend><?php echo lang('email_short preferences', 2);?></legend>
-
-						<div class="control-group">
-							<label class="control-label"><?php echo lang('email_short format', 2);?></label>
-							<div class="controls">
-								<?php echo Form::select('email_format', $prefs['email_format'], array('html' => 'HTML', 'text' => lang('text', 1)), array('class' => 'span2'));?>
-							</div>
-						</div>
+						<?php endif;?>
 					</fieldset>
 
 					<fieldset>
@@ -128,6 +121,101 @@
 							</div>
 						</div>
 					</fieldset>
+
+					<fieldset>
+						<legend><?php echo lang('email_short and email_short notification preferences', 2);?></legend>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('email_short format', 2);?></label>
+							<div class="controls">
+								<?php echo Form::select('email_format', $prefs['email_format'], array('html' => 'HTML', 'text' => lang('text', 1)), array('class' => 'span2'));?>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('comments', 1);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_comments|comment|mission_post|personal_log|announcement]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_comments', 1, $prefs['email_comments']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_comments', 0, $prefs['email_comments']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('messages', 1);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_messages|message]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_messages', 1, $prefs['email_messages']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_messages', 0, $prefs['email_messages']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('personal_logs', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify|personal_log]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_logs', 1, $prefs['email_logs']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_logs', 0, $prefs['email_logs']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('announcements', 1);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify|announcement]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_announcements', 1, $prefs['email_announcements']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_announcements', 0, $prefs['email_announcements']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('mission_posts', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify|mission_post]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_posts', 1, $prefs['email_posts']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_posts', 0, $prefs['email_posts']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('joint mission_posts action.saved', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_posts_action|mission_post|action.updated]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_posts_save', 1, $prefs['email_posts_save']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_posts_save', 0, $prefs['email_posts_save']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"><?php echo lang('joint mission_posts action.deleted', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_posts_action|mission_post|action.deleted]]');?>"></i></label>
+							<div class="controls">
+								<label class="radio inline">
+									<?php echo Form::radio('email_posts_delete', 1, $prefs['email_posts_delete']).' '.lang('yes', 1);?>
+								</label>
+								<label class="radio inline">
+									<?php echo Form::radio('email_posts_delete', 0, $prefs['email_posts_delete']).' '.lang('no', 1);?>
+								</label>
+							</div>
+						</div>
+					</fieldset><br>
 
 					<div class="controls">
 						<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
