@@ -41,7 +41,7 @@ class Observer_User extends \Orm\Observer
 		/**
 		 * System Event
 		 */
-		//\SystemEvent::add('user', '[[event.admin.form.field_create|{{'.$model->label.'}}|{{'.$model->form_key.'}}]]');
+		\SystemEvent::add('user', '[[event.admin.user.item|{{'.$model->name.'}}|action.created]]');
 
 		/**
 		 * Create the user settings.
@@ -68,5 +68,35 @@ class Observer_User extends \Orm\Observer
 				));
 			}
 		}
+	}
+
+	/**
+	 * Pre-delete observer.
+	 *
+	 * @internal
+	 * @param	Model	the model being acted on
+	 * @return	void
+	 */
+	public function before_delete(\Model $model)
+	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.user.item|{{'.$model->name.'}}|action.deleted]]');
+	}
+
+	/**
+	 * Post-update observer.
+	 *
+	 * @internal
+	 * @param	Model	the model being acted on
+	 * @return	void
+	 */
+	public function after_update(\Model $model)
+	{
+		/**
+		 * System Event
+		 */
+		\SystemEvent::add('user', '[[event.admin.user.item|{{'.$model->name.'}}|action.updated]]');
 	}
 }

@@ -168,7 +168,7 @@ class Model_User extends \Model {
 	 */
 	protected static $_observers = array(
 		'\\User' => array(
-			'events' => array('after_insert', 'before_insert')
+			'events' => array('after_insert', 'before_insert', 'after_update', 'before_delete')
 		),
 		'\\Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert')
