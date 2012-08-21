@@ -101,10 +101,6 @@ class Create_settings
 				'value' => 'UTC',
 				'user_created' => (int) false),
 			array(
-				'key' => 'daylight_savings',
-				'value' => 'false',
-				'user_created' => (int) false),
-			array(
 				'key' => 'date_format',
 				'value' => '%d %B %Y',
 				'user_created' => (int) false),
