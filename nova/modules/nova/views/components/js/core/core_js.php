@@ -12,17 +12,45 @@
 			},
 			cache: true
 		});
-		
-		$('.tooltip-right').tooltip({
-			placement: 'right'
-		});
-
-		$('.tooltip-top').tooltip({
-			placement: 'top'
-		});
 
 		// initialize the chosen plugin if it's there
 		$('.chzn').chosen();
+		
+		/**
+		 * Bootstrap Tooltips
+		 */
+		$('.tooltip-right').tooltip({
+			placement: 'right'
+		});
+		$('.tooltip-left').tooltip({
+			placement: 'left'
+		});
+		$('.tooltip-top').tooltip({
+			placement: 'top'
+		});
+		$('.tooltip-bottom').tooltip({
+			placement: 'bottom'
+		});
+
+		/**
+		 * Bootstrap Popovers
+		 */
+		$('.popover-right').tooltip({
+			placement: 'right',
+			html: true
+		});
+		$('.popover-left').tooltip({
+			placement: 'left',
+			html: true
+		});
+		$('.popover-top').tooltip({
+			placement: 'top',
+			html: true
+		});
+		$('.popover-bottom').tooltip({
+			placement: 'bottom',
+			html: true
+		});
 	});
 
 	// rank dropdown
