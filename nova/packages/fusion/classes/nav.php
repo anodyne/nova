@@ -392,7 +392,7 @@ class Nav
 						'name' => ucwords(__('my', array('thing' => __('account')))),
 						'url' => 'admin/user/edit/'.\Sentry::user()->id,
 						'extra' => array(),
-						'additional' => ' <i class="icon-question-sign icon-50 tooltip-left" title="Edit your account, change your preferences, and request an LOA from your account page"></i>'),
+						'additional' => ' <i class="icon-question-sign icon-50 tooltip-left" title="'.lang('short.help.user_account').'"></i>'),
 					array(
 						'name' => ucwords(__('my', array('thing' => \Inflector::pluralize(__('character'))))),
 						'url' => 'admin/character/edit',
