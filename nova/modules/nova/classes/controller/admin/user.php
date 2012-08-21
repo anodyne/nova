@@ -38,7 +38,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_access('user.create') and $action == 'create')
 				{
-					// generate a password for the user
+					// generate a password
 					$password = \Str::random('alnum', 8);
 
 					// create the user
@@ -53,7 +53,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 					// email the user
 					\NovaMail::send('user_add', array(
 						'to' => array($user->id),
-						'subject' => '',
+						'subject' => lang('email.subject.user.add'),
 						'content' => array('message' => lang('[[email.content.user.add|user|{{'.$this->options->sim_name.'}}|{{'.\Uri::base().'}}|action.login|{{'.$user->name.'}}|{{'.$password.'}}]]')),
 					));
 
