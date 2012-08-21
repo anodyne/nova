@@ -378,39 +378,57 @@ class Nav
 				0 => array(
 					array(
 						'name' => ucwords(__('cp')),
-						'url' => 'admin/index'),
+						'url' => 'admin/index',
+						'extra' => array(),
+						'additional' => ''),
 					array(
 						'name' => ucfirst(\Inflector::pluralize(__('notification'))),
-						'url' => 'admin/notifications'),
+						'url' => 'admin/notifications',
+						'extra' => array(),
+						'additional' => ''),
 				),
 				1 => array(
 					array(
 						'name' => ucwords(__('my', array('thing' => __('account')))),
-						'url' => 'admin/user/edit/'.\Sentry::user()->id),
+						'url' => 'admin/user/edit/'.\Sentry::user()->id,
+						'extra' => array(),
+						'additional' => ' <i class="icon-question-sign icon-50 tooltip-left" title="Edit your account, change your preferences, and request an LOA from your account page"></i>'),
 					array(
 						'name' => ucwords(__('my', array('thing' => \Inflector::pluralize(__('character'))))),
-						'url' => 'admin/character/edit'),
+						'url' => 'admin/character/edit',
+						'extra' => array(),
+						'additional' => ''),
 				),
 				2 => array(
 					array(
 						'name' => $message_output.ucfirst(\Inflector::pluralize(__('message'))),
-						'url' => 'admin/messages'),
+						'url' => 'admin/messages',
+						'extra' => array(),
+						'additional' => ''),
 					array(
 						'name' => $writing_output.ucfirst(__('writing')),
-						'url' => 'admin/writing'),
+						'url' => 'admin/writing',
+						'extra' => array(),
+						'additional' => ''),
 				),
 				3 => array(
 					array(
 						'name' => ucwords(__('action.request').' '.__('loa')),
-						'url' => 'admin/user/loa'),
+						'url' => 'admin/user/loa',
+						'extra' => array(),
+						'additional' => ''),
 					array(
 						'name' => ucfirst(__('action.nominate')).' '.__('for').' '.ucfirst(__('award')),
-						'url' => 'admin/user/nominate'),
+						'url' => 'admin/user/nominate',
+						'extra' => array(),
+						'additional' => ''),
 				),
 				4 => array(
 					array(
 						'name' => ucfirst(__('action.logout')),
-						'url' => 'login/logout'),
+						'url' => 'login/logout',
+						'extra' => array(),
+						'additional' => ''),
 				),
 			);
 
@@ -437,7 +455,8 @@ class Nav
 
 				foreach ($section as $item)
 				{
-					$output.= '<li><a href="'.\Uri::create($item['url']).'">'.$item['name'].'</a></li>';
+					//$output.= '<li><a href="'.\Uri::create($item['url']).'">'.$item['name'].'</a></li>';
+					$output.= '<li>'.\Html::anchor($item['url'], $item['name'].$item['additional'], $item['extra']).'</li>';
 				}
 			}
 
