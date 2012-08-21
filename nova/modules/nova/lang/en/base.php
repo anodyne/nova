@@ -14,6 +14,9 @@ return array(
 	'access_role' => 'access role',
 	'active' => 'active',
 	'admin' => 'admin',
+	'announcement' => 'announcement',
+	'announcements' => 'announcements',
+	'and' => 'and',
 
 	'bio'	=> 'bio',
 	'base' => 'base',
@@ -72,6 +75,8 @@ return array(
 	'in' => 'in',
 	'inactive' => 'inactive',
 	'in_progress' => 'in progress',
+
+	'joint' => 'joint',
 	
 	'loa' => "LOA",
 	'loa_full' => "Leave of Absence",
@@ -89,6 +94,10 @@ return array(
 	'modules' => 'modules',
 	'more' => 'more',
 	'main' => 'main',
+	'mission_post' => "mission post",
+	'mission_posts' => "mission posts",
+	'message' => 'message',
+	'messages' => 'messages',
 
 	'name' => "name",
 	'notification' => "notification",
@@ -115,6 +124,8 @@ return array(
 	'participant' => 'participant',
 	'participants' => 'participants',
 	'pending' => 'pending',
+	'personal_log' => "personal log",
+	'personal_logs' => "personal logs",
 
 	'row' => 'row',
 	'rows' => 'rows',

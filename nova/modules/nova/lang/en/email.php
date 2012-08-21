@@ -33,4 +33,11 @@ return array(
 		'no_to_address' => "Could not find TO address data.",
 		'no_subject' => "Could not find SUBJECT data.",
 	),
+
+	'help' => array(
+		'notify' => "When a new :0 is created, you will be notified about it through email",
+		'notify_posts_action' => "When a joint :0 you're involved in is :1, you will be notified about it through email",
+		'notify_comments' => "When a new :0 is added to a :1, :2, or :3 that you're part of, you will be notified about it through email",
+		'notify_messages' => "When you're sent a new :0, you will be notified about it through email",
+	),
 );
