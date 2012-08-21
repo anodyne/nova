@@ -150,6 +150,86 @@ class NovaForm
 	}
 
 	/**
+	 * Builds a select menu of available languages.
+	 *
+	 * @api
+	 * @uses	Form::select
+	 * @param	string	the name of the select menu
+	 * @param	array 	an array of selected items
+	 * @param	array	any extra attributes to be added to the select menu
+	 * @return	string
+	 */
+	public static function languages($name, $selected = array(), $extra = array())
+	{
+		// an array of languages
+		$languages = array(
+			'ar' => 'arabic',
+			'az' => 'azeri',
+			'bg' => 'bulgarian',
+			'bn' => 'bengali',
+			'cs' => 'czech',
+			'cy' => 'welsh',
+			'da' => 'danish',
+			'de' => 'german',
+			'en' => 'english',
+			'es' => 'spanish',
+			'et' => 'estonian',
+			'fa' => 'farsi',
+			'fi' => 'finnish',
+			'fr' => 'french',
+			'ha' => 'hausa',
+			'hi' => 'hindi',
+			'hr' => 'croatian',
+			'hu' => 'hungarian',
+			'id' => 'indonesian',
+			'is' => 'icelandic',
+			'it' => 'italian',
+			'kk' => 'kazakh',
+			'ky' => 'kyrgyz',
+			'la' => 'latin',
+			'lt' => 'lithuanian',
+			'lv' => 'latvian',
+			'mk' => 'macedonian',
+			'mn' => 'mongolian',
+			'ne' => 'nepali',
+			'nl' => 'dutch',
+			'no' => 'norwegian',
+			'pl' => 'polish',
+			'ps' => 'pashto',
+			'pt' => 'portuguese',
+			'ro' => 'romanian',
+			'ru' => 'russian',
+			'sk' => 'slovak',
+			'sl' => 'slovene',
+			'so' => 'somali',
+			'sq' => 'albanian',
+			'sr' => 'serbian',
+			'sv' => 'swedish',
+			'sw' => 'swahili',
+			'tl' => 'tagalog',
+			'tr' => 'turkish',
+			'uk' => 'ukrainian',
+			'ur' => 'urdu',
+			'uz' => 'uzbek',
+			'vi' => 'vietnamese',
+		);
+
+		// get a list of the languges in the system
+		$dir = \File::read_dir(APPPATH.'lang', 1, null);
+
+		// loop through the languages and figure out what should be shown
+		foreach ($languages as $code => $lang)
+		{
+			if (array_key_exists($code.DS, $dir))
+			{
+				$options[$code] = ucfirst($lang);
+			}
+		}
+
+		return \Form::select($name, $selected, $options, $extra);
+	}
+
+	/**
 	 * Builds a select menu that includes all of the positions from
 	 * the database based on the parameters passed to the method.
 	 *
