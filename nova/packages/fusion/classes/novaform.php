@@ -333,6 +333,49 @@ class NovaForm
 	}
 
 	/**
+	 * Builds a select menu that includes all timezones supported in PHP.
+	 *
+	 * <code>
+	 * echo NovaForm::timezones('timezone', 'America/Chicago', array('class' => 'span4 chzn'));
+	 * </code>
+	 *
+	 * @api
+	 * @uses	Form::select
+	 * @param	string	the name of the select menu
+	 * @param	array 	an array of selected items
+	 * @param	array	any extra attributes to be added to the select menu
+	 * @return	string	a select menu output from Form::select
+	 */
+	public static function timezones($name, $selected = array(), $extra = array())
+	{
+		// get the timezone information
+		$zones = timezone_identifiers_list();
+
+		// make sure UTC is in the list
+		$locations['UTC'] = 'UTC';
+
+		foreach ($zones as $zone)
+		{
+			// break out the zones into contintent and city
+			$zone = explode('/', $zone);
+
+			// only use "friendly" continent names
+			if ($zone[0] == 'Africa' or $zone[0] == 'America' or $zone[0] == 'Antarctica' or $zone[0] == 'Arctic' or 
+					$zone[0] == 'Asia' or $zone[0] == 'Atlantic' or $zone[0] == 'Australia' or $zone[0] == 'Europe' or 
+					$zone[0] == 'Indian' or $zone[0] == 'Pacific')
+			{
+				if (isset($zone[1]) != '')
+				{
+					// create an array with the zone and the friendly name
+					$locations[$zone[0]][$zone[0].'/'.$zone[1]] = str_replace('_', ' ', $zone[1]);
+				}
+			}
+		}
+
+		return \Form::select($name, $selected, $locations, $extra);
+	}
+
+	/**
 	 * Builds a select menu that includes all of the users from
 	 * the database based on the parameters passed to the method.
 	 *
