@@ -386,10 +386,7 @@ class Nav
 				1 => array(
 					array(
 						'name' => ucwords(__('my', array('thing' => __('account')))),
-						'url' => 'admin/user/edit'),
-					array(
-						'name' => ucfirst(\Inflector::pluralize(__('preference'))),
-						'url' => 'admin/user/preferences'),
+						'url' => 'admin/user/edit/'.\Sentry::user()->id),
 					array(
 						'name' => ucwords(__('my', array('thing' => \Inflector::pluralize(__('character'))))),
 						'url' => 'admin/character/edit'),
