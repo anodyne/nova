@@ -166,4 +166,17 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			echo \View::forge(\Location::file('update/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
 		}
 	}
+
+	/**
+	 * Create a user record.
+	 *
+	 * @return	void
+	 */
+	public function action_user()
+	{
+		if (\Sentry::check() and \Sentry::user()->has_access('user.create'))
+		{
+			echo \View::forge(\Location::file('add/user', \Utility::get_skin('admin'), 'ajax'));
+		}
+	}
 }

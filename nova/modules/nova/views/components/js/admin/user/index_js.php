@@ -9,28 +9,6 @@
 
 	$(document).ready(function(){
 		
-		$('.close').click(function(){
-			
-			// get the item
-			var item = $(this).attr('rel');
-
-			// hide the item
-			$('#add-' + item).fadeOut();
-
-			return false;
-		});
-
-		$('.add-switch').click(function(){
-			
-			// get the item
-			var item = $(this).attr('rel');
-
-			// show the item
-			$('#add-' + item).fadeIn();
-
-			return false;
-		});
-
 		$('[rel="change_user_view"]').click(function(){
 			
 			// get the view
@@ -137,6 +115,22 @@
 			$('<div/>').dialog2({
 				title: "<?php echo lang('action.delete user', 2);?>",
 				content: "<?php echo Uri::create('ajax/delete/user');?>/" + id
+			});
+		}
+
+		if (doaction == 'create')
+		{
+			$('<div/>').dialog2({
+				title: "<?php echo lang('action.create user', 2);?>",
+				content: "<?php echo Uri::create('ajax/add/user');?>"
+			});
+		}
+
+		if (doaction == 'link')
+		{
+			$('<div/>').dialog2({
+				title: "<?php echo lang('action.create user', 2);?>",
+				content: "<?php echo Uri::create('ajax/add/user');?>"
 			});
 		}
 
