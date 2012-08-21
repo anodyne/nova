@@ -69,4 +69,8 @@ return array(
 		'done_searching' => "Done searching? Head <a href='#' rel='change_user_view' id='show_actives'>back</a> to the list of :0 :1.",
 		'remove' => "Are you sure you want to remove <strong>:0</strong>? In addition to removing :0, this will also remove all :1 associated with :0. This action is permanent and cannot be done. Are you sure you want to continue?",
 	),
+
+	'help' => array(
+		'user_account' => "Edit your user details and bio, change your preferences and request an LOA from your account page"
+	),
 );

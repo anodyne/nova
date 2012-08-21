@@ -10,6 +10,10 @@ return array(
 			'email_applicant' => 'Email Regarding Your Application',
 			'response' => 'Application Response',
 		),
+
+		'user' => array(
+			'add' => "User Record Created",
+		),
 	),
 
 	'content' => array(

@@ -36,6 +36,10 @@ return array(
 			'item' => "Rank item was :0",
 			'group' => "The :0 rank group was :1",
 		),
+
+		'user' => array(
+			'item' => "The user :0 was :1"
+		),
 	),
 
 	'login' => array(
