@@ -1,8 +1,8 @@
 <br>
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn tooltip-top" title="<?php echo lang('all forms', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
-		<a href="<?php echo Uri::create('admin/form/tabs/'.Uri::segment(4).'/0');?>" class="btn tooltip-top" title="<?php echo lang('action.add tab', 1);?>"><i class="icon-plus icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('all forms', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
+		<a href="<?php echo Uri::create('admin/form/tabs/'.Uri::segment(4).'/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.add tab', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 	</div>
 
 	<div class="btn-group">
@@ -28,12 +28,12 @@
 				<td class="span2">
 					<div class="btn-toolbar pull-right">
 						<div class="btn-group">
-							<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key.'/'.$t->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1).' '.$t->name;?>"><i class="icon-pencil icon-50"></i></a>
+							<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key.'/'.$t->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$t->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
 						</div>
 
 						<?php if (Sentry::user()->has_access('form.delete')): ?>
 							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key);?>" class="btn btn-mini btn-icon btn-danger tooltip-top tab-action" title="<?php echo lang('action.delete', 1).' '.$t->name;?>" data-action="delete" data-id="<?php echo $t->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+								<a href="<?php echo Uri::create('admin/form/tabs/'.$t->form_key);?>" class="btn btn-mini btn-danger tooltip-top tab-action" title="<?php echo lang('action.delete', 1).' '.$t->name;?>" data-action="delete" data-id="<?php echo $t->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 								
 							</div>
 						<?php endif;?>

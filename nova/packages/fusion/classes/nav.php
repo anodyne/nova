@@ -392,7 +392,7 @@ class Nav
 						'name' => ucwords(__('my', array('thing' => __('account')))),
 						'url' => 'admin/user/edit/'.\Sentry::user()->id,
 						'extra' => array(),
-						'additional' => ' <i class="icon-question-sign icon-50 tooltip-left" title="'.lang('short.help.user_account').'"></i>'),
+						'additional' => ' <span class="icn icn-50 tooltip-left" data-icon="?" title="'.lang('short.help.user_account').'"></span>'),
 					array(
 						'name' => ucwords(__('my', array('thing' => \Inflector::pluralize(__('character'))))),
 						'url' => 'admin/character/edit',

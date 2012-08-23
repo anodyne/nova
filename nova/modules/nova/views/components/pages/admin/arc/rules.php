@@ -1,8 +1,8 @@
 <div class="btn-group">
-	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn tooltip-top" title="<?php echo lang('applications index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('applications index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	
 	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
-		<a href="<?php echo Uri::create('admin/application/rules/0');?>" class="btn tooltip-top" title="<?php echo lang('action.add rule', 1);?>"><i class="icon-plus icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/application/rules/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.add rule', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 	<?php endif;?>
 </div>
 <br>
@@ -36,13 +36,13 @@
 				</td>
 				<td class="span2">
 					<?php if (Sentry::user()->has_level('character.create', 2)): ?>
-						<div class="btn-toolbar">
+						<div class="btn-toolbar pull-right">
 							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-50"></i></a>
+								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 
 							<div class="btn-group">
-								<a href="#" class="btn btn-danger btn-mini btn-icon tooltip-top apprule-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+								<a href="#" class="btn btn-danger btn-mini tooltip-top apprule-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><div class="icn icn-75" data-icon="x"></div></a>
 							</div>
 						</div>
 					<?php endif;?>

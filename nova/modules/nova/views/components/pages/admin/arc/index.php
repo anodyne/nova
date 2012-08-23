@@ -1,9 +1,9 @@
 <div class="btn-group">
 	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
-		<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn tooltip-top" title="<?php echo lang('action.manage rules', 1);?>"><?php echo $images['rules'];?></a>
+		<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.manage rules', 1);?>"><div class="icn icn-75" data-icon=","></div></a>
 	<?php endif;?>
 	
-	<a href="<?php echo Uri::create('admin/application/history');?>" class="btn tooltip-top" title="<?php echo lang('action.view history', 1);?>"><?php echo $images['clock'];?></a>
+	<a href="<?php echo Uri::create('admin/application/history');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.view history', 1);?>"><div class="icn icn-75" data-icon="h"></div></a>
 </div>
 <br>
 
@@ -20,20 +20,20 @@
 					<div class="btn-toolbar pull-right">
 						<div class="btn-group">
 							<?php if (count($r->comments()) > 0): ?>
-								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small tooltip-top" title="<?php echo lang('comments', 1);?>"><i class="icon-comment icon-50"></i> <?php echo count($r->comments());?></a>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small tooltip-top" title="<?php echo lang('comments', 1);?>"><span class="icn icn-50" data-icon="c"></span> <?php echo count($r->comments());?></a>
 							<?php endif;?>
 
 							<?php if (count($r->votes('yes')) > 0): ?>
-								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-success tooltip-top" title="<?php echo lang('yes votes', 1);?>"><i class="icon-thumbs-up icon-white"></i> <?php echo count($r->votes('yes'));?></a>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-success tooltip-top" title="<?php echo lang('yes votes', 1);?>"><span class="icn" data-icon="."></span> <?php echo count($r->votes('yes'));?></a>
 							<?php endif;?>
 
 							<?php if (count($r->votes('no')) > 0): ?>
-								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-danger tooltip-top" title="<?php echo lang('no votes', 1);?>"><i class="icon-thumbs-down icon-white"></i> <?php echo count($r->votes('no'));?></a>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-danger tooltip-top" title="<?php echo lang('no votes', 1);?>"><span class="icn" data-icon="/"></span> <?php echo count($r->votes('no'));?></a>
 							<?php endif;?>
 						</div>
 
 						<div class="btn-group">
-							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-small"><i class="icon-chevron-right icon-50"></i></a>
+							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-small"><span class="icn icn-50" data-icon=">"></span></a>
 						</div>
 					</div>
 				</td>

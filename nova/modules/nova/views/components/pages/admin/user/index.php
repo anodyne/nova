@@ -1,17 +1,17 @@
 <div class="controls pull-right">
 	<div class="input-prepend">
-		<span class="add-on"><i class="icon-search icon-50"></i></span><input type="text" id="user-search" class="span4" placeholder="<?php echo lang('action.search for users', 1);?>">
+		<span class="add-on"><div class="icn icn16 icn-50" data-icon="s"></div></span><input type="text" id="user-search" class="span4" placeholder="<?php echo lang('action.search for users', 1);?>">
 	</div>
 </div>
 
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<?php if (Sentry::user()->has_access('user.create')): ?>
-			<a href="#" class="btn tooltip-top user-action" data-action="create" title="<?php echo lang('action.add user', 1);?>"><i class="icon-plus icon-75"></i></a>
+			<a href="#" class="btn tooltip-top user-action" data-action="create" title="<?php echo lang('action.add user', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 		<?php endif;?>
 
 		<?php if (Sentry::user()->has_level('user.update', 2)): ?>
-			<a href="#" class="btn tooltip-top user-action" data-action="link" title="<?php echo lang('action.link character to user', 1);?>"><i class="icon-resize-small icon-75"></i></a>
+			<a href="#" class="btn tooltip-top user-action" data-action="link" title="<?php echo lang('action.link character to user', 1);?>"><div class="icn icn-75" data-icon="-"></div></a>
 		<?php endif;?>
 	</div>
 </div><br>
@@ -30,13 +30,13 @@
 						<?php if ((Sentry::user()->has_level('user.update', 1) and Sentry::user()->id == $a->id)
 								or Sentry::user()->has_level('user.update', 2)): ?>
 							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/user/edit/'.$a->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit user', 1);?>"><i class="icon-pencil icon-50"></i></a>
+								<a href="<?php echo Uri::create('admin/user/edit/'.$a->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit user', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 						<?php endif;?>
 
 						<?php if (Sentry::user()->has_access('user.delete')): ?>
 							<div class="btn-group">
-								<a href="#" class="btn btn-mini btn-icon btn-danger tooltip-top user-action" title="<?php echo lang('action.delete user', 1);?>" data-action="delete" data-id="<?php echo $a->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+								<a href="#" class="btn btn-mini btn-danger tooltip-top user-action" title="<?php echo lang('action.delete user', 1);?>" data-action="delete" data-id="<?php echo $a->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 							</div>
 						<?php endif;?>
 					</div>

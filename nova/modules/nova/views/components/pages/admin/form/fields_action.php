@@ -15,7 +15,7 @@ function field($obj, $property, $default = false)
 <?php if (is_numeric(Uri::segment(5))): ?>
 	<br>
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.back to fields', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to fields', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 <?php endif;?>
 
@@ -150,7 +150,7 @@ function field($obj, $property, $default = false)
 					<div class="span6">
 						<div class="controls">
 							<div class="input-append">
-								<input name="value-add-content" type="text" placeholder="<?php echo lang('action.add field values', 2);?>" class="span3"><button class="btn value-action" data-action="add"><?php echo lang('action.submit', 1);?></button>
+								<input name="value-add-content" type="text" placeholder="<?php echo lang('action.add field values', 2);?>" class="span3"><button class="btn icn16 tooltip-top value-action" data-action="add" title="<?php echo lang('action.add value', 1);?>"><div class="icn icn-50" data-icon="+"></div></button>
 							</div>
 						</div>
 
@@ -176,11 +176,11 @@ function field($obj, $property, $default = false)
 										<td class="span2">
 											<div class="btn-toolbar">
 												<div class="btn-group">
-													<a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $v->id;?>"><i class="icon-pencil icon-50"></i></a>
+													<a href="#" class="btn btn-mini value-action tooltip-top" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $v->id;?>"><div class="icn icn-50" data-icon="p"></div></a>
 												</div>
 
 												<div class="btn-group">
-													<a href="#" class="btn btn-mini btn-icon btn-danger value-action tooltip-top" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $v->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+													<a href="#" class="btn btn-mini btn-danger value-action tooltip-top" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $v->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 												</div>
 											</div>
 										</td>

@@ -1,12 +1,12 @@
 <div class="btn-toolbar">
 	<?php if (Sentry::user()->has_access('user.read')): ?>
 		<div class="btn-group">
-			<a href="<?php echo Uri::create('admin/user/index');?>" class="btn tooltip-top" title="<?php echo lang('action.back to all users', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+			<a href="<?php echo Uri::create('admin/user/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to all users', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 		</div>
 	<?php endif;?>
 
 	<div class="btn-group">
-		<a href="#" class="btn tooltip-top" title="<?php echo lang('action.request loa', 1);?>"><i class="icon-briefcase icon-75"></i></a>
+		<a href="#" class="btn icn16 tooltip-top" title="<?php echo lang('action.request loa', 1);?>"><div class="icn icn-75" data-icon="!"></div></a>
 	</div>
 </div>
 
@@ -133,7 +133,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('comments', 1);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_comments|comment|mission_post|personal_log|announcement]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('comments', 1);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify_comments|comment|mission_post|personal_log|announcement]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_comments', 1, $prefs['email_comments']).' '.lang('yes', 1);?>
@@ -145,7 +145,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('messages', 1);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_messages|message]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('messages', 1);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify_messages|message]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_messages', 1, $prefs['email_messages']).' '.lang('yes', 1);?>
@@ -157,7 +157,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('personal_logs', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify|personal_log]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('personal_logs', 2);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify|personal_log]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_logs', 1, $prefs['email_logs']).' '.lang('yes', 1);?>
@@ -169,7 +169,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('announcements', 1);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify|announcement]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('announcements', 1);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify|announcement]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_announcements', 1, $prefs['email_announcements']).' '.lang('yes', 1);?>
@@ -181,7 +181,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('mission_posts', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify|mission_post]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('mission_posts', 2);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify|mission_post]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_posts', 1, $prefs['email_posts']).' '.lang('yes', 1);?>
@@ -193,7 +193,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('joint mission_posts action.saved', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_posts_action|mission_post|action.updated]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('joint mission_posts action.saved', 2);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify_posts_action|mission_post|action.updated]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_posts_save', 1, $prefs['email_posts_save']).' '.lang('yes', 1);?>
@@ -205,7 +205,7 @@
 						</div>
 
 						<div class="control-group">
-							<label class="control-label"><?php echo lang('joint mission_posts action.deleted', 2);?> <i class="icon-question-sign icon-50 tooltip-right" title="<?php echo lang('[[email.help.notify_posts_action|mission_post|action.deleted]]');?>"></i></label>
+							<label class="control-label"><?php echo lang('joint mission_posts action.deleted', 2);?> <span class="icn icn-50 tooltip-right" data-icon="?" title="<?php echo lang('[[email.help.notify_posts_action|mission_post|action.deleted]]');?>"></span></label>
 							<div class="controls">
 								<label class="radio inline">
 									<?php echo Form::radio('email_posts_delete', 1, $prefs['email_posts_delete']).' '.lang('yes', 1);?>

@@ -15,7 +15,7 @@ function section($obj, $property, $default = false)
 <?php if (is_numeric(Uri::segment(5))): ?>
 	<br>
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.back to sections', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4));?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to sections', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 <?php endif;?>
 
@@ -49,10 +49,11 @@ function section($obj, $property, $default = false)
 
 	<div class="controls">
 		<br>
-		<?php echo Form::hidden('action', $action);?>
-		<?php echo Form::hidden('form_key', Uri::segment(4));?>
-		<?php echo Form::hidden('id', Uri::segment(5));?>
-		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 	</div>
+
+	<?php echo Form::hidden('action', $action);?>
+	<?php echo Form::hidden('form_key', Uri::segment(4));?>
+	<?php echo Form::hidden('id', Uri::segment(5));?>
+	<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 </form>

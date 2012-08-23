@@ -69,7 +69,7 @@
 							if ( ! $.isEmptyObject(data.name))
 							{
 								$.each(data.name, function(key, value){
-									$('#results-name ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini btn-icon"><i class="icon-pencil icon-50"></i></a>&nbsp;&nbsp;' + value.name + '</li>');
+									$('#results-name ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini"><div class="icn icn-50" data-icon="p"></div></a>&nbsp;&nbsp;' + value.name + '</li>');
 								});
 								
 								$('#results-name').show();
@@ -78,7 +78,7 @@
 							if ( ! $.isEmptyObject(data.email))
 							{
 								$.each(data.email, function(key, value){
-									$('#results-email ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini btn-icon"><i class="icon-pencil icon-50"></i></a>&nbsp;&nbsp;' + value.name + ' (' + value.email + ')' + '</li>');
+									$('#results-email ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini"><div class="icn icn-50" data-icon="p"></div></a>&nbsp;&nbsp;' + value.name + ' (' + value.email + ')' + '</li>');
 								});
 								
 								$('#results-email').show();
@@ -87,7 +87,7 @@
 							if ( ! $.isEmptyObject(data.characters))
 							{
 								$.each(data.characters, function(key, value){
-									$('#results-characters ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini btn-icon"><i class="icon-pencil icon-50"></i></a>&nbsp;&nbsp;' + value.name + ' (' + value.fname + ' ' + value.lname + ')' + '</li>');
+									$('#results-characters ul').append('<li><a href="' + url + value.id + '" class="btn btn-mini"><div class="icn icn-50" data-icon="p"></div></a>&nbsp;&nbsp;' + value.name + ' (' + value.fname + ' ' + value.lname + ')' + '</li>');
 								});
 								
 								$('#results-characters').show();

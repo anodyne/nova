@@ -65,7 +65,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 
 			if ($record)
 			{
-				echo '<tr id="value_'.$item->id.'"><td>'.$item->content.'</td><td class="span2"><div class="btn-group"><a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="'.lang('action.edit', 1).'" data-action="update" data-id="'.$item->id.'"><i class="icon-pencil icon-50"></i></a><a href="#" class="btn btn-mini btn-icon value-action tooltip-top" title="'.lang('action.delete', 1).'" data-action="delete" data-id="'.$item->id.'"><i class="icon-remove icon-50"></i></a></div></td><td class="span1 reorder"></td></tr>';
+				echo '<tr id="value_'.$item->id.'"><td>'.$item->content.'</td><td class="span2"><div class="btn-toolbar pull-right"><div class="btn-group"><a href="#" class="btn btn-mini value-action tooltip-top" title="'.lang('action.edit', 1).'" data-action="update" data-id="'.$item->id.'"><div class="icn icn-50" data-icon="p"></div></a></div><div class="btn-group"><a href="#" class="btn btn-mini value-action tooltip-top" title="'.lang('action.delete', 1).'" data-action="delete" data-id="'.$item->id.'"><div class="icn icn-50" data-icon="x"></div></a></div></div></td><td class="span1 reorder"></td></tr>';
 			}
 		}
 	}

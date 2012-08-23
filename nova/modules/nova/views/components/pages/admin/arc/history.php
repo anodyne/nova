@@ -1,13 +1,13 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/application/index');?>" class="btn tooltip-top" title="<?php echo lang('action.back to index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 
 	<div class="btn-group">
-		<a href="#" class="btn status-toggle tooltip-top" title="<?php echo lang('action.clear action.filter', 1);?>" data-status="all"><i class="icon-remove icon-75"></i></a>
-		<a href="#" class="btn status-toggle tooltip-top" title="<?php echo lang('action.show in_progress', 1);?>" data-status="inprogress"><i class="icon-asterisk icon-75"></i></a>
-		<a href="#" class="btn status-toggle tooltip-top" title="<?php echo lang('action.show action.approved', 1);?>" data-status="approved"><i class="icon-ok icon-75"></i></a>
-		<a href="#" class="btn status-toggle tooltip-top" title="<?php echo lang('action.show action.rejected', 1);?>" data-status="rejected"><i class="icon-ban-circle icon-75"></i></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.clear action.filter', 1);?>" data-status="all"><div class="icn icn-75" data-icon="x"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show in_progress', 1);?>" data-status="inprogress"><div class="icn icn-75" data-icon="'"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show action.approved', 1);?>" data-status="approved"><div class="icn icn-75" data-icon="4"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show action.rejected', 1);?>" data-status="rejected"><div class="icn icn-75" data-icon="2"></div></a>
 	</div>
 </div>
 <br>
@@ -21,11 +21,11 @@
 					<span class="lead"><?php echo $r->character->name(false);?></span><br>
 
 					<?php if ($r->status == Status::IN_PROGRESS): ?>
-						<span class="label label-info"><i class="icon-asterisk icon-white"></i></span>
+						<span class="label label-info"><span class="icn icn-75" data-icon="'"></span></span>
 					<?php elseif ($r->status == Status::APPROVED): ?>
-						<span class="label label-success"><i class="icon-ok icon-white"></i></span>
+						<span class="label label-success"><span class="icn icn-75" data-icon="4"></span></span>
 					<?php elseif ($r->status == Status::REJECTED): ?>
-						<span class="label label-important"><i class="icon-remove icon-white"></i></span>
+						<span class="label label-important"><span class="icn icn-75" data-icon="x"></span></span>
 					<?php endif;?>
 
 					<span class="muted"><?php echo $r->position->name;?></span>
@@ -34,15 +34,15 @@
 					<div class="btn-toolbar">
 						<div class="btn-group">
 							<?php if (count($r->comments()) > 0): ?>
-								<span class="btn btn-mini btn-icon btn-noclick tooltip-top" title="<?php echo lang('comments', 1);?>"><i class="icon-comment icon-50"></i> <?php echo count($r->comments());?></span>
+								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo lang('comments', 1);?>"><span class="icn icn-50" data-icon="c"></span> <?php echo count($r->comments());?></span>
 							<?php endif;?>
 
 							<?php if (count($r->votes('yes')) > 0): ?>
-								<span class="btn btn-mini btn-icon btn-noclick tooltip-top" title="<?php echo lang('yes votes', 1);?>"><i class="icon-thumbs-up icon-50"></i> <?php echo count($r->votes('yes'));?></span>
+								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo lang('yes votes', 1);?>"><span class="icn icn-50" data-icon="."></span> <?php echo count($r->votes('yes'));?></span>
 							<?php endif;?>
 
 							<?php if (count($r->votes('no')) > 0): ?>
-								<span class="btn btn-mini btn-icon btn-noclick tooltip-top" title="<?php echo lang('no votes', 1);?>"><i class="icon-thumbs-down icon-50"></i> <?php echo count($r->votes('no'));?></span>
+								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo lang('no votes', 1);?>"><span class="icn icn-50" data-icon="/"></span> <?php echo count($r->votes('no'));?></span>
 							<?php endif;?>
 						</div>
 					</div>
@@ -52,15 +52,15 @@
 						<?php if ($r->status == Status::REJECTED): ?>
 							<div class="btn-group">
 								<?php if (Model_Ban::find_items($r->user->email)): ?>
-									<a href="#" class="btn btn-mini btn-icon btn-danger tooltip-top unban-user" title="<?php echo lang('action.remove user action.ban', 1);?>" data-user="<?php echo $r->user->id;?>"><i class="icon-ban-circle icon-white icon-50"></i></a>
+									<a href="#" class="btn btn-mini btn-danger tooltip-top unban-user" title="<?php echo lang('action.remove user action.ban', 1);?>" data-user="<?php echo $r->user->id;?>"><div class="icn icn-50" data-icon="2"></div></a>
 								<?php else:?>
-									<a href="#" class="btn btn-mini btn-icon btn-danger tooltip-top ban-user" title="<?php echo lang('action.ban user', 1);?>" data-user="<?php echo $r->user->id;?>"><i class="icon-ban-circle icon-white icon-50"></i></a>
+									<a href="#" class="btn btn-mini btn-danger tooltip-top ban-user" title="<?php echo lang('action.ban user', 1);?>" data-user="<?php echo $r->user->id;?>"><div class="icn icn-50" data-icon="2"></div></a>
 								<?php endif;?>
 							</div>
 						<?php endif;?>
 
 						<div class="btn-group">
-							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-mini btn-icon"><i class="icon-chevron-right icon-50"></i></a>
+							<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>" class="btn btn-mini"><div class="icn icn-50" data-icon=">"></div></a>
 						</div>
 					</div>
 				</td>

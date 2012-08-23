@@ -1,13 +1,13 @@
 <br>
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/rank/index');?>" class="btn tooltip-top" title="<?php echo lang('ranks index', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
-		<a href="<?php echo Uri::create('admin/rank/manage/0');?>" class="btn tooltip-top" title="<?php echo lang('action.create rank', 1);?>"><i class="icon-plus icon-75"></i></a>
+		<a href="<?php echo Uri::create('admin/rank/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('ranks index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
+		<a href="<?php echo Uri::create('admin/rank/manage/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.create rank', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 	</div>
 
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/rank/info');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><?php echo $images['info'];?></a>
-		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><?php echo $images['groups'];?></a>
+		<a href="<?php echo Uri::create('admin/rank/info');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><div class="icn icn-75" data-icon="i"></div></a>
+		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><div class="icn icn-75" data-icon=","></div></a>
 	</div>
 
 	<div class="btn-group pull-right">
@@ -18,7 +18,7 @@
 			<div class="control-group">
 				<div class="controls">
 					<div class="input-prepend input-append">
-						<span class="add-on font-small"><?php echo lang('action.change rank set', 2);?></span><?php echo Form::select('changeSet', $default, $sets);?><button type="submit" class="btn"><?php echo lang('action.submit', 1);?></button>
+						<span class="add-on font-small"><?php echo lang('action.change rank set', 2);?></span><?php echo Form::select('changeSet', $default, $sets);?><button type="submit" class="btn icn16"><div class="icn icn-50" data-icon=">"></div></button>
 					</div>
 				</div>
 			</div>
@@ -47,14 +47,14 @@
 								<td class="span3"><?php echo Location::rank($r->base, $r->pip, $default);?></td>
 								<td class="span4"></td>
 								<td class="span2">
-									<div class="btn-toolbar">
+									<div class="btn-toolbar pull-right">
 										<div class="btn-group">
-											<a href="<?php echo Uri::create('admin/rank/manage/'.$r->id);?>" class="btn btn-mini btn-icon tooltip-top" title="<?php echo lang('action.edit', 1);?>"><i class="icon-pencil icon-50"></i></a>
+											<a href="<?php echo Uri::create('admin/rank/manage/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
 										</div>
 
 										<?php if (Sentry::user()->has_access('rank.delete')): ?>
 											<div class="btn-group">
-												<a href="#" class="btn btn-danger btn-mini btn-icon tooltip-top rank-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><i class="icon-remove icon-white icon-50"></i></a>
+												<a href="#" class="btn btn-danger btn-mini tooltip-top rank-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 											</div>
 										<?php endif;?>
 									</div>

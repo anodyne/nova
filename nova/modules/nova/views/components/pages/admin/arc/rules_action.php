@@ -36,7 +36,7 @@ if ( ! function_exists('ruleData'))
 ?>
 <br>
 <div class="btn-group">
-	<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn tooltip-top" title="<?php echo lang('action.back to rules', 1);?>"><i class="icon-chevron-left icon-75"></i></a>
+	<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to rules', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 </div>
 <br>
 
