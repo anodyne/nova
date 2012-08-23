@@ -1,3 +1,6 @@
-.icon-black25 {
-	opacity: 0.25;
+.add-on > a {
+	color: #111;
+}
+.add-on > a:hover {
+	text-decoration: none;
 }
