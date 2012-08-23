@@ -8,19 +8,6 @@ body {
 	background: transparent url(images/reorder-16x16.png) no-repeat center center;
 }
 
-.icon-25 {
-	opacity: 0.25;
-}
-.icon-50 {
-	opacity: 0.5;
-}
-.icon-75 {
-	opacity: 0.75;
-}
-
-.btn-icon {
-	font-size: 12px !important;
-}
 .btn-noclick:hover {
 	cursor: default;
 }
