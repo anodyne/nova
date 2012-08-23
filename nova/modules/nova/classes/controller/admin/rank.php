@@ -654,7 +654,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			{
 				foreach ($sets as $s)
 				{
-					if ($s->status == 'active')
+					if ($s->status == \Status::ACTIVE)
 					{
 						$this->_data->sets[$s->location] = $s->name;
 					}
