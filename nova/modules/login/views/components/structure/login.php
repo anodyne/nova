@@ -12,6 +12,7 @@
 
 		<!-- Bootstrap Toolkit -->
 		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/icomoon.css">
 		
 		<!-- Nova's base styles and any user-defined styles -->
 		<?php if (is_file(APPPATH.'views/'.$skin.'/design/style.login.css')): ?>
