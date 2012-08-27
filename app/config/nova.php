@@ -2,5 +2,5 @@
 
 return array(
 	
-	'genre' => 'ds9'
+	'genre' => 'st24'
 );
