@@ -59,7 +59,7 @@ $groups = array(
 		'name' => 'Naval Admiralty',
 		'order' => 0),
 	array(
-		'name' => 'Marine Admiralty',
+		'name' => 'MACO Admiralty',
 		'order' => 1),
 	array(
 		'name' => 'Command',
@@ -71,17 +71,8 @@ $groups = array(
 		'name' => 'Sciences',
 		'order' => 4),
 	array(
-		'name' => 'Aerospace Operations',
+		'name' => 'MACO',
 		'order' => 5),
-	array(
-		'name' => 'Intelligence',
-		'order' => 6),
-	array(
-		'name' => 'Diplomatic Corps',
-		'order' => 7),
-	array(
-		'name' => 'Marine',
-		'order' => 8),
 );
 
 $info = array(
@@ -318,52 +309,6 @@ $info = array(
 		'group' => 7),
 
 	array(
-		'name' => "Chief Master Sergeant",
-		'short_name' => "CMSGT",
-		'order' => 30,
-		'group' => 8),
-	array(
-		'name' => "Senior Master Sergeant",
-		'short_name' => "SMSGT",
-		'order' => 31,
-		'group' => 8),
-	array(
-		'name' => "Master Sergeant",
-		'short_name' => "MSGT",
-		'order' => 32,
-		'group' => 8),
-	array(
-		'name' => "Technical Sergeant",
-		'short_name' => "TSGT",
-		'order' => 33,
-		'group' => 8),
-	array(
-		'name' => "Staff Sergeant",
-		'short_name' => "SSGT",
-		'order' => 34,
-		'group' => 8),
-	array(
-		'name' => "Senior Airman",
-		'short_name' => "SRA",
-		'order' => 35,
-		'group' => 8),
-	array(
-		'name' => "Airman 1st Class",
-		'short_name' => "A1C",
-		'order' => 36,
-		'group' => 8),
-	array(
-		'name' => "Airman",
-		'short_name' => "AMN",
-		'order' => 37,
-		'group' => 8),
-	array(
-		'name' => "Airman Basic",
-		'short_name' => "AB",
-		'order' => 38,
-		'group' => 8),
-
-	array(
 		'name' => "Cadet Senior Grade",
 		'short_name' => "CDT(SR)",
 		'order' => 50,
@@ -421,7 +366,7 @@ $ranks = array(
 		'pip' => 'a1'),
 
 	/**
-	 * Marine Admiralty
+	 * MACO Admiralty
 	 */
 	array(
 		'info_id' => 6,
@@ -455,102 +400,102 @@ $ranks = array(
 	array(
 		'info_id' => 11,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'o6'),
 	array(
 		'info_id' => 12,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'o5'),
 	array(
 		'info_id' => 13,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'o4'),
 	array(
 		'info_id' => 14,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'o3'),
 	array(
 		'info_id' => 15,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'o2'),
 	array(
 		'info_id' => 16,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'o1'),
 	array(
 		'info_id' => 23,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'w5'),
 	array(
 		'info_id' => 24,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'w4'),
 	array(
 		'info_id' => 25,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'w3'),
 	array(
 		'info_id' => 26,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'w2'),
 	array(
 		'info_id' => 27,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'w1'),
 	array(
 		'info_id' => 28,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e9'),
 	array(
 		'info_id' => 29,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e8'),
 	array(
 		'info_id' => 30,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e7'),
 	array(
 		'info_id' => 31,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e6'),
 	array(
 		'info_id' => 32,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e5'),
 	array(
 		'info_id' => 33,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e4'),
 	array(
 		'info_id' => 34,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e3'),
 	array(
 		'info_id' => 35,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e2'),
 	array(
 		'info_id' => 36,
 		'group_id' => 3,
-		'base' => 'red',
+		'base' => 'yellow',
 		'pip' => 'e1'),
 
 	/**
@@ -559,102 +504,102 @@ $ranks = array(
 	array(
 		'info_id' => 11,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'o6'),
 	array(
 		'info_id' => 12,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'o5'),
 	array(
 		'info_id' => 13,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'o4'),
 	array(
 		'info_id' => 14,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'o3'),
 	array(
 		'info_id' => 15,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'o2'),
 	array(
 		'info_id' => 16,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'o1'),
 	array(
 		'info_id' => 23,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'w5'),
 	array(
 		'info_id' => 24,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'w4'),
 	array(
 		'info_id' => 25,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'w3'),
 	array(
 		'info_id' => 26,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'w2'),
 	array(
 		'info_id' => 27,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'w1'),
 	array(
 		'info_id' => 28,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e9'),
 	array(
 		'info_id' => 29,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e8'),
 	array(
 		'info_id' => 30,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e7'),
 	array(
 		'info_id' => 31,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e6'),
 	array(
 		'info_id' => 32,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e5'),
 	array(
 		'info_id' => 33,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e4'),
 	array(
 		'info_id' => 34,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e3'),
 	array(
 		'info_id' => 35,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e2'),
 	array(
 		'info_id' => 36,
 		'group_id' => 4,
-		'base' => 'yellow',
+		'base' => 'red',
 		'pip' => 'e1'),
 
 	/**
@@ -762,418 +707,106 @@ $ranks = array(
 		'pip' => 'e1'),
 
 	/**
-	 * Aerospace
-	 */
-	array(
-		'info_id' => 11,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'o6'),
-	array(
-		'info_id' => 12,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'o5'),
-	array(
-		'info_id' => 13,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'o4'),
-	array(
-		'info_id' => 14,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'o3'),
-	array(
-		'info_id' => 15,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'o2'),
-	array(
-		'info_id' => 16,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'o1'),
-	array(
-		'info_id' => 23,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'w5'),
-	array(
-		'info_id' => 24,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'w4'),
-	array(
-		'info_id' => 25,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'w3'),
-	array(
-		'info_id' => 26,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'w2'),
-	array(
-		'info_id' => 27,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'w1'),
-	array(
-		'info_id' => 46,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e9'),
-	array(
-		'info_id' => 47,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e8'),
-	array(
-		'info_id' => 48,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e7'),
-	array(
-		'info_id' => 49,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e6'),
-	array(
-		'info_id' => 50,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e5'),
-	array(
-		'info_id' => 51,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e4'),
-	array(
-		'info_id' => 52,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e3'),
-	array(
-		'info_id' => 53,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e2'),
-	array(
-		'info_id' => 54,
-		'group_id' => 6,
-		'base' => 'blue',
-		'pip' => 'airforce/e1'),
-
-	/**
-	 * Intelligence
-	 */
-	array(
-		'info_id' => 11,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'o6'),
-	array(
-		'info_id' => 12,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'o5'),
-	array(
-		'info_id' => 13,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'o4'),
-	array(
-		'info_id' => 14,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'o3'),
-	array(
-		'info_id' => 15,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'o2'),
-	array(
-		'info_id' => 16,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'o1'),
-	array(
-		'info_id' => 23,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'w5'),
-	array(
-		'info_id' => 24,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'w4'),
-	array(
-		'info_id' => 25,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'w3'),
-	array(
-		'info_id' => 26,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'w2'),
-	array(
-		'info_id' => 27,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'w1'),
-	array(
-		'info_id' => 28,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e9'),
-	array(
-		'info_id' => 29,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e8'),
-	array(
-		'info_id' => 30,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e7'),
-	array(
-		'info_id' => 31,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e6'),
-	array(
-		'info_id' => 32,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e5'),
-	array(
-		'info_id' => 33,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e4'),
-	array(
-		'info_id' => 34,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e3'),
-	array(
-		'info_id' => 35,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e2'),
-	array(
-		'info_id' => 36,
-		'group_id' => 7,
-		'base' => 'grey',
-		'pip' => 'e1'),
-
-	/**
-	 * Diplomatic
-	 */
-	array(
-		'info_id' => 11,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'o6'),
-	array(
-		'info_id' => 12,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'o5'),
-	array(
-		'info_id' => 13,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'o4'),
-	array(
-		'info_id' => 14,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'o3'),
-	array(
-		'info_id' => 15,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'o2'),
-	array(
-		'info_id' => 16,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'o1'),
-	array(
-		'info_id' => 23,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'w5'),
-	array(
-		'info_id' => 24,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'w4'),
-	array(
-		'info_id' => 25,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'w3'),
-	array(
-		'info_id' => 26,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'w2'),
-	array(
-		'info_id' => 27,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'w1'),
-	array(
-		'info_id' => 28,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e9'),
-	array(
-		'info_id' => 29,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e8'),
-	array(
-		'info_id' => 30,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e7'),
-	array(
-		'info_id' => 31,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e6'),
-	array(
-		'info_id' => 32,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e5'),
-	array(
-		'info_id' => 33,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e4'),
-	array(
-		'info_id' => 34,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e3'),
-	array(
-		'info_id' => 35,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e2'),
-	array(
-		'info_id' => 36,
-		'group_id' => 8,
-		'base' => 'violet',
-		'pip' => 'e1'),
-
-	/**
-	 * Marine
+	 * MACO
 	 */
 	array(
 		'info_id' => 17,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/o6'),
 	array(
 		'info_id' => 18,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/o5'),
 	array(
 		'info_id' => 19,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/o4'),
 	array(
 		'info_id' => 20,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/o3'),
 	array(
 		'info_id' => 21,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/o2'),
 	array(
 		'info_id' => 22,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/o1'),
 	array(
 		'info_id' => 23,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/w5'),
 	array(
 		'info_id' => 24,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/w4'),
 	array(
 		'info_id' => 25,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/w3'),
 	array(
 		'info_id' => 26,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/w2'),
 	array(
 		'info_id' => 27,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/w1'),
 	array(
 		'info_id' => 37,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e9'),
 	array(
 		'info_id' => 38,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e8'),
 	array(
 		'info_id' => 39,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e7'),
 	array(
 		'info_id' => 40,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e6'),
 	array(
 		'info_id' => 41,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e5'),
 	array(
 		'info_id' => 42,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e4'),
 	array(
 		'info_id' => 43,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e3'),
 	array(
 		'info_id' => 44,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e2'),
 	array(
 		'info_id' => 45,
-		'group_id' => 9,
+		'group_id' => 6,
 		'base' => 'green',
 		'pip' => 'marine/e1'),
 );
@@ -1367,7 +1000,7 @@ $catalog_ranks = array(
 	array(
 		'name' => 'Duty Uniform',
 		'location' => 'default',
-		'credits' => "The Enterprise rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
-		'default' => 1,
+		'credits' => "The Enterprise duty uniform rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'default' => (int) true,
 		'genre' => $g)
 );
