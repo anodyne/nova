@@ -45,7 +45,6 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		$this->skin			= $this->session->get('skin_admin', $this->options->skin_admin);
 		$this->rank			= $this->session->get('rank', $this->options->rank);
 		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
-		$this->dst			= $this->session->get('dst', (bool) $this->options->daylight_savings);
 		$this->images		= \Utility::get_image_index($this->skin);
 		
 		// set the values to be passed to the template

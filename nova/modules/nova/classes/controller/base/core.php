@@ -47,11 +47,6 @@ abstract class Controller_Base_Core extends \Controller_Template
 	public $timezone;
 	
 	/**
-	 * @var	bool	Whether we're in daylight savings time.
-	 */
-	public $dst;
-	
-	/**
 	 * @var	array	An array of setting keys used to make the final pull from the database.
 	 */
 	protected $_settings_setup;
@@ -160,7 +155,6 @@ abstract class Controller_Base_Core extends \Controller_Template
 		$this->_settings_setup = array(
 			'rank',
 			'timezone',
-			'daylight_savings',
 			'date_format',
 			'sim_name',
 			'meta_description',
