@@ -158,7 +158,7 @@ class Controller_Main extends Controller_Base_Setup
 		$this->_data->title = 'Database Connection Setup';
 		$this->_data->header = new \stdClass;
 		$this->_data->header->text = 'Database Connection Setup';
-		$this->_data->header->image = 'pencil-24x24.png';
+		$this->_data->header->image = 'gear-24x24.png';
 		$this->_data->controls = false;
 
 		// clear the installed status cache
