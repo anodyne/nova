@@ -276,9 +276,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			$password = \Str::random();
 
 		\Debug::dump(
-			'WKbgCCYvFb6rhPDp',
-			\Sentry_User::password_generate('WKbgCCYvFb6rhPDp'),
-			\Sentry::user()->atleast_level('user.read', 1)
+			\Model_Catalog_Rank::get_default(true)
 		);
 		
 		return;
