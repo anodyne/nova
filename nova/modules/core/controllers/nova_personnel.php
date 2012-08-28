@@ -453,7 +453,7 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$data['character']['rank'] = $character->rank;
 			$data['character']['position_1'] = $character->position_1;
 			$data['character']['position_2'] = $character->position_2;
-			$data['character']['user'] = $character->user;
+			$data['character']['user'] = ($character->user !== null or $character->user > 0) ? $character->user : null;
 			
 			if ($character->images > '')
 			{
@@ -967,8 +967,8 @@ abstract class Nova_personnel extends Nova_controller_main {
 		else
 		{
 			// set the header
-			$data['header'] = lang('error_title_invalid_user');
-			$data['msg_error'] = lang('error_msg_invalid_user');
+			$data['header'] = sprintf(lang('error_title_invalid_user'), lang('global_user'));
+			$data['msg_error'] = sprintf(lang('error_msg_invalid_user'), lang('global_user'));
 			
 			// set the title
 			$this->_regions['title'].= lang('error_pagetitle');

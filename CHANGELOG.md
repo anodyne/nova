@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.1 (- June 2012)
+## 2.1.1
 
 ### Nova Core
 
@@ -11,6 +11,9 @@
 * During the update process, Nova never updated the system information table with the correct version number.
 * Despite the system version and components database tables being pulled out, the What's New menu item was never removed, throwing a 404 error if someone tried to go to the page.
 * The Admin Control Panel's update notification panel doesn't properly display all the language strings because the proper language file wasn't loaded.
+* The user bio page had debug code from 2.1 development at the top of the page.
+* Under some circumstances, unlinked NPCs had a link to a user bio that threw an error.
+* The User Not Found error was missing a parameter (would show %s instead of the word 'user').
 
 ## 2.1.0 (26 June 2012)
 
