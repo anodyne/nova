@@ -7,7 +7,7 @@
 
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/rank/info');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><div class="icn icn-75" data-icon="i"></div></a>
-		<a href="<?php echo Uri::create('admin/ranks/groups');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><div class="icn icn-75" data-icon=","></div></a>
+		<a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><div class="icn icn-75" data-icon=","></div></a>
 	</div>
 
 	<div class="btn-group pull-right">
