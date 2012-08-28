@@ -1369,7 +1369,7 @@ $catalog_ranks = array(
 	array(
 		'name' => 'Duty Uniform',
 		'location' => 'default',
-		'credits' => "The Original Series rank sets used in Nova were created by Kuro-chan of Kuro-RPG. The ranksets can be found at <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not copy or modify the images.",
+		'credits' => "The Original Series rank set used in Nova were created by Kuro-chan of <a href='http://www.kuro-rpg.net' target='_blank''>Kuro-RPG</a>. Please do not modify the images in any way.",
 		'default' => 1,
 		'genre' => $g)
 );
