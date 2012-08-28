@@ -5,6 +5,7 @@
 ### Nova Core
 
 * Update to CodeIgniter 2.1.2.
+* Update the IP Address fields in the database to be compatible with IPv6 addresses.
 
 ### Bug Fixes
 
