@@ -25,14 +25,14 @@ class Setup
 		// move to the latest migration
 		\Migrate::latest('setup', 'module');
 		
-		// install the dev data
-		static::install_dev_data();
-		
 		// do the quick installs
 		\QuickInstall::module();
 		\QuickInstall::rank();
 		\QuickInstall::skin();
 		\QuickInstall::widget();
+
+		// install the dev data
+		static::install_dev_data();
 		
 		// clear the entire cache
 		\Cache::delete_all();

@@ -51,9 +51,6 @@ class Model_Form_Data extends \Model {
 	 * Observers
 	 */
 	protected static $_observers = array(
-		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
-		),
 		'\\Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save')
 		),

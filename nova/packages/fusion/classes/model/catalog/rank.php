@@ -103,7 +103,7 @@ class Model_Catalog_Rank extends \Model {
 	public static function get_default($value_only = false)
 	{
 		$result = static::find()
-			->where(array('default', 1))
+			->where('default', 1)
 			->get_one();
 		
 		if ($value_only)

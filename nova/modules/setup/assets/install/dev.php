@@ -14,18 +14,6 @@
  */
 $data = array(
 	array(
-		'data' => 'applications',
-		'model' => '\\Model_Application',
-		'method' => 'create_item'),
-	array(
-		'data' => 'application_responses',
-		'model' => '\\Model_Application_Response',
-		'method' => 'create_item'),
-	array(
-		'data' => 'application_reviewers',
-		'model' => '\\Model_Application_Reviewer',
-		'method' => 'create_item'),
-	array(
 		'data' => 'characters',
 		'model' => '\\Model_Character',
 		'method' => 'create_item'),
@@ -36,6 +24,18 @@ $data = array(
 	array(
 		'data' => 'users',
 		'model' => '\\Model_User',
+		'method' => 'create_item'),
+	array(
+		'data' => 'applications',
+		'model' => '\\Model_Application',
+		'method' => 'create_item'),
+	array(
+		'data' => 'application_responses',
+		'model' => '\\Model_Application_Response',
+		'method' => 'create_item'),
+	array(
+		'data' => 'application_reviewers',
+		'model' => '\\Model_Application_Reviewer',
 		'method' => 'create_item'),
 );
 
