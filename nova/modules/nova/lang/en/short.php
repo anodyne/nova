@@ -21,7 +21,7 @@ return array(
 
 	'edit' => "edit :0",
 
-	'forgot_password' => "Forgot your password? Don't worry, it happens to the best of us!",
+	'forgot_password' => "Forgot your password?",
 
 	'join' => array(
 		'user_info' => ":0 information (including :1 and :2) is only viewable by members of the :3 when they are logged in to the site. None of your information can be seen by visitors to the site or anyone who is not logged in.",
