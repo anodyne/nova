@@ -2,6 +2,10 @@ body {
 	padding-top: 40px;
 }
 
+.footer-content {
+	margin-top: 20px;
+}
+
 .reorder {
 	height: 16px;
 	width: 16px;
@@ -31,4 +35,6 @@ label.control-label {
 	padding-right: 14px;
 }
 
-.font-small { font-size: 11px; }
+.font-small {
+	font-size: 11px;
+}
