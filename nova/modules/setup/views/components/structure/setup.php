@@ -11,6 +11,7 @@
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 		
 		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/icomoon.css">
 		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/setup/views/design/style.css">
 	</head>
 	<body>

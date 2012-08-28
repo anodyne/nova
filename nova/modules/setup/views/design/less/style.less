@@ -332,3 +332,62 @@ label.control-label {
 .help-block {
 	font-size: 13px;
 }
+
+.visuallyhidden {
+	border: 0 none;
+	clip: rect(0px, 0px, 0px, 0px);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.loading1:before {
+	content: attr(data-icon1);
+	font-family: 'icomoon';
+	text-shadow: 0 2px 2px black;
+	vertical-align: top;
+}
+
+.cssanimations .loading1:before {
+	content: attr(data-icon2);
+}
+
+.cssanimations .loading1 {
+	color: #707070;
+	display: inline-block;
+	line-height: 1;
+}
+.cssanimations .loading1:before {
+	text-shadow: 0 0 0.1em #c8c8c8, 0 0 0.3em #c8c8c8;
+}
+
+.anim-rotate, .cssanimations .loading1 {
+	-webkit-animation: anim-rotate 1.5s linear infinite;
+	-moz-animation: anim-rotate 1.5s linear infinite;
+	-ms-animation: anim-rotate 1.5s linear infinite;
+}
+.fs1 {
+	font-size: 64px;
+	margin: 0;
+}
+.fs5 {
+	font-size: 1.31465em;
+	line-height: 1.14099em;
+	margin: 1.14099em 0;
+}
+
+@-webkit-keyframes anim-rotate {
+	0%   { -webkit-transform: rotate(0); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes anim-rotate {
+	0%   { -moz-transform: rotate(0); }
+	100% { -moz-transform: rotate(360deg); }
+}
+@-ms-keyframes anim-rotate {
+	0%   { -ms-transform: rotate(0); }
+	100% { -ms-transform: rotate(360deg); }
+}

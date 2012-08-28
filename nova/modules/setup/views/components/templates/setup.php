@@ -15,8 +15,12 @@
 		
 		<div class="content">
 			<div id="loading" class="hide">
-				<p><?php echo Html::img('nova/modules/setup/views/design/images/loading.gif');?></p>
-				<p class="muted"><strong>Processing...</strong></p>
+				<div class="cssanimations">
+					<p class="fs1 fgc1">
+						<span class="loading1" data-icon1="%" data-icon2="&"></span>
+						<span class="fgc1 visuallyhidden">Loading...</span>
+					</p>
+				</div>
 			</div>
 			
 			<div id="loaded">
