@@ -19,7 +19,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * nova/packages/sentry
     * Notes
-        * This is a __highly__ modified version of Sentry 1.1. Updates to Sentry must be integrated manually.
+        * This is a __highly__ modified version of Sentry 1.1.
 * Nova (module)
     * Version: 3.0
     * Location
@@ -45,12 +45,12 @@ Nova is made up of a wide range of plugins and components to help make it what i
 ## CSS and JavaScript
 
 * jQuery
-    * Version: 1.7.2
+    * Version: 1.8.1
     * Site: http://jquery.com/
     * Location
         * http://code.jquery.com/jquery-1.7.2.min.js
 * Bootstrap
-    * Version: 2.0.4
+    * Version: 2.1.0
     * Site: http://twitter.github.com/bootstrap/
     * Location
         * nova/modules/assets/css/bootstrap-responsive.min.css
@@ -87,7 +87,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * nova/modules/assets/js/jquery.ajaxq.js
 * jQuery UI
-    * Version: 1.8.20
+    * Version: 1.8.23
     * Site: http://jqueryui.com
     * Location
         * nova/modules/assets/js/jquery.ui.accordion.min.js

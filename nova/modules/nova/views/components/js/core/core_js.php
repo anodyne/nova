@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/jquery.lazy.js"></script>
 <script type="text/javascript" src="<?php echo Uri::base(false);?>nova/modules/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
