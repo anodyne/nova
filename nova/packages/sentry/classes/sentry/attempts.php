@@ -123,7 +123,9 @@ class Sentry_Attempts
 		}
 		elseif ($result)
 		{
-			$this->attempts = $result[0]['attempts'];
+			$row = reset($result);
+
+			$this->attempts = (int) $row->attempts;
 		}
 		else
 		{

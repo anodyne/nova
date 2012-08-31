@@ -75,6 +75,10 @@ class Controller_Login extends Controller_Base_Login
 					{
 						$this->response->redirect('admin/index');
 					}
+					else
+					{
+						$this->response->redirect('login/index/'.$error);
+					}
 				}
 				else
 				{
@@ -91,22 +95,22 @@ class Controller_Login extends Controller_Base_Login
 				{
 					case self::WRONG_EMAIL:
 						$error_status = 'danger';
-						$error_message = lang("error.login.error_$error|[".\Uri::create('main/contact')."]");
+						$error_message = lang("[[error.login.error_$error|{{".\Uri::create('main/contact')."}}]]");
 					break;
 
 					case self::WRONG_PASS:
 						$error_status = 'danger';
-						$error_message = lang("error.login.error_$error|[".\Uri::create('login/reset')."]");
+						$error_message = lang("[[error.login.error_$error|{{".\Uri::create('login/reset')."}}]]");
 					break;
 
 					case self::SUSPEND_DURING:
 						$error_status = 'warning';
-						$error_message = lang("error.login.error_$error|[".\Model_Settings::get_settings('login_lockout_time')."]");
+						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::get_settings('login_lockout_time')."}}]]");
 					break;
 
 					case self::SUSPEND_START:
 						$error_status = 'danger';
-						$error_message = lang("error.login.error_$error|[".\Model_Settings::get_settings('login_lockout_time')."]");
+						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::get_settings('login_lockout_time')."}}]]");
 					break;
 
 					case self::PASS_RESET:

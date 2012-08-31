@@ -48,8 +48,8 @@ class Create_users
 			'attempts' => array('type' => 'INT', 'constraint' => 50),
 			'ip' => array('type' => 'VARCHAR', 'constraint' => 16),
 			'last_attempt_at' => array('type' => 'BIGINT', 'constraint' => 20),
-			'suspended_at' => array('type' => 'BIGINT', 'constraint' => 20),
-			'unsuspend_at' => array('type' => 'BIGINT', 'constraint' => 20),
+			'suspended_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'unsuspend_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 		), array('id'));
 	}
 

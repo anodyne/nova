@@ -135,7 +135,7 @@ class Sentry
 		}
 		catch (SentryUserNotFoundException $e)
 		{
-			throw new SentryAuthException($e->getMessage());
+			return \Login\Controller_Login::WRONG_EMAIL;
 		}
 
 		// else return empty user
@@ -203,7 +203,7 @@ class Sentry
 					// create a system event entry
 					\SystemEvent::add($login_column_value, Input::real_ip(), $u, null, __('event.login.suspended'));
 					
-					return 6;
+					return \Login\Controller_Login::SUSPEND_START;
 				}
 			}
 		}
@@ -213,15 +213,15 @@ class Sentry
 		{
 			if (empty($login_column_value) and ! empty($password))
 			{
-				return 3;
+				return \Login\Controller_Login::NO_EMAIL;
 			}
 
 			if ( ! empty($login_column_value) and empty($password))
 			{
-				return 4;
+				return \Login\Controller_Login::NO_PASS;
 			}
 
-			return 5;
+			return \Login\Controller_Login::WRONG_EMAIL_PASS;
 		}
 		
 		// validate the user
@@ -266,14 +266,14 @@ class Sentry
 			Session::set('role', $user->groups());
 			Session::set('preferences', \Model_User::find($user->get('id'))->preferences());
 			
-			return 0;
+			return \Login\Controller_Login::OK;
 		}
 		else
 		{
 			return $user;
 		}
 
-		return 8;
+		return \Login\Controller_Login::UNKNOWN;
 	}
 
 	/**
@@ -596,6 +596,11 @@ class Sentry
 	{
 		// get user
 		$user = static::user($login_column_value);
+
+		if (is_numeric($user))
+		{
+			return \Login\Controller_Login::WRONG_EMAIL;
+		}
 		
 		// check password
 		if ( ! $user->check_password($password, $field))
@@ -605,7 +610,7 @@ class Sentry
 				static::attempts($login_column_value, Input::real_ip())->add();
 			}
 
-			return 2;
+			return \Login\Controller_Login::WRONG_PASS;
 		}
 
 		return $user;

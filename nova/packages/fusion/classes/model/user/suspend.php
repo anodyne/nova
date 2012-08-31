@@ -34,10 +34,12 @@ class Model_User_Suspend extends \Model {
 			'constraint' => 20),
 		'suspended_at' => array(
 			'type' => 'bigint',
-			'constraint' => 20),
+			'constraint' => 20,
+			'null' => true),
 		'unsuspend_at' => array(
 			'type' => 'bigint',
-			'constraint' => 20),
+			'constraint' => 20,
+			'null' => true),
 	);
 
 	public static function clear_item(array $conditions)
