@@ -23,4 +23,18 @@
 			}
 		});
 	});
+
+	$('#rankSet').on('change', function(){
+
+		var set = $('#rankSet option:selected').val();
+
+		$.ajax({
+			type: "GET",
+			url: "<?php echo Uri::create('ajax/info/rank_preview/');?>" + set,
+			success: function(data){
+				$('#rankImage').html('');
+				$('#rankImage').append(data);
+			}
+		});
+	});
 </script>

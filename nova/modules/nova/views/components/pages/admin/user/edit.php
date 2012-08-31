@@ -102,9 +102,18 @@
 					<fieldset>
 						<legend><?php echo lang('site preferences', 2);?></legend>
 
-						<div class="control-group">
-							<label class="control-label"><?php echo lang('rank', 1);?></label>
-							<div class="controls">
+						<div class="row">
+							<div class="span4">
+								<div class="control-group">
+									<label class="control-label"><?php echo lang('rank', 1);?></label>
+									<div class="controls">
+										<?php echo Form::select('rank', $prefs['rank'], $ranks, array('class' => 'span4', 'id' => 'rankSet'));?>
+									</div>
+								</div>
+							</div>
+							<div class="span4">
+								<label class="control-label">&nbsp;</label>
+								<div id="rankImage"><?php Request::forge('ajax/info/rank_preview/'.$prefs['rank'])->execute();?></div>
 							</div>
 						</div>
 
@@ -233,8 +242,8 @@
 	</div>
 
 	<div class="span3">
-		<ul class="thumbnails">
-			<li class="span3"><a href="#" class="thumbnail"><img alt="" src="http://placehold.it/260x180"></a></li>
-		</ul>
+		<p><img alt="" src="http://placehold.it/260x260" class="img-circle"></p>
+
+		<a href="#" class="btn btn-block"><?php echo lang('action.edit image', 2);?></a>
 	</div>
 </div>

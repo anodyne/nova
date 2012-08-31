@@ -208,16 +208,31 @@ class Controller_Admin_User extends Controller_Base_Admin
 			$this->_data->user = $user = \Model_User::find($id);
 
 			// get the user preferences
-			$this->_data->prefs = $user->preferences();
+			$this->_data->prefs = $prefs = $user->preferences();
 
 			// get the user form
 			$this->_data->userForm = \NovaForm::build('user', $this->skin, $id);
+
+			// get the rank catalog items
+			$ranks = \Model_Catalog_Rank::get_all_items(false);
+
+			// loop through the ranks and build the array for the dropdown
+			foreach ($ranks as $r)
+			{
+				if ($r->status == \Status::ACTIVE)
+				{
+					$this->_data->ranks[$r->location] = $r->name;
+				}
+			}
 
 			// manually set the header
 			$this->_headers['edit'] = lang('action.edit user', 2).' &ndash; '.$user->name;
 
 			// manually set the title
 			$this->_titles['edit'] = lang('action.edit user', 2);
+
+			// send the genre to the JS view
+			$this->_js_data->genre = $this->genre;
 		}
 		else
 		{

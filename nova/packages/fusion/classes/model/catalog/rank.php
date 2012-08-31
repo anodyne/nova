@@ -80,15 +80,19 @@ class Model_Catalog_Rank extends \Model {
 	 */
 	public static function get_all_items($status = \Status::ACTIVE, $limit_to_genre = true)
 	{
-		$genre_where = ($limit_to_genre) ? array('genre', \Config::get('nova.genre')) : array();
-		$status_where = ( ! empty($status)) ? array('status', $status) : array();
+		$result = static::find();
+
+		if ($limit_to_genre)
+		{
+			$result->where('genre', \Config::get('nova.genre'));
+		}
+
+		if ( ! empty($status))
+		{
+			$result->where('status', $status);
+		}
 		
-		$result = static::find()
-			->where($genre_where)
-			->where($status_where)
-			->get();
-			
-		return $result;
+		return $result->get();
 	}
 	
 	/**

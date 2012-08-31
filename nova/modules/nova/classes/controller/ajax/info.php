@@ -61,4 +61,20 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		
 		echo $output;
 	}
+
+	public function action_rank_preview($location = false)
+	{
+		// get the URI variable
+		$location = \Security::xss_clean($location);
+		
+		// pull the rank catalog record
+		$rank = \Model_Catalog_Rank::get_item($location);
+		
+		// set the output
+		$output = (count($rank) > 0) 
+			? \Html::img(\Uri::base(false).'app/assets/common/'.$rank->genre.'/ranks/'.$location.'/'.$rank->preview) 
+			: '';
+		
+		echo $output;
+	}
 }
