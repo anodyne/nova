@@ -425,7 +425,7 @@ class Migrate
 				// make sure it exists in the migration file loaded
 				if ( ! class_exists($class, false))
 				{
-					throw new FuelException(sprintf('Migration "%s" does not contain expected class "%s"', $file, $class));
+					throw new FuelException(sprintf('Migration "%s" does not contain expected class "%s"', $migration['path'], $class));
 				}
 
 				// and that it contains an "up" and "down" method
@@ -438,7 +438,7 @@ class Migrate
 			}
 			else
 			{
-				throw new FuelException(sprintf('Invalid Migration filename "%s"', $file));
+				throw new FuelException(sprintf('Invalid Migration filename "%s"', $migration['path']));
 			}
 		}
 
@@ -506,12 +506,23 @@ class Migrate
 		if ($name)
 		{
 			// find a package
-			$files = glob(PKGPATH.$name.'/'.\Config::get('migrations.folder').'*_*.php');
+			foreach (\Config::get('package_paths', array(PKGPATH)) as $p)
+			{
+				$files = glob($p .$name.'/'.\Config::get('migrations.folder').'*_*.php');
+				if (count($files))
+				{
+					break;
+				}
+			}
 		}
 		else
 		{
 			// find all packages
-			$files = glob(PKGPATH.'*/'.\Config::get('migrations.folder').'*_*.php');
+			$files = array();
+			foreach (\Config::get('package_paths', array(PKGPATH)) as $p)
+			{
+				$files = array_merge($files, glob($p.'*/'.\Config::get('migrations.folder').'*_*.php'));
+			}
 		}
 
 		return $files;

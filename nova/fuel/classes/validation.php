@@ -372,6 +372,11 @@ class Validation
 			catch (Validation_Error $v)
 			{
 				$this->errors[$field->name] = $v;
+				
+				if($field->fieldset())
+				{
+					$field->fieldset()->Validation()->add_error($field->name, $v);
+				}
 			}
 		}
 
@@ -565,6 +570,25 @@ class Validation
 	}
 
 	/**
+	 * Add error
+	 *
+	 * Adds an error for a given field. 
+	 *
+	 * @param   string				field name for which to set the error
+	 * @param   Validation_Error  	error for the field
+	 * @return  Validation 			this, to allow chaining
+	 */
+	protected function add_error($name = null, $error = null)
+	{
+		if($name !== null and $error !== null)
+		{
+			$this->errors[$name] = $error;
+		}
+		
+		return $this;
+	}
+
+	/**
 	 * Alias for $this->fieldset->add()
 	 *
 	 * @return  Fieldset_Field
@@ -740,14 +764,14 @@ class Validation
 	 * @param   string
 	 * @return  bool
 	 */
-	public function _validation_valid_emails($val)
+	public function _validation_valid_emails($val, $separator = ',')
 	{
 		if ($this->_empty($val))
 		{
 			return true;
 		}
 
-		$emails = explode(',', $val);
+		$emails = explode($separator, $val);
 
 		foreach ($emails as $e)
 		{
@@ -866,4 +890,23 @@ class Validation
 	{
 		return $this->_empty($val) || floatval($val) <= floatval($max_val);
 	}
+	
+	/**
+	 * Conditionally requires completion of current field based on completion of another field
+	 *
+	 * @param mixed
+	 * @param string 
+	 * @return bool
+	 */
+	public function _validation_required_with($val, $field)
+	{
+	  	  
+	  if ( ! $this->_empty($this->input($field)) and $this->_empty($val))
+	  {
+			$validating = $this->active_field();
+			throw new \Validation_Error($validating, $val, array('required_with' => array($this->field($field))), array($this->field($field)->label));	    
+	  }
+	  
+	  return true;
+	}	
 }

@@ -58,6 +58,7 @@ class Database_PDO_Connection extends \Database_Connection
 			'username'   => null,
 			'password'   => null,
 			'persistent' => false,
+			'compress'	 => true,
 		));
 
 		// Clear the connection parameters for security
@@ -74,6 +75,12 @@ class Database_PDO_Connection extends \Database_Connection
 		{
 			// Make the connection persistent
 			$attrs[\PDO::ATTR_PERSISTENT] = true;
+		}
+
+		if (in_array(strtolower($this->_db_type), array('mysql', 'mysqli')) and $compress)
+		{
+			// Use client compression with mysql or mysqli (doesn't work with mysqlnd)
+			$attrs[\PDO::MYSQL_ATTR_COMPRESS] = true;
 		}
 
 		try
@@ -164,7 +171,8 @@ class Database_PDO_Connection extends \Database_Connection
 					}
 
 					// Convert the exception in a database exception
-					throw new \Database_Exception($e->getMessage().' with query: "'.$sql.'"');
+					$error_code = is_numeric($e->getCode()) ? $e->getCode() : 0;
+					throw new \Database_Exception($e->getMessage().' with query: "'.$sql.'"', $error_code, $e);
 				}
 			}
 		}
@@ -183,18 +191,17 @@ class Database_PDO_Connection extends \Database_Connection
 			// Convert the result into an array, as PDOStatement::rowCount is not reliable
 			if ($as_object === false)
 			{
-				$result->setFetchMode(\PDO::FETCH_ASSOC);
+				$result = $result->fetchAll(\PDO::FETCH_ASSOC);
 			}
 			elseif (is_string($as_object))
 			{
-				$result->setFetchMode(\PDO::FETCH_CLASS, $as_object);
+				$result = $result->fetchAll(\PDO::FETCH_CLASS, $as_object);
 			}
 			else
 			{
-				$result->setFetchMode(\PDO::FETCH_CLASS, 'stdClass');
+				$result = $result->fetchAll(\PDO::FETCH_CLASS, 'stdClass');
 			}
 
-			$result = $result->fetchAll();
 
 			// Return an iterator of results
 			return new \Database_Result_Cached($result, $sql, $as_object);

@@ -88,6 +88,32 @@ class Str
 	}
 
 	/**
+	 * Checks wether a string has a precific beginning.
+	 *
+	 * @param   string   $str          string to check
+	 * @param   string   $start        beginning to check for
+	 * @param   boolean  $ignore_case  wether to ignore the case
+	 * @return  boolean  wether a string starts with a specified beginning
+	 */
+	public static function starts_with($str, $start, $ignore_case = false)
+	{
+		return (bool) preg_match('/^'.preg_quote($start, '/').'/m'.($ignore_case ? 'i' : ''), $str);
+	}
+
+	/**
+	 * Checks wether a string has a precific ending.
+	 *
+	 * @param   string   $str          string to check
+	 * @param   string   $end          ending to check for
+	 * @param   boolean  $ignore_case  wether to ignore the case
+	 * @return  boolean  wether a string ends with a specified ending
+	 */
+	public static function ends_with($str, $end, $ignore_case = false)
+	{
+		return (bool) preg_match('/'.preg_quote($end, '/').'$/m'.($ignore_case ? 'i' : ''), $str);
+	}
+
+	/**
 	 * substr
 	 *
 	 * @param   string    $str       required
@@ -328,6 +354,41 @@ class Str
 		{
 			return $string;
 		}
+	}
+
+	/**
+	 * Check if a string is json encoded
+	 * 
+	 * @param  string $string string to check
+	 * @return bool
+	 */
+	public static function is_json($string)
+	{
+		json_decode($string);
+		return json_last_error() === JSON_ERROR_NONE;
+	}
+
+	/**
+	 * Check if a string is serialized
+	 * 
+	 * @param  string $string string to check
+	 * @return bool
+	 */
+	public static function is_serialized($string)
+	{
+		$array = @unserialize($string);
+		return ! ($array === false and $string !== 'b:0;');
+	}
+
+	/**
+	 * Check if a string is html
+	 * 
+	 * @param  string $string string to check
+	 * @return bool
+	 */
+	public static function is_html($string)
+	{
+		return strlen(strip_tags($string)) < strlen($string);
 	}
 }
 
