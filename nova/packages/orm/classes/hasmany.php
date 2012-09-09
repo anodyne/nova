@@ -48,14 +48,25 @@ class HasMany extends Relation
 			$query->where(current($this->key_to), $from->{$key});
 			next($this->key_to);
 		}
-		if ($where = \Arr::get($this->conditions, 'where')) 
+
+		foreach (\Arr::get($this->conditions, 'where', array()) as $key => $condition)
 		{
-			$query->where($where);
+			is_array($condition) or $condition = array($key, '=', $condition);
+			$query->where($condition);
 		}
-		if ($order_by = \Arr::get($this->conditions, 'order_by'))
+
+		foreach (\Arr::get($this->conditions, 'order_by', array()) as $field => $direction)
 		{
-			$query->order_by($order_by);
+			if (is_numeric($field))
+			{
+				$query->order_by($direction);
+			}
+			else
+			{
+				$query->order_by($field, $direction);
+			}
 		}
+
 		return $query->get();
 	}
 

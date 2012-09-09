@@ -746,7 +746,7 @@ class Query
 							$v_ob = $m_name.'.'.$v_ob;
 						}
 
-						$order_by[] = array($v_ob, 'ASC');
+						$order_by[] = array($v_ob, $v_dir);
 					}
 					else
 					{
@@ -864,7 +864,12 @@ class Query
 			$obj = array();
 			foreach ($select as $s)
 			{
-				$obj[substr($s[0], strpos($s[0], '.') + 1)] = $row[$s[1]];
+				$f = substr($s[0], strpos($s[0], '.') + 1);
+				$obj[$f] = $row[$s[1]];
+				if (in_array($f, $primary_key))
+				{
+					$obj[$f] = \Orm\Observer_Typing::typecast($f, $obj[$f], call_user_func($model.'::property', $f));
+				}
 				unset($row[$s[1]]);
 			}
 			$obj = $model::forge($obj, false, $this->view ? $this->view['_name'] : null);
@@ -1047,7 +1052,7 @@ class Query
 			') AS count_result');
 
 		// Remove the current select and
-		$query = call_user_func('DB::select', $columns);
+		$query = \DB::select($columns);
 
 		// Set from table
 		$query->from(array(call_user_func($this->model.'::table'), $this->alias));
@@ -1081,7 +1086,7 @@ class Query
 			') AS max_result');
 
 		// Remove the current select and
-		$query = call_user_func('DB::select', $columns);
+		$query = \DB::select($columns);
 
 		// Set from table
 		$query->from(array(call_user_func($this->model.'::table'), $this->alias));
@@ -1115,7 +1120,7 @@ class Query
 			') AS min_result');
 
 		// Remove the current select and
-		$query = call_user_func('DB::select', $columns);
+		$query = \DB::select($columns);
 
 		// Set from table
 		$query->from(array(call_user_func($this->model.'::table'), $this->alias));

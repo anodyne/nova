@@ -404,6 +404,40 @@ class Model implements \ArrayAccess, \Iterator
 	}
 
 	/**
+	 * Register an observer
+	 *
+	 * @param	string	class name of the observer (including namespace)
+	 * @param	mixed	observer options
+	 *
+	 * @return	void
+	 */
+	public static function register_observer($name, $options = null)
+	{
+		$class = get_called_class();
+		$new_observer = is_null($options) ? array($name) : array($name => $options);
+
+		static::$_observers_cached[$class] = static::observers() + $new_observer;
+	}
+
+	/**
+	 * Unregister an observer
+	 *
+	 * @param string class name of the observer (including namespace)
+	 * @return void
+	 */
+	public static function unregister_observer($name)
+	{
+		$class = get_called_class();
+		foreach (static::observers() as $key => $value)
+		{
+			if ((is_array($value) and $key == $name) or $value == $name)
+			{
+				unset(static::$_observers_cached[$class][$key]);
+			}
+		}
+	}
+
+	/**
 	 * Find one or more entries
 	 *
 	 * @param   mixed
@@ -720,6 +754,7 @@ class Model implements \ArrayAccess, \Iterator
 		{
 			if (is_array($data))
 			{
+				$this->_original_relations[$rel] = array();
 				foreach ($data as $obj)
 				{
 					$this->_original_relations[$rel][] = $obj ? $obj->implode_pk($obj) : null;
@@ -853,7 +888,7 @@ class Model implements \ArrayAccess, \Iterator
 				{
 					$this->_data_relations[$property] = $rel->get($this);
 				}
-				
+
 				$this->_update_original_relations(array($property));
 			}
 			return $this->_data_relations[$property];
@@ -876,34 +911,50 @@ class Model implements \ArrayAccess, \Iterator
 	 * object
 	 *
 	 * @access  public
-	 * @param   string  $property
-	 * @param   string  $value
+	 * @param   string|array  $property
+	 * @param   string  $value in case $property is a string
 	 * @return  Orm\Model
 	 */
-	public function set($property, $value)
+	public function set($property, $value = null)
 	{
 		if ($this->_frozen)
 		{
 			throw new FrozenObject('No changes allowed.');
 		}
 
-		if (in_array($property, static::primary_key()) and $this->{$property} !== null)
+		if (is_array($property))
 		{
-			throw new \FuelException('Primary key cannot be changed.');
-		}
-		if (array_key_exists($property, static::properties()))
-		{
-			$this->_data[$property] = $value;
-		}
-		elseif (static::relations($property))
-		{
-			$this->is_fetched($property) or $this->_reset_relations[$property] = true;
-			$this->_data_relations[$property] = $value;
+			foreach ($property as $p => $v)
+			{
+				$this->set($p, $v);
+			}
 		}
 		else
 		{
-			throw new \OutOfBoundsException('Property "'.$property.'" not found for '.get_called_class().'.');
+			if (func_num_args() < 2)
+			{
+				throw new \InvalidArgumentException('You need to pass both a property name and a value to set().');
+			}
+
+			if (in_array($property, static::primary_key()) and $this->{$property} !== null)
+			{
+				throw new \FuelException('Primary key cannot be changed.');
+			}
+			if (array_key_exists($property, static::properties()))
+			{
+				$this->_data[$property] = $value;
+			}
+			elseif (static::relations($property))
+			{
+				$this->is_fetched($property) or $this->_reset_relations[$property] = true;
+				$this->_data_relations[$property] = $value;
+			}
+			else
+			{
+				throw new \OutOfBoundsException('Property "'.$property.'" not found for '.get_called_class().'.');
+			}
 		}
+
 		return $this;
 	}
 
@@ -917,15 +968,13 @@ class Model implements \ArrayAccess, \Iterator
 	 * @access  public
 	 * @param   array  $values
 	 * @return  Orm\Model
+	 *
+	 * @deprecated since 1.3, use set() instead
 	 */
 	public function values(Array $data)
 	{
-		foreach ($data as $property => $value)
-		{
-			$this->set($property, $value);
-		}
-
-		return $this;
+		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a set() instead.', __METHOD__);
+		return $this->set($data);
 	}
 
 	/**
@@ -1034,10 +1083,7 @@ class Model implements \ArrayAccess, \Iterator
 		if (count($primary_key) == 1 and $id !== false)
 		{
 			$pk = reset($primary_key);
-			if ($this->{$pk} === null)
-			{
-				$this->{$pk} = $id;
-			}
+			$this->{$pk} = $id;
 		}
 
 		// update the original properties on creation and cache object for future retrieval in this request
@@ -1069,7 +1115,7 @@ class Model implements \ArrayAccess, \Iterator
 		$this->observe('before_update');
 
 		// Create the query and limit to primary key(s)
-		$query       = Query::forge(get_called_class(), static::connection())->limit(1);
+		$query       = Query::forge(get_called_class(), static::connection());
 		$primary_key = static::primary_key();
 		$properties  = array_keys(static::properties());
 		foreach ($primary_key as $pk)
@@ -1332,18 +1378,21 @@ class Model implements \ArrayAccess, \Iterator
 			else
 			{
 				$original_pks = $this->_original_relations[$key];
+				$new_pks = array();
 				foreach ($val as $v)
 				{
 					if ( ! in_array(($new_pk = $v->implode_pk($v)), $original_pks))
 					{
-						$diff[0][$key] = null;
-						$diff[1][$key] = $new_pk;
+						$new_pks[] = $new_pk;
 					}
 					else
 					{
 						$original_pks = array_diff($original_pks, array($new_pk));
 					}
-					isset($diff[0][$key]) ? $diff[0][$key] += $original_pks : $diff[0][$key] = $original_pks;
+				}
+				if ( ! empty($original_pks) or ! empty($new_pks)) {
+					$diff[0][$key] = empty($original_pks) ? null : $original_pks;
+					$diff[1][$key] = empty($new_pks) ? null : $new_pks;
 				}
 			}
 		}
@@ -1575,6 +1624,18 @@ class Model implements \ArrayAccess, \Iterator
 
 		return $array;
 	}
+
+
+	/**
+	 * Allow converting this object to a real object
+	 *
+	 * @return  object
+	 */
+	public function to_object()
+	{
+		return (object) $this->to_array();
+	}
+
 
 	/**
 	 * Allow for getter, setter and unset methods

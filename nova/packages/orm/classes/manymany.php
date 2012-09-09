@@ -106,16 +106,25 @@ class ManyMany extends Relation
 			next($this->key_to);
 		}
 
-		$query->_join($join);
+		foreach (\Arr::get($this->conditions, 'where', array()) as $key => $condition)
+		{
+			is_array($condition) or $condition = array($key, '=', $condition);
+			$query->where($condition);
+		}
 
-		if ($where = \Arr::get($this->conditions, 'where')) 
+		foreach (\Arr::get($this->conditions, 'order_by', array()) as $field => $direction)
 		{
-			$query->where($where);
+			if (is_numeric($field))
+			{
+				$query->order_by($direction);
+			}
+			else
+			{
+				$query->order_by($field, $direction);
+			}
 		}
-		if ($order_by = \Arr::get($this->conditions, 'order_by'))
-		{
-			$query->order_by($order_by);
-		}
+
+		$query->_join($join);
 
 		return $query->get();
 	}
