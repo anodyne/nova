@@ -45,7 +45,7 @@ return array(
 	// MARKDOWN ( http://michelf.com/projects/php-markdown/ )
 	// ------------------------------------------------------------------------
 	'View_Markdown' => array(
-		'include'      => PKGPATH.'parser'.DS.'vendor'.DS.'markdown'.DS.'markdown.php',
+		'include'      => \Package::exists('parser').'vendor'.DS.'markdown'.DS.'markdown.php',
 		'auto_encode'  => true,
 		'allow_php'    => true,
 	),
@@ -102,7 +102,7 @@ return array(
 	// MUSTACHE ( https://github.com/bobthecow/mustache.php )
 	// ------------------------------------------------------------------------
 	'View_Mustache' => array(
-		'include' => PKGPATH.'parser'.DS.'vendor'.DS.'Mustache'.DS.'Mustache.php',
+		'include' => \Package::exists('parser').'vendor'.DS.'Mustache'.DS.'Mustache.php',
 		'auto_encode' => true,
 		'delimiters' => array('left' => '{{', 'right' => '}}'),
 		'environment' => array(
@@ -138,6 +138,7 @@ return array(
 			'compile_dir'       => APPPATH.'tmp'.DS.'Smarty'.DS.'templates_c'.DS,
 			'config_dir'        => APPPATH.'tmp'.DS.'Smarty'.DS.'configs'.DS,
 			'cache_dir'         => APPPATH.'cache'.DS.'Smarty'.DS,
+			'plugins_dir'       => array(),
 			'caching'           => false,
 			'cache_lifetime'    => 0,
 			'force_compile'     => false,
