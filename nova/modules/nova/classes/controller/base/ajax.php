@@ -32,12 +32,4 @@ class Controller_Base_Ajax extends \Controller
 		\Lang::load('nova::short', 'short');
 		\Lang::load('nova::sitecontent', 'sitecontent');
 	}
-	
-	public function after($response)
-	{
-		parent::after($response);
-		
-		// return the response object
-		return $this->response;
-	}
 }

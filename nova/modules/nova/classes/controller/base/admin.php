@@ -27,7 +27,7 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		// make sure we're logged in
 		if ( ! \Sentry::check())
 		{
-			$this->response->redirect('login/index/'.\Login\Controller_Login::NOT_LOGGED_IN);
+			\Response::redirect('login/index/'.\Login\Controller_Login::NOT_LOGGED_IN);
 		}
 
 		// pull these additional settings

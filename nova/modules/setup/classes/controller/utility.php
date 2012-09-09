@@ -30,7 +30,7 @@ class Controller_Utility extends Controller_Base_Setup
 	public function action_index()
 	{
 		// nothing here, so redirect to the main page
-		$this->response->redirect('setup/main/index');
+		\Response::redirect('setup/main/index');
 	}
 
 	/**

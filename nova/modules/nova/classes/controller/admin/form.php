@@ -275,13 +275,13 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// if we don't have a field, redirect to the creation screen
 				if ($this->_data->field === null)
 				{
-					$this->response->redirect('admin/form/fields/'.$key.'/0');
+					\Response::redirect('admin/form/fields/'.$key.'/0');
 				}
 
 				// if the field isn't part of this form, redirect them
 				if ($this->_data->field->form_key != $key)
 				{
-					$this->response->redirect('admin/form/fields/'.$this->_data->field->form_key.'/'.$id);
+					\Response::redirect('admin/form/fields/'.$this->_data->field->form_key.'/'.$id);
 				}
 
 				// get the field values
@@ -496,13 +496,13 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// if we don't have a section, redirect to the creation screen
 				if ($this->_data->section === null)
 				{
-					$this->response->redirect('admin/form/sections/'.$key.'/0');
+					\Response::redirect('admin/form/sections/'.$key.'/0');
 				}
 
 				// if the section isn't part of this form, redirect them
 				if ($this->_data->section->form_key != $key)
 				{
-					$this->response->redirect('admin/form/sections/'.$this->_data->section->form_key.'/'.$id);
+					\Response::redirect('admin/form/sections/'.$this->_data->section->form_key.'/'.$id);
 				}
 
 				// set the action
@@ -691,13 +691,13 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// if we don't have a tab, redirect to the creation screen
 				if ($this->_data->tab === null)
 				{
-					$this->response->redirect('admin/form/tabs/'.$key.'/0');
+					\Response::redirect('admin/form/tabs/'.$key.'/0');
 				}
 
 				// if the tab isn't part of this form, redirect them
 				if ($this->_data->tab->form_key != $key)
 				{
-					$this->response->redirect('admin/form/tabs/'.$this->_data->tab->form_key.'/'.$id);
+					\Response::redirect('admin/form/tabs/'.$this->_data->tab->form_key.'/'.$id);
 				}
 
 				// set the action

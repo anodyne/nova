@@ -61,7 +61,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 		{
 			if ($this->request->action != 'config')
 			{
-				$this->response->redirect('setup/main/config');
+				\Response::redirect('setup/main/config');
 			}
 		}
 		else
@@ -74,7 +74,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 					// if they aren't a system admin, send them away
 					if ( ! \Sentry::user()->is_admin())
 					{
-						$this->response->redirect('login/index/'.\Login\Controller_Login::NOT_ADMIN);
+						\Response::redirect('login/index/'.\Login\Controller_Login::NOT_ADMIN);
 					}
 				}
 				else
@@ -82,7 +82,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 					if ($this->request->controller == 'Controller_Utility' or $this->request->controller == 'Controller_Main')
 					{
 						// no session? send them away
-						$this->response->redirect('login/index/'.\Login\Controller_Login::NOT_LOGGED_IN);
+						\Response::redirect('login/index/'.\Login\Controller_Login::NOT_LOGGED_IN);
 					}
 				}
 			}
@@ -149,13 +149,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 			}
 		}
 		
-		// set the response body
-		$this->response->body = $this->template;
-		
-		// set the status
-		$this->response->status = $this->_status;
-		
 		// return the response object
-		return $this->response;
+		return \Response::forge($this->template, $this->_status);
 	}
 }

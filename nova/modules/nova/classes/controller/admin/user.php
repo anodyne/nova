@@ -236,7 +236,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 		}
 		else
 		{
-			$this->response->redirect('admin/error/'.\Nova\Controller_Admin::NOT_ALLOWED);
+			\Response::redirect('admin/error/'.\Nova\Controller_Admin::NOT_ALLOWED);
 		}
 	}
 }

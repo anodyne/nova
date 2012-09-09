@@ -120,13 +120,13 @@ abstract class Controller_Base_Core extends \Controller_Template
 		// if the config file isn't set
 		if ( ! file_exists(APPPATH.'config/'.\Fuel::$env.'/db.php'))
 		{
-			$this->response->redirect('setup/main/config');
+			\Response::redirect('setup/main/config');
 		}
 
 		// make sure the system is installed
 		if ( ! \Utility::installed())
 		{
-			$this->response->redirect('setup/main/index');
+			\Response::redirect('setup/main/index');
 		}
 		
 		// load the session library
@@ -249,14 +249,8 @@ abstract class Controller_Base_Core extends \Controller_Template
 			}
 		}
 
-		// set the response body
-		$this->response->body = $this->template;
-
-		// set the status
-		$this->response->status = $this->_status;
-		
 		// return the response object
-		return $this->response;
+		return \Response::forge($this->template, $this->_status);
 	}
 	
 	/**
@@ -291,5 +285,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 			 * display the page.
 			 */
 		}
+
+		return;
 	}
 }

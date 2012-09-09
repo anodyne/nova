@@ -73,11 +73,11 @@ class Controller_Login extends Controller_Base_Login
 					// successful log in
 					if ($error === self::OK)
 					{
-						$this->response->redirect('admin/index');
+						\Response::redirect('admin/index');
 					}
 					else
 					{
-						$this->response->redirect('login/index/'.$error);
+						\Response::redirect("login/index/$error");
 					}
 				}
 				else
@@ -268,7 +268,7 @@ class Controller_Login extends Controller_Base_Login
 					if ($confirm_reset)
 					{
 						// redirect to the login page with a message about a successful reset
-						$this->response->redirect('login/index/'.self::PASS_RESET);
+						\Response::redirect('login/index/'.self::PASS_RESET);
 					}
 					else
 					{
