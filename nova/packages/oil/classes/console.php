@@ -88,7 +88,15 @@ class Console
 			ob_start();
 
 			// Unset the previous line and execute the new one
-			$ret = eval("unset(\$__line); $__line;");
+			try
+			{
+				$ret = eval("unset(\$__line); $__line;");
+			}
+			catch(\Exception $e)
+			{
+				$ret = false;
+				$__line = $e->getMessage();
+			}
 
 			// Error was returned
 			if ($ret === false)

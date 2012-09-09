@@ -1,5 +1,13 @@
 <?php
 /**
+ * Refuse to run oil when called from php-cgi !
+ */
+if (substr(php_sapi_name(), 0, 3) == 'cgi')
+{
+    die("The use of oil is not supported when running php-cgi. Oil needs php-cli to function!\n\n");
+}
+
+/**
  * Set error reporting and display errors settings.  You will want to change these when in production.
  */
 error_reporting(-1);
@@ -13,22 +21,17 @@ define('DOCROOT', __DIR__.DIRECTORY_SEPARATOR);
 /**
  * Path to the application directory.
  */
-define('APPPATH', realpath(__DIR__.'/app/').DIRECTORY_SEPARATOR);
+define('APPPATH', realpath(__DIR__.'/fuel/app/').DIRECTORY_SEPARATOR);
 
 /**
  * Path to the default packages directory.
  */
-define('PKGPATH', realpath(__DIR__.'/nova/packages/').DIRECTORY_SEPARATOR);
+define('PKGPATH', realpath(__DIR__.'/fuel/packages/').DIRECTORY_SEPARATOR);
 
 /**
  * The path to the framework core.
  */
-define('COREPATH', realpath(__DIR__.'/nova/fuel/').DIRECTORY_SEPARATOR);
-
-/**
- * The path to the Nova core.
- */
-define('NOVAPATH', DOCROOT.'nova/modules'.DIRECTORY_SEPARATOR);
+define('COREPATH', realpath(__DIR__.'/fuel/core/').DIRECTORY_SEPARATOR);
 
 // Get the start time and memory for use later
 defined('FUEL_START_TIME') or define('FUEL_START_TIME', microtime(true));
@@ -41,7 +44,5 @@ Package::load('oil');
 
 // Fire up the command line interfact
 Oil\Command::init($_SERVER['argv']);
-
-echo PHP_EOL;
 
 /* End of file oil */
