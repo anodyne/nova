@@ -1,10 +1,12 @@
 # Changelog
 
-## 2.1.1 (- June 2012)
+## 2.1.1 (12 September 2012)
 
 ### Nova Core
 
 * Update to CodeIgniter 2.1.2.
+* Update to jQuery 1.8.1.
+* Update to jQuery UI 1.8.23.
 
 ### Bug Fixes
 
