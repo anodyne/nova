@@ -15,6 +15,9 @@ abstract class Nova_admin extends Nova_controller_admin {
 	public function __construct()
 	{
 		parent::__construct();
+
+		// load the install language file
+		$this->nova->lang('install');
 	}
 
 	public function index()

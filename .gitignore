@@ -15,7 +15,7 @@ application/config/database.php
 
 application/assets/common/*
 
-app/
+app/*
 
 # General
 *~

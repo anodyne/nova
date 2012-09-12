@@ -1128,16 +1128,6 @@ $menu_items = array(
 		'menu_cat' => 'admin',
 		'menu_use_access' => 'y',
 		'menu_access' => 'admin/index'),
-	array(
-		'menu_name' => "What's New",
-		'menu_group' => 0,
-		'menu_order' => 1,
-		'menu_link' => 'admin/whatsnew',
-		'menu_sim_type' => 1,
-		'menu_type' => 'adminsub',
-		'menu_cat' => 'admin',
-		'menu_use_access' => 'y',
-		'menu_access' => 'admin/index'),
 		
 	array(
 		'menu_name' => 'Writing Control Panel',
@@ -2254,7 +2244,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 2,
 		'sys_version_minor' => 1,
-		'sys_version_update' => 0)
+		'sys_version_update' => 1)
 );
 
 $tour_fields = array(
