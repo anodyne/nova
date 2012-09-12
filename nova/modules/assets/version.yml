@@ -5,5 +5,5 @@ version_update: 1
 severity: minor
 notes: |
   Nova 2.1.1 addresses several small bugs that remained from the Nova 2.1 development.
-date: - June 2012
+date: 12 September 2012
 link: http://www.anodyne-productions.com/nova/index.php
