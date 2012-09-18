@@ -124,7 +124,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 		}
 
 		// get all the users
-		$this->_data->active = \Model_User::find_users();
+		$this->_data->active = \Model_User::getItems();
 
 		return;
 	}
@@ -169,7 +169,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 						unset($_POST[\Config::get('security.csrf_token_key')]);
 
 						// update the user form
-						\Model_Form_Data::update_data('user', $id, \Input::post());
+						\Model_Form_Data::updateData('user', $id, \Input::post());
 
 						$this->_flash[] = array(
 							'status' => 'success',
@@ -187,7 +187,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 						unset($_POST[\Config::get('security.csrf_token_key')]);
 
 						// update the preferences
-						\Model_User_Preferences::update_user_preferences($id, \Input::post());
+						\Model_User_Preferences::updateUserPreferences($id, \Input::post());
 
 						$this->_flash[] = array(
 							'status' => 'success',
@@ -208,13 +208,13 @@ class Controller_Admin_User extends Controller_Base_Admin
 			$this->_data->user = $user = \Model_User::find($id);
 
 			// get the user preferences
-			$this->_data->prefs = $prefs = $user->preferences();
+			$this->_data->prefs = $prefs = $user->getPreferences();
 
 			// get the user form
 			$this->_data->userForm = \NovaForm::build('user', $this->skin, $id);
 
 			// get the rank catalog items
-			$ranks = \Model_Catalog_Rank::get_all_items(false);
+			$ranks = \Model_Catalog_Rank::getItems(false);
 
 			// loop through the ranks and build the array for the dropdown
 			foreach ($ranks as $r)

@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Form extends \Model {
-	
+class Model_Form extends \Model
+{
 	public static $_table_name = 'forms';
 	
 	public static $_properties = array(
@@ -34,12 +34,25 @@ class Model_Form extends \Model {
 			'default' => 'vertical'),
 	);
 
-	public static function get_form($key)
+	/**
+	 * Get a form by key.
+	 *
+	 * @api
+	 * @param	string	the form key
+	 * @return	object
+	 */
+	public static function getForm($key)
 	{
 		return static::find()->where('key', $key)->get_one();
 	}
 
-	public static function get_forms()
+	/**
+	 * Get all forms.
+	 *
+	 * @api
+	 * @return	array
+	 */
+	public static function getForms()
 	{
 		$items = static::find('all');
 

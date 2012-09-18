@@ -76,7 +76,7 @@ class Model_Spec extends \Model {
 		/**
 		 * Fill the rows for the dynamic form with blank data for editing later.
 		 */
-		$fields = \Model_Form_Field::get_fields('specs');
+		$fields = \Model_Form_Field::getItems('specs');
 		
 		if (count($fields) > 0)
 		{
@@ -92,7 +92,7 @@ class Model_Spec extends \Model {
 					'updated_at' => time(),
 				);
 				
-				\Model_Form_Data::create_data($field_data);
+				\Model_Form_Data::createData($field_data);
 			}
 		}
 		

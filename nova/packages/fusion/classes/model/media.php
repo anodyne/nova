@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Media extends \Model {
-	
+class Model_Media extends \Model
+{
 	public static $_table_name = 'media';
 	
 	public static $_properties = array(

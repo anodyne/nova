@@ -52,10 +52,10 @@ class Utility
 	{
 		if (\Sentry::check())
 		{
-			return \Sentry::user()->get()->preferences('rank');
+			return \Sentry::user()->get()->getPreferences('rank');
 		}
 
-		return \Model_Settings::get_settings('rank');
+		return \Model_Settings::getItems('rank');
 	}
 
 	/**
@@ -70,10 +70,10 @@ class Utility
 	{
 		if (\Sentry::check())
 		{
-			return \Sentry::user()->get()->preferences('skin_'.$section);
+			return \Sentry::user()->get()->getPreferences('skin_'.$section);
 		}
 
-		return \Model_Settings::get_settings('skin_'.$section);
+		return \Model_Settings::getItems('skin_'.$section);
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Utility
 		if (ini_get('allow_url_fopen'))
 		{
 			// grab the update setting preference
-			$pref = \Model_Settings::get_settings('updates');
+			$pref = \Model_Settings::getItems('updates');
 			
 			// get the ignore version info
 			$sys = \Model_System::find('first');
@@ -195,7 +195,7 @@ class Utility
 				 */
 				try
 				{
-					$uid = \Model_System::get_uid();
+					$uid = \Model_System::getUid();
 					
 					if ( ! empty($uid))
 					{

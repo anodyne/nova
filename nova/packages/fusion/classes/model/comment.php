@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Comment extends \Model {
-	
+class Model_Comment extends \Model
+{
 	public static $_table_name = 'comments';
 	
 	public static $_properties = array(

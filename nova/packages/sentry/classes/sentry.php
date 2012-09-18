@@ -258,13 +258,13 @@ class Sentry
 			// update user
 			if (count($update))
 			{
-				\Model_User::update_user($user->get('id'), $update);
+				\Model_User::updateUser($user->get('id'), $update);
 			}
 
 			// set session vars
 			Session::set('user', (int) $user->get('id'));
 			Session::set('role', $user->groups());
-			Session::set('preferences', \Model_User::find($user->get('id'))->preferences());
+			Session::set('preferences', \Model_User::find($user->get('id'))->getPreferences());
 			
 			return \Login\Controller_Login::OK;
 		}
@@ -294,7 +294,7 @@ class Sentry
 
 		Session::set('user', $id);
 		Session::set('role', $user->get_user_role());
-		Session::set('preferences', \Model_User::find($id)->preferences());
+		Session::set('preferences', \Model_User::find($id)->getPreferences());
 		
 		return true;
 	}
@@ -411,7 +411,7 @@ class Sentry
 		);
 
 		// save the user
-		$save = \Model_User::update_user($user->get('id'), $update);
+		$save = \Model_User::updateUser($user->get('id'), $update);
 
 		// if database was updated return confirmation data
 		if ($save)
@@ -469,7 +469,7 @@ class Sentry
 		if ($user)
 		{
 			$u = \Model_User::find($user);
-			$u->password = \Sentry_User::password_hash($u->temp_password, \Model_System::get_uid());
+			$u->password = \Sentry_User::password_hash($u->temp_password, \Model_System::getUid());
 			$u->password_reset_hash = null;
 			$u->temp_password = null;
 			$u->remember_me = null;
@@ -520,7 +520,7 @@ class Sentry
 		// set the field to use
 		$field = (is_int($group)) ? 'id' : 'name';
 		
-		return (bool) count(\Model_Access_Role::get_role($field, $group));
+		return (bool) count(\Model_Access_Role::getRole($field, $group));
 	}
 
 	/**
@@ -702,7 +702,7 @@ class Sentry
 	public static function users_with_access($value)
 	{
 		// get the task
-		$task = \Model_Access_Task::find_task($value);
+		$task = \Model_Access_Task::getTask($value);
 
 		// get any role that DIRECTLY has this task
 		$direct = $task->roles;

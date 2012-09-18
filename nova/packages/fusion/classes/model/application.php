@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Application extends \Model {
-	
+class Model_Application extends \Model
+{
 	public static $_table_name = 'applications';
 	
 	public static $_properties = array(
@@ -117,7 +117,7 @@ class Model_Application extends \Model {
 	 * @api
 	 * @return	object
 	 */
-	public function comments()
+	public function getComments()
 	{
 		return \Model_Application_Response::find()
 			->where('app_id', $this->id)
@@ -127,13 +127,53 @@ class Model_Application extends \Model {
 	}
 
 	/**
+	 * Gets the decision makers that are involved with this application.
+	 *
+	 * @api
+	 * @return	array
+	 */
+	public function getDecisionMakers()
+	{
+		// get all decision makers
+		$decision_makers = array_keys(\Sentry::users_with_access('character.create.2'));
+
+		// loop through the reviewers
+		foreach ($this->reviewers as $r)
+		{
+			$review_users[] = $r->user_id;
+		}
+
+		// compare the two arrays
+		return array_intersect($decision_makers, $review_users);
+	}
+
+	/**
+	 * Get the application records.
+	 *
+	 * @api
+	 * @param	bool	should we get only active records?
+	 * @return	object
+	 */
+	public static function getItems($only_active = true)
+	{
+		$query = static::find();
+
+		if ($only_active)
+		{
+			$query->where('status', \Status::IN_PROGRESS);
+		}
+
+		return $query->get();
+	}
+
+	/**
 	 * Get vote records for this application.
 	 *
 	 * @api
 	 * @param	mixed	which responses to get (yes/no/false for all)
 	 * @return	object
 	 */
-	public function votes($response = false)
+	public function getVotes($response = false)
 	{
 		$items = \Model_Application_Response::find()
 			->where('app_id', $this->id)
@@ -160,15 +200,15 @@ class Model_Application extends \Model {
 	 * @param	string	the message
 	 * @return	string
 	 */
-	public function message_substitution($message)
+	public function substituteMessageKeys($message)
 	{
 		// build the list of possible substitutions
 		$args = array(
 			'name'		=> $this->user->name,
-			'character'	=> $this->character->name(false),
+			'character'	=> $this->character->getName(false),
 			'position'	=> $this->position->name,
 			'rank'		=> $this->character->rank->info->name,
-			'sim'		=> \Model_Settings::get_settings('sim_name'),
+			'sim'		=> \Model_Settings::getItems('sim_name'),
 		);
 
 		// loop through all the arguments and replace it if it's in the message
@@ -184,46 +224,6 @@ class Model_Application extends \Model {
 	}
 
 	/**
-	 * Gets the decision makers that are involved with this application.
-	 *
-	 * @api
-	 * @return	array
-	 */
-	public function find_decision_makers()
-	{
-		// get all decision makers
-		$decision_makers = array_keys(\Sentry::users_with_access('character.create.2'));
-
-		// loop through the reviewers
-		foreach ($this->reviewers as $r)
-		{
-			$review_users[] = $r->user_id;
-		}
-
-		// compare the two arrays
-		return array_intersect($decision_makers, $review_users);
-	}
-
-	/**
-	 * Get the application records.
-	 *
-	 * @api
-	 * @param	bool	should we get only active records?
-	 * @return	object
-	 */
-	public static function find_items($only_active = true)
-	{
-		$query = static::find();
-
-		if ($only_active)
-		{
-			$query->where('status', \Status::IN_PROGRESS);
-		}
-
-		return $query->get();
-	}
-
-	/**
 	 * Update the reviewers associated with this review. This involves
 	 * removing all reviewers and re-adding them.
 	 *
@@ -233,7 +233,7 @@ class Model_Application extends \Model {
 	 * @return	mixed
 	 * @todo	send the email to a new reviewer
 	 */
-	public function update_reviewers($data, $email_to_new = true)
+	public function updateReviewers($data, $email_to_new = true)
 	{
 		// make sure we have an array
 		$data = ( ! is_array($data)) ? array($data) : $data;
@@ -291,7 +291,7 @@ class Model_Application extends \Model {
 	 * @param	array			the POST array
 	 * @return	bool
 	 */
-	public function update_vote($user, $data)
+	public function updateVote($user, $data)
 	{
 		// get the user's vote
 		$myVote = $this->votes( (int) $user->id);

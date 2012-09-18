@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Award_Category extends \Model {
-	
+class Model_Award_Category extends \Model
+{
 	public static $_table_name = 'awards_categories';
 	
 	public static $_properties = array(

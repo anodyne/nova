@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Position extends \Model {
-	
+class Model_Position extends \Model
+{
 	public static $_table_name = 'positions_';
 	
 	public static $_properties = array(
@@ -100,9 +100,9 @@ class Model_Position extends \Model {
 	 * @api
 	 * @return	object
 	 */
-	public function characters()
+	public function getCharacters()
 	{
-		return \Model_Character_Positions::find_items($this->id, 'position_id');
+		return \Model_Character_Positions::getItems($this->id, 'position_id');
 	}
 	
 	/**
@@ -114,7 +114,7 @@ class Model_Position extends \Model {
 	 * @param	bool	whether to show displayed positions or not (null for both)
 	 * @return	object
 	 */
-	public static function find_positions($scope = 'all', $dept = null, $active = true)
+	public static function getItems($scope = 'all', $dept = null, $active = true)
 	{
 		// grab the genre
 		$genre = \Config::get('nova.genre');
@@ -172,7 +172,7 @@ class Model_Position extends \Model {
 	 * @param	string	the action being taken on the character (add, remove)
 	 * @return	void
 	 */
-	public function update_open_slots($character_action)
+	public function updateAvailability($character_action)
 	{
 		if ($character_action == 'add')
 		{

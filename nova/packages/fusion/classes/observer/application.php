@@ -96,7 +96,7 @@ class Observer_Application extends \Orm\Observer
 								$p = \Model_Position::find($position);
 
 								// loop through the characters for that position
-								foreach ($p->characters() as $character)
+								foreach ($p->getCharacters() as $character)
 								{
 									// get the character
 									$char = \Model_Character::find($character->character_id);
@@ -147,7 +147,7 @@ class Observer_Application extends \Orm\Observer
 									$p = \Model_Position::find($position);
 
 									// loop through the characters for that position
-									foreach ($p->characters() as $character)
+									foreach ($p->getCharacters() as $character)
 									{
 										// get the character
 										$char = \Model_Character::find($character->character_id);

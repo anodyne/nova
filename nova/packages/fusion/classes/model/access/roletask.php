@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Access_RoleTask extends \Model {
-	
+class Model_Access_RoleTask extends \Model
+{
 	public static $_table_name = 'roles_tasks';
 	
 	public static $_properties = array(

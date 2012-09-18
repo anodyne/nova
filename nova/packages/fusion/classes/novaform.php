@@ -18,7 +18,7 @@ class NovaForm
 	{
 		// set up the variables
 		$data = new \stdClass;
-		$data->form = \Model_Form::get_form($key);
+		$data->form = \Model_Form::getForm($key);
 		$data->tabs = false;
 		$data->sections = false;
 		$data->fields = false;
@@ -31,7 +31,7 @@ class NovaForm
 		$tabs = \Model_Form_Tab::getFormItems($key, true);
 		$sections = \Model_Form_Section::getFormItems($key, true);
 		$fields = \Model_Form_Field::getFormItems($key, true);
-		$content = \Model_Form_Data::get_data($key, $id);
+		$content = \Model_Form_Data::getData($key, $id);
 
 		/**
 		 * Tabs
@@ -250,15 +250,15 @@ class NovaForm
 	{
 		if (is_numeric($type))
 		{
-			$positions = \Model_Position::find_positions('all', $type);
+			$positions = \Model_Position::getItems('all', $type);
 		}
 		elseif (is_string($type))
 		{
-			$positions = \Model_Position::find_positions($type);
+			$positions = \Model_Position::getItems($type);
 		}
 		else
 		{
-			$positions = \Model_Position::find_positions();
+			$positions = \Model_Position::getItems();
 		}
 
 		if (count($positions) > 0)
@@ -323,7 +323,7 @@ class NovaForm
 	public static function rank($name, $selected = false, $extra = array(), $select_only = false)
 	{
 		// grab the rank groups
-		$groups = \Model_Rank_Group::find_items(true);
+		$groups = \Model_Rank_Group::getItems(true);
 		
 		if (count($groups) > 0)
 		{
@@ -382,7 +382,7 @@ class NovaForm
 	public static function roles($name, $selected = array(), $extra = array(), $select_only = false)
 	{
 		// get the access roles
-		$roles = \Model_Access_Role::get_roles();
+		$roles = \Model_Access_Role::getRoles();
 
 		if (count($roles) > 0)
 		{
@@ -473,7 +473,7 @@ class NovaForm
 	public static function users($name, $selected = array(), $extra = array(), $status = \Status::ACTIVE)
 	{
 		// get the users
-		$users = ( ! empty($status)) ? \Model_User::find_users($status) : \Model_User::find('all');
+		$users = ( ! empty($status)) ? \Model_User::getItems($status) : \Model_User::find('all');
 		
 		if (count($users) > 0)
 		{

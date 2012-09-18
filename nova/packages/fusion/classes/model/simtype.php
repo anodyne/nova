@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_SimType extends \Model {
-	
+class Model_SimType extends \Model
+{
 	public static $_table_name = 'sim_types';
 	
 	public static $_properties = array(

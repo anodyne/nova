@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Award extends \Model {
-	
+class Model_Award extends \Model
+{
 	public static $_table_name = 'awards';
 	
 	public static $_properties = array(
@@ -49,6 +49,9 @@ class Model_Award extends \Model {
 			'default' => \Status::ACTIVE),
 	);
 
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'category' => array(
 			'model_to' => '\\Model_Award_Category',

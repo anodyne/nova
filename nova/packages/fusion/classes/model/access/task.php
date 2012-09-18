@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Access_Task extends \Model {
-	
+class Model_Access_Task extends \Model
+{
 	public static $_table_name = 'tasks';
 	
 	public static $_properties = array(
@@ -55,7 +55,7 @@ class Model_Access_Task extends \Model {
 		),
 	);
 
-	public static function find_task($task)
+	public static function getTask($task)
 	{
 		// break the task up into an array
 		$taskArray = explode('.', $task);

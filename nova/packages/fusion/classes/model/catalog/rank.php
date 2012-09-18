@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Catalog_Rank extends \Model {
-	
+class Model_Catalog_Rank extends \Model
+{
 	public static $_table_name = 'catalog_ranks';
 	
 	public static $_properties = array(
@@ -76,9 +76,9 @@ class Model_Catalog_Rank extends \Model {
 	 * @api
 	 * @param	string	the status to pull
 	 * @param	bool	whether to limit to the current genre or not
-	 * @return	object	an object of results
+	 * @return	object
 	 */
-	public static function get_all_items($status = \Status::ACTIVE, $limit_to_genre = true)
+	public static function getItems($status = \Status::ACTIVE, $limit_to_genre = true)
 	{
 		$result = static::find();
 
@@ -98,13 +98,11 @@ class Model_Catalog_Rank extends \Model {
 	/**
 	 * Get the default rank catalog item.
 	 *
-	 *     $default = Model_Catalog_Rank::get_default();
-	 *
-	 * @access	public
-	 * @param	boolean	whether to return just the location value or the whole object
-	 * @return	mixed	the catalog object or a string with the location
+	 * @api
+	 * @param	bool	whether to return just the location value or the whole object
+	 * @return	mixed
 	 */
-	public static function get_default($value_only = false)
+	public static function getDefault($value_only = false)
 	{
 		$result = static::find()
 			->where('default', 1)
@@ -121,14 +119,12 @@ class Model_Catalog_Rank extends \Model {
 	/**
 	 * Get a specific catalog item.
 	 *
-	 *     $catalog = Model_Catalog_Rank::get_item('default');
-	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the item to pull
 	 * @param	string	the identifier to use
-	 * @return	object	the catalog object
+	 * @return	object
 	 */
-	public static function get_item($item, $identifier = 'location')
+	public static function getCatalog($item, $identifier = 'location')
 	{
 		$result = static::find()->where($identifier, $item)->get_one();
 		

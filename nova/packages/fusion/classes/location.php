@@ -158,8 +158,8 @@ class Location
 
 		// get the rank catalog object
 		$catalog = ( ! $location)
-			? \Model_Catalog_Rank::get_item(\Utility::getRank())
-			: \Model_Catalog_Rank::get_item($location);
+			? \Model_Catalog_Rank::getCatalog(\Utility::getRank())
+			: \Model_Catalog_Rank::getCatalog($location);
 
 		if (is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/base") 
 				and is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/pips"))

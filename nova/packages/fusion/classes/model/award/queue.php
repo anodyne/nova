@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Award_Queue extends \Model {
-	
+class Model_Award_Queue extends \Model
+{
 	public static $_table_name = 'awards_queue';
 	
 	public static $_properties = array(

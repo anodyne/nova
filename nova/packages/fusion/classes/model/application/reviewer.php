@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Application_Reviewer extends \Model {
-	
+class Model_Application_Reviewer extends \Model
+{
 	public static $_table_name = 'application_reviewers';
 	
 	public static $_properties = array(

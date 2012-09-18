@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_User_Loa extends \Model {
-	
+class Model_User_Loa extends \Model
+{
 	public static $_table_name = 'user_loas';
 	
 	public static $_properties = array(

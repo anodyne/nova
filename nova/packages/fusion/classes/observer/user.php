@@ -46,7 +46,7 @@ class Observer_User extends \Orm\Observer
 		/**
 		 * Create the user settings.
 		 */
-		$settings = \Model_User_Preferences::create_user_preferences($model->id);
+		$settings = \Model_User_Preferences::createUserPreferences($model->id);
 		
 		/**
 		 * Fill the user rows for the dynamic form with blank data for editing later.
@@ -57,7 +57,7 @@ class Observer_User extends \Orm\Observer
 		{
 			foreach ($fields as $f)
 			{
-				\Model_Form_Data::create_data(array(
+				\Model_Form_Data::createData(array(
 					'form_key' 		=> 'user',
 					'field_id' 		=> $f->id,
 					'user_id' 		=> $model->id,

@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="span10">
 		<div class="well well-small">
-			<h2><?php echo $app->character->name(false);?> <small><?php echo $app->position->name;?></small></h2>
+			<h2><?php echo $app->character->getName(false);?> <small><?php echo $app->position->name;?></small></h2>
 
 			<p>
 				<strong><?php echo lang('[[short.arc.involved|users]]', 1);?>:</strong>
@@ -241,7 +241,7 @@
 								<div class="control-group">
 									<label class="control-label"><?php echo lang('message', 1);?></label>
 									<div class="controls">
-										<textarea name="message" class="span8" rows="10"><?php echo Model_SiteContent::get_content("accept_message");?></textarea>
+										<textarea name="message" class="span8" rows="10"><?php echo Model_SiteContent::getContent("accept_message");?></textarea>
 									</div>
 								</div>
 

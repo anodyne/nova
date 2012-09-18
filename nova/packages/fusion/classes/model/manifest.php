@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Manifest extends \Model {
-	
+class Model_Manifest extends \Model
+{
 	public static $_table_name = 'manifests';
 	
 	public static $_properties = array(
@@ -44,6 +44,9 @@ class Model_Manifest extends \Model {
 			'default' => 0),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_has_many = array(
 		'departments' => array(
 			'model_to' => '\\Model_Department',

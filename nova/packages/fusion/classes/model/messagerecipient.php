@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_MessageRecipient extends \Model {
-	
+class Model_MessageRecipient extends \Model
+{
 	public static $_table_name = 'message_recipients';
 	
 	public static $_properties = array(
@@ -39,6 +39,9 @@ class Model_MessageRecipient extends \Model {
 			'default' => \Status::ACTIVE),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'pm' => array(
 			'model_to' => '\\Model_Message',

@@ -14,8 +14,8 @@
  
 namespace Fusion;
 
-class Model_Form_Tab extends \Model {
-	
+class Model_Form_Tab extends \Model
+{
 	public static $_table_name = 'form_tabs';
 	
 	public static $_properties = array(
@@ -73,7 +73,14 @@ class Model_Form_Tab extends \Model {
 		),
 	);
 
-	public static function get_tabs($key)
+	/**
+	 * Get tabs.
+	 *
+	 * @api
+	 * @param	string	the form
+	 * @return	array
+	 */
+	public static function getItems($key)
 	{
 		$items = static::find()->where('form_key', $key)->order_by('name', 'asc')->get();
 

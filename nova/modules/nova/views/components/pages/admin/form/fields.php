@@ -45,7 +45,7 @@
 											<?php elseif ($f->type == 'textarea'): ?>
 												<?php echo Form::textarea(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value, 'rows' => $f->html_rows));?>
 											<?php elseif ($f->type == 'select'): ?>
-												<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
+												<?php echo Form::select($f->html_name, $f->value, $f->getValues(), array('class' => $f->html_class, 'id' => $f->html_id));?>
 											<?php endif;?>
 
 											<?php if ( ! empty($f->help)): ?>
@@ -106,7 +106,7 @@
 										<?php elseif ($f->type == 'textarea'): ?>
 											<?php echo Form::textarea(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value, 'rows' => $f->html_rows));?>
 										<?php elseif ($f->type == 'select'): ?>
-											<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
+											<?php echo Form::select($f->html_name, $f->value, $f->getValues(), array('class' => $f->html_class, 'id' => $f->html_id));?>
 										<?php endif;?>
 									</div>
 								</td>
@@ -152,7 +152,7 @@
 								<?php elseif ($f->type == 'textarea'): ?>
 									<?php echo Form::textarea(array('name' => $f->html_name, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $f->value, 'rows' => $f->html_rows));?>
 								<?php elseif ($f->type == 'select'): ?>
-									<?php echo Form::select($f->html_name, $f->value, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
+									<?php echo Form::select($f->html_name, $f->value, $f->getValues(), array('class' => $f->html_class, 'id' => $f->html_id));?>
 								<?php endif;?>
 							</div>
 						</td>

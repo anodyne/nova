@@ -27,7 +27,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		$this->_view = 'admin/arc/index';
 
 		// get the reviews
-		$this->_data->reviews = \Sentry::user()->get()->find_app_reviews(\Status::IN_PROGRESS);
+		$this->_data->reviews = \Sentry::user()->get()->getAppReviews(\Status::IN_PROGRESS);
 
 		// set up the images
 		$this->_data->images = array(
@@ -81,7 +81,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
 					{
 						// update the reviewers
-						$app->update_reviewers(\Security::xss_clean(\Input::post('reviewUsers')));
+						$app->updateReviewers(\Security::xss_clean(\Input::post('reviewUsers')));
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
@@ -95,7 +95,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if ($action == 'vote')
 					{
 						// update the vote
-						$app->update_vote(\Sentry::user(), \Security::xss_clean(\Input::post()));
+						$app->updateVote(\Sentry::user(), \Security::xss_clean(\Input::post()));
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
@@ -136,7 +136,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						));
 
 						// loop through the decision makers
-						foreach ($app->find_decision_makers() as $dm)
+						foreach ($app->getDecisionMakers() as $dm)
 						{
 							// get the user
 							$user = \Model_User::find($dm);
@@ -146,7 +146,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						}
 
 						// get the email preferences
-						$email_prefs = \Model_Settings::get_settings(array(
+						$email_prefs = \Model_Settings::getItems(array(
 							'email_subject',
 							'email_name',
 							'email_address',
@@ -206,7 +206,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 								$app->position->id != \Security::xss_clean(\Input::post('position')))
 						{
 							// update the position
-							$app->character->update_position(
+							$app->character->updatePosition(
 								\Security::xss_clean(\Input::post('position')), 
 								$app->position->id
 							);
@@ -221,11 +221,11 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::RESPONSE,
-							'content'	=> $app->message_substitution(\Security::xss_clean(\Input::post('message')))
+							'content'	=> $app->substituteMessageKeys(\Security::xss_clean(\Input::post('message')))
 						));
 
 						// get the email preferences
-						$email_prefs = \Model_Settings::get_settings(array(
+						$email_prefs = \Model_Settings::getItems(array(
 							'email_subject',
 							'email_name',
 							'email_address',
@@ -315,20 +315,20 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			$this->_data->appForm = \NovaForm::build('app', $this->skin, $app->id, false);
 
 			// get the sample post question
-			$this->_data->samplePost = \Markdown::parse(\Model_SiteContent::get_content('join_sample_post'));
+			$this->_data->samplePost = \Markdown::parse(\Model_SiteContent::getContent('join_sample_post'));
 
 			// get the vote information
 			$this->_data->votes = new \stdClass;
-			$this->_data->votes->all = count($app->votes());
-			$this->_data->votes->yes = count($app->votes('yes'));
-			$this->_data->votes->no = count($app->votes('no'));
-			$this->_data->votes->mine = $app->votes( (int) \Sentry::user()->id);
+			$this->_data->votes->all = count($app->getVotes());
+			$this->_data->votes->yes = count($app->getVotes('yes'));
+			$this->_data->votes->no = count($app->getVotes('no'));
+			$this->_data->votes->mine = $app->getVotes( (int) \Sentry::user()->id);
 
 			// get the role information
 			$this->_data->roles = array();
 
 			// set the date the user applied on
-			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->get()->preferences('timezone'))
+			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->get()->getPreferences('timezone'))
 				->format($this->options->date_format);
 		}
 

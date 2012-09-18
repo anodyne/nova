@@ -32,31 +32,31 @@ class Setup
 		\QuickInstall::widget();
 
 		// install the dev data
-		static::install_dev_data();
+		static::installDevData();
 		
 		// clear the entire cache
 		\Cache::delete_all();
 		
 		// cache the headers
-		\Model_SiteContent::get_section_content('header', 'main');
-		\Model_SiteContent::get_section_content('header', 'sim');
-		\Model_SiteContent::get_section_content('header', 'personnel');
-		\Model_SiteContent::get_section_content('header', 'search');
-		\Model_SiteContent::get_section_content('header', 'login');
+		\Model_SiteContent::getSectionContent('header', 'main');
+		\Model_SiteContent::getSectionContent('header', 'sim');
+		\Model_SiteContent::getSectionContent('header', 'personnel');
+		\Model_SiteContent::getSectionContent('header', 'search');
+		\Model_SiteContent::getSectionContent('header', 'login');
 		
 		// cache the titles
-		\Model_SiteContent::get_section_content('title', 'main');
-		\Model_SiteContent::get_section_content('title', 'sim');
-		\Model_SiteContent::get_section_content('title', 'personnel');
-		\Model_SiteContent::get_section_content('title', 'search');
-		\Model_SiteContent::get_section_content('title', 'login');
+		\Model_SiteContent::getSectionContent('title', 'main');
+		\Model_SiteContent::getSectionContent('title', 'sim');
+		\Model_SiteContent::getSectionContent('title', 'personnel');
+		\Model_SiteContent::getSectionContent('title', 'search');
+		\Model_SiteContent::getSectionContent('title', 'login');
 		
 		// cache the messages
-		\Model_SiteContent::get_section_content('message', 'main');
-		\Model_SiteContent::get_section_content('message', 'sim');
-		\Model_SiteContent::get_section_content('message', 'personnel');
-		\Model_SiteContent::get_section_content('message', 'search');
-		\Model_SiteContent::get_section_content('message', 'login');
+		\Model_SiteContent::getSectionContent('message', 'main');
+		\Model_SiteContent::getSectionContent('message', 'sim');
+		\Model_SiteContent::getSectionContent('message', 'personnel');
+		\Model_SiteContent::getSectionContent('message', 'search');
+		\Model_SiteContent::getSectionContent('message', 'login');
 		
 		return true;
 	}
@@ -68,7 +68,7 @@ class Setup
 	 * @return	bool
 	 * @throws	NovaSetupException
 	 */
-	public static function install_dev_data()
+	public static function installDevData()
 	{
 		if (\Config::get('nova.dev_install'))
 		{

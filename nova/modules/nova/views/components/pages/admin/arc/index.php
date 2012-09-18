@@ -13,22 +13,22 @@
 		<?php foreach ($reviews as $r): ?>
 			<tr>
 				<td>
-					<span class="lead"><?php echo $r->character->name(false);?></span><br>
+					<span class="lead"><?php echo $r->character->getName(false);?></span><br>
 					<span class="muted"><?php echo $r->position->name;?></span>
 				</td>
 				<td class="span3">
 					<div class="btn-toolbar pull-right">
 						<div class="btn-group">
-							<?php if (count($r->comments()) > 0): ?>
-								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small tooltip-top" title="<?php echo lang('comments', 1);?>"><span class="icn icn-50" data-icon="c"></span> <?php echo count($r->comments());?></a>
+							<?php if (count($r->getComments()) > 0): ?>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small tooltip-top" title="<?php echo lang('comments', 1);?>"><span class="icn icn-50" data-icon="c"></span> <?php echo count($r->getComments());?></a>
 							<?php endif;?>
 
-							<?php if (count($r->votes('yes')) > 0): ?>
-								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-success tooltip-top" title="<?php echo lang('yes votes', 1);?>"><span class="icn" data-icon="."></span> <?php echo count($r->votes('yes'));?></a>
+							<?php if (count($r->getVotes('yes')) > 0): ?>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-success tooltip-top" title="<?php echo lang('yes votes', 1);?>"><span class="icn" data-icon="."></span> <?php echo count($r->getVotes('yes'));?></a>
 							<?php endif;?>
 
-							<?php if (count($r->votes('no')) > 0): ?>
-								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-danger tooltip-top" title="<?php echo lang('no votes', 1);?>"><span class="icn" data-icon="/"></span> <?php echo count($r->votes('no'));?></a>
+							<?php if (count($r->getVotes('no')) > 0): ?>
+								<a href="<?php echo Uri::create('admin/application/review/'.$r->id);?>"  class="btn btn-small btn-danger tooltip-top" title="<?php echo lang('no votes', 1);?>"><span class="icn" data-icon="/"></span> <?php echo count($r->getVotes('no'));?></a>
 							<?php endif;?>
 						</div>
 

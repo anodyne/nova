@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_User extends \Model {
-	
+class Model_User extends \Model
+{
 	public static $_table_name = 'users';
 	
 	public static $_properties = array(
@@ -82,6 +82,9 @@ class Model_User extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	protected static $_belongs_to = array(
 		'role' => array(
 			'model_to' => '\\Model_Access_Role',
@@ -181,13 +184,11 @@ class Model_User extends \Model {
 	/**
 	 * Get the user's preferences.
 	 *
-	 *     $preferences = Model_User::find($id)->preferences();
-	 *
 	 * @api
 	 * @param	string	a specific item to grab
-	 * @return	array	an array of items
+	 * @return	array
 	 */
-	public function preferences($item = false)
+	public function getPreferences($item = false)
 	{
 		// set up a blank array for storing the items
 		$prefs = array();
@@ -213,7 +214,7 @@ class Model_User extends \Model {
 	 * @param	int		a specific status to pull back
 	 * @return	array
 	 */
-	public function find_app_reviews($status = false)
+	public function getAppReviews($status = false)
 	{
 		// setup the holding array
 		$reviews = array();
@@ -244,7 +245,7 @@ class Model_User extends \Model {
 	 * @param	int		the status to pull
 	 * @return	object
 	 */
-	public static function find_users($status = \Status::ACTIVE)
+	public static function getItems($status = \Status::ACTIVE)
 	{
 		return static::find()->where('status', $status)->get();
 	}
@@ -256,7 +257,7 @@ class Model_User extends \Model {
 	 * @param	string	the status to change to
 	 * @return	void
 	 */
-	public function update_status($status)
+	public function updateStatus($status)
 	{
 		switch ($status)
 		{
@@ -283,9 +284,9 @@ class Model_User extends \Model {
 	 * @api
 	 * @param	int		the user ID to update, if nothing is provided, it will update all users
 	 * @param	array 	a data array to use for updating the record
-	 * @return	object	the user object of the updated user
+	 * @return	object
 	 */
-	public static function update_user($user, array $data)
+	public static function updateUser($user, array $data)
 	{
 		if ($user !== null)
 		{

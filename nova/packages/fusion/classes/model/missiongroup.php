@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_MissionGroup extends \Model {
-	
+class Model_MissionGroup extends \Model
+{
 	public static $_table_name = 'mission_groups';
 	
 	public static $_properties = array(
@@ -37,6 +37,9 @@ class Model_MissionGroup extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_has_many = array(
 		'missions' => array(
 			'model_to' => '\\Model_Mission',

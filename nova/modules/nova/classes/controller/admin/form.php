@@ -240,7 +240,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			$this->_view = 'admin/form/fields_action';
 
 			// get the sections
-			$this->_data->sections = \Model_Form_Section::get_sections($key);
+			$this->_data->sections = \Model_Form_Section::getItems($key);
 
 			// set the types
 			$this->_data->types = array(
@@ -251,7 +251,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 
 			// set the roles
 			$empty_role = array(0 => '');
-			$this->_data->roles = array_merge($empty_role, \Model_Access_Role::get_roles());
+			$this->_data->roles = array_merge($empty_role, \Model_Access_Role::getRoles());
 
 			// ID 0 means a new field, anything else edits an existing field
 			if ($id == 0)
@@ -285,7 +285,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				}
 
 				// get the field values
-				$this->_data->values = \Model_Form_Value::get_values($id);
+				$this->_data->values = \Model_Form_Value::getItems($id);
 
 				// set the action
 				$this->_data->action = 'update';
@@ -469,10 +469,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			$this->_view = 'admin/form/sections_action';
 
 			// get the forms
-			$this->_data->forms = \Model_Form::get_forms();
+			$this->_data->forms = \Model_Form::getForms();
 
 			// get the tabs
-			$this->_data->tabs = \Model_Form_Tab::get_tabs($key);
+			$this->_data->tabs = \Model_Form_Tab::getItems($key);
 
 			// ID 0 means a new section, anything else edits an existing section
 			if ($id == 0)
@@ -667,7 +667,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			$this->_view = 'admin/form/tabs_action';
 
 			// get the tabs
-			$this->_data->tabs = \Model_Form_Tab::get_tabs($key);
+			$this->_data->tabs = \Model_Form_Tab::getItems($key);
 
 			// ID 0 means a new tab, anything else edits an existing tab
 			if ($id == 0)

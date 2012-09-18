@@ -11,11 +11,8 @@
  
 namespace Fusion;
 
-class Model_Access_Role extends \Model {
-	
-	/**
-	 * Constants for the default access levels.
-	 */
+class Model_Access_Role extends \Model
+{
 	const INACTIVE		= 1;
 	const USER			= 2;
 	const ACTIVE		= 3;
@@ -73,7 +70,7 @@ class Model_Access_Role extends \Model {
 	 * @param	mixed	the value to use
 	 * @return	object	a role object
 	 */
-	public static function get_role($column, $value)
+	public static function getRole($column, $value)
 	{
 		if (array_key_exists($column, static::$_properties))
 		{
@@ -83,7 +80,7 @@ class Model_Access_Role extends \Model {
 		return false;
 	}
 
-	public static function get_roles()
+	public static function getRoles()
 	{
 		$items = static::find('all');
 
@@ -100,7 +97,7 @@ class Model_Access_Role extends \Model {
 		return $roles;
 	}
 	
-	public function get_tasks()
+	public function getTasks()
 	{
 		$groups[] = $this->tasks;
 		
@@ -108,7 +105,7 @@ class Model_Access_Role extends \Model {
 		
 		foreach ($inherited as $i)
 		{
-			//$groups[] = static::find($i)->get_tasks();
+			//$groups[] = static::find($i)->getTasks();
 			\Debug::dump(static::find($i));
 		}
 		

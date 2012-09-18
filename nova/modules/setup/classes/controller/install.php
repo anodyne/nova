@@ -153,7 +153,7 @@ class Controller_Install extends Controller_Base_Setup
 						$rank 		= \Security::xss_clean(\Input::post('rank'));
 						
 						// update the settings
-						\Model_Settings::update_settings(array(
+						\Model_Settings::updateItems(array(
 							'sim_name' => $simname,
 							'email_subject' => '['.$simname.']',
 							'email_address' => 'nova@'.$_SERVER['HTTP_HOST'],
@@ -170,7 +170,7 @@ class Controller_Install extends Controller_Base_Setup
 						), true);
 
 						// update the user prefs
-						\Model_User_Preferences::update_user_preferences($crUser->id, array(
+						\Model_User_Preferences::updateUserPreferences($crUser->id, array(
 							'is_sysadmin' => (int) true,
 							'is_game_master' => (int) true,
 						));
@@ -193,10 +193,10 @@ class Controller_Install extends Controller_Base_Setup
 						));
 
 						// update the position's open slots
-						\Model_Position::find($position)->update_open_slots('add');
+						\Model_Position::find($position)->updateAvailability('add');
 						
 						// update the user with the character info
-						\Model_User::update_user($crUser->id, array(
+						\Model_User::updateUser($crUser->id, array(
 							'character_id' => $crCharacter->id
 						));
 						

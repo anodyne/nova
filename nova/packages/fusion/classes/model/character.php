@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Character extends \Model {
-	
+class Model_Character extends \Model
+{
 	public static $_table_name = 'characters';
 	
 	public static $_properties = array(
@@ -153,55 +153,13 @@ class Model_Character extends \Model {
 	);
 
 	/**
-	 * Get the name of the character.
-	 *
-	 * @api
-	 * @param	bool	show the character rank?
-	 * @param	bool	use the rank short name instead of the full name?
-	 * @return	string
-	 */
-	public function name($include_rank = true, $short_rank = false)
-	{
-		$pieces = array(
-			($include_rank) 
-				? ($short_rank) 
-					? $this->rank->short_name 
-					: $this->rank->name 
-				: '',
-			$this->first_name,
-			$this->last_name
-		);
-		
-		foreach ($pieces as $key => $p)
-		{
-			if (empty($p))
-			{
-				unset($pieces[$key]);
-			}
-		}
-		
-		return implode(' ', $pieces);
-	}
-
-	/**
-	 * Get the positions for the character.
-	 *
-	 * @api
-	 * @return	object
-	 */
-	public function positions()
-	{
-		return \Model_Character_Positions::find_items($this->id);
-	}
-	
-	/**
 	 * Get all characters from the database.
 	 *
 	 * @api
 	 * @param	string	the status of characters to pull back
-	 * @return	object	an object of characters
+	 * @return	object
 	 */
-	public static function find_characters($scope = \Status::ACTIVE)
+	public static function getCharacters($scope = \Status::ACTIVE)
 	{
 		switch ($scope)
 		{
@@ -249,6 +207,48 @@ class Model_Character extends \Model {
 	}
 
 	/**
+	 * Get the name of the character.
+	 *
+	 * @api
+	 * @param	bool	show the character rank?
+	 * @param	bool	use the rank short name instead of the full name?
+	 * @return	string
+	 */
+	public function getName($include_rank = true, $short_rank = false)
+	{
+		$pieces = array(
+			($include_rank) 
+				? ($short_rank) 
+					? $this->rank->short_name 
+					: $this->rank->name 
+				: '',
+			$this->first_name,
+			$this->last_name
+		);
+		
+		foreach ($pieces as $key => $p)
+		{
+			if (empty($p))
+			{
+				unset($pieces[$key]);
+			}
+		}
+		
+		return implode(' ', $pieces);
+	}
+
+	/**
+	 * Get the positions for the character.
+	 *
+	 * @api
+	 * @return	object
+	 */
+	public function getPositions()
+	{
+		return \Model_Character_Positions::getItems($this->id);
+	}
+	
+	/**
 	 * Update the position record.
 	 *
 	 * @api
@@ -256,7 +256,7 @@ class Model_Character extends \Model {
 	 * @param	int		the old ID to use (for finding the record)
 	 * @return	void
 	 */
-	public function update_position($new_id, $old_id = false)
+	public function updatePosition($new_id, $old_id = false)
 	{
 		// build the arguments
 		$args['character_id'] = $this->id;
@@ -267,7 +267,7 @@ class Model_Character extends \Model {
 		}
 
 		// get the position record
-		$position = \Model_Character_Positions::find_items($args);
+		$position = \Model_Character_Positions::getItems($args);
 
 		// update to the new position
 		$position->position_id = $new_id;

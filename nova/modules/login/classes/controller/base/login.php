@@ -37,7 +37,7 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 		$this->_settings_setup = array_merge($this->_settings_setup, $additional_settings);
 		
 		// pull the settings and put them into the options object
-		$this->options = \Model_Settings::get_settings($this->_settings_setup);
+		$this->options = \Model_Settings::getItems($this->_settings_setup);
 		
 		// set the variables
 		$this->skin			= $this->session->get('skin_login', $this->options->skin_login);

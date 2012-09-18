@@ -217,7 +217,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		}
 
 		// get all the group
-		$this->_data->groups = \Model_Rank_Group::find_items();
+		$this->_data->groups = \Model_Rank_Group::getItems();
 
 		// set up the images
 		$this->_data->images = array(
@@ -361,7 +361,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		}
 
 		// get all the info records
-		$info = \Model_Rank_Info::find_items();
+		$info = \Model_Rank_Info::getItems();
 
 		// create an empty holding array
 		$this->_data->info = array();
@@ -393,7 +393,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		$this->_js_view = 'admin/rank/manage_js';
 
 		// get the default rank
-		$default = \Model_Settings::get_settings('rank');
+		$default = \Model_Settings::getItems('rank');
 
 		if (\Input::method() == 'POST')
 		{
@@ -497,7 +497,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		$rankPath = $this->_js_data->rankPath = "app/assets/common/$this->genre/ranks/$default/";
 
 		// get the rank extension
-		$rankExt = $this->_js_data->rankExt = \Model_Catalog_Rank::get_item($default)->extension;
+		$rankExt = $this->_js_data->rankExt = \Model_Catalog_Rank::getCatalog($default)->extension;
 
 		if (is_numeric($id))
 		{
@@ -511,7 +511,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			$rank = $this->_data->rank = \Model_Rank::find($id);
 
 			// get the rank info records
-			$infos = \Model_Rank_Info::find_items();
+			$infos = \Model_Rank_Info::getItems();
 
 			// start the infos listing
 			$this->_data->infos[0] = '';
@@ -529,7 +529,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			}
 
 			// get the rank group records
-			$groups = \Model_Rank_Group::find_items();
+			$groups = \Model_Rank_Group::getItems();
 
 			// start the groups listing
 			$this->_data->groups = array();
@@ -665,7 +665,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			$this->_data->default = $default;
 
 			// get all the rank groups
-			$this->_data->groups = \Model_Rank_Group::find_items();
+			$this->_data->groups = \Model_Rank_Group::getItems();
 
 			// set up the images
 			$this->_data->images = array(

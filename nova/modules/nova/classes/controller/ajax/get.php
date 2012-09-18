@@ -18,7 +18,7 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 		$key = \Input::get('key');
 
 		// load and return the content from the database
-		echo \Model_SiteContent::get_content($key);
+		echo \Model_SiteContent::getContent($key);
 	}
 
 	public function action_user()

@@ -39,7 +39,7 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		$this->_settings_setup = array_merge($this->_settings_setup, $additional_settings);
 		
 		// pull the settings and put them into the options object
-		$this->options = \Model_Settings::get_settings($this->_settings_setup);
+		$this->options = \Model_Settings::getItems($this->_settings_setup);
 		
 		// set the variables
 		$this->skin			= $this->session->get('skin_admin', $this->options->skin_admin);
@@ -78,6 +78,6 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		$this->template->layout->navsub->widget3	= false;
 		
 		$this->template->layout->footer				= \View::forge(\Location::file('footer', $this->skin, 'partials'));
-		$this->template->layout->footer->extra 		= \Model_SiteContent::get_content('footer');
+		$this->template->layout->footer->extra 		= \Model_SiteContent::getContent('footer');
 	}
 }

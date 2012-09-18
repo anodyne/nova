@@ -36,7 +36,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 			$content = ($pieces[0] == 'header') ? strip_tags(\Markdown::parse($value)) : $value;
 
 			// save the content
-			\Model_SiteContent::update_site_content(array($key => $content));
+			\Model_SiteContent::updateSiteContent(array($key => $content));
 
 			// if it's a header, show the content, otherwise we need to parse the Markdown
 			if ($pieces[0] == 'header')
@@ -61,7 +61,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
 		{
 			// get the form
-			$form = \Model_Form::get_form($key);
+			$form = \Model_Form::getForm($key);
 
 			if ($form !== false)
 			{

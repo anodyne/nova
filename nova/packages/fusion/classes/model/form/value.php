@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Form_Value extends \Model {
-	
+class Model_Form_Value extends \Model
+{
 	public static $_table_name = 'form_values';
 	
 	public static $_properties = array(
@@ -46,7 +46,14 @@ class Model_Form_Value extends \Model {
 		),
 	);
 
-	public static function get_values($field)
+	/**
+	 * Get values.
+	 *
+	 * @api
+	 * @param	int		the field ID
+	 * @return	object
+	 */
+	public static function getItems($field)
 	{
 		return static::find()->where('field_id', $field)->order_by('order', 'asc')->get();
 	}

@@ -44,7 +44,7 @@ class Controller_Post extends \Controller_Rest
 				'location'	=> $post->location,
 				'timeline'	=> $post->timeline,
 				'mission'	=> $post->mission->name,
-				'date'		=> \Date::forge($post->date)->format(\Model_Settings::get_settings('date_format'))
+				'date'		=> \Date::forge($post->date)->format(\Model_Settings::getItems('date_format'))
 			), 200);
 		}
 		else

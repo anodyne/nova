@@ -63,7 +63,7 @@ class Controller_Admin_Character extends Controller_Base_Admin
 				$this->_data->character = \Model_Character::find($id);
 
 				// manually set the header, footer, and message
-				$this->_headers['edit'] = lang('{{'.$this->_data->character->name(false).'}}').' - '.lang('action.edit character', 2);
+				$this->_headers['edit'] = lang('{{'.$this->_data->character->getName(false).'}}').' - '.lang('action.edit character', 2);
 				$this->_titles['edit'] = lang('action.edit character', 2);
 				$this->_messages['edit'] = false;
 			}
@@ -76,7 +76,7 @@ class Controller_Admin_Character extends Controller_Base_Admin
 			# TODO: is the user allowed to edit this character?
 
 			// manually set the header, footer, and message
-			$this->_headers['edit'] = lang('{{'.$this->_data->character->name(false).'}}').' - '.lang('action.edit character', 2);
+			$this->_headers['edit'] = lang('{{'.$this->_data->character->getName(false).'}}').' - '.lang('action.edit character', 2);
 			$this->_titles['edit'] = lang('action.edit character', 2);
 			$this->_messages['edit'] = false;
 		}
@@ -85,8 +85,8 @@ class Controller_Admin_Character extends Controller_Base_Admin
 		$tabs = \Model_Form_Tab::getFormItems('character', true);
 		$sections = \Model_Form_Section::getFormItems('character', true);
 		$fields = \Model_Form_Field::getFormItems('character', true);
-		$content = \Model_Form_Data::get_data('character', $id);
-		$this->_data->form = \Model_Form::get_form('character');
+		$content = \Model_Form_Data::getData('character', $id);
+		$this->_data->form = \Model_Form::getForm('character');
 
 		/**
 		 * Tabs

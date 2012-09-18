@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Rank extends \Model {
-	
+class Model_Rank extends \Model
+{
 	public static $_table_name = 'ranks_';
 	
 	public static $_properties = array(

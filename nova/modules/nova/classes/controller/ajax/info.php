@@ -56,7 +56,7 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		
 		// set the output
 		$output = (count($rank) > 0) 
-			? \Location::rank($rank->base, $rank->pip, \Model_Catalog_Rank::get_default()->location) 
+			? \Location::rank($rank->base, $rank->pip, \Model_Catalog_Rank::getDefault()->location) 
 			: '';
 		
 		echo $output;
@@ -68,7 +68,7 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		$location = \Security::xss_clean($location);
 		
 		// pull the rank catalog record
-		$rank = \Model_Catalog_Rank::get_item($location);
+		$rank = \Model_Catalog_Rank::getCatalog($location);
 		
 		// set the output
 		$output = (count($rank) > 0) 

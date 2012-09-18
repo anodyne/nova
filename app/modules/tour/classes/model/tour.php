@@ -73,7 +73,7 @@ class Model_Tour extends \Model {
 		/**
 		 * Fill the rows for the dynamic form with blank data for editing later.
 		 */
-		$fields = \Model_Form_Field::get_fields('tour');
+		$fields = \Model_Form_Field::getItems('tour');
 		
 		if (count($fields) > 0)
 		{
@@ -89,7 +89,7 @@ class Model_Tour extends \Model {
 					'updated_at' => time(),
 				);
 				
-				\Model_Form_Data::create_data($field_data);
+				\Model_Form_Data::createData($field_data);
 			}
 		}
 		

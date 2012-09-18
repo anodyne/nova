@@ -35,7 +35,7 @@ class Controller_Admin_Catalog extends Controller_Base_Admin
 		$this->_js_view = 'admin/catalog/modules_js';
 
 		// get the list of installed modules
-		$installed = \Model_Catalog_Module::get_all_items();
+		$installed = \Model_Catalog_Module::getItems();
 
 		// get the directory list of the modules
 		$pending = \File::read_dir(APPPATH.'modules');
@@ -65,7 +65,7 @@ class Controller_Admin_Catalog extends Controller_Base_Admin
 					$migrations = \File::read_dir(APPPATH.'modules/'.$m->location.'/migrations');
 
 					// if we have more migrations files than versions, then we have an update
-					if (count($migrations) > \Model_Migration::get_version($m->location))
+					if (count($migrations) > \Model_Migration::getVersion($m->location))
 					{
 						$update[$m->id] = $m;
 					}

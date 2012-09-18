@@ -25,7 +25,7 @@ class NovaMail
 	public static function send($view, array $data)
 	{
 		// get the email preferences
-		$options = \Model_Settings::get_settings(array(
+		$options = \Model_Settings::getItems(array(
 			'email_subject',
 			'email_name',
 			'email_address',
@@ -123,7 +123,7 @@ class NovaMail
 	public static function setup()
 	{
 		// get the email config options from the database
-		$cfg = \Model_Settings::get_settings(array(
+		$cfg = \Model_Settings::getItems(array(
 			'email_protocol',
 			'email_smtp_server',
 			'email_smtp_port',
@@ -178,7 +178,7 @@ class NovaMail
 			$u = \Model_User::find($user);
 
 			// break the users out based on mail format preference
-			$retval[$u->preferences('email_format')][] = $u->email;
+			$retval[$u->getPreferences('email_format')][] = $u->email;
 		}
 
 		return $retval;

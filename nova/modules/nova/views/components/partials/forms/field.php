@@ -10,7 +10,7 @@
 				<?php elseif ($f->type == 'textarea'): ?>
 					<?php echo Form::textarea(array('name' => $f->id, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $d, 'rows' => $f->html_rows));?>
 				<?php elseif ($f->type == 'select'): ?>
-					<?php echo Form::select($f->id, $d, $f->get_values(), array('class' => $f->html_class, 'id' => $f->html_id));?>
+					<?php echo Form::select($f->id, $d, $f->getValues(), array('class' => $f->html_class, 'id' => $f->html_id));?>
 				<?php endif;?>
 			<?php else: ?>
 				<?php echo $d;?>

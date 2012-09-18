@@ -97,7 +97,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 			$section = \Model_Form_Section::find($id);
 
 			// get all the sections
-			$sections = \Model_Form_Section::get_sections($section->form_key);
+			$sections = \Model_Form_Section::getItems($section->form_key);
 
 			// remove the section we are deleting
 			unset($sections[$id]);
@@ -123,7 +123,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 			$tab = \Model_Form_Tab::find($id);
 
 			// get all the tabs
-			$tabs = \Model_Form_Tab::get_tabs($tab->form_key);
+			$tabs = \Model_Form_Tab::getItems($tab->form_key);
 
 			// remove the tab we are deleting
 			unset($tabs[$id]);
@@ -175,7 +175,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 				);
 
 				// get all the groups
-				$groups = \Model_Rank_Group::find_items(true);
+				$groups = \Model_Rank_Group::getItems(true);
 
 				// create an empty array
 				$data['groups'] = array();
@@ -211,7 +211,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 				);
 
 				// get all the info records
-				$infoItems = \Model_Rank_Info::find_items(true);
+				$infoItems = \Model_Rank_Info::getItems(true);
 
 				// create an empty array
 				$data['infos'] = array();

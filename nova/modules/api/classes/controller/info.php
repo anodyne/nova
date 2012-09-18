@@ -29,7 +29,7 @@ class Controller_Info extends \Controller_Rest
 	public function get_sim()
 	{
 		$this->response(array(
-			'name'	=> \Model_Settings::get_settings('sim_name'),
+			'name'	=> \Model_Settings::getItems('sim_name'),
 			'url'	=> \Uri::base(false),
 		), 200);
 	}

@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Wiki_Category extends \Model {
-	
+class Model_Wiki_Category extends \Model
+{
 	public static $_table_name = 'wiki_categories';
 	
 	public static $_properties = array(

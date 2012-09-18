@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_SystemEvent extends \Model {
-	
+class Model_SystemEvent extends \Model
+{
 	public static $_table_name = 'system_events';
 	
 	public static $_properties = array(

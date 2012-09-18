@@ -614,7 +614,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	public function check_password($password, $field = 'password')
 	{
 		// get the UID (which is used for the salt)
-		$salt = \Model_System::get_uid();
+		$salt = \Model_System::getUid();
 
 		// hash the inputted password
 		$password = $this->hash_password($password, $salt);
@@ -667,7 +667,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 */
 	public static function password_generate($password)
 	{
-		$salt = \Model_System::get_uid();
+		$salt = \Model_System::getUid();
 
 		return static::password_hash($password, $salt);
 	}

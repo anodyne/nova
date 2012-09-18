@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_PostAuthor extends \Model {
-	
+class Model_PostAuthor extends \Model
+{
 	public static $_table_name = 'post_authors';
 	
 	public static $_properties = array(

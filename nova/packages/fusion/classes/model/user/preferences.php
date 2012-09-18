@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_User_Preferences extends \Model {
-	
+class Model_User_Preferences extends \Model
+{
 	public static $_table_name = 'users_preferences';
 	
 	public static $_properties = array(
@@ -32,6 +32,9 @@ class Model_User_Preferences extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'user' => array(
 			'model_to' => '\\Model_User',
@@ -49,7 +52,7 @@ class Model_User_Preferences extends \Model {
 	 * @param	int		the user ID
 	 * @return	object
 	 */
-	public static function create_user_preferences($user)
+	public static function createUserPreferences($user)
 	{
 		$insert = array(
 			'is_sysadmin'			=> (int) false,
@@ -60,9 +63,9 @@ class Model_User_Preferences extends \Model {
 			'email_format'			=> 'html',
 			'language'				=> 'en',
 			
-			'rank'					=> \Model_Catalog_Rank::get_default(true),
-			'skin_main'				=> \Model_Catalog_SkinSec::get_default('main', true),
-			'skin_admin'			=> \Model_Catalog_SkinSec::get_default('admin', true),
+			'rank'					=> \Model_Catalog_Rank::getDefault(true),
+			'skin_main'				=> \Model_Catalog_SkinSec::getDefault('main', true),
+			'skin_admin'			=> \Model_Catalog_SkinSec::getDefault('admin', true),
 			
 			# TODO: need to pull these values from the menu
 			'my_links'				=> '',
@@ -99,9 +102,9 @@ class Model_User_Preferences extends \Model {
 	 * @api
 	 * @param 	int 	the user ID
 	 * @param 	array 	an array of data to use
-	 * @return 	bool 	whether everything saved
+	 * @return 	bool
 	 */
-	public static function update_user_preferences($id, array $data)
+	public static function updateUserPreferences($id, array $data)
 	{
 		// load the items
 		$items = static::find()->where('user_id', $id)->get();

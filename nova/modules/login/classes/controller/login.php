@@ -105,12 +105,12 @@ class Controller_Login extends Controller_Base_Login
 
 					case self::SUSPEND_DURING:
 						$error_status = 'warning';
-						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::get_settings('login_lockout_time')."}}]]");
+						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::getItems('login_lockout_time')."}}]]");
 					break;
 
 					case self::SUSPEND_START:
 						$error_status = 'danger';
-						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::get_settings('login_lockout_time')."}}]]");
+						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::getItems('login_lockout_time')."}}]]");
 					break;
 
 					case self::PASS_RESET:

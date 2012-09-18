@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Catalog_Skin extends \Model {
-	
+class Model_Catalog_Skin extends \Model
+{
 	public static $_table_name = 'catalog_skins';
 	
 	public static $_properties = array(
@@ -50,11 +50,11 @@ class Model_Catalog_Skin extends \Model {
 	/**
 	 * Get all items from the catalog.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the status to pull
-	 * @return	object	an object of results
+	 * @return	object
 	 */
-	public static function get_all_items($status = 'active')
+	public static function getItems($status = 'active')
 	{
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();
 		

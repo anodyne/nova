@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Moderation extends \Model {
-	
+class Model_Moderation extends \Model
+{
 	public static $_table_name = 'moderation';
 	
 	public static $_properties = array(

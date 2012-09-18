@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Post extends \Model {
-	
+class Model_Post extends \Model
+{
 	public static $_table_name = 'posts';
 	
 	public static $_properties = array(
@@ -69,6 +69,9 @@ class Model_Post extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'mission' => array(
 			'model_to' => '\\Model_Mission',
@@ -105,14 +108,11 @@ class Model_Post extends \Model {
 	/**
 	 * Get all the comments for a mission entry.
 	 *
-	 *     $post = Model_Post::find(1);
-	 *     $comments = $post->comments();
-	 *
 	 * @api
 	 * @param	string	the status of items to retrieve
-	 * @return	object	an object with all the comments
+	 * @return	object
 	 */
-	public function comments($status = \Status::ACTIVE)
+	public function getComments($status = \Status::ACTIVE)
 	{
 		return \Model_Comment::find('all', array(
 			'where' => array(
@@ -125,9 +125,6 @@ class Model_Post extends \Model {
 	
 	/**
 	 * Display the authors for a mission post.
-	 *
-	 *     $post = Model_Post::find(1);
-	 *     echo $post->showAuthors();
 	 *
 	 * @api
 	 * @param	string	the type of authors to display (characters, users)
@@ -142,7 +139,7 @@ class Model_Post extends \Model {
 			case 'characters':
 				foreach ($this->authors_characters as $a)
 				{
-					$output[] = $a->name();
+					$output[] = $a->getName();
 				}
 			break;
 			

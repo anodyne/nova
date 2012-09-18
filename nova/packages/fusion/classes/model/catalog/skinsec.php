@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Catalog_SkinSec extends \Model {
-	
+class Model_Catalog_SkinSec extends \Model
+{
 	public static $_table_name = 'catalog_skinsecs';
 	
 	public static $_properties = array(
@@ -59,11 +59,11 @@ class Model_Catalog_SkinSec extends \Model {
 	/**
 	 * Get the default skin section catalog item.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the section to pull
-	 * @return	object	the catalog object
+	 * @return	object
 	 */
-	public static function get_default($section, $value_only = false)
+	public static function getDefault($section, $value_only = false)
 	{
 		$result = static::find()
 			->where(array('default', 1))
@@ -78,7 +78,15 @@ class Model_Catalog_SkinSec extends \Model {
 		return $result;
 	}
 
-	public static function get_item($column, $value)
+	/**
+	 * Get the catalog item.
+	 *
+	 * @api
+	 * @param	string	the column to use
+	 * @param	string	the value to use
+	 * @return	object
+	 */
+	public static function getCatalog($column, $value)
 	{
 		$item = static::find()
 			->where($column, $value)

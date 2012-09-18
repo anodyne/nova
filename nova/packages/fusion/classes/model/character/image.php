@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Character_Image extends \Model {
-	
+class Model_Character_Image extends \Model
+{
 	public static $_table_name = 'character_images';
 	
 	public static $_properties = array(
@@ -40,18 +40,4 @@ class Model_Character_Image extends \Model {
 			'type' => 'bigint',
 			'constraint' => 20),
 	);
-	
-	/**
-	 * Create a character image.
-	 *
-	 * @access	public
-	 * @param	array 	an array of data used for creation
-	 * @return	object	the created object
-	 */
-	public static function create_image(array $data)
-	{
-		$record = static::createItem($data);
-		
-		return $record;
-	}
 }

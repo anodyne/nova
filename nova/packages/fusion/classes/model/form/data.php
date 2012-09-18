@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Form_Data extends \Model {
-	
+class Model_Form_Data extends \Model
+{
 	public static $_table_name = 'form_data';
 	
 	public static $_properties = array(
@@ -56,7 +56,15 @@ class Model_Form_Data extends \Model {
 		),
 	);
 
-	public static function get_data($type, $id)
+	/**
+	 * Get specific form data.
+	 *
+	 * @api
+	 * @param	string	the type of data
+	 * @param	int		the ID of the item
+	 * @return	object
+	 */
+	public static function getData($type, $id)
 	{
 		switch ($type)
 		{
@@ -90,9 +98,9 @@ class Model_Form_Data extends \Model {
 	 *
 	 * @api
 	 * @param	array 	the data array to use for creation
-	 * @return	object	the created object
+	 * @return	object
 	 */
-	public static function create_data(array $data)
+	public static function createData(array $data)
 	{
 		$record = \Model_Form_Data::forge();
 		
@@ -113,9 +121,9 @@ class Model_Form_Data extends \Model {
 	 * @param	string	the form to update
 	 * @param	int		the ID to udpate
 	 * @param	array 	a data array of information to update
-	 * @return	bool	whether it was successful or not
+	 * @return	bool
 	 */
-	public static function update_data($type, $id, array $data)
+	public static function updateData($type, $id, array $data)
 	{
 		$results = array();
 		

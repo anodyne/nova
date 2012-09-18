@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Form_Field extends \Model {
-	
+class Model_Form_Field extends \Model
+{
 	public static $_table_name = 'form_fields';
 	
 	public static $_properties = array(
@@ -118,7 +118,16 @@ class Model_Form_Field extends \Model {
 		),
 	);
 
-	public static function get_fields($key, $section = null, $active = true)
+	/**
+	 * Get fields.
+	 *
+	 * @api
+	 * @param	string	the form key
+	 * @param	int		the section ID
+	 * @param	bool	only active items
+	 * @return	object
+	 */
+	public static function getItems($key, $section = null, $active = true)
 	{
 		$items = static::find();
 		$items->where('form_key', $key);
@@ -145,10 +154,10 @@ class Model_Form_Field extends \Model {
 	 * @api
 	 * @return	array
 	 */
-	public function get_values()
+	public function getValues()
 	{
 		// get the values
-		$values = \Model_Form_Value::get_values($this->id);
+		$values = \Model_Form_Value::getItems($this->id);
 
 		// start with an empty array
 		$items = array();

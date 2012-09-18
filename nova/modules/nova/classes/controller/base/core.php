@@ -175,9 +175,9 @@ abstract class Controller_Base_Core extends \Controller_Template
 		$this->_js_data = new \stdClass;
 		
 		// grab the content for the current section
-		$this->_headers		= \Model_SiteContent::get_section_content('header', $controller_name);
-		$this->_messages	= \Model_SiteContent::get_section_content('message', $controller_name);
-		$this->_titles		= \Model_SiteContent::get_section_content('title', $controller_name);
+		$this->_headers		= \Model_SiteContent::getSectionContent('header', $controller_name);
+		$this->_messages	= \Model_SiteContent::getSectionContent('message', $controller_name);
+		$this->_titles		= \Model_SiteContent::getSectionContent('title', $controller_name);
 	}
 	
 	/**

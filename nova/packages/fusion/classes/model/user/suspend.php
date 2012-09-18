@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_User_Suspend extends \Model {
-	
+class Model_User_Suspend extends \Model
+{
 	public static $_table_name = 'users_suspended';
 	
 	public static $_properties = array(
@@ -42,7 +42,14 @@ class Model_User_Suspend extends \Model {
 			'null' => true),
 	);
 
-	public static function clear_item(array $conditions)
+	/**
+	 * Clear the user suspensions out.
+	 *
+	 * @api
+	 * @param	array	the conditions to use
+	 * @return 	void
+	 */
+	public static function clearItem(array $conditions)
 	{
 		// start the find process
 		$items = static::find();

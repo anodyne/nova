@@ -66,8 +66,8 @@ class Sentry_Attempts
 	{
 		static::$limit = array(
 			'enabled'	=> true,
-			'attempts'	=> (int) \Model_Settings::get_settings('login_attempts'),
-			'time'		=> (int) \Model_Settings::get_settings('login_lockout_time'),
+			'attempts'	=> (int) \Model_Settings::getItems('login_attempts'),
+			'time'		=> (int) \Model_Settings::getItems('login_lockout_time'),
 		);
 		$this->login_id = $login_id;
 		$this->ip_address = $ip_address;
@@ -208,12 +208,12 @@ class Sentry_Attempts
 	{
 		if ($this->login_id)
 		{
-			$query = \Model_User_Suspend::clear_item(array('login_id' => $this->login_id));
+			$query = \Model_User_Suspend::clearItem(array('login_id' => $this->login_id));
 		}
 
 		if ($this->ip_address)
 		{
-			$query = \Model_User_Suspend::clear_item(array('ip' => $this->ip_address));
+			$query = \Model_User_Suspend::clearItem(array('ip' => $this->ip_address));
 		}
 
 		$this->attempts = 0;

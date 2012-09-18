@@ -39,7 +39,7 @@ class Observer_Character extends \Orm\Observer
 		{
 			foreach ($fields as $f)
 			{
-				\Model_Form_Data::create_data(array(
+				\Model_Form_Data::createData(array(
 					'form_key' => 'bio',
 					'field_id' => $f->id,
 					'user_id' => 0,

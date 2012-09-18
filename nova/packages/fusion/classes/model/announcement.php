@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Announcement extends \Model {
-	
+class Model_Announcement extends \Model
+{
 	public static $_table_name = 'announcements';
 	
 	public static $_properties = array(
@@ -55,6 +55,9 @@ class Model_Announcement extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'category' => array(
 			'model_to' => '\\Model_AnnouncementCategory',
@@ -94,16 +97,11 @@ class Model_Announcement extends \Model {
 	/**
 	 * Get all the comments for an announcement.
 	 *
-	 * <code>
-	 * $announcement = Model_Announcement::find(1);
-	 * $comments = $announcement->comments();
-	 * </code>
-	 *
 	 * @api
 	 * @param	string	the status of items to retrieve
-	 * @return	object	an object with all the comments
+	 * @return	object
 	 */
-	public function comments($status = \Status::ACTIVE)
+	public function getComments($status = \Status::ACTIVE)
 	{
 		return \Model_Comment::find('all', array(
 			'where' => array(

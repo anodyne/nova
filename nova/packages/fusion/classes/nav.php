@@ -104,7 +104,7 @@ class Nav
 	protected static function getAdminNavData()
 	{
 		// get the items
-		static::$dataAdmin = \Model_Nav::get_nav_items('admin', false);
+		static::$dataAdmin = \Model_Nav::getItems('admin', false);
 
 		// loop through the items
 		foreach (static::$dataAdmin as $key => $item)
@@ -142,7 +142,7 @@ class Nav
 	protected static function getMainNavData()
 	{
 		// get the items
-		static::$dataMain = \Model_Nav::get_nav_items('main', false);
+		static::$dataMain = \Model_Nav::getItems('main', false);
 
 		// loop through the items
 		foreach (static::$dataMain as $key => $item)
@@ -180,7 +180,7 @@ class Nav
 	protected static function getSubNavData($category)
 	{
 		// get the items
-		static::$dataSub = \Model_Nav::get_nav_items('sub', $category);
+		static::$dataSub = \Model_Nav::getItems('sub', $category);
 
 		// loop through the items
 		foreach (static::$dataSub as $key => $item)
@@ -285,7 +285,7 @@ class Nav
 		foreach ($data as $item)
 		{
 			// get the sub nav items under this section
-			$sub = \Model_Nav::get_nav_items($sub_type, $item->category);
+			$sub = \Model_Nav::getItems($sub_type, $item->category);
 
 			// figure out what should be shown
 			$target_output = ($item->url_target == 'offsite') ? ' target="_blank"' : false;

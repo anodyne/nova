@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_PersonalLog extends \Model {
-	
+class Model_PersonalLog extends \Model
+{
 	public static $_table_name = 'personal_logs';
 	
 	public static $_properties = array(
@@ -49,6 +49,9 @@ class Model_PersonalLog extends \Model {
 			'null' => true),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'character' => array(
 			'model_to' => '\\Model_Character',
@@ -69,16 +72,11 @@ class Model_PersonalLog extends \Model {
 	/**
 	 * Get all the comments for a personal log.
 	 *
-	 * <code>
-	 * $log = Model_PersonalLog::find(1);
-	 * $comments = $log->comments();
-	 * </code>
-	 *
 	 * @api
 	 * @param	string	the status of items to retrieve
-	 * @return	object	an object with all the comments
+	 * @return	object
 	 */
-	public function comments($status = \Status::ACTIVE)
+	public function getComments($status = \Status::ACTIVE)
 	{
 		return \Model_Comment::find('all', array(
 			'where' => array(

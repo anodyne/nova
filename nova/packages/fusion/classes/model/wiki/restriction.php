@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Wiki_Restriction extends \Model {
-	
+class Model_Wiki_Restriction extends \Model
+{
 	public static $_table_name = 'wiki_restrictions';
 	
 	public static $_properties = array(

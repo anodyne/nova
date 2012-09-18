@@ -240,20 +240,20 @@ class Controller_Upgradeajax extends \Controller
 					case 'updates':
 					case 'post_count_format':
 					case 'posting_requirement':
-						$new = \Model_Settings::get_settings($s['setting_key'], false);
+						$new = \Model_Settings::getItems($s['setting_key'], false);
 						$new->value = $s['setting_value'];
 						$new->save();
 					break;
 
 					case 'default_email_address':
-						$new = \Model_Settings::get_settings('email_address', false);
+						$new = \Model_Settings::getItems('email_address', false);
 						$new->value = $s['setting_value'];
 						$new->save();
 					break;
 
 					case 'default_email_name':
-						$new = \Model_Settings::get_settings('email_name', false);
-						$new->value = \Model_Settings::get_settings('sim_name');
+						$new = \Model_Settings::getItems('email_name', false);
+						$new->value = \Model_Settings::getItems('sim_name');
 						$new->save();
 					break;
 					
@@ -261,13 +261,13 @@ class Controller_Upgradeajax extends \Controller
 						$start = ($s['setting_key'] == 'email_subject') ? '[' : '';
 						$end = ($s['setting_key'] == 'email_subject') ? ']' : '';
 						
-						$new = \Model_Settings::get_settings($s['setting_key'], false);
-						$new->value = $start.\Model_Settings::get_settings('sim_name').$end;
+						$new = \Model_Settings::getItems($s['setting_key'], false);
+						$new->value = $start.\Model_Settings::getItems('sim_name').$end;
 						$new->save();
 					break;
 					
 					case 'use_mission_notes':
-						$new = \Model_Settings::get_settings($s['setting_key'], false);
+						$new = \Model_Settings::getItems($s['setting_key'], false);
 						$new->value = (int) true;
 						$new->save();
 					break;
@@ -322,13 +322,13 @@ class Controller_Upgradeajax extends \Controller
 				switch ($m['message_key'])
 				{
 					case 'welcome_msg':
-						$new = \Model_SiteContent::get_content('main_index_message', false);
+						$new = \Model_SiteContent::getContent('main_index_message', false);
 						$new->content = $m['message_content'];
 						$new->save();
 					break;
 					
 					case 'welcome_head':
-						$new = \Model_SiteContent::get_content('main_index_header', false);
+						$new = \Model_SiteContent::getContent('main_index_header', false);
 						$new->content = $m['message_content'];
 						$new->save();
 					break;
@@ -364,13 +364,13 @@ class Controller_Upgradeajax extends \Controller
 					break;
 					
 					case 'credits':
-						$new = \Model_SiteContent::get_content('main_credits_message', false);
+						$new = \Model_SiteContent::getContent('main_credits_message', false);
 						$new->content = $m['message_content'];
 						$new->save();
 					break;
 					
 					case 'sim':
-						$new = \Model_SiteContent::get_content('sim_index_message', false);
+						$new = \Model_SiteContent::getContent('sim_index_message', false);
 						$new->content = $m['message_content'];
 						$new->save();
 					break;
@@ -379,7 +379,7 @@ class Controller_Upgradeajax extends \Controller
 					case 'join_post':
 					case 'accept_message':
 					case 'reject_message':
-						$new = \Model_SiteContent::get_content($m['message_key'], false);
+						$new = \Model_SiteContent::getContent($m['message_key'], false);
 						$new->content = $m['message_content'];
 						$new->save();
 					break;
@@ -1467,7 +1467,7 @@ class Controller_Upgradeajax extends \Controller
 		$password = \Security::xss_clean(\Input::post('password'));
 
 		// hash the new password
-		$new_password = \Sentry_User::password_hash($password, \Model_System::get_uid());
+		$new_password = \Sentry_User::password_hash($password, \Model_System::getUid());
 
 		// update all the users with the new password
 		\DB::query('UPDATE '.\DB::table_prefix().'users SET password = "'.$new_password.'"')->execute();
@@ -2481,7 +2481,7 @@ class Controller_Upgradeajax extends \Controller
 				/**
 				 * Update the user.
 				 */
-				\Model_User::update_user($u['userid'], array(
+				\Model_User::updateUser($u['userid'], array(
 					'status' => \Status::toInt($u['status']),
 					'role_id' => ($u['status'] == 'pending' or $u['status'] == 'inactive') 
 						? \Model_Access_Role::USER 
@@ -2492,7 +2492,7 @@ class Controller_Upgradeajax extends \Controller
 				 * User Preferences
 				 */
 				// create the initial preferences
-				\Model_User_Preferences::create_user_preferences($u['userid']);
+				\Model_User_Preferences::createUserPreferences($u['userid']);
 
 				// now change the data
 				$data = array(
@@ -2500,7 +2500,7 @@ class Controller_Upgradeajax extends \Controller
 					'is_game_master' => ($u['is_game_master'] == 'y') ? (int) true : (int) false,
 					'loa' => $u['loa'],
 				);
-				\Model_User_Preferences::update_user_preferences($u['userid'], $data);
+				\Model_User_Preferences::updateUserPreferences($u['userid'], $data);
 
 				/**
 				 * User Moderation

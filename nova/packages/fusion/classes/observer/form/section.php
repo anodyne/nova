@@ -99,7 +99,7 @@ class Observer_Form_Section extends \Orm\Observer
 		$form = $model->form_key;
 
 		// count how many sections we have in this key
-		$sections = \Model_Form_Section::get_sections($form);
+		$sections = \Model_Form_Section::getItems($form);
 
 		if (count($sections) == 1)
 		{

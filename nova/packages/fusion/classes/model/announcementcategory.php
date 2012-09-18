@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_AnnouncementCategory extends \Model {
-	
+class Model_AnnouncementCategory extends \Model
+{
 	public static $_table_name = 'announcement_categories';
 	
 	public static $_properties = array(
@@ -30,6 +30,9 @@ class Model_AnnouncementCategory extends \Model {
 			'default' => \Status::ACTIVE),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_has_many = array(
 		'newsitems' => array(
 			'model_to' => '\\Model_Announcement',

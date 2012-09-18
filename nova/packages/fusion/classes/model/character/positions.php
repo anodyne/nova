@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Character_Positions extends \Model {
-	
+class Model_Character_Positions extends \Model
+{
 	public static $_table_name = 'character_positions';
 	
 	public static $_properties = array(
@@ -40,7 +40,7 @@ class Model_Character_Positions extends \Model {
 	 * @param	string	the column to use (character_id, position_id)
 	 * @return	object
 	 */
-	public static function find_items($value, $column = 'character_id')
+	public static function getItems($value, $column = 'character_id')
 	{
 		if (is_array($value))
 		{

@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Catalog_Module extends \Model {
-	
+class Model_Catalog_Module extends \Model
+{
 	public static $_table_name = 'catalog_modules';
 	
 	public static $_properties = array(
@@ -51,11 +51,11 @@ class Model_Catalog_Module extends \Model {
 	/**
 	 * Get all the modules from the catalog.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the status of modules
-	 * @return	object	an object with the results
+	 * @return	object
 	 */
-	public static function get_all_items($status = \Status::ACTIVE)
+	public static function getItems($status = \Status::ACTIVE)
 	{
 		return static::find()->where('status', $status)->get();
 	}

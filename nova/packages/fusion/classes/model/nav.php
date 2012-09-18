@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Nav extends \Model {
-	
+class Model_Nav extends \Model
+{
 	public static $_table_name = 'navigation';
 	
 	public static $_properties = array(
@@ -64,24 +64,6 @@ class Model_Nav extends \Model {
 			'constraint' => 5,
 			'default' => 1),
 	);
-	
-	/**
-	 * Get a user from the database based on something other than their ID.
-	 *
-	 * @api
-	 * @param	string	the column to use
-	 * @param	mixed	the value to use
-	 * @return	object	a user object
-	 */
-	public static function get_menu_item($column, $value)
-	{
-		if (in_array($column, static::$_properties))
-		{
-			return static::find()->where($column, $value)->get_one();
-		}
-		
-		return false;
-	}
 
 	/**
 	 * Gets the nav items out of the database based on type and category.
@@ -89,10 +71,10 @@ class Model_Nav extends \Model {
 	 * @api
 	 * @param	string	the type of navigation (main, admin, sub, adminsub)
 	 * @param	string	the category of navigation (main, personnel, sim, wiki)
-	 * @param	bool	whether to pull displayed or hidden items (null to pull everything)
+	 * @param	int		the status to pull (null for all)
 	 * @return	object
 	 */
-	public static function get_nav_items($type, $category, $active = \Status::ACTIVE)
+	public static function getItems($type, $category, $active = \Status::ACTIVE)
 	{
 		$query = static::find();
 

@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Form_Section extends \Model {
-	
+class Model_Form_Section extends \Model
+{
 	public static $_table_name = 'form_sections';
 	
 	public static $_properties = array(
@@ -80,7 +80,14 @@ class Model_Form_Section extends \Model {
 		),
 	);
 
-	public static function get_sections($key)
+	/**
+	 * Get sections.
+	 *
+	 * @api
+	 * @param	string	the form
+	 * @return	array
+	 */
+	public static function getItems($key)
 	{
 		$items = static::find()->where('form_key', $key)->order_by('name', 'asc')->get();
 

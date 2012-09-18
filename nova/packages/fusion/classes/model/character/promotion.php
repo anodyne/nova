@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Character_Promotion extends \Model {
-	
+class Model_Character_Promotion extends \Model
+{
 	public static $_table_name = 'character_promotions';
 	
 	public static $_properties = array(

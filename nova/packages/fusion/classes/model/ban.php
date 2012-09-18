@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Ban extends \Model {
-	
+class Model_Ban extends \Model
+{
 	public static $_table_name = 'bans';
 	
 	public static $_properties = array(
@@ -49,7 +49,15 @@ class Model_Ban extends \Model {
 		),
 	);
 
-	public static function find_items($value, $column = 'email')
+	/**
+	 * Get bans.
+	 *
+	 * @api
+	 * @param	string	the value to use
+	 * @param	string	the column to use
+	 * @return	object
+	 */
+	public static function getItems($value, $column = 'email')
 	{
 		return static::find()->where($column, $value)->get();
 	}

@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_SiteContent extends \Model {
-	
+class Model_SiteContent extends \Model
+{
 	public static $_table_name = 'site_contents';
 	
 	public static $_properties = array(
@@ -51,15 +51,12 @@ class Model_SiteContent extends \Model {
 	/**
 	 * Get a specific piece of content from the database.
 	 *
-	 *     Model_SiteContent::get_content('welcome_msg');
-	 *     Model_SiteContent::get_content('welcome_msg', false);
-	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the key of the content to get
 	 * @param	boolean	whether to pull only the value or the full object
-	 * @return	mixed	a string if $value_only is TRUE, else an object
+	 * @return	mixed
 	 */
-	public static function get_content($key, $value_only = true)
+	public static function getContent($key, $value_only = true)
 	{
 		$query = static::find()->where('key', $key)->get_one();
 		
@@ -77,9 +74,9 @@ class Model_SiteContent extends \Model {
 	 * @api
 	 * @param	string	the type of message to pull
 	 * @param	string	the section to pull for
-	 * @return	array 	an array of values
+	 * @return	array
 	 */
-	public static function get_section_content($type, $section)
+	public static function getSectionContent($type, $section)
 	{
 		try
 		{
@@ -111,7 +108,7 @@ class Model_SiteContent extends \Model {
 						foreach ($arr[2] as $k => $v)
 						{
 							// get the item from the settings table
-							$replace = \Model_Settings::get_settings($v);
+							$replace = \Model_Settings::getItems($v);
 							
 							// set the new content
 							$content = str_replace($arr[0][$k], $replace, $content);
@@ -139,11 +136,11 @@ class Model_SiteContent extends \Model {
 	 * update multiple settings at the same time. The data array just needs to
 	 * stay in the (setting key) => (setting value) format.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	array 	the data array for updating the site content
 	 * @return	void
 	 */
-	public static function update_site_content(array $data)
+	public static function updateSiteContent(array $data)
 	{
 		foreach ($data as $key => $value)
 		{
@@ -164,7 +161,7 @@ class Model_SiteContent extends \Model {
 				\Cache::delete('content_'.$t.'_'.$section);
 				
 				// now grab that content again (which will automatically re-cache everything)
-				static::get_section_content($t, $section);
+				static::getSectionContent($t, $section);
 			}
 		}
 	}

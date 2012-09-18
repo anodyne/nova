@@ -30,7 +30,7 @@ class QuickInstall
 			$dir = \File::read_dir(APPPATH.'modules');
 
 			// get all the installed modules
-			$modules = \Model_Catalog_Module::get_all_items();
+			$modules = \Model_Catalog_Module::getItems();
 
 			if (count($modules) > 0)
 			{
@@ -132,7 +132,7 @@ class QuickInstall
 			$dir = \File::read_dir(APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/');
 
 			// get all the rank sets locations
-			$ranks = \Model_Catalog_Rank::get_all_items();
+			$ranks = \Model_Catalog_Rank::getItems();
 
 			if (count($ranks) > 0)
 			{
@@ -192,7 +192,7 @@ class QuickInstall
 			$dir = self::directory_list(APPPATH.'views/');
 			
 			// get all the skin catalogue items
-			$skins = Model_CatalogueSkin::get_all_items();
+			$skins = Model_CatalogueSkin::getItems();
 			
 			if (count($skins) > 0)
 			{
@@ -314,7 +314,7 @@ class QuickInstall
 			$dir = self::directory_list(MODPATH.'app/views/components/widgets/');
 			
 			// get all the installed widgets
-			$widgets = Model_CatalogueWidget::get_all_items();
+			$widgets = Model_CatalogueWidget::getItems();
 			
 			if (count($widgets) > 0)
 			{

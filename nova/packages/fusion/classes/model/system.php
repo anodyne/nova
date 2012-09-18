@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_System extends \Model {
-	
+class Model_System extends \Model
+{
 	public static $_table_name = 'system_info';
 	
 	public static $_properties = array(
@@ -50,10 +50,10 @@ class Model_System extends \Model {
 	/**
 	 * Get the RPG unique identifier.
 	 *
-	 * @access	public
-	 * @return	string	the UID
+	 * @api
+	 * @return	string
 	 */
-	public static function get_uid()
+	public static function getUid()
 	{
 		return static::find('first')->uid;
 	}
@@ -61,10 +61,11 @@ class Model_System extends \Model {
 	/**
 	 * Update the system information.
 	 *
-	 * @access	public
-	 * @return	object	the object that was just updated
+	 * @api
+	 * @param	array	the content to use in the update
+	 * @return	object
 	 */
-	public static function update_info(array $data)
+	public static function updateInfo(array $data)
 	{
 		// get the first record in the table
 		$record = static::find('first');

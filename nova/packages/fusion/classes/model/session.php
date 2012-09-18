@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Session extends \Model {
-	
+class Model_Session extends \Model
+{
 	public static $_table_name = 'sessions';
 	
 	public static $_properties = array(

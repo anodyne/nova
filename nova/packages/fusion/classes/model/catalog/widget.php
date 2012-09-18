@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Catalog_Widget extends \Model {
-	
+class Model_Catalog_Widget extends \Model
+{
 	public static $_table_name = 'catalog_widgets';
 	
 	public static $_properties = array(
@@ -48,11 +48,11 @@ class Model_Catalog_Widget extends \Model {
 	/**
 	 * Get all items from the catalog.
 	 *
-	 * @access	public
+	 * @api
 	 * @param	string	the status to pull
-	 * @return	object	an object of results
+	 * @return	object
 	 */
-	public static function get_all_items($status = \Status::ACTIVE)
+	public static function getItems($status = \Status::ACTIVE)
 	{
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();
 		

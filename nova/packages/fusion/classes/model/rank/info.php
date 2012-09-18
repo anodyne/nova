@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Rank_Info extends \Model {
-	
+class Model_Rank_Info extends \Model
+{
 	public static $_table_name = 'rank_info_';
 	
 	public static $_properties = array(
@@ -81,13 +81,11 @@ class Model_Rank_Info extends \Model {
 	/**
 	 * Returns all items from the database.
 	 *
-	 * This method overrides the default `find_items` method in the Model class.
-	 *
 	 * @api
 	 * @param	bool	whether to get only displayed items or not
 	 * @return	void
 	 */
-	public static function find_items($only_active = false)
+	public static function getItems($only_active = false)
 	{
 		// start the find
 		$query = static::find();

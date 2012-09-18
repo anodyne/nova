@@ -11,8 +11,8 @@
  
 namespace Fusion;
 
-class Model_Wiki_Page extends \Model {
-	
+class Model_Wiki_Page extends \Model
+{
 	public static $_table_name = 'wiki_pages';
 	
 	public static $_properties = array(
@@ -59,16 +59,11 @@ class Model_Wiki_Page extends \Model {
 	/**
 	 * Get all the comments for a wiki page.
 	 *
-	 * <code>
-	 * $page = Model_Wiki_Page::find(1);
-	 * $comments = $page->comments();
-	 * </code>
-	 *
 	 * @api
 	 * @param	string	the status of items to retrieve
-	 * @return	object	an object with all the comments
+	 * @return	object
 	 */
-	public function comments($status = 'activated')
+	public function getComments($status = 'activated')
 	{
 		return \Model_Comment::find('all', array(
 			'where' => array(

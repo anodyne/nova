@@ -20,7 +20,7 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 						<a href="<?php echo Uri::create('admin/character/edit/'.$c->id);?>" class="btn btn-small"><?php echo lang('action.edit', 1);?></a>
 					</div>
 
-					<h3><?php echo $c->name(true, true);?></h3>
+					<h3><?php echo $c->getName(true, true);?></h3>
 				</div>
 			</div>
 		</li>

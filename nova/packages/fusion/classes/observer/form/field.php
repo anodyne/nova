@@ -51,7 +51,7 @@ class Observer_Form_Field extends \Orm\Observer
 		/**
 		 * Data cleanup
 		 */
-		$data = \Model_Form_Data::get_data('field', $model->id);
+		$data = \Model_Form_Data::getData('field', $model->id);
 
 		if ($data !== null)
 		{
@@ -138,7 +138,7 @@ class Observer_Form_Field extends \Orm\Observer
 		{
 			case 'bio':
 				// get all the active characters
-				$characters = \Model_Character::find_characters();
+				$characters = \Model_Character::getCharacters();
 
 				if (count($characters) > 0)
 				{
@@ -150,14 +150,14 @@ class Observer_Form_Field extends \Orm\Observer
 						$data['item_id'] = 0;
 
 						// create the data
-						\Model_Form_Data::create_data($data);
+						\Model_Form_Data::createData($data);
 					}
 				}
 			break;
 
 			case 'user':
 				// get all the active users
-				$users = \Model_User::find_users();
+				$users = \Model_User::getItems();
 
 				if (count($users) > 0)
 				{
@@ -169,7 +169,7 @@ class Observer_Form_Field extends \Orm\Observer
 						$data['item_id'] = 0;
 
 						// create the data
-						\Model_Form_Data::create_data($data);
+						\Model_Form_Data::createData($data);
 					}
 				}
 			break;
@@ -188,7 +188,7 @@ class Observer_Form_Field extends \Orm\Observer
 						$data['character_id'] = 0;
 
 						// create the data
-						\Model_Form_Data::create_data($data);
+						\Model_Form_Data::createData($data);
 					}
 				}
 			break;
@@ -207,7 +207,7 @@ class Observer_Form_Field extends \Orm\Observer
 						$data['character_id'] = 0;
 
 						// create the data
-						\Model_Form_Data::create_data($data);
+						\Model_Form_Data::createData($data);
 					}
 				}
 			break;

@@ -31,7 +31,7 @@ abstract class Controller_Main extends Controller_Base_Main
 		$this->_view = 'main/credits';
 
 		// load the credits
-		$credits = \Model_SiteContent::get_content('credits_perm');
+		$credits = \Model_SiteContent::getContent('credits_perm');
 		$credits.= "\r\n\r\n".$this->_section_info->skins->credits;
 		$credits.= "\r\n\r\nRank credits go here";
 
@@ -95,7 +95,7 @@ abstract class Controller_Main extends Controller_Base_Main
 						'user_id' 			=> $user->id,
 						'user_name' 		=> $user->name,
 						'character_id' 		=> $char->id,
-						'character_name'	=> $char->name(false, false),
+						'character_name'	=> $char->getName(false, false),
 						'position_id' 		=> (int) \Security::xss_clean(\Input::post('position')),
 						'sample_post' 		=> \Security::xss_clean(\Input::post('sample_post')),
 					), true);
@@ -115,7 +115,7 @@ abstract class Controller_Main extends Controller_Base_Main
 						$form_key = \Model_Form_Field::find($field)->form_key;
 
 						// insert the data
-						\Model_Form_Data::create_data(array(
+						\Model_Form_Data::createData(array(
 							'field_id'		=> $field,
 							'value'			=> $value,
 							'user_id'		=> $user->id,
@@ -141,7 +141,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			}
 
 			// set the content manually
-			$this->_data->message = \Model_SiteContent::get_content('main_join_message');
+			$this->_data->message = \Model_SiteContent::getContent('main_join_message');
 
 			// build the character form
 			$this->_data->character = \NovaForm::build('character', $this->skin);
@@ -156,17 +156,17 @@ abstract class Controller_Main extends Controller_Base_Main
 			$this->_data->position = $position;
 
 			// set the character join help
-			$this->_data->characterJoinHelp = \Markdown::parse(\Model_SiteContent::get_content('join_character_help'));
+			$this->_data->characterJoinHelp = \Markdown::parse(\Model_SiteContent::getContent('join_character_help'));
 
 			// get the sample post content
-			$this->_data->samplePostContent = \Model_SiteContent::get_content('join_sample_post');
+			$this->_data->samplePostContent = \Model_SiteContent::getContent('join_sample_post');
 		}
 		else
 		{
 			$this->_view = 'main/join_coppa';
 
 			// set the content manually
-			$this->_data->message = \Model_SiteContent::get_content('main_join_coppa_message');
+			$this->_data->message = \Model_SiteContent::getContent('main_join_coppa_message');
 		}
 
 		return;
@@ -265,7 +265,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			$dataAsObj->position[0]
 		);*/
 		
-		//\Debug::dump(\Model_User::find_users());
+		//\Debug::dump(\Model_User::getItems());
 		
 		$rev1 = \Model_User::find(1)->appReviews;
 		$rev2 = \Model_User::query()->related('appReviews')
@@ -276,7 +276,7 @@ abstract class Controller_Main extends Controller_Base_Main
 			$password = \Str::random();
 
 		\Debug::dump(
-			\Model_Catalog_Rank::get_default(true)
+			\Model_Catalog_Rank::getDefault(true)
 		);
 		
 		return;
