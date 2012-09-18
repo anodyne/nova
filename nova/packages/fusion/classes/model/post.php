@@ -127,13 +127,13 @@ class Model_Post extends \Model {
 	 * Display the authors for a mission post.
 	 *
 	 *     $post = Model_Post::find(1);
-	 *     echo $post->display_authors();
+	 *     echo $post->showAuthors();
 	 *
 	 * @api
 	 * @param	string	the type of authors to display (characters, users)
 	 * @return	string	the string of authors
 	 */
-	public function display_authors($type = 'characters')
+	public function showAuthors($type = 'characters')
 	{
 		$output = array();
 		
