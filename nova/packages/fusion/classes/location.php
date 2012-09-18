@@ -74,7 +74,7 @@ class Location
 	public static function asset($image, $return = 'image', $attr = array())
 	{
 		// find the path to the image
-		$path = Location::_find_image('asset', $image);
+		$path = static::findImage('asset', $image);
 		
 		if ($return == 'image')
 		{
@@ -116,7 +116,7 @@ class Location
 	public static function image($image, $skin, $section, $return = 'image', $attr = array())
 	{
 		// find the path to the image
-		$path = static::_find_image('image', $image, $skin, $section);
+		$path = static::findImage('image', $image, $skin, $section);
 		
 		if ($return == 'image')
 		{
@@ -196,7 +196,7 @@ class Location
 	 * @return	string	the path to the image
 	 * @throws	NovaImageNotFoundException
 	 */
-	protected static function _find_image()
+	protected static function findImage()
 	{
 		// get the complete list of arguments
 		$args = func_get_args();

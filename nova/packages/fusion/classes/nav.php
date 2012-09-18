@@ -18,22 +18,22 @@ class Nav
 	/**
 	 * @var	array	an array of data for the main nav
 	 */
-	protected static $_data_main;
+	protected static $dataMain;
 
 	/**
 	 * @var	array	an array of data for the admin nav
 	 */
-	protected static $_data_admin;
+	protected static $dataAdmin;
 
 	/**
 	 * @var	array	an array of data for the sub nav
 	 */
-	protected static $_data_sub;
+	protected static $dataSub;
 
 	/**
 	 * @var	string	the final output of the nav
 	 */
-	protected static $_output;
+	protected static $output;
 
 	/**
 	 * Display the navigation item requested.
@@ -52,36 +52,36 @@ class Nav
 			{
 				case 'admin':
 					// generate the data
-					static::_gather_admin_nav_data();
+					static::getAdminNavData();
 
 					// generate the nav
-					static::_generate_dropdown_nav(static::$_data_admin, 'adminsub');
+					static::buildDropdownNav(static::$dataAdmin, 'adminsub');
 				break;
 
 				case 'main':
 					// generate the data
-					static::_gather_main_nav_data();
+					static::getMainNavData();
 
 					if ($style == 'classic')
 					{
 						// generate the classic menu
-						static::_generate_classic_main_nav();
+						static::buildClassicMainNav();
 					}
 					elseif ($style == 'dropdown')
 					{
 						// generate the classic menu
-						static::_generate_dropdown_nav(static::$_data_main);
+						static::buildDropdownNav(static::$dataMain);
 					}
 				break;
 
 				case 'sub':
 					// generate the data
-					static::_gather_sub_nav_data($category);
+					static::getSubNavData($category);
 
 					if ($style == 'classic')
 					{
 						// generate the classic menu
-						static::_generate_classic_sub_nav();
+						static::buildClassicSubNav();
 					}
 				break;
 			}
@@ -89,10 +89,10 @@ class Nav
 		elseif ($style == 'user')
 		{
 			// generate the user nav
-			static::_generate_user_nav();
+			static::buildUserNav();
 		}
 
-		return static::$_output;
+		return static::$output;
 	}
 
 	/**
@@ -101,17 +101,17 @@ class Nav
 	 * @internal
 	 * @return	void
 	 */
-	protected static function _gather_admin_nav_data()
+	protected static function getAdminNavData()
 	{
 		// get the items
-		static::$_data_admin = \Model_Nav::get_nav_items('admin', false);
+		static::$dataAdmin = \Model_Nav::get_nav_items('admin', false);
 
 		// loop through the items
-		foreach (static::$_data_admin as $key => $item)
+		foreach (static::$dataAdmin as $key => $item)
 		{
 			if (($item->needs_login == 'y' and \Sentry::check() === false) or ($item->needs_login == 'n' and \Sentry::check() === true))
 			{
-				unset(static::$_data_admin[$key]);
+				unset(static::$dataAdmin[$key]);
 			}
 
 			if ( ! empty($item->access))
@@ -127,7 +127,7 @@ class Nav
 
 				if ($access === false or ($access === true and $level === false))
 				{
-					unset(static::$_data_admin[$key]);
+					unset(static::$dataAdmin[$key]);
 				}
 			}
 		}
@@ -139,17 +139,17 @@ class Nav
 	 * @internal
 	 * @return	void
 	 */
-	protected static function _gather_main_nav_data()
+	protected static function getMainNavData()
 	{
 		// get the items
-		static::$_data_main = \Model_Nav::get_nav_items('main', false);
+		static::$dataMain = \Model_Nav::get_nav_items('main', false);
 
 		// loop through the items
-		foreach (static::$_data_main as $key => $item)
+		foreach (static::$dataMain as $key => $item)
 		{
 			if (($item->needs_login == 'y' and \Sentry::check() === false) or ($item->needs_login == 'n' and \Sentry::check() === true))
 			{
-				unset(static::$_data_main[$key]);
+				unset(static::$dataMain[$key]);
 			}
 
 			if ( ! empty($item->access))
@@ -165,7 +165,7 @@ class Nav
 
 				if ($access === false or ($access === true and $level === false))
 				{
-					unset(static::$_data_main[$key]);
+					unset(static::$dataMain[$key]);
 				}
 			}
 		}
@@ -177,17 +177,17 @@ class Nav
 	 * @internal
 	 * @return	void
 	 */
-	protected static function _gather_sub_nav_data($category)
+	protected static function getSubNavData($category)
 	{
 		// get the items
-		static::$_data_sub = \Model_Nav::get_nav_items('sub', $category);
+		static::$dataSub = \Model_Nav::get_nav_items('sub', $category);
 
 		// loop through the items
-		foreach (static::$_data_sub as $key => $item)
+		foreach (static::$dataSub as $key => $item)
 		{
 			if (($item->needs_login == 'y' and \Sentry::check() === false) or ($item->needs_login == 'n' and \Sentry::check() === true))
 			{
-				unset(static::$_data_main[$key]);
+				unset(static::$dataSub[$key]);
 			}
 
 			if ( ! empty($item->access))
@@ -203,7 +203,7 @@ class Nav
 
 				if ( ! $level)
 				{
-					unset(static::$_data_sub[$key]);
+					unset(static::$dataSub[$key]);
 				}
 			}
 		}
@@ -215,12 +215,12 @@ class Nav
 	 * @internal
 	 * @return	void
 	 */
-	protected static function _generate_classic_main_nav()
+	protected static function buildClassicMainNav()
 	{
 		// open the nav
 		$output = '<ul class="nav">';
 
-		foreach (static::$_data_main as $item)
+		foreach (static::$dataMain as $item)
 		{
 			// get the url segments
 			$segments = explode('/', $item->url);
@@ -242,7 +242,7 @@ class Nav
 		$output.= '</ul>';
 
 		// send the final output to the class
-		static::$_output = $output;
+		static::$output = $output;
 	}
 
 	/**
@@ -251,12 +251,12 @@ class Nav
 	 * @internal
 	 * @return	void
 	 */
-	protected static function _generate_classic_sub_nav()
+	protected static function buildClassicSubNav()
 	{
 		// open the nav
 		$output = '<ul>';
 
-		foreach (static::$_data_sub as $item)
+		foreach (static::$dataSub as $item)
 		{
 			if ($item->order == 0 and $item->group != 0)
 			{
@@ -274,10 +274,10 @@ class Nav
 		$output.= '</ul>';
 
 		// send the final output to the class
-		static::$_output = $output;
+		static::$output = $output;
 	}
 
-	protected static function _generate_dropdown_nav($data, $sub_type = 'sub')
+	protected static function buildDropdownNav($data, $sub_type = 'sub')
 	{
 		// open the nav
 		$output = '<ul class="nav">';
@@ -337,7 +337,7 @@ class Nav
 		$output.= '</ul>';
 
 		// send the final output to the class
-		static::$_output = $output;
+		static::$output = $output;
 	}
 
 	/**
@@ -348,7 +348,7 @@ class Nav
 	 * @internal
 	 * @return	void
 	 */
-	protected static function _generate_user_nav()
+	protected static function buildUserNav()
 	{
 		if (\Sentry::check())
 		{
@@ -475,6 +475,6 @@ class Nav
 		}
 
 		// dump the output into the class
-		static::$_output = $output;
+		static::$output = $output;
 	}
 }

@@ -52,7 +52,7 @@
 				<p class="alert alert-danger">
 			<?php endif;?>
 
-			<strong><?php echo ucwords(Status::translate_to_string($app->status));?></strong></p>
+			<strong><?php echo ucwords(Status::toString($app->status));?></strong></p>
 		<?php endif;?>
 
 		<?php if ($votes->mine): ?>

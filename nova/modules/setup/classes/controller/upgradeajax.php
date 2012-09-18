@@ -1971,7 +1971,7 @@ class Controller_Upgradeajax extends \Controller
 				 * Update the character.
 				 */
 				\Model_Character::update_item($c['id'], array(
-					'status' => \Status::translate_from_string($c['status']),
+					'status' => \Status::toInt($c['status']),
 				));
 
 				\Model_Character_Positions::create_item(array(
@@ -2482,7 +2482,7 @@ class Controller_Upgradeajax extends \Controller
 				 * Update the user.
 				 */
 				\Model_User::update_user($u['userid'], array(
-					'status' => \Status::translate_from_string($u['status']),
+					'status' => \Status::toInt($u['status']),
 					'role_id' => ($u['status'] == 'pending' or $u['status'] == 'inactive') 
 						? \Model_Access_Role::USER 
 						: \Model_Access_Role::ACTIVE,

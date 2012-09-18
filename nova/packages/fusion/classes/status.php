@@ -24,7 +24,7 @@ class Status
 	 * @param	int		the status to translate
 	 * @return	int
 	 */
-	public static function translate_to_string($status)
+	public static function toString($status)
 	{
 		switch ($status)
 		{
@@ -67,7 +67,7 @@ class Status
 	 * @param	string	the text to translate from
 	 * @return	int
 	 */
-	public static function translate_from_string($str)
+	public static function toInt($str)
 	{
 		switch ($str)
 		{
