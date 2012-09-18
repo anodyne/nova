@@ -53,7 +53,7 @@ class NovaMail
 			$mailer = static::setup();
 
 			// set up the users by email format preference
-			$to = static::_split_users($data['to']);
+			$to = static::splitUsers($data['to']);
 
 			// build the basic message
 			$message = \Swift_Message::newInstance()
@@ -84,7 +84,7 @@ class NovaMail
 			if (array_key_exists('cc', $data))
 			{
 				// split the users based on email format preferences
-				$cc = static::_split_users($data['cc']);
+				$cc = static::splitUsers($data['cc']);
 
 				// add the CC to the emails
 				$html->setCc($cc['html']);
@@ -95,7 +95,7 @@ class NovaMail
 			if (array_key_exists('bcc', $data))
 			{
 				// split the users based on email format preferences
-				$bcc = static::_split_users($data['bcc']);
+				$bcc = static::splitUsers($data['bcc']);
 
 				// add the BCC to the emails
 				$html->setBcc($bcc['html']);
@@ -166,7 +166,7 @@ class NovaMail
 	 * @param	array	an array of user IDs
 	 * @return	array
 	 */
-	protected static function _split_users(array $users)
+	protected static function splitUsers(array $users)
 	{
 		// create an array for storing users
 		$retval = array();

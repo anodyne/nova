@@ -161,7 +161,7 @@ class Controller_Install extends Controller_Base_Setup
 						));
 						
 						// create the user
-						$crUser = \Model_User::create_item(array(
+						$crUser = \Model_User::createItem(array(
 							'name' => $name,
 							'email' => $email,
 							'password' => $password,
@@ -176,7 +176,7 @@ class Controller_Install extends Controller_Base_Setup
 						));
 						
 						// create the character
-						$crCharacter = \Model_Character::create_item(array(
+						$crCharacter = \Model_Character::createItem(array(
 							'user_id' => $crUser->id,
 							'first_name' => $first_name,
 							'last_name' => $last_name,
@@ -186,7 +186,7 @@ class Controller_Install extends Controller_Base_Setup
 						), true);
 
 						// create the position record
-						\Model_Character_Positions::create_item(array(
+						\Model_Character_Positions::createItem(array(
 							'position_id' => $position,
 							'character_id' => $crCharacter->id,
 							'primary' => (int) true

@@ -109,7 +109,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if ($action == 'comment')
 					{
 						// add the comment
-						\Model_Application_Response::create_item(array(
+						\Model_Application_Response::createItem(array(
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::COMMENT,
@@ -128,7 +128,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					if ($action == 'email')
 					{
 						// add the comment
-						\Model_Application_Response::create_item(array(
+						\Model_Application_Response::createItem(array(
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::EMAIL,
@@ -217,7 +217,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 						$app->save();
 
 						// add the response
-						\Model_Application_Response::create_item(array(
+						\Model_Application_Response::createItem(array(
 							'app_id'	=> $app->id,
 							'user_id'	=> \Sentry::user()->id,
 							'type'		=> \Model_Application_Response::RESPONSE,
@@ -378,7 +378,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'create')
 				{
-					$item = \Model_Application_Rule::create_item(\Security::xss_clean(\Input::post()));
+					$item = \Model_Application_Rule::createItem(\Security::xss_clean(\Input::post()));
 
 					if ($item)
 					{
@@ -402,7 +402,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'update')
 				{
-					$item = \Model_Application_Rule::update_item($rule_id, \Security::xss_clean(\Input::post()));
+					$item = \Model_Application_Rule::updateItem($rule_id, \Security::xss_clean(\Input::post()));
 
 					if ($item)
 					{
@@ -425,7 +425,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_level('character.create', 2) and $action == 'delete')
 				{
-					$item = \Model_Application_Rule::delete_item($rule_id);
+					$item = \Model_Application_Rule::deleteItem($rule_id);
 
 					if ($item)
 					{

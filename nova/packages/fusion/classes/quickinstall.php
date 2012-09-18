@@ -78,7 +78,7 @@ class QuickInstall
 					$data = json_decode($content);
 					
 					// create the item
-					\Model_Catalog_Module::create_item($data);
+					\Model_Catalog_Module::createItem($data);
 				}
 			}
 		}
@@ -111,7 +111,7 @@ class QuickInstall
 				$data = json_decode($content);
 				
 				// create the item
-				\Model_Catalog_Module::create_item($data);
+				\Model_Catalog_Module::createItem($data);
 			}
 		}
 	}
@@ -160,7 +160,7 @@ class QuickInstall
 					$data = json_decode($content);
 
 					// create the item
-					\Model_Catalog_Rank::create_item($data);
+					\Model_Catalog_Rank::createItem($data);
 				}
 			}
 		}
@@ -177,7 +177,7 @@ class QuickInstall
 				$data = json_decode($content);
 				
 				// create the item
-				\Model_Catalog_Rank::create_item($data);
+				\Model_Catalog_Rank::createItem($data);
 			}
 		}
 	}
@@ -243,7 +243,7 @@ class QuickInstall
 						);
 						
 						// create the skin
-						Model_CatalogueSkin::create_item($data_skin);
+						Model_CatalogueSkin::createItem($data_skin);
 						
 						// go through and add the sections
 						foreach ($data->sections as $v)
@@ -257,7 +257,7 @@ class QuickInstall
 							);
 							
 							// create the section
-							Model_CatalogueSkinSec::create_item($data_section);
+							Model_CatalogueSkinSec::createItem($data_section);
 						}
 					}
 				}
@@ -283,7 +283,7 @@ class QuickInstall
 				);
 				
 				// create the skin
-				Model_CatalogueSkin::create_item($data_skin);
+				Model_CatalogueSkin::createItem($data_skin);
 				
 				// go through and add the sections
 				foreach ($data->sections as $v)
@@ -297,7 +297,7 @@ class QuickInstall
 					);
 					
 					// create the section
-					Model_CatalogueSkinSec::create_item($data_section);
+					Model_CatalogueSkinSec::createItem($data_section);
 				}
 			}
 		}
@@ -354,7 +354,7 @@ class QuickInstall
 					);
 					
 					// create the item
-					Model_CatalogueWidget::create_item($data_widget);
+					Model_CatalogueWidget::createItem($data_widget);
 				}
 			}
 		}
@@ -380,7 +380,7 @@ class QuickInstall
 				);
 				
 				// create the item
-				Model_CatalogueWidget::create_item($data_widget);
+				Model_CatalogueWidget::createItem($data_widget);
 			}
 		}
 		*/

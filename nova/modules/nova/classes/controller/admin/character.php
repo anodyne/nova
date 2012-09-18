@@ -82,9 +82,9 @@ class Controller_Admin_Character extends Controller_Base_Admin
 		}
 
 		// get the form elements
-		$tabs = \Model_Form_Tab::find_form_items('character', true);
-		$sections = \Model_Form_Section::find_form_items('character', true);
-		$fields = \Model_Form_Field::find_form_items('character', true);
+		$tabs = \Model_Form_Tab::getFormItems('character', true);
+		$sections = \Model_Form_Section::getFormItems('character', true);
+		$fields = \Model_Form_Field::getFormItems('character', true);
 		$content = \Model_Form_Data::get_data('character', $id);
 		$this->_data->form = \Model_Form::get_form('character');
 

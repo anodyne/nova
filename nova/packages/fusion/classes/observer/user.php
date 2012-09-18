@@ -51,7 +51,7 @@ class Observer_User extends \Orm\Observer
 		/**
 		 * Fill the user rows for the dynamic form with blank data for editing later.
 		 */
-		$fields = \Model_Form_Field::find_form_items('user');
+		$fields = \Model_Form_Field::getFormItems('user');
 		
 		if (count($fields) > 0)
 		{

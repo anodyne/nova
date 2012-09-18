@@ -15,6 +15,68 @@ namespace Fusion;
 class Utility
 {
 	/**
+	 * Pulls the image index arrays from the base as well as the current skin.
+	 *
+	 * <code>
+	 * $image_index = Utility::getImageIndex('default');
+	 * </code>
+	 *
+	 * @api
+	 * @param	string	the current skin
+	 * @return 	array
+	 */
+	public static function getImageIndex($skin)
+	{
+		// load the image index from the nova module first
+		$common_path = \Finder::search('views', 'nova::images');
+		$common_index = \Fuel::load($common_path);
+		
+		// load the current skin's image index (if it has one)
+		$skin_path = \Finder::search('views', $skin.'/images');
+		$skin_index = ($skin_path !== false) ? \Fuel::load($skin_path) : array();
+		
+		// merge the files into an array
+		$image_index = array_merge( (array) $common_index, (array) $skin_index);
+		
+		return $image_index;
+	}
+
+	/**
+	 * Get the current rank set, whether it's the user's preference or the
+	 * system default.
+	 *
+	 * @api
+	 * @return	string
+	 */
+	public static function getRank()
+	{
+		if (\Sentry::check())
+		{
+			return \Sentry::user()->get()->preferences('rank');
+		}
+
+		return \Model_Settings::get_settings('rank');
+	}
+
+	/**
+	 * Get the current skin for a given section, whether it's the user's
+	 * preference or the system default.
+	 *
+	 * @api
+	 * @param	string	the section
+	 * @return	string
+	 */
+	public static function getSkin($section)
+	{
+		if (\Sentry::check())
+		{
+			return \Sentry::user()->get()->preferences('skin_'.$section);
+		}
+
+		return \Model_Settings::get_settings('skin_'.$section);
+	}
+
+	/**
 	 * Check for updates to the system.
 	 *
 	 * 0 - no updates
@@ -23,13 +85,9 @@ class Utility
 	 * 3 - incremental update (3.0.1 => 3.0.2)
 	 *
 	 * @api
-	 * @uses	Config::load
-	 * @uses	Config::get
-	 * @uses	Model_Settings::get_settings
-	 * @uses	Model_System::find
 	 * @return 	mixed	false if there are no updates, an object with information if there are
 	 */
-	public static function check_for_updates()
+	public static function getUpdates()
 	{
 		if (ini_get('allow_url_fopen'))
 		{
@@ -76,70 +134,6 @@ class Utility
 		}
 		
 		return false;
-	}
-
-	/**
-	 * Pulls the image index arrays from the base as well as the current skin.
-	 *
-	 * <code>
-	 * $image_index = Utility::get_image_index('default');
-	 * </code>
-	 *
-	 * @api
-	 * @uses	Finder::search
-	 * @uses	Fuel::load
-	 * @param	string	the current skin
-	 * @return 	array 	the image index array
-	 */
-	public static function get_image_index($skin)
-	{
-		// load the image index from the nova module first
-		$common_path = \Finder::search('views', 'nova::images');
-		$common_index = \Fuel::load($common_path);
-		
-		// load the current skin's image index (if it has one)
-		$skin_path = \Finder::search('views', $skin.'/images');
-		$skin_index = ($skin_path !== false) ? \Fuel::load($skin_path) : array();
-		
-		// merge the files into an array
-		$image_index = array_merge( (array) $common_index, (array) $skin_index);
-		
-		return $image_index;
-	}
-
-	/**
-	 * Get the current rank set, whether it's the user's preference or the
-	 * system default.
-	 *
-	 * @api
-	 * @return	string
-	 */
-	public static function get_rank()
-	{
-		if (\Sentry::check())
-		{
-			return \Sentry::user()->get()->preferences('rank');
-		}
-
-		return \Model_Settings::get_settings('rank');
-	}
-
-	/**
-	 * Get the current skin for a given section, whether it's the user's
-	 * preference or the system default.
-	 *
-	 * @api
-	 * @param	string	the section
-	 * @return	string
-	 */
-	public static function get_skin($section)
-	{
-		if (\Sentry::check())
-		{
-			return \Sentry::user()->get()->preferences('skin_'.$section);
-		}
-
-		return \Model_Settings::get_settings('skin_'.$section);
 	}
 
 	/**

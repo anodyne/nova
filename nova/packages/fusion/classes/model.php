@@ -29,7 +29,7 @@ class Model extends \Orm\Model
 	 * @param	bool	should the data be filtered?
 	 * @return	mixed
 	 */
-	public static function create_item($data, $return_object = false, $filter = true)
+	public static function createItem($data, $return_object = false, $filter = true)
 	{
 		// create a forge
 		$item = static::forge();
@@ -86,7 +86,7 @@ class Model extends \Orm\Model
 	 * @param	bool	is this for a search?
 	 * @return	object
 	 */
-	public static function find_item($column, $value, $search = false)
+	public static function getItem($column, $value, $search = false)
 	{
 		if (is_array($column))
 		{
@@ -129,7 +129,7 @@ class Model extends \Orm\Model
 	 * @param	bool	pull back displayed items (true) or all items (false)
 	 * @return	object
 	 */
-	public static function find_form_items($key, $only_active = false)
+	public static function getFormItems($key, $only_active = false)
 	{
 		// get the object
 		$items = static::find();
@@ -159,7 +159,7 @@ class Model extends \Orm\Model
 	 * @param	bool	should the data be run through the XSS filter
 	 * @return	mixed
 	 */
-	public static function update_item($id, array $data, $return_object = false, $filter = true)
+	public static function updateItem($id, array $data, $return_object = false, $filter = true)
 	{
 		if ($id !== null)
 		{
@@ -227,7 +227,7 @@ class Model extends \Orm\Model
 	 * @param	mixed	an array of arguments or the item ID
 	 * @return	bool
 	 */
-	public static function delete_item($args)
+	public static function deleteItem($args)
 	{
 		// if we have a list of arguments, loop through them
 		if (is_array($args))

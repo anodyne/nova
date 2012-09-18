@@ -62,15 +62,13 @@ class Model_Tour extends \Model {
 	/**
 	 * Create a tour item.
 	 *
-	 *     Model_Tour::create_item($data);
-	 *
 	 * @access	public
 	 * @param	mixed	an array or object of data
 	 * @return	object	the newly created item
 	 */
 	public static function create_tour_item($data)
 	{
-		$item = static::create_item($data);
+		$item = static::createItem($data);
 		
 		/**
 		 * Fill the rows for the dynamic form with blank data for editing later.

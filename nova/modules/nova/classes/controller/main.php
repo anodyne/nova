@@ -58,7 +58,7 @@ abstract class Controller_Main extends Controller_Base_Main
 					if (\Input::post('user.id') == '0')
 					{
 						// create the user
-						$user = \Model_User::create_item(\Input::post('user'), true);
+						$user = \Model_User::createItem(\Input::post('user'), true);
 
 						// make sure the user ID is associated with the character
 						$_POST['character']['user_id'] = $user->id;
@@ -73,10 +73,10 @@ abstract class Controller_Main extends Controller_Base_Main
 					}
 
 					// create the character
-					$char = \Model_Character::create_item(\Input::post('character'), true);
+					$char = \Model_Character::createItem(\Input::post('character'), true);
 
 					// insert the position info
-					\Model_Character_Positions::create_item(array(
+					\Model_Character_Positions::createItem(array(
 						'position_id' => (int) \Security::xss_clean(\Input::post('position')),
 						'character_id' => $char->id,
 						'primary' => (\Input::post('user.id') == '0') ? (int) false : (int) true
@@ -85,11 +85,11 @@ abstract class Controller_Main extends Controller_Base_Main
 					// update the user with the character info if it's a new user
 					if (\Input::post('user.id') == '0')
 					{
-						\Model_User::update_item($user->id, array('character_id' => $char->id));
+						\Model_User::updateItem($user->id, array('character_id' => $char->id));
 					}
 
 					// create the application
-					$createApp = \Model_Application::create_item(array(
+					$createApp = \Model_Application::createItem(array(
 						'email' 			=> $user->email,
 						'ip_address' 		=> \Input::real_ip(),
 						'user_id' 			=> $user->id,

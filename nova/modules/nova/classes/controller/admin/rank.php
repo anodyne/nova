@@ -57,7 +57,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 				{
-					$item = \Model_Rank_Group::create_item(array(
+					$item = \Model_Rank_Group::createItem(array(
 						'name' => \Security::xss_clean(\Input::post('name')),
 						'order' => (\Model_Rank_Group::count() + 1),
 					));
@@ -86,7 +86,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('rank.create') and $action == 'duplicate')
 				{
 					// create the new group
-					$item = \Model_Rank_Group::create_item(array(
+					$item = \Model_Rank_Group::createItem(array(
 						'name'	=> \Security::xss_clean(\Input::post('name')),
 						'order' => (\Model_Rank_Group::count() + 1),
 					), true);
@@ -135,7 +135,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
 				{
 					// update the field
-					$item = \Model_Rank_Group::update_item($group_id, \Input::post());
+					$item = \Model_Rank_Group::updateItem($group_id, \Input::post());
 
 					if ($item)
 					{
@@ -189,7 +189,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					}
 
 					// delete the rank group
-					$item = \Model_Rank_Group::delete_item($group_id);
+					$item = \Model_Rank_Group::deleteItem($group_id);
 
 					if ($item)
 					{
@@ -254,7 +254,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 				{
-					$item = \Model_Rank_Info::create_item(\Input::post());
+					$item = \Model_Rank_Info::createItem(\Input::post());
 
 					if ($item)
 					{
@@ -279,7 +279,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
 				{
 					// update the field
-					$item = \Model_Rank_Info::update_item($info_id, \Input::post());
+					$item = \Model_Rank_Info::updateItem($info_id, \Input::post());
 
 					if ($item)
 					{
@@ -333,7 +333,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					}
 
 					// delete the rank info
-					$item = \Model_Rank_Info::delete_item($info_id);
+					$item = \Model_Rank_Info::deleteItem($info_id);
 
 					if ($item)
 					{
@@ -410,7 +410,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
 				{
-					$item = \Model_Rank::create_item(\Input::post());
+					$item = \Model_Rank::createItem(\Input::post());
 
 					if ($item)
 					{
@@ -433,7 +433,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
 				{
-					$item = \Model_Rank::update_item($rank_id, \Input::post());
+					$item = \Model_Rank::updateItem($rank_id, \Input::post());
 
 					if ($item)
 					{
@@ -458,7 +458,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
 				{
-					$item = \Model_Rank::delete_item($rank_id);
+					$item = \Model_Rank::deleteItem($rank_id);
 
 					if ($item)
 					{

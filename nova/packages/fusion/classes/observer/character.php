@@ -33,7 +33,7 @@ class Observer_Character extends \Orm\Observer
 		/**
 		 * Fill the character rows for the dynamic form with blank data for editing later.
 		 */
-		$fields = \Model_Form_Field::find_form_items('character');
+		$fields = \Model_Form_Field::getFormItems('character');
 		
 		if (count($fields) > 0)
 		{

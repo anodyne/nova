@@ -158,7 +158,7 @@ class Location
 
 		// get the rank catalog object
 		$catalog = ( ! $location)
-			? \Model_Catalog_Rank::get_item(\Utility::get_rank())
+			? \Model_Catalog_Rank::get_item(\Utility::getRank())
 			: \Model_Catalog_Rank::get_item($location);
 
 		if (is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/base") 

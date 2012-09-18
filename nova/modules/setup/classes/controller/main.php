@@ -41,7 +41,7 @@ class Controller_Main extends Controller_Base_Setup
 
 		// do some checks to see what we should show
 		$installed = \Utility::installed();
-		$update = ($installed) ? \Utility::check_for_updates() : false;
+		$update = ($installed) ? \Utility::getUpdates() : false;
 
 		if ($installed)
 		{

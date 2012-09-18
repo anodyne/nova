@@ -28,9 +28,9 @@ class NovaForm
 		$data->editable = $editable;
 
 		// get the form elements
-		$tabs = \Model_Form_Tab::find_form_items($key, true);
-		$sections = \Model_Form_Section::find_form_items($key, true);
-		$fields = \Model_Form_Field::find_form_items($key, true);
+		$tabs = \Model_Form_Tab::getFormItems($key, true);
+		$sections = \Model_Form_Section::getFormItems($key, true);
+		$fields = \Model_Form_Field::getFormItems($key, true);
 		$content = \Model_Form_Data::get_data($key, $id);
 
 		/**

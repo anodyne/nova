@@ -156,7 +156,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 					);
 
 					// get the fields
-					$fields = \Model_Form_Field::find_form_items($value->field->form_key);
+					$fields = \Model_Form_Field::getFormItems($value->field->form_key);
 
 					if (count($fields) > 0)
 					{
@@ -303,7 +303,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$data['status'] = (int) $group->status;
 			}
 
-			echo \View::forge(\Location::file('update/rankgroup', \Utility::get_skin('admin'), 'ajax'), $data);
+			echo \View::forge(\Location::file('update/rankgroup', \Utility::getSkin('admin'), 'ajax'), $data);
 		}
 	}
 
@@ -361,7 +361,7 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 				$data['status'] = (int) $info->status;
 			}
 
-			echo \View::forge(\Location::file('update/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
+			echo \View::forge(\Location::file('update/rankinfo', \Utility::getSkin('admin'), 'ajax'), $data);
 		}
 	}
 

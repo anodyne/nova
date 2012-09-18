@@ -50,7 +50,7 @@ class Model_Character_Image extends \Model {
 	 */
 	public static function create_image(array $data)
 	{
-		$record = static::create_item($data);
+		$record = static::createItem($data);
 		
 		return $record;
 	}

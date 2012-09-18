@@ -16,27 +16,27 @@ $data = array(
 	array(
 		'data' => 'characters',
 		'model' => '\\Model_Character',
-		'method' => 'create_item'),
+		'method' => 'createItem'),
 	array(
 		'data' => 'character_positions',
 		'model' => '\\Model_Character_Positions',
-		'method' => 'create_item'),
+		'method' => 'createItem'),
 	array(
 		'data' => 'users',
 		'model' => '\\Model_User',
-		'method' => 'create_item'),
+		'method' => 'createItem'),
 	array(
 		'data' => 'applications',
 		'model' => '\\Model_Application',
-		'method' => 'create_item'),
+		'method' => 'createItem'),
 	array(
 		'data' => 'application_responses',
 		'model' => '\\Model_Application_Response',
-		'method' => 'create_item'),
+		'method' => 'createItem'),
 	array(
 		'data' => 'application_reviewers',
 		'model' => '\\Model_Application_Reviewer',
-		'method' => 'create_item'),
+		'method' => 'createItem'),
 );
 
 /**

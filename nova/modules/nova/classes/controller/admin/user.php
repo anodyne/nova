@@ -42,7 +42,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 					$password = \Str::random('alnum', 8);
 
 					// create the user
-					$user = \Model_User::create_item(array(
+					$user = \Model_User::createItem(array(
 						'status' 	=> \Status::ACTIVE,
 						'name' 		=> \Security::xss_clean(\Input::post('name')),
 						'email' 	=> \Security::xss_clean(\Input::post('email')),
@@ -161,7 +161,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 						}
 
 						// update the user
-						\Model_User::update_item($id, \Input::post('basic'));
+						\Model_User::updateItem($id, \Input::post('basic'));
 
 						// clear some of the POST variables
 						unset($_POST['action']);

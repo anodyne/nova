@@ -38,12 +38,12 @@ class Observer_Form_Tab extends \Orm\Observer
 		$form = $model->form_key;
 
 		// count how many tabs we have in this form
-		$tabs = \Model_Form_Tab::find_form_items($form);
+		$tabs = \Model_Form_Tab::getFormItems($form);
 
 		if (count($tabs) < 2)
 		{
 			// get all the sections for this form
-			$sections = \Model_Form_Section::find_form_items($form);
+			$sections = \Model_Form_Section::getFormItems($form);
 
 			if (count($sections) > 0)
 			{
@@ -59,7 +59,7 @@ class Observer_Form_Tab extends \Orm\Observer
 			else
 			{
 				// create a new section
-				$sec = \Model_Form_Section::create_item(array(
+				$sec = \Model_Form_Section::createItem(array(
 					'form_key' => $form,
 					'tab_id' => $model->id,
 					'name' => '',
@@ -67,7 +67,7 @@ class Observer_Form_Tab extends \Orm\Observer
 				), true);
 
 				// get all the fields and move them in to the section
-				$fields = \Model_Form_Field::find_form_items($form);
+				$fields = \Model_Form_Field::getFormItems($form);
 
 				if (count($fields) > 0)
 				{

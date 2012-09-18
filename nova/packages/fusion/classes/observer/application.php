@@ -47,7 +47,7 @@ class Observer_Application extends \Orm\Observer
 		foreach ($decisionMakers as $dm)
 		{
 			// add the reviewer record
-			\Model_Application_Reviewer::create_item(array(
+			\Model_Application_Reviewer::createItem(array(
 				'app_id' => $model->id,
 				'user_id' => $dm->id
 			));
@@ -78,7 +78,7 @@ class Observer_Application extends \Orm\Observer
 							foreach ($data->user as $user)
 							{
 								// add the reviewer record
-								\Model_Application_Reviewer::create_item(array(
+								\Model_Application_Reviewer::createItem(array(
 									'app_id' => $model->id,
 									'user_id' => $user
 								));
@@ -104,7 +104,7 @@ class Observer_Application extends \Orm\Observer
 									if ($char->status == \Status::ACTIVE and $char->user !== null)
 									{
 										// add the reviewer record
-										\Model_Application_Reviewer::create_item(array(
+										\Model_Application_Reviewer::createItem(array(
 											'app_id' => $model->id,
 											'user_id' => $char->user->id
 										));
@@ -129,7 +129,7 @@ class Observer_Application extends \Orm\Observer
 								foreach ($data->user as $user)
 								{
 									// add the reviewer record
-									\Model_Application_Reviewer::create_item(array(
+									\Model_Application_Reviewer::createItem(array(
 										'app_id' => $model->id,
 										'user_id' => $user
 									));
@@ -155,7 +155,7 @@ class Observer_Application extends \Orm\Observer
 										if ($char->status == \Status::ACTIVE and $char->user !== null)
 										{
 											// add the reviewer record
-											\Model_Application_Reviewer::create_item(array(
+											\Model_Application_Reviewer::createItem(array(
 												'app_id' => $model->id,
 												'user_id' => $char->user->id
 											));

@@ -65,15 +65,13 @@ class Model_Spec extends \Model {
 	/**
 	 * Create a spec item.
 	 *
-	 *     Model_Spec::create_item($data);
-	 *
-	 * @access	public
+	 * @api
 	 * @param	mixed	an array or object of data
-	 * @return	object	the newly created item
+	 * @return	object
 	 */
 	public static function create_spec($data)
 	{
-		$item = static::create_item($data);
+		$item = static::createItem($data);
 		
 		/**
 		 * Fill the rows for the dynamic form with blank data for editing later.

@@ -38,7 +38,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				$id = \Security::xss_clean(\Input::post('id'));
 
 				// update the form
-				$entry = \Model_Form::update_item($id, \Input::post(), true);
+				$entry = \Model_Form::updateItem($id, \Input::post(), true);
 
 				if (is_object($entry))
 				{
@@ -101,7 +101,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
 				{
 					// delete the field
-					$item = \Model_Form_Field::delete_item($field_id);
+					$item = \Model_Form_Field::deleteItem($field_id);
 
 					if ($item)
 					{
@@ -122,7 +122,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.update') and $action == 'add')
 				{
 					// add the field
-					$item = \Model_Form_Field::create_item(\Input::post());
+					$item = \Model_Form_Field::createItem(\Input::post());
 
 					if ($item)
 					{
@@ -143,7 +143,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.update') and $action == 'update')
 				{
 					// update the field
-					$item = \Model_Form_Field::update_item($field_id, \Input::post());
+					$item = \Model_Form_Field::updateItem($field_id, \Input::post());
 
 					if ($item)
 					{
@@ -179,9 +179,9 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			$this->_data->fields = false;
 
 			// get the form elements
-			$tabs = \Model_Form_Tab::find_form_items($key);
-			$sections = \Model_Form_Section::find_form_items($key);
-			$fields = \Model_Form_Field::find_form_items($key);
+			$tabs = \Model_Form_Tab::getFormItems($key);
+			$sections = \Model_Form_Section::getFormItems($key);
+			$fields = \Model_Form_Field::getFormItems($key);
 
 			/**
 			 * Tabs
@@ -350,7 +350,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 
 					// delete the section
-					$item = \Model_Form_Section::delete_item($section_id);
+					$item = \Model_Form_Section::deleteItem($section_id);
 
 					if ($item)
 					{
@@ -371,7 +371,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.update') and $action == 'add')
 				{
 					// add the section
-					$item = \Model_Form_Section::create_item(\Input::post());
+					$item = \Model_Form_Section::createItem(\Input::post());
 
 					if ($item)
 					{
@@ -392,7 +392,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.update') and $action == 'update')
 				{
 					// update the section
-					$item = \Model_Form_Section::update_item($section_id, \Input::post());
+					$item = \Model_Form_Section::updateItem($section_id, \Input::post());
 
 					if ($item)
 					{
@@ -427,8 +427,8 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			$this->_data->sections = false;
 
 			// get the form elements
-			$tabs = \Model_Form_Tab::find_form_items($key);
-			$sections = \Model_Form_Section::find_form_items($key);
+			$tabs = \Model_Form_Tab::getFormItems($key);
+			$sections = \Model_Form_Section::getFormItems($key);
 
 			/**
 			 * Tabs
@@ -568,7 +568,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 
 					// delete the tab
-					$item = \Model_Form_Tab::delete_item($tab_id);
+					$item = \Model_Form_Tab::deleteItem($tab_id);
 
 					if ($item)
 					{
@@ -589,7 +589,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.update') and $action == 'add')
 				{
 					// add the tab
-					$item = \Model_Form_Tab::create_item(\Input::post());
+					$item = \Model_Form_Tab::createItem(\Input::post());
 
 					if ($item)
 					{
@@ -610,7 +610,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (\Sentry::user()->has_access('form.update') and $action == 'update')
 				{
 					// update the tab
-					$item = \Model_Form_Tab::update_item($tab_id, \Input::post());
+					$item = \Model_Form_Tab::updateItem($tab_id, \Input::post());
 
 					if ($item)
 					{
@@ -644,7 +644,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			$this->_data->tabs = false;
 
 			// get the form elements
-			$tabs = \Model_Form_Tab::find_form_items($key);
+			$tabs = \Model_Form_Tab::getFormItems($key);
 
 			/**
 			 * Tabs

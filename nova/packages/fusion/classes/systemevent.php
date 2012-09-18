@@ -60,7 +60,7 @@ class SystemEvent
 		));
 
 		// create the new event item
-		\Model_SystemEvent::create_item($data);
+		\Model_SystemEvent::createItem($data);
 	}
 
 	public static function cleanup()

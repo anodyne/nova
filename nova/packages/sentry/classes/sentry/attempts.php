@@ -176,20 +176,20 @@ class Sentry_Attempts
 		if ($this->attempts)
 		{
 			// find the record
-			$record = \Model_User_Suspend::find_item(array(
+			$record = \Model_User_Suspend::getItem(array(
 				'login_id' => $this->login_id,
 				'ip' => $this->ip_address
 			));
 			
 			// update the record
-			$result = \Model_User_Suspend::update_item($record->id, array(
+			$result = \Model_User_Suspend::updateItem($record->id, array(
 				'attempts' => ++$this->attempts,
 				'last_attempt_at' => time(),
 			));
 		}
 		else
 		{
-			$result = \Model_User_Suspend::create_item(array(
+			$result = \Model_User_Suspend::createItem(array(
 				'login_id' => $this->login_id,
 				'ip' => $this->ip_address,
 				'attempts' => ++$this->attempts,
@@ -241,13 +241,13 @@ class Sentry_Attempts
 			->get();
 		
 		// update the record
-		$result = \Model_User_Suspend::update_item($record->id, array(
+		$result = \Model_User_Suspend::updateItem($record->id, array(
 			'suspended_at' => time(),
 			'unsuspend_at' => time()+(static::$limit['time'] * 60),
 		));
 
 		// get the user
-		$u = \Model_User::find_item('email', $login_column_value);
+		$u = \Model_User::getItem('email', $login_column_value);
 
 		// create an event
 		\SystemEvent::add('user', __('event.login.suspend'));

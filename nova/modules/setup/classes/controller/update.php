@@ -35,7 +35,7 @@ class Controller_Update extends Controller_Base_Setup
 		$this->_data->controls = '<a href="'.\Uri::create('setup/main').'" class="muted pull-right">Back to Setup Center</a>';
 
 		// check for updates
-		$check = \Utility::check_for_updates();
+		$check = \Utility::getUpdates();
 
 		// get the version from the database
 		$sys = \Model_System::find('first');
@@ -133,7 +133,7 @@ class Controller_Update extends Controller_Base_Setup
 		set_time_limit(0);
 
 		// check for updates
-		$check = \Utility::check_for_updates();
+		$check = \Utility::getUpdates();
 		
 		switch ($id)
 		{

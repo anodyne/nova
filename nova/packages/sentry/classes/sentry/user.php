@@ -113,7 +113,7 @@ class Sentry_User implements Iterator, ArrayAccess
 			}
 			
 			// get the user
-			$user = \Model_User::find_item($field, $id);
+			$user = \Model_User::getItem($field, $id);
 
 			// if there was a result - update user
 			if (count($user))
@@ -266,7 +266,7 @@ class Sentry_User implements Iterator, ArrayAccess
 			throw new \SentryUserException(__('sentry.user_already_enabled'));
 		}
 
-		return \Model_User::update_item($this->user['id'], array('status' => 1));
+		return \Model_User::updateItem($this->user['id'], array('status' => 1));
 	}
 
 	/**
@@ -594,7 +594,7 @@ class Sentry_User implements Iterator, ArrayAccess
 			$field = $this->login_column;
 		}
 		
-		$result = \Model_User::find_item($field, $login);
+		$result = \Model_User::getItem($field, $login);
 
 		if ($result)
 		{

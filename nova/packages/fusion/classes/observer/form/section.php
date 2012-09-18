@@ -104,7 +104,7 @@ class Observer_Form_Section extends \Orm\Observer
 		if (count($sections) == 1)
 		{
 			// get all the fields for this form
-			$fields = \Model_Form_Field::find_form_items($form);
+			$fields = \Model_Form_Field::getFormItems($form);
 
 			if (count($fields) > 0)
 			{

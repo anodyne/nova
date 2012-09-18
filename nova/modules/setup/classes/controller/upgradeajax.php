@@ -304,7 +304,7 @@ class Controller_Upgradeajax extends \Controller
 						);
 						
 						// add the user-created data to the settings table
-						\Model_Settings::create_item($new_data);
+						\Model_Settings::createItem($new_data);
 					break;
 				}
 			}
@@ -344,7 +344,7 @@ class Controller_Upgradeajax extends \Controller
 								'section' => 'main',
 								'page' => 'join',
 							);
-							\Model_SiteContent::create_item($new_data);
+							\Model_SiteContent::createItem($new_data);
 						}
 					break;
 					
@@ -359,7 +359,7 @@ class Controller_Upgradeajax extends \Controller
 								'section' => 'main',
 								'page' => 'contact',
 							);
-							\Model_SiteContent::create_item($new_data);
+							\Model_SiteContent::createItem($new_data);
 						}
 					break;
 					
@@ -400,7 +400,7 @@ class Controller_Upgradeajax extends \Controller
 							'label' => $m['message_label'],
 							'type' => $m['message_type'],
 						);
-						\Model_SiteContent::create_item($new_data);
+						\Model_SiteContent::createItem($new_data);
 					break;
 				}
 			}
@@ -503,7 +503,7 @@ class Controller_Upgradeajax extends \Controller
 					'status'		=> $c['lcomment_status'],
 					'date'			=> $c['lcomment_date'],
 				);
-				\Model_Comment::create_item($data);
+				\Model_Comment::createItem($data);
 			}
 		}
 		
@@ -645,7 +645,7 @@ class Controller_Upgradeajax extends \Controller
 					'status'		=> $c['ncomment_status'],
 					'date'			=> $c['ncomment_date'],
 				);
-				\Model_Comment::create_item($data);
+				\Model_Comment::createItem($data);
 			}
 		}
 		
@@ -788,7 +788,7 @@ class Controller_Upgradeajax extends \Controller
 					'status'		=> $c['pcomment_status'],
 					'date'			=> $c['pcomment_date'],
 				);
-				\Model_Comment::create_item($data);
+				\Model_Comment::createItem($data);
 			}
 		}
 
@@ -1118,7 +1118,7 @@ class Controller_Upgradeajax extends \Controller
 					'status'		=> $c['wcomment_status'],
 					'date'			=> $c['wcomment_date'],
 				);
-				\Model_Comment::create_item($data);
+				\Model_Comment::createItem($data);
 			}
 		}
 		
@@ -1541,7 +1541,7 @@ class Controller_Upgradeajax extends \Controller
 					);
 
 					// add the record to the table
-					\Model_PostAuthor::create_item($through);
+					\Model_PostAuthor::createItem($through);
 				}
 			}
 		}
@@ -1599,7 +1599,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the tab record
-				$item = \Model_Form_Tab::create_item($data);
+				$item = \Model_Form_Tab::createItem($data);
 				
 				// track the old and new IDs
 				$tabs[$r['tab_id']] = $item->id;
@@ -1630,7 +1630,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the section record
-				$item = \Model_Form_Section::create_item($data);
+				$item = \Model_Form_Section::createItem($data);
 				
 				// track the old and new IDs
 				$sections[$r['section_id']] = $item->id;
@@ -1671,7 +1671,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the field record
-				$item = \Model_Form_Field::create_item($data);
+				$item = \Model_Form_Field::createItem($data);
 				
 				// track the old and new IDs
 				$fields[$r['field_id']] = $item->id;
@@ -1701,7 +1701,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the value record
-				$item = \Model_Form_Value::create_item($data);
+				$item = \Model_Form_Value::createItem($data);
 				
 				// track the old and new IDs
 				$values[$r['value_id']] = $item->id;
@@ -1733,7 +1733,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the data record
-				\Model_Form_Data::create_item($data);
+				\Model_Form_Data::createItem($data);
 			}
 		}
 		
@@ -1775,9 +1775,9 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// insert the records
-				\Model_Form_Data::create_item($data['location']);
-				\Model_Form_Data::create_item($data['interests']);
-				\Model_Form_Data::create_item($data['bio']);
+				\Model_Form_Data::createItem($data['location']);
+				\Model_Form_Data::createItem($data['interests']);
+				\Model_Form_Data::createItem($data['bio']);
 			}
 		}
 		
@@ -1842,7 +1842,7 @@ class Controller_Upgradeajax extends \Controller
 						);
 
 						// create the image record
-						\Model_Character_Image::create_item($data);
+						\Model_Character_Image::createItem($data);
 
 						// increment the loop count
 						++$loop;
@@ -1890,7 +1890,7 @@ class Controller_Upgradeajax extends \Controller
 						'date'			=> ($r['prom_date'] === null) ? 0 : $r['prom_date'],
 					);
 					
-					\Model_Character_Promotion::create_item($data);
+					\Model_Character_Promotion::createItem($data);
 				}
 			}
 		}
@@ -1970,11 +1970,11 @@ class Controller_Upgradeajax extends \Controller
 				/**
 				 * Update the character.
 				 */
-				\Model_Character::update_item($c['id'], array(
+				\Model_Character::updateItem($c['id'], array(
 					'status' => \Status::toInt($c['status']),
 				));
 
-				\Model_Character_Positions::create_item(array(
+				\Model_Character_Positions::createItem(array(
 					'character_id' => $c['id'],
 					'position_id' => $c['position_1'],
 					'primary' => (int) true
@@ -1982,7 +1982,7 @@ class Controller_Upgradeajax extends \Controller
 
 				if ( ! empty($c['position_2']) and $c['position_2'] !== null and (int) $c['position_2'] !== 0)
 				{
-					\Model_Character_Positions::create_item(array(
+					\Model_Character_Positions::createItem(array(
 						'character_id' => $c['id'],
 						'position_id' => $c['position_2'],
 						'primary' => (int) false
@@ -2129,7 +2129,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the section record
-				$item = \Model_Form_Section::create_item($data);
+				$item = \Model_Form_Section::createItem($data);
 				
 				// track the old and new IDs
 				$sections[$r['section_id']] = $item->id;
@@ -2170,7 +2170,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the field record
-				$item = \Model_Form_Field::create_item($data);
+				$item = \Model_Form_Field::createItem($data);
 				
 				// track the old and new IDs
 				$fields[$r['field_id']] = $item->id;
@@ -2197,7 +2197,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the value record
-				$item = \Model_Form_Value::create_item($data);
+				$item = \Model_Form_Value::createItem($data);
 				
 				// track the old and new IDs
 				$values[$r['value_id']] = $item->id;
@@ -2229,7 +2229,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the data record
-				\Model_Form_Data::create_item($data);
+				\Model_Form_Data::createItem($data);
 			}
 		}
 		
@@ -2282,7 +2282,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the field record
-				$item = \Model_Form_Field::create_item($data);
+				$item = \Model_Form_Field::createItem($data);
 				
 				// track the old and new IDs
 				$fields[$r['field_id']] = $item->id;
@@ -2309,7 +2309,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the value record
-				$item = \Model_Form_Value::create_item($data);
+				$item = \Model_Form_Value::createItem($data);
 				
 				// track the old and new IDs
 				$values[$r['value_id']] = $item->id;
@@ -2341,7 +2341,7 @@ class Controller_Upgradeajax extends \Controller
 				);
 				
 				// create the data record
-				\Model_Form_Data::create_item($data);
+				\Model_Form_Data::createItem($data);
 			}
 		}
 		
@@ -2371,7 +2371,7 @@ class Controller_Upgradeajax extends \Controller
 					'type'		=> $r['loa_type'],
 				);
 				
-				\Model_User_Loa::create_item($data);
+				\Model_User_Loa::createItem($data);
 			}
 		}
 		
@@ -2507,7 +2507,7 @@ class Controller_Upgradeajax extends \Controller
 				 */
 				if ($u['moderate_posts'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'posts',
@@ -2517,7 +2517,7 @@ class Controller_Upgradeajax extends \Controller
 				
 				if ($u['moderate_logs'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'logs',
@@ -2527,7 +2527,7 @@ class Controller_Upgradeajax extends \Controller
 				
 				if ($u['moderate_news'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'news',
@@ -2537,7 +2537,7 @@ class Controller_Upgradeajax extends \Controller
 				
 				if ($u['moderate_post_comments'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'post_comments',
@@ -2547,7 +2547,7 @@ class Controller_Upgradeajax extends \Controller
 				
 				if ($u['moderate_log_comments'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'log_comments',
@@ -2557,7 +2557,7 @@ class Controller_Upgradeajax extends \Controller
 				
 				if ($u['moderate_news_comments'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'news_comments',
@@ -2567,7 +2567,7 @@ class Controller_Upgradeajax extends \Controller
 				
 				if ($u['moderate_wiki_comments'] == 'y')
 				{
-					\Model_Moderation::create_item(array(
+					\Model_Moderation::createItem(array(
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'wiki_comments',

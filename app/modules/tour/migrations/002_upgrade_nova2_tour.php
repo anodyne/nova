@@ -69,7 +69,7 @@ class Upgrade_nova2_tour
 						);
 						
 						// create the section record
-						$item = \Model_Form_Section::create_item($data);
+						$item = \Model_Form_Section::createItem($data);
 						
 						// track the old and new IDs
 						$sections[$r['section_id']] = $item->id;
@@ -110,7 +110,7 @@ class Upgrade_nova2_tour
 						);
 						
 						// create the field record
-						$item = \Model_Form_Field::create_item($data);
+						$item = \Model_Form_Field::createItem($data);
 						
 						// track the old and new IDs
 						$fields[$r['field_id']] = $item->id;
@@ -137,7 +137,7 @@ class Upgrade_nova2_tour
 						);
 						
 						// create the value record
-						$item = \Model_Form_Value::create_item($data);
+						$item = \Model_Form_Value::createItem($data);
 						
 						// track the old and new IDs
 						$values[$r['value_id']] = $item->id;
@@ -169,7 +169,7 @@ class Upgrade_nova2_tour
 						);
 						
 						// create the data record
-						\Model_Form_Data::create_item($data);
+						\Model_Form_Data::createItem($data);
 					}
 				}
 			}

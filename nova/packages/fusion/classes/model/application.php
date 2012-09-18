@@ -258,7 +258,7 @@ class Model_Application extends \Model {
 		foreach ($data as $d)
 		{
 			// add the reviewer
-			\Model_Application_Reviewer::create_item(array(
+			\Model_Application_Reviewer::createItem(array(
 				'app_id' => $this->id,
 				'user_id' => $d
 			));
@@ -306,7 +306,7 @@ class Model_Application extends \Model {
 		else
 		{
 			// add the response
-			\Model_Application_Response::create_item(array(
+			\Model_Application_Response::createItem(array(
 				'app_id' => $this->id,
 				'user_id' => $user->id,
 				'type' => \Model_Application_Response::VOTE,

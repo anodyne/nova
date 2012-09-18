@@ -26,7 +26,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'id' => $rule->id,
 				);
 
-				echo \View::forge(\Location::file('delete/apprule', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/apprule', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -44,7 +44,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 			$user = \Model_User::find(\Security::xss_clean($id));
 
 			// delete the ban
-			\Model_Ban::delete_item(array('email' => $user->email));
+			\Model_Ban::deleteItem(array('email' => $user->email));
 
 			\SystemEvent::add('user', '[[event.admin.arc.unban_user|{{'.$user->email.'}}]]');
 
@@ -67,7 +67,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'id' => $field->id,
 				);
 
-				echo \View::forge(\Location::file('delete/field', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/field', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -110,7 +110,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'sections' => $sections,
 				);
 
-				echo \View::forge(\Location::file('delete/section', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/section', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -136,7 +136,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'tabs' => $tabs,
 				);
 
-				echo \View::forge(\Location::file('delete/tab', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/tab', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -155,7 +155,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'id' => $rank->id,
 				);
 
-				echo \View::forge(\Location::file('delete/rank', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/rank', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -191,7 +191,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					}
 				}
 
-				echo \View::forge(\Location::file('delete/rankgroup', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/rankgroup', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -229,7 +229,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					}
 				}
 
-				echo \View::forge(\Location::file('delete/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/rankinfo', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}
@@ -248,7 +248,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 					'id' => $user->id,
 				);
 
-				echo \View::forge(\Location::file('delete/user', \Utility::get_skin('admin'), 'ajax'), $data);
+				echo \View::forge(\Location::file('delete/user', \Utility::getSkin('admin'), 'ajax'), $data);
 			}
 		}
 	}

@@ -198,7 +198,7 @@ class Sentry
 				catch(SentryUserSuspendedException $e)
 				{
 					// get the user
-					$u = \Model_User::find_item('email', $login_column_value);
+					$u = \Model_User::getItem('email', $login_column_value);
 
 					// create a system event entry
 					\SystemEvent::add($login_column_value, Input::real_ip(), $u, null, __('event.login.suspended'));

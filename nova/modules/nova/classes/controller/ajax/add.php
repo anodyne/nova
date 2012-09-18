@@ -25,7 +25,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			$user = \Model_User::find(\Security::xss_clean($id));
 
 			// create the ban
-			\Model_Ban::create_item(array(
+			\Model_Ban::createItem(array(
 				'level' => 1,
 				'email' => $user->email,
 			));
@@ -140,7 +140,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 				}
 			}
 
-			echo \View::forge(\Location::file('add/rankgroup_duplicate', \Utility::get_skin('admin'), 'ajax'), $data);
+			echo \View::forge(\Location::file('add/rankgroup_duplicate', \Utility::getSkin('admin'), 'ajax'), $data);
 		}
 	}
 
@@ -163,7 +163,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 			$data['group'] = '';
 			$data['display'] = 1;
 
-			echo \View::forge(\Location::file('update/rankinfo', \Utility::get_skin('admin'), 'ajax'), $data);
+			echo \View::forge(\Location::file('update/rankinfo', \Utility::getSkin('admin'), 'ajax'), $data);
 		}
 	}
 
@@ -176,7 +176,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	{
 		if (\Sentry::check() and \Sentry::user()->has_access('user.create'))
 		{
-			echo \View::forge(\Location::file('add/user', \Utility::get_skin('admin'), 'ajax'));
+			echo \View::forge(\Location::file('add/user', \Utility::getSkin('admin'), 'ajax'));
 		}
 	}
 }

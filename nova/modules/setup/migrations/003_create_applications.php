@@ -47,7 +47,7 @@ class Create_applications
 
 		foreach ($rules as $r)
 		{
-			\Model_Application_Rule::create_item($r);
+			\Model_Application_Rule::createItem($r);
 		}
 	}
 
