@@ -90,7 +90,7 @@ class Sentry_Group implements Iterator, ArrayAccess
 			$field = 'name';
 		}
 		
-		$group = \Model_Access_Role::getItem($field, $id);
+		$group = \Model_Access_Role::getItem($id, $field);
 
 		// if there was a result - update user
 		if (count($group))

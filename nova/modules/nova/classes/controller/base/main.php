@@ -47,7 +47,7 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 		$this->images		= \Utility::getImageIndex($this->skin);
 
 		// get the skin section info
-		$this->_section_info = \Model_Catalog_SkinSec::getCatalog('skin', $this->skin);
+		$this->_section_info = \Model_Catalog_SkinSec::getItem($this->skin, 'skin');
 		
 		// set the values to be passed to the template
 		$vars = array(

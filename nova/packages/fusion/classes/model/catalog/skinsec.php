@@ -46,6 +46,9 @@ class Model_Catalog_SkinSec extends \Model
 			'default' => 'dropdown'),
 	);
 	
+	/**
+	 * Relationships
+	 */
 	public static $_belongs_to = array(
 		'skins' => array(
 			'model_to' => '\\Model_Catalog_Skin',
@@ -76,27 +79,5 @@ class Model_Catalog_SkinSec extends \Model
 		}
 		
 		return $result;
-	}
-
-	/**
-	 * Get the catalog item.
-	 *
-	 * @api
-	 * @param	string	the column to use
-	 * @param	string	the value to use
-	 * @return	object
-	 */
-	public static function getCatalog($column, $value)
-	{
-		$item = static::find()
-			->where($column, $value)
-			->get_one();
-
-		if (count($item) > 0)
-		{
-			return $item;
-		}
-
-		return false;
 	}
 }

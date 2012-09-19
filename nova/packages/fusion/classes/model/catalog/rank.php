@@ -104,29 +104,12 @@ class Model_Catalog_Rank extends \Model
 	 */
 	public static function getDefault($value_only = false)
 	{
-		$result = static::find()
-			->where('default', 1)
-			->get_one();
+		$result = static::find()->where('default', 1)->get_one();
 		
 		if ($value_only)
 		{
 			return $result->location;
 		}
-		
-		return $result;
-	}
-	
-	/**
-	 * Get a specific catalog item.
-	 *
-	 * @api
-	 * @param	string	the item to pull
-	 * @param	string	the identifier to use
-	 * @return	object
-	 */
-	public static function getCatalog($item, $identifier = 'location')
-	{
-		$result = static::find()->where($identifier, $item)->get_one();
 		
 		return $result;
 	}

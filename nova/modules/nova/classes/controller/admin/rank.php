@@ -497,7 +497,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 		$rankPath = $this->_js_data->rankPath = "app/assets/common/$this->genre/ranks/$default/";
 
 		// get the rank extension
-		$rankExt = $this->_js_data->rankExt = \Model_Catalog_Rank::getCatalog($default)->extension;
+		$rankExt = $this->_js_data->rankExt = \Model_Catalog_Rank::getItem($default, 'location')->extension;
 
 		if (is_numeric($id))
 		{

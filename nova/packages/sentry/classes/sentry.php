@@ -198,7 +198,7 @@ class Sentry
 				catch(SentryUserSuspendedException $e)
 				{
 					// get the user
-					$u = \Model_User::getItem('email', $login_column_value);
+					$u = \Model_User::getItem($login_column_value, 'email');
 
 					// create a system event entry
 					\SystemEvent::add($login_column_value, Input::real_ip(), $u, null, __('event.login.suspended'));
@@ -520,7 +520,7 @@ class Sentry
 		// set the field to use
 		$field = (is_int($group)) ? 'id' : 'name';
 		
-		return (bool) count(\Model_Access_Role::getRole($field, $group));
+		return (bool) count(\Model_Access_Role::getItem($group, $field));
 	}
 
 	/**

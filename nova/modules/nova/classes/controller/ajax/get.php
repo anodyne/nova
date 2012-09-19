@@ -74,7 +74,7 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 				$only_search_email = (bool) preg_match('(@)', $query);
 
 				// search for any users with the email address
-				$email = \Model_User::getItem('email', "%$query%", true);
+				$email = \Model_User::getItem("%$query%", 'email', true);
 
 				if (count($email) > 0)
 				{
@@ -91,7 +91,7 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 				if ( ! $only_search_email)
 				{
 					// search for any users with the name
-					$name = \Model_User::getItem('name', "%$query%", true);
+					$name = \Model_User::getItem("%$query%", 'name', true);
 
 					if (count($name) > 0)
 					{
@@ -106,7 +106,7 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 					}
 
 					// search for first names
-					$first_name = \Model_Character::getItem('first_name', "%$query%", true);
+					$first_name = \Model_Character::getItem("%$query%", 'first_name', true);
 
 					if (count($first_name) > 0)
 					{
@@ -123,7 +123,7 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 					}
 
 					// search for last names
-					$last_name = \Model_Character::getItem('last_name', "%$query%", true);
+					$last_name = \Model_Character::getItem("%$query%", 'last_name', true);
 
 					if (count($last_name) > 0)
 					{

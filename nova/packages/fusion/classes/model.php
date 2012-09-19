@@ -86,19 +86,19 @@ class Model extends \Orm\Model
 	 * @param	bool	is this for a search?
 	 * @return	object
 	 */
-	public static function getItem($column, $value, $search = false)
+	public static function getItem($value, $column, $search = false)
 	{
-		if (is_array($column))
+		if (is_array($value))
 		{
 			// start the find
 			$record = static::find();
 			
 			// loop through the arguments and build the where clause
-			foreach ($args as $column => $value)
+			foreach ($value as $col => $val)
 			{
-				if (array_key_exists($column, static::$_properties))
+				if (array_key_exists($col, static::$_properties))
 				{
-					$record->where($column, $value);
+					$record->where($col, $val);
 				}
 			}
 			

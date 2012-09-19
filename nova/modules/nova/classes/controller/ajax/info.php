@@ -68,7 +68,7 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		$location = \Security::xss_clean($location);
 		
 		// pull the rank catalog record
-		$rank = \Model_Catalog_Rank::getCatalog($location);
+		$rank = \Model_Catalog_Rank::getItem($location, 'location');
 		
 		// set the output
 		$output = (count($rank) > 0) 

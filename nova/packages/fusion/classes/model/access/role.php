@@ -61,25 +61,13 @@ class Model_Access_Role extends \Model
 			'cascade_delete' => false,
 		),
 	);
-	
+
 	/**
-	 * Get a role from the database based on something other than their ID.
+	 * Get all the roles.
 	 *
 	 * @api
-	 * @param	string	the column to use
-	 * @param	mixed	the value to use
-	 * @return	object	a role object
+	 * @return	array
 	 */
-	public static function getRole($column, $value)
-	{
-		if (array_key_exists($column, static::$_properties))
-		{
-			return static::find()->where($column, $value)->get_one();
-		}
-		
-		return false;
-	}
-
 	public static function getRoles()
 	{
 		$items = static::find('all');
@@ -97,6 +85,12 @@ class Model_Access_Role extends \Model
 		return $roles;
 	}
 	
+	/**
+	 * Get all the tasks.
+	 *
+	 * @api
+	 * @return	array
+	 */
 	public function getTasks()
 	{
 		$groups[] = $this->tasks;

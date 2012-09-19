@@ -56,6 +56,7 @@ class Model_Ban extends \Model
 	 * @param	string	the value to use
 	 * @param	string	the column to use
 	 * @return	object
+	 * @todo	should this be removed in favor of something else?
 	 */
 	public static function getItems($value, $column = 'email')
 	{
