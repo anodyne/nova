@@ -135,7 +135,7 @@ class Model_Application extends \Model
 	public function getDecisionMakers()
 	{
 		// get all decision makers
-		$decision_makers = array_keys(\Sentry::users_with_access('character.create.2'));
+		$decision_makers = array_keys(\Sentry::usersWithAccess('character.create.2'));
 
 		// loop through the reviewers
 		foreach ($this->reviewers as $r)

@@ -31,7 +31,7 @@
 								<a href="#" class="btn btn-mini tooltip-top rankinfo-action" title="<?php echo lang('action.edit', 1);?>" data-action="update" data-id="<?php echo $i->id;?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 
-							<?php if (Sentry::user()->has_access('rank.delete')): ?>
+							<?php if (Sentry::user()->hasAccess('rank.delete')): ?>
 								<div class="btn-group">
 									<a href="#" class="btn btn-danger btn-mini tooltip-top rankinfo-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $i->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 								</div>

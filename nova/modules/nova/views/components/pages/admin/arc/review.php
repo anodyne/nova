@@ -94,7 +94,7 @@
 	<li class="active"><a href="#reviewHistory" data-toggle="pill"><?php echo lang('review history', 2);?></a></li>
 	<li><a href="#characterForm" data-toggle="pill"><?php echo lang('character bio', 2);?></a></li>
 	
-	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
+	<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
 		<li><a href="#userForm" data-toggle="pill"><?php echo lang('user info', 2);?></a></li>
 	<?php endif;?>
 	
@@ -102,7 +102,7 @@
 		<li><a href="#samplePost" data-toggle="pill"><?php echo lang('sample_post', 2);?></a></li>
 	<?php endif;?>
 
-	<?php if (Sentry::user()->has_level('character.create', 2) and $app->status == Status::IN_PROGRESS): ?>
+	<?php if (Sentry::user()->hasLevel('character.create', 2) and $app->status == Status::IN_PROGRESS): ?>
 		<li><a href="#admin" data-toggle="pill"><?php echo lang('admin', 1);?></a></li>
 	<?php endif;?>
 </ul>
@@ -141,7 +141,7 @@
 
 	<div id="characterForm" class="pill-pane"><?php echo $characterForm;?></div>
 
-	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
+	<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
 		<div id="userForm" class="pill-pane">
 			<div class="row">
 				<div class="span6">

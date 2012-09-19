@@ -5,7 +5,7 @@
 		<li class="span6">
 			<div class="thumbnail">
 				<div class="caption">
-					<?php if (Sentry::user()->has_access('form.update')): ?>
+					<?php if (Sentry::user()->hasAccess('form.update')): ?>
 						<div class="btn-group pull-right">
 							<a class="btn icn16 dropdown-toggle" data-toggle="dropdown" href="#"><span class="icn icn-50" data-icon=")"></span></a>
 							<ul class="dropdown-menu">

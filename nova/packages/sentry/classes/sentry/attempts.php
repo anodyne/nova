@@ -148,7 +148,7 @@ class Sentry_Attempts
 	 *
 	 * @return  int
 	 */
-	 public function get_limit()
+	 public function getLimit()
 	 {
 	 	return static::$limit['attempts'];
 	 }

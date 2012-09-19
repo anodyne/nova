@@ -1,5 +1,5 @@
 <div class="btn-toolbar">
-	<?php if (Sentry::user()->has_access('user.read')): ?>
+	<?php if (Sentry::user()->hasAccess('user.read')): ?>
 		<div class="btn-group">
 			<a href="<?php echo Uri::create('admin/user/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to all users', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 		</div>
@@ -16,7 +16,7 @@
 			<li class="active"><a href="#userInfo" data-toggle="pill"><?php echo lang('info', 1);?></a></li>
 			<li><a href="#userPrefs" data-toggle="pill"><?php echo lang('preferences', 1);?></a></li>
 
-			<?php if (Sentry::user()->has_level('user.update', 2)): ?>
+			<?php if (Sentry::user()->hasLevel('user.update', 2)): ?>
 				<li><a href="#userAdmin" data-toggle="pill"><?php echo lang('admin', 1);?></a></li>
 			<?php endif;?>
 		</ul>
@@ -235,7 +235,7 @@
 				<?php echo Form::close();?>
 			</div>
 
-			<?php if (Sentry::user()->has_level('user.update', 2)): ?>
+			<?php if (Sentry::user()->hasLevel('user.update', 2)): ?>
 				<div id="userAdmin" class="pill-pane"></div>
 			<?php endif;?>
 		</div>

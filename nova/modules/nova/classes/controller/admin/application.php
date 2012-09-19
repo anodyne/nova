@@ -47,7 +47,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 		$this->_view = 'admin/arc/history';
 		$this->_js_view = 'admin/arc/history_js';
 
-		$this->_data->applications = (\Sentry::user()->has_level('character.create', 2))
+		$this->_data->applications = (\Sentry::user()->hasLevel('character.create', 2))
 			? \Model_Application::find('all')
 			: \Sentry::user()->get()->appReviews;
 
@@ -78,7 +78,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					/**
 					 * Update the reviewers associated with the review.
 					 */
-					if (\Sentry::user()->has_level('character.create', 2) and $action == 'users')
+					if (\Sentry::user()->hasLevel('character.create', 2) and $action == 'users')
 					{
 						// update the reviewers
 						$app->updateReviewers(\Security::xss_clean(\Input::post('reviewUsers')));
@@ -181,7 +181,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					/**
 					 * Make the decision for the application.
 					 */
-					if (\Sentry::user()->has_level('character.create', 2) and $action == 'decision')
+					if (\Sentry::user()->hasLevel('character.create', 2) and $action == 'decision')
 					{
 						// get the decision
 						$decision = \Security::xss_clean(\Input::post('decision'));
@@ -376,7 +376,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				/**
 				 * Create a new application rule.
 				 */
-				if (\Sentry::user()->has_level('character.create', 2) and $action == 'create')
+				if (\Sentry::user()->hasLevel('character.create', 2) and $action == 'create')
 				{
 					$item = \Model_Application_Rule::createItem(\Security::xss_clean(\Input::post()));
 
@@ -400,7 +400,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				 * Update the specified application rule with the information the user specified
 				 * in the modal pop-up.
 				 */
-				if (\Sentry::user()->has_level('character.create', 2) and $action == 'update')
+				if (\Sentry::user()->hasLevel('character.create', 2) and $action == 'update')
 				{
 					$item = \Model_Application_Rule::updateItem($rule_id, \Security::xss_clean(\Input::post()));
 
@@ -423,7 +423,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 				/**
 				 * Delete the specified application rule.
 				 */
-				if (\Sentry::user()->has_level('character.create', 2) and $action == 'delete')
+				if (\Sentry::user()->hasLevel('character.create', 2) and $action == 'delete')
 				{
 					$item = \Model_Application_Rule::deleteItem($rule_id);
 

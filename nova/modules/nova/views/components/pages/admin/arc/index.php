@@ -1,5 +1,5 @@
 <div class="btn-group">
-	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
+	<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
 		<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.manage rules', 1);?>"><div class="icn icn-75" data-icon=","></div></a>
 	<?php endif;?>
 	

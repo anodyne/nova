@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		<?php if (Sentry::check() and Sentry::user()->has_access('content.update')): ?>
+		<?php if (Sentry::check() and Sentry::user()->hasAccess('content.update')): ?>
 
 			$('.editable-single').editable("<?php echo Uri::create('ajax/update/content_save');?>", {
 				loadurl: "<?php echo Uri::create('ajax/get/content_load');?>",

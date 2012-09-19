@@ -4,7 +4,7 @@
 	<div class="control-group">
 		<label class="control-label"><?php echo $f->label;?></label>
 		<div class="controls">
-			<?php if (empty($f->restriction) or (Sentry::check() and Sentry::user()->has_role($f->restriction))): ?>
+			<?php if (empty($f->restriction) or (Sentry::check() and Sentry::user()->hasRole($f->restriction))): ?>
 				<?php if ($f->type == 'text'): ?>
 					<?php echo Form::input(array('name' => $f->id, 'class' => $f->html_class, 'id' => $f->html_id, 'placeholder' => $f->placeholder, 'value' => $d));?>
 				<?php elseif ($f->type == 'textarea'): ?>

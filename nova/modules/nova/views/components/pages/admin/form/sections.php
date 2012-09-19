@@ -41,7 +41,7 @@
 									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
 								</div>
 
-								<?php if (Sentry::user()->has_access('form.delete')): ?>
+								<?php if (Sentry::user()->hasAccess('form.delete')): ?>
 									<div class="btn-group">
 										<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 									</div>
@@ -79,7 +79,7 @@
 								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 
-							<?php if (Sentry::user()->has_access('form.delete')): ?>
+							<?php if (Sentry::user()->hasAccess('form.delete')): ?>
 								<div class="btn-group">
 									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 								</div>

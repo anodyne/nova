@@ -1467,7 +1467,7 @@ class Controller_Upgradeajax extends \Controller
 		$password = \Security::xss_clean(\Input::post('password'));
 
 		// hash the new password
-		$new_password = \Sentry_User::password_hash($password, \Model_System::getUid());
+		$new_password = \Sentry_User::passwordHash($password, \Model_System::getUid());
 
 		// update all the users with the new password
 		\DB::query('UPDATE '.\DB::table_prefix().'users SET password = "'.$new_password.'"')->execute();

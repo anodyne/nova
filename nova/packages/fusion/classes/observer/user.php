@@ -24,7 +24,7 @@ class Observer_User extends \Orm\Observer
 	 */
 	public function before_insert(\Model $model)
 	{
-		$model->password = \Sentry_User::password_generate($model->password);
+		$model->password = \Sentry_User::passwordGenerate($model->password);
 	}
 
 	/**

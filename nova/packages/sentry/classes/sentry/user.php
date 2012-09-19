@@ -133,7 +133,7 @@ class Sentry_User implements Iterator, ArrayAccess
 			}
 			
 			// assign the roles to the user
-			$this->groups = $this->get_user_role();
+			$this->groups = $this->getUserRole();
 		}
 	}
 
@@ -143,7 +143,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @api
 	 * @return	array 	the array of role tasks for the user
 	 */
-	public function get_user_role()
+	public function getUserRole()
 	{
 		// get the roles from the session
 		$roles = \Session::get('role');
@@ -376,10 +376,10 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @return  bool
 	 * @throws  SentryUserException
 	 */
-	public function change_password($password, $old_password)
+	public function changePassword($password, $old_password)
 	{
 		// make sure old password matches the current password
-		if ( ! $this->check_password($old_password))
+		if ( ! $this->checkPassword($old_password))
 		{
 			throw new \SentryUserException(__('sentry.invalid_old_password'));
 		}
@@ -404,9 +404,9 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @return  bool
 	 * @throws  SentryUserException
 	 */
-	public function add_to_group($id)
+	public function addToGroup($id)
 	{
-		if ($this->in_group($id))
+		if ($this->inGroup($id))
 		{
 			throw new \SentryUserException(__('sentry.user_already_in_group', array('group' => $id)));
 		}
@@ -444,9 +444,9 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @return  bool
 	 * @throws  SentryUserException
 	 */
-	public function remove_from_group($id)
+	public function removeFromGroup($id)
 	{
-		if ( ! $this->in_group($id))
+		if ( ! $this->inGroup($id))
 		{
 			throw new \SentryUserException(__('sentry.user_not_in_group', array('group' => $id)));
 		}
@@ -490,7 +490,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Group name
 	 * @return  bool
 	 */
-	public function in_group($name)
+	public function inGroup($name)
 	{
 		$field = 'name';
 		if (is_numeric($name))
@@ -514,7 +514,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 *
 	 * @return  bool
 	 */
-	public function is_admin()
+	public function isAdmin()
 	{
 		if (\Session::get('user') == (int) $this->user['id'])
 		{
@@ -557,7 +557,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param	int		the level to check for (default: 0)
 	 * @return	bool
 	 */
-	public function has_level($task, $level = 0)
+	public function hasLevel($task, $level = 0)
 	{
 		return (\Arr::get($this->groups(), $task, false) === $level);
 	}
@@ -569,9 +569,9 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param	int		the level to check for (default: 0)
 	 * @return	bool
 	 */
-	public function atleast_level($task, $level = 0)
+	public function atLeastLevel($task, $level = 0)
 	{
-		if ($this->has_access($task) === false)
+		if ($this->hasAccess($task) === false)
 		{
 			return false;
 		}
@@ -586,7 +586,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Column to use for check
 	 * @return  bool
 	 */
-	protected function user_exists($login, $field = null)
+	protected function userExists($login, $field = null)
 	{
 		// set field value if null
 		if ($field === null)
@@ -611,13 +611,13 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Password type
 	 * @return  bool
 	 */
-	public function check_password($password, $field = 'password')
+	public function checkPassword($password, $field = 'password')
 	{
 		// get the UID (which is used for the salt)
 		$salt = \Model_System::getUid();
 
 		// hash the inputted password
-		$password = $this->hash_password($password, $salt);
+		$password = $this->hashPassword($password, $salt);
 		
 		// check to see if passwords match
 		return $password == $this->user[$field];
@@ -640,9 +640,9 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Password to generate hash/salt for
 	 * @return  string
 	 */
-	protected function generate_password($password)
+	protected function generatePassword($password)
 	{
-		return self::password_generate($password);
+		return self::passwordGenerate($password);
 	}
 
 	/**
@@ -652,9 +652,9 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Password Salt
 	 * @return  string
 	 */
-	protected function hash_password($password, $salt)
+	protected function hashPassword($password, $salt)
 	{
-		return self::password_hash($password, $salt);
+		return self::passwordHash($password, $salt);
 	}
 
 	/**
@@ -665,11 +665,11 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Password to generate hash/salt for
 	 * @return  string
 	 */
-	public static function password_generate($password)
+	public static function passwordGenerate($password)
 	{
 		$salt = \Model_System::getUid();
 
-		return static::password_hash($password, $salt);
+		return static::passwordHash($password, $salt);
 	}
 
 	/**
@@ -680,7 +680,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param   string  Password Salt
 	 * @return  string
 	 */
-	public static function password_hash($password, $salt)
+	public static function passwordHash($password, $salt)
 	{
 		$password = hash('sha256', $salt.$password);
 
@@ -780,7 +780,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param	string	a dot-notated string with the component and action (user.update)
 	 * @return	bool
 	 */
-	public function has_access($task)
+	public function hasAccess($task)
 	{
 		return (\Arr::get($this->groups(), $task, false) !== false);
 	}
@@ -792,7 +792,7 @@ class Sentry_User implements Iterator, ArrayAccess
 	 * @param	bool	should it be a strict comparison (must equal) or not (greater than or equal)
 	 * @return	bool
 	 */
-	public function has_role($role, $strict = false)
+	public function hasRole($role, $strict = false)
 	{
 		if ($strict)
 		{

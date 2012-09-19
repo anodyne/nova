@@ -41,7 +41,7 @@ class Observer_Application extends \Orm\Observer
 		 * component level 2 create action task (character.create.2).
 		 */
 		// get the decision makers
-		$decisionMakers = \Sentry::users_with_access('character.create.2');
+		$decisionMakers = \Sentry::usersWithAccess('character.create.2');
 
 		// add the decision makers to the review
 		foreach ($decisionMakers as $dm)

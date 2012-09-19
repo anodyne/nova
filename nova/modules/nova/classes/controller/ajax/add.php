@@ -19,7 +19,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_arc_banuser($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('ban.create'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('ban.create'))
 		{
 			// get the user
 			$user = \Model_User::find(\Security::xss_clean($id));
@@ -44,7 +44,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_formfield_value()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('form.update'))
 		{
 			// get the values
 			$content = \Security::xss_clean(\Input::post('content'));
@@ -77,7 +77,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_module($module)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('catalog.create'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('catalog.create'))
 		{
 			// do the quick install
 			\QuickInstall::module($module);
@@ -97,7 +97,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_rankgroup_duplicate($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.create'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('rank.create'))
 		{
 			$data['id'] = $id;
 			$data['rank'] = \Model_Settings::getItems('rank');
@@ -151,7 +151,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_rankinfo()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.create'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('rank.create'))
 		{
 			// set the data
 			$data['id'] = 0;
@@ -174,7 +174,7 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	 */
 	public function action_user()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('user.create'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('user.create'))
 		{
 			echo \View::forge(\Location::file('add/user', \Utility::getSkin('admin'), 'ajax'));
 		}

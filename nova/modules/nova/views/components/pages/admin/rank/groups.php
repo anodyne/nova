@@ -43,7 +43,7 @@
 							<a href="<?php echo Uri::create('admin/rank/groups/'.$g->id);?>" class="btn btn-mini tooltip-top rankgroup-action" title="<?php echo lang('action.duplicate', 1);?>" data-action="duplicate" data-id="<?php echo $g->id;?>"><div class="icn icn-50" data-icon="_"></div></a>
 						</div>
 
-						<?php if (Sentry::user()->has_access('rank.delete')): ?>
+						<?php if (Sentry::user()->hasAccess('rank.delete')): ?>
 							<div class="btn-group">
 								<a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn btn-danger btn-mini tooltip-top rankgroup-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $g->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 							</div>

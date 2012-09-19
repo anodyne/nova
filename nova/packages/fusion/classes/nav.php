@@ -120,10 +120,10 @@ class Nav
 				$navaccess = explode('|', $item->access);
 
 				// find if the user has access
-				$access = \Sentry::user()->has_access("$navaccess[0].$navaccess[1]");
+				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
 
 				// find if the user has the proper level
-				$level = \Sentry::user()->atleast_level("$navaccess[0].$navaccess[1]", $navaccess[2]);
+				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
 
 				if ($access === false or ($access === true and $level === false))
 				{
@@ -158,10 +158,10 @@ class Nav
 				$navaccess = explode('|', $item->access);
 
 				// find if the user has access
-				$access = \Sentry::user()->has_access("$navaccess[0].$navaccess[1]");
+				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
 
 				// find if the user has the proper level
-				$level = \Sentry::user()->atleast_level("$navaccess[0].$navaccess[1]", $navaccess[2]);
+				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
 
 				if ($access === false or ($access === true and $level === false))
 				{
@@ -196,10 +196,10 @@ class Nav
 				$navaccess = explode('|', $item->access);
 
 				// find if the user has access
-				$access = \Sentry::user()->has_access("$navaccess[0].$navaccess[1]");
+				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
 
 				// find if the user has the proper level
-				$level = \Sentry::user()->atleast_level("$navaccess[0].$navaccess[1]", $navaccess[2]);
+				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
 
 				if ( ! $level)
 				{
@@ -306,7 +306,7 @@ class Nav
 						$navaccess = explode('|', $i->access);
 
 						// find if the user has the proper level
-						$level = \Sentry::user()->atleast_level("$navaccess[0].$navaccess[1]", $navaccess[2]);
+						$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
 					}
 
 					if ($level)

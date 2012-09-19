@@ -6,11 +6,11 @@
 
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<?php if (Sentry::user()->has_access('user.create')): ?>
+		<?php if (Sentry::user()->hasAccess('user.create')): ?>
 			<a href="#" class="btn tooltip-top user-action" data-action="create" title="<?php echo lang('action.add user', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 		<?php endif;?>
 
-		<?php if (Sentry::user()->has_level('user.update', 2)): ?>
+		<?php if (Sentry::user()->hasLevel('user.update', 2)): ?>
 			<a href="#" class="btn tooltip-top user-action" data-action="link" title="<?php echo lang('action.link character to user', 1);?>"><div class="icn icn-75" data-icon="-"></div></a>
 		<?php endif;?>
 	</div>
@@ -27,14 +27,14 @@
 				</td>
 				<td class="span2">
 					<div class="btn-toolbar pull-right">
-						<?php if ((Sentry::user()->has_level('user.update', 1) and Sentry::user()->id == $a->id)
-								or Sentry::user()->has_level('user.update', 2)): ?>
+						<?php if ((Sentry::user()->hasLevel('user.update', 1) and Sentry::user()->id == $a->id)
+								or Sentry::user()->hasLevel('user.update', 2)): ?>
 							<div class="btn-group">
 								<a href="<?php echo Uri::create('admin/user/edit/'.$a->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit user', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 						<?php endif;?>
 
-						<?php if (Sentry::user()->has_access('user.delete')): ?>
+						<?php if (Sentry::user()->hasAccess('user.delete')): ?>
 							<div class="btn-group">
 								<a href="#" class="btn btn-mini btn-danger tooltip-top user-action" title="<?php echo lang('action.delete user', 1);?>" data-action="delete" data-id="<?php echo $a->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 							</div>

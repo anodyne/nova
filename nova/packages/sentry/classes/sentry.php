@@ -189,7 +189,7 @@ class Sentry
 			$attempts = static::attempts($login_column_value, Input::real_ip());
 
 			// if attempts > limit - suspend the login/ip combo
-			if ($attempts->get() >= $attempts->get_limit())
+			if ($attempts->get() >= $attempts->getLimit())
 			{
 				try
 				{
@@ -225,7 +225,7 @@ class Sentry
 		}
 		
 		// validate the user
-		$user = static::validate_user($login_column_value, $password, 'password');
+		$user = static::validateUser($login_column_value, $password, 'password');
 
 		// if we have a user object, continue
 		if ( ! is_numeric($user))
@@ -284,16 +284,16 @@ class Sentry
 	 * @return  bool
 	 * @throws  SentryAuthException
 	 */
-	public static function force_login($id, $provider = 'Sentry-Forced')
+	public static function forceLogin($id, $provider = 'Sentry-Forced')
 	{
 		// check to make sure user exists
-		if ( ! static::user_exists($id))
+		if ( ! static::userExists($id))
 		{
 			throw new \SentryAuthException(__('sentry.user_not_found'));
 		}
 
 		Session::set('user', $id);
-		Session::set('role', $user->get_user_role());
+		Session::set('role', $user->getUserRole());
 		Session::set('preferences', \Model_User::find($id)->getPreferences());
 		
 		return true;
@@ -313,7 +313,7 @@ class Sentry
 		if ($user_id === null or ! is_numeric($user_id))
 		{
 			// if they are not logged in - check for cookie and log them in
-			if (static::is_remembered())
+			if (static::isRemembered())
 			{
 				return true;
 			}
@@ -350,7 +350,7 @@ class Sentry
 	 * @return  bool
 	 * @throws  SentryAuthException
 	 */
-	public static function activate_user($login_column_value, $code, $decode = true)
+	public static function activateUser($login_column_value, $code, $decode = true)
 	{
 		// decode login column
 		if ($decode)
@@ -365,7 +365,7 @@ class Sentry
 		}
 
 		// if user is validated
-		if ($user = static::validate_user($login_column_value, $code, 'activation_hash'))
+		if ($user = static::validateUser($login_column_value, $code, 'activation_hash'))
 		{
 			// update pass to temp pass, reset temp pass and hash
 			$user->update(array(
@@ -389,7 +389,7 @@ class Sentry
 	 * @return  bool|array
 	 * @throws  SentryAuthException
 	 */
-	public static function reset_password($login_column_value, $password)
+	public static function resetPassword($login_column_value, $password)
 	{
 		// make sure a user id is set
 		if (empty($login_column_value) or empty($password))
@@ -400,7 +400,7 @@ class Sentry
 		// check if user exists
 		$user = static::user($login_column_value);
 
-		// create a hash for reset_password link
+		// create a hash for resetPassword link
 		$hash = \Str::random('alnum', 24);
 
 		// set update values
@@ -436,7 +436,7 @@ class Sentry
 	 * @return  bool
 	 * @throws  SentryAuthException
 	 */
-	public static function reset_password_confirm($login_column_value, $code, $decode = true)
+	public static function resetPasswordConfirm($login_column_value, $code, $decode = true)
 	{
 		// decode login column
 		if ($decode)
@@ -456,20 +456,20 @@ class Sentry
 			$attempts = static::attempts($login_column_value, Input::real_ip());
 
 			// if attempts > limit - suspend the login/ip combo
-			if ($attempts->get() >= $attempts->get_limit())
+			if ($attempts->get() >= $attempts->getLimit())
 			{
 				$attempts->suspend();
 			}
 		}
 
 		// validate the user
-		$user = static::validate_user($login_column_value, $code, 'password_reset_hash');
+		$user = static::validateUser($login_column_value, $code, 'password_reset_hash');
 
 		// if user is validated
 		if ($user)
 		{
 			$u = \Model_User::find($user);
-			$u->password = \Sentry_User::password_hash($u->temp_password, \Model_System::getUid());
+			$u->password = \Sentry_User::passwordHash($u->temp_password, \Model_System::getUid());
 			$u->password_reset_hash = null;
 			$u->temp_password = null;
 			$u->remember_me = null;
@@ -487,7 +487,7 @@ class Sentry
 	 * @param   string|id  Login column value or Id
 	 * @return  bool
 	 */
-	public static function user_exists($login_column_value)
+	public static function userExists($login_column_value)
 	{
 		try
 		{
@@ -515,7 +515,7 @@ class Sentry
 	 * @param   string|int  Group name|Group id
 	 * @return  bool
 	 */
-	public static function group_exists($group)
+	public static function groupExists($group)
 	{
 		// set the field to use
 		$field = (is_int($group)) ? 'id' : 'name';
@@ -549,7 +549,7 @@ class Sentry
 	/**
 	 * Check if remember me is set and valid
 	 */
-	protected static function is_remembered()
+	protected static function isRemembered()
 	{
 		$encoded_val = \Cookie::get(\Config::get('sentry.remember_me.cookie_name'));
 
@@ -559,7 +559,7 @@ class Sentry
 			list($login_column, $hash) = explode(':', $val);
 
 			// if user is validated
-			if ($user = static::validate_user($login_column, $hash, 'remember_me'))
+			if ($user = static::validateUser($login_column, $hash, 'remember_me'))
 			{
 				// update last login
 				$user->update(array(
@@ -592,7 +592,7 @@ class Sentry
 	 * @param   string  Field name (password type)
 	 * @return  bool|Sentry_User
 	 */
-	protected static function validate_user($login_column_value, $password, $field)
+	protected static function validateUser($login_column_value, $password, $field)
 	{
 		// get user
 		$user = static::user($login_column_value);
@@ -603,7 +603,7 @@ class Sentry
 		}
 		
 		// check password
-		if ( ! $user->check_password($password, $field))
+		if ( ! $user->checkPassword($password, $field))
 		{
 			if (static::$suspend and ($field == 'password' or $field == 'password_reset_hash'))
 			{
@@ -630,15 +630,15 @@ class Sentry
 	}
 	
 	/**
-	 * Checks if the role exists. Alias of group_exists.
+	 * Checks if the role exists. Alias of groupExists.
 	 *
 	 * @api
 	 * @param   string|int  Role name|Role id
 	 * @return  bool
 	 */
-	public static function role_exists($role)
+	public static function roleExists($role)
 	{
-		return static::group_exists($role);
+		return static::groupExists($role);
 	}
 
 	/**
@@ -673,7 +673,7 @@ class Sentry
 			// loop through the array and see if they have access
 			foreach ($key as $k)
 			{
-				$allowed[] = $user->has_access($k);
+				$allowed[] = $user->hasAccess($k);
 			}
 
 			if ($redirect === true)
@@ -699,7 +699,7 @@ class Sentry
 	 * @param	string	a period-delimited string for an access task (component.action.level)
 	 * @return	array
 	 */
-	public static function users_with_access($value)
+	public static function usersWithAccess($value)
 	{
 		// get the task
 		$task = \Model_Access_Task::getTask($value);

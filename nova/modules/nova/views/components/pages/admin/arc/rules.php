@@ -1,7 +1,7 @@
 <div class="btn-group">
 	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('applications index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	
-	<?php if (Sentry::user()->has_level('character.create', 2)): ?>
+	<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
 		<a href="<?php echo Uri::create('admin/application/rules/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.add rule', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 	<?php endif;?>
 </div>
@@ -35,7 +35,7 @@
 					<?php echo lang('to the review');?>.
 				</td>
 				<td class="span2">
-					<?php if (Sentry::user()->has_level('character.create', 2)): ?>
+					<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
 						<div class="btn-toolbar pull-right">
 							<div class="btn-group">
 								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>

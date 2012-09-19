@@ -14,7 +14,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 {
 	public function action_apprule($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_level('character.create', 2))
+		if (\Sentry::check() and \Sentry::user()->hasLevel('character.create', 2))
 		{
 			// get the rule
 			$rule = \Model_Application_Rule::find($id);
@@ -38,7 +38,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 	 */
 	public function action_arc_unbanuser($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('ban.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('ban.delete'))
 		{
 			// get the user
 			$user = \Model_User::find(\Security::xss_clean($id));
@@ -55,7 +55,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_formfield($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('form.delete'))
 		{
 			// get the field
 			$field = \Model_Form_Field::find($id);
@@ -74,7 +74,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_formfield_value()
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.update'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('form.update'))
 		{
 			// get the value
 			$id = \Security::xss_clean(\Input::post('id'));
@@ -91,7 +91,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_formsection($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('form.delete'))
 		{
 			// get the section
 			$section = \Model_Form_Section::find($id);
@@ -117,7 +117,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_formtab($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('form.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('form.delete'))
 		{
 			// get the tab
 			$tab = \Model_Form_Tab::find($id);
@@ -143,7 +143,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_rank($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('rank.delete'))
 		{
 			// get the rank info
 			$rank = \Model_Rank::find($id);
@@ -162,7 +162,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_rankgroup($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('rank.delete'))
 		{
 			// get the rank group
 			$group = \Model_Rank_Group::find($id);
@@ -198,7 +198,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_rankinfo($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('rank.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('rank.delete'))
 		{
 			// get the rank info
 			$info = \Model_Rank_Info::find($id);
@@ -236,7 +236,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 
 	public function action_user($id)
 	{
-		if (\Sentry::check() and \Sentry::user()->has_access('user.delete'))
+		if (\Sentry::check() and \Sentry::user()->hasAccess('user.delete'))
 		{
 			// get the user info
 			$user = \Model_User::find($id);

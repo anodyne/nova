@@ -45,7 +45,7 @@ class Controller_Login extends Controller_Base_Login
 		$lockout = \Sentry::attempts(null, \Input::real_ip())->get();
 
 		// display a message if the user is locked out
-		if ( (int) $lockout > \Sentry::attempts()->get_limit())
+		if ( (int) $lockout > \Sentry::attempts()->getLimit())
 		{
 			$this->_flash[] = array(
 				'status' => 'warning',
@@ -173,7 +173,7 @@ class Controller_Login extends Controller_Base_Login
 				try
 				{
 					// do the reset
-					$reset = \Sentry::reset_password($email, $password);
+					$reset = \Sentry::resetPassword($email, $password);
 
 					if ($reset)
 					{
@@ -263,7 +263,7 @@ class Controller_Login extends Controller_Base_Login
 				try
 				{
 					// confirm password reset
-					$confirm_reset = \Sentry::reset_password_confirm(\Uri::segment(3), \Uri::segment(4));
+					$confirm_reset = \Sentry::resetPasswordConfirm(\Uri::segment(3), \Uri::segment(4));
 
 					if ($confirm_reset)
 					{

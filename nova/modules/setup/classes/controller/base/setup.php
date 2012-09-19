@@ -72,7 +72,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 				if (\Sentry::check() === true)
 				{
 					// if they aren't a system admin, send them away
-					if ( ! \Sentry::user()->is_admin())
+					if ( ! \Sentry::user()->isAdmin())
 					{
 						\Response::redirect('login/index/'.\Login\Controller_Login::NOT_ADMIN);
 					}

@@ -30,7 +30,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 		$this->_view = 'admin/form/index';
 		$this->_js_view = 'admin/form/index_js';
 
-		if (\Sentry::user()->has_access('form.update') and \Input::method() == 'POST')
+		if (\Sentry::user()->hasAccess('form.update') and \Input::method() == 'POST')
 		{
 			if (\Security::check_token())
 			{
@@ -98,7 +98,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// get the ID from the POST
 				$field_id = \Security::xss_clean(\Input::post('id'));
 
-				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('form.delete') and $action == 'delete')
 				{
 					// delete the field
 					$item = \Model_Form_Field::deleteItem($field_id);
@@ -119,7 +119,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.update') and $action == 'add')
+				if (\Sentry::user()->hasAccess('form.update') and $action == 'add')
 				{
 					// add the field
 					$item = \Model_Form_Field::createItem(\Input::post());
@@ -140,7 +140,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.update') and $action == 'update')
+				if (\Sentry::user()->hasAccess('form.update') and $action == 'update')
 				{
 					// update the field
 					$item = \Model_Form_Field::updateItem($field_id, \Input::post());
@@ -331,7 +331,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// get the ID from the POST
 				$section_id = \Security::xss_clean(\Input::post('id'));
 
-				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('form.delete') and $action == 'delete')
 				{
 					// get the new section ID
 					$new_section = \Security::xss_clean(\Input::post('new_section_id'));
@@ -368,7 +368,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.update') and $action == 'add')
+				if (\Sentry::user()->hasAccess('form.update') and $action == 'add')
 				{
 					// add the section
 					$item = \Model_Form_Section::createItem(\Input::post());
@@ -389,7 +389,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.update') and $action == 'update')
+				if (\Sentry::user()->hasAccess('form.update') and $action == 'update')
 				{
 					// update the section
 					$item = \Model_Form_Section::updateItem($section_id, \Input::post());
@@ -549,7 +549,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// get the ID from the POST
 				$tab_id = \Security::xss_clean(\Input::post('id'));
 
-				if (\Sentry::user()->has_access('form.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('form.delete') and $action == 'delete')
 				{
 					// get the new tab ID
 					$new_tab = \Security::xss_clean(\Input::post('new_tab_id'));
@@ -586,7 +586,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.update') and $action == 'add')
+				if (\Sentry::user()->hasAccess('form.update') and $action == 'add')
 				{
 					// add the tab
 					$item = \Model_Form_Tab::createItem(\Input::post());
@@ -607,7 +607,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					}
 				}
 
-				if (\Sentry::user()->has_access('form.update') and $action == 'update')
+				if (\Sentry::user()->hasAccess('form.update') and $action == 'update')
 				{
 					// update the tab
 					$item = \Model_Form_Tab::updateItem($tab_id, \Input::post());

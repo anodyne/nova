@@ -36,7 +36,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 				/**
 				 * Create a new user.
 				 */
-				if (\Sentry::user()->has_access('user.create') and $action == 'create')
+				if (\Sentry::user()->hasAccess('user.create') and $action == 'create')
 				{
 					// generate a password
 					$password = \Str::random('alnum', 8);
@@ -79,7 +79,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 				 * Instead, this simply sets the user to a status that makes sure it's never
 				 * pulled back. It also goes through and "removes" the characters as well.
 				 */
-				if (\Sentry::user()->has_access('user.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('user.delete') and $action == 'delete')
 				{
 					// get the user
 					$user = \Model_User::find(\Security::xss_clean(\Input::post('id')));
@@ -109,7 +109,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 				/**
 				 * Link a character to a user account.
 				 */
-				if (\Sentry::user()->has_level('user.update', 2) and $action == 'link')
+				if (\Sentry::user()->hasLevel('user.update', 2) and $action == 'link')
 				{
 					# code...
 				}
@@ -139,8 +139,8 @@ class Controller_Admin_User extends Controller_Base_Admin
 		// sanitize the input
 		\Security::xss_clean($id);
 
-		if (\Sentry::user()->has_level('user.update', 2) or 
-				(\Sentry::user()->has_level('user.update', 1) and \Sentry::user()->id === $id))
+		if (\Sentry::user()->hasLevel('user.update', 2) or 
+				(\Sentry::user()->hasLevel('user.update', 1) and \Sentry::user()->id === $id))
 		{
 			if (\Input::method() == 'POST')
 			{
@@ -157,7 +157,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 						// make sure we hash the password if it's being reset
 						if (\Input::post('basic.password', false) !== false)
 						{
-							$_POST['basic']['password'] = \Sentry_User::password_generate(\Security::xss_clean(\Input::post('basic.password')));
+							$_POST['basic']['password'] = \Sentry_User::passwordGenerate(\Security::xss_clean(\Input::post('basic.password')));
 						}
 
 						// update the user

@@ -55,7 +55,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				/**
 				 * Create a new rank group with the name provided by the user.
 				 */
-				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+				if (\Sentry::user()->hasAccess('rank.create') and $action == 'create')
 				{
 					$item = \Model_Rank_Group::createItem(array(
 						'name' => \Security::xss_clean(\Input::post('name')),
@@ -83,7 +83,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * from the old group into the new group with the new base the user
 				 * specified in the modal pop-up.
 				 */
-				if (\Sentry::user()->has_access('rank.create') and $action == 'duplicate')
+				if (\Sentry::user()->hasAccess('rank.create') and $action == 'duplicate')
 				{
 					// create the new group
 					$item = \Model_Rank_Group::createItem(array(
@@ -132,7 +132,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * Update the specified rank group with the information the user specified
 				 * in the modal pop-up.
 				 */
-				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
+				if (\Sentry::user()->hasAccess('rank.update') and $action == 'update')
 				{
 					// update the field
 					$item = \Model_Rank_Group::updateItem($group_id, \Input::post());
@@ -158,7 +158,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * group the user specified in the modal pop-up. If the user requested to
 				 * have the group's ranks deleted, that will supercede any new group ID selection.
 				 */
-				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('rank.delete') and $action == 'delete')
 				{
 					// get all the ranks for the current group
 					$group = \Model_Rank_Group::find($group_id);
@@ -252,7 +252,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				/**
 				 * Create a new rank info with the data provided by the user.
 				 */
-				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+				if (\Sentry::user()->hasAccess('rank.create') and $action == 'create')
 				{
 					$item = \Model_Rank_Info::createItem(\Input::post());
 
@@ -276,7 +276,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * Update the specified rank info with the information the user specified
 				 * in the modal pop-up.
 				 */
-				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
+				if (\Sentry::user()->hasAccess('rank.update') and $action == 'update')
 				{
 					// update the field
 					$item = \Model_Rank_Info::updateItem($info_id, \Input::post());
@@ -302,7 +302,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 * info the user specified in the modal pop-up. If the user requested to
 				 * have the info's ranks deleted, that will supercede any new info ID selection.
 				 */
-				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('rank.delete') and $action == 'delete')
 				{
 					// get the rank info record
 					$info = \Model_Rank_Info::find($info_id);
@@ -408,7 +408,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				/**
 				 * Create a new rank.
 				 */
-				if (\Sentry::user()->has_access('rank.create') and $action == 'create')
+				if (\Sentry::user()->hasAccess('rank.create') and $action == 'create')
 				{
 					$item = \Model_Rank::createItem(\Input::post());
 
@@ -431,7 +431,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				/**
 				 * Update a rank.
 				 */
-				if (\Sentry::user()->has_access('rank.update') and $action == 'update')
+				if (\Sentry::user()->hasAccess('rank.update') and $action == 'update')
 				{
 					$item = \Model_Rank::updateItem($rank_id, \Input::post());
 
@@ -456,7 +456,7 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 				 *
 				 * @todo	what do we need to do with characters when a rank is deleted?
 				 */
-				if (\Sentry::user()->has_access('rank.delete') and $action == 'delete')
+				if (\Sentry::user()->hasAccess('rank.delete') and $action == 'delete')
 				{
 					$item = \Model_Rank::deleteItem($rank_id);
 
