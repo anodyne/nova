@@ -190,6 +190,7 @@ return array(
 			'orm',
 			'sentry',
 			'swiftmailer',
+			'carbon',
 		),
 
 		/**
