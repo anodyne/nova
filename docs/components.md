@@ -5,7 +5,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
 ## PHP
 
 * FuelPHP
-    * Version: 1.2.1
+    * Version: 1.3
     * Site: http://fuelphp.com/
     * Location
         * nova/fuel
@@ -20,6 +20,13 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/packages/sentry
     * Notes
         * This is a __highly__ modified version of Sentry 1.1.
+* Carbon
+    * Version: 1.1
+    * Site: https://github.com/briannesbitt/Carbon
+    * Location
+        * nova/packages/carbon
+    * Notes
+        * A simple API extension for DateTime with PHP 5.3+
 * Nova (module)
     * Version: 3.0
     * Location
@@ -30,11 +37,11 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Version: R1
     * Location
         * nova/modules/setup
-* Thresher (module)
+* Wiki (module)
     * Version: R3
     * Location
         * nova/modules/wiki
-* Mako (module)
+* Forums (module)
     * Version: R1
     * Location
         * nova/modules/forums
@@ -50,7 +57,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * http://code.jquery.com/jquery-1.7.2.min.js
 * Bootstrap
-    * Version: 2.1.0
+    * Version: 2.1.1
     * Site: http://twitter.github.com/bootstrap/
     * Location
         * nova/modules/assets/css/bootstrap-responsive.min.css
