@@ -40,13 +40,13 @@ class Observer_Character extends \Orm\Observer
 			foreach ($fields as $f)
 			{
 				\Model_Form_Data::createData(array(
-					'form_key' => 'bio',
-					'field_id' => $f->id,
-					'user_id' => 0,
-					'character_id' => $model->id,
-					'item_id' => 0,
-					'value' => '',
-					'updated_at' => time(),
+					'form_key' 		=> 'bio',
+					'field_id' 		=> $f->id,
+					'user_id' 		=> 0,
+					'character_id'	=> $model->id,
+					'item_id' 		=> 0,
+					'value' 		=> '',
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				));
 			}
 		}

@@ -17,7 +17,7 @@ $system_info		= null;
  * Build the data used by the system for version info
  */
 $system_info = array(
-	'last_update'		=> time(),
+	'last_update'		=> \Carbon::now('UTC')->timestamp,
 	'version_major'		=> 3,
 	'version_minor'		=> 0,
 	'version_update'	=> 1

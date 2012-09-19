@@ -128,10 +128,10 @@ class Observer_Form_Field extends \Orm\Observer
 
 		// what should be in the data?
 		$data = array(
-			'form_key' => $model->form_key,
-			'field_id' => $model->id,
-			'value' => '',
-			'updated_at' => time(),
+			'form_key' 		=> $model->form_key,
+			'field_id' 		=> $model->id,
+			'value' 		=> '',
+			'updated_at'	=> \Carbon::now('UTC')->timestamp,
 		);
 
 		switch ($model->form_key)

@@ -300,7 +300,7 @@ class Model_Application extends \Model
 		{
 			// update the response
 			$myVote->content = (\Arr::get($data, 'vote.yes') !== false) ? 'yes' : 'no';
-			$myVote->created_at = time();
+			$myVote->created_at = \Carbon::now('UTC')->timestamp;
 			$myVote->save();
 		}
 		else

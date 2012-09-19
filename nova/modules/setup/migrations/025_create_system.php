@@ -20,7 +20,7 @@ class Create_system
 		$data = array(
 			array(
 				'uid' => \Str::random('alnum', 32),
-				'install_date' => time(),
+				'install_date' => \Carbon::now('UTC')->timestamp,
 				'version_major' => 3,
 				'version_minor' => 0,
 				'version_update' => 0)

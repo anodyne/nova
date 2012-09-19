@@ -116,7 +116,7 @@ HELP;
 				else
 				{
 					// move the file to the backups location
-					rename($path.'install/fields.php', $path.'backups/fields_'.$version.'_'.time().'.php');
+					rename($path.'install/fields.php', $path.'backups/fields_'.$version.'_'.\Carbon::now('UTC')->timestamp.'.php');
 				}
 			}
 			else

@@ -107,7 +107,7 @@ class Upgrade_nova2_docking
 							'placeholder' 	=> '',
 							'order' 		=> $r['field_order'],
 							'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-							'updated_at' 	=> time(),
+							'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 						);
 						
 						// create the field record
@@ -166,7 +166,7 @@ class Upgrade_nova2_docking
 							'character_id' 	=> 0,
 							'item_id' 		=> $r['data_docking_item'],
 							'value' 		=> $r['data_value'],
-							'updated_at' 	=> time(),
+							'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 						);
 						
 						// create the data record

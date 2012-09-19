@@ -1667,7 +1667,7 @@ class Controller_Upgradeajax extends \Controller
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
 					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-					'updated_at' 	=> time(),
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				);
 				
 				// create the field record
@@ -1729,7 +1729,7 @@ class Controller_Upgradeajax extends \Controller
 					'character_id' 	=> $r['data_char'],
 					'item_id' 		=> 0,
 					'value' 		=> $r['data_value'],
-					'updated_at' 	=> time(),
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				);
 				
 				// create the data record
@@ -1755,7 +1755,7 @@ class Controller_Upgradeajax extends \Controller
 						'character_id' 	=> 0,
 						'item_id' 		=> 0,
 						'value' 		=> $r['location'],
-						'updated_at' 	=> time()),
+						'updated_at' 	=> \Carbon::now('UTC')->timestamp),
 					'interests' => array(
 						'form_key' 		=> 'user',
 						'field_id' 		=> 51,
@@ -1763,7 +1763,7 @@ class Controller_Upgradeajax extends \Controller
 						'character_id'	=> 0,
 						'item_id'		=> 0,
 						'value'			=> $r['interests'],
-						'updated_at'	=> time()),
+						'updated_at'	=> \Carbon::now('UTC')->timestamp),
 					'bio' => array(
 						'form_key'		=> 'user',
 						'field_id'		=> 52,
@@ -1771,7 +1771,7 @@ class Controller_Upgradeajax extends \Controller
 						'character_id'	=> 0,
 						'item_id'		=> 0,
 						'value'			=> $r['bio'],
-						'updated_at'	=> time()),
+						'updated_at'	=> \Carbon::now('UTC')->timestamp),
 				);
 				
 				// insert the records
@@ -1836,7 +1836,7 @@ class Controller_Upgradeajax extends \Controller
 							'user_id' => ((int) $c['user_id'] === 0 or $c['user_id'] === null) ? 0 : $c['user_id'],
 							'character_id' => $c['id'],
 							'image' => $i,
-							'created_at' => time(),
+							'created_at' => \Carbon::now('UTC')->timestamp,
 							'created_by' => 0,
 							'primary_image' => ($loop === 0) ? (int) true : (int) false,
 						);
@@ -2166,7 +2166,7 @@ class Controller_Upgradeajax extends \Controller
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
 					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-					'updated_at' 	=> time(),
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				);
 				
 				// create the field record
@@ -2225,7 +2225,7 @@ class Controller_Upgradeajax extends \Controller
 					'character_id' 	=> 0,
 					'item_id' 		=> $r['data_item'],
 					'value' 		=> $r['data_value'],
-					'updated_at' 	=> time(),
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				);
 				
 				// create the data record
@@ -2278,7 +2278,7 @@ class Controller_Upgradeajax extends \Controller
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
 					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-					'updated_at' 	=> time(),
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				);
 				
 				// create the field record
@@ -2337,7 +2337,7 @@ class Controller_Upgradeajax extends \Controller
 					'character_id' 	=> 0,
 					'item_id' 		=> $r['data_tour_item'],
 					'value' 		=> $r['data_value'],
-					'updated_at' 	=> time(),
+					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
 				);
 				
 				// create the data record
@@ -2511,7 +2511,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'posts',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 				
@@ -2521,7 +2521,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'logs',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 				
@@ -2531,7 +2531,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'news',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 				
@@ -2541,7 +2541,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'post_comments',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 				
@@ -2551,7 +2551,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'log_comments',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 				
@@ -2561,7 +2561,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'news_comments',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 				
@@ -2571,7 +2571,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'wiki_comments',
-						'date' => time()
+						'date' => \Carbon::now('UTC')->timestamp
 					));
 				}
 			}

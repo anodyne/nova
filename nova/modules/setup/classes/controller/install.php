@@ -182,7 +182,7 @@ class Controller_Install extends Controller_Base_Setup
 							'last_name' => $last_name,
 							'rank_id' => $rank,
 							'status' => \Status::ACTIVE,
-							'activated' => time(),
+							'activated' => \Carbon::now('UTC')->timestamp,
 						), true);
 
 						// create the position record
