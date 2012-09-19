@@ -52,4 +52,11 @@ class Controller_Test extends Nova\Controller_Main
 		
 		return;
 	}
+
+	public function action_date()
+	{
+		\Debug::dump(\Carbon::now()->timestamp, \Carbon::now('UTC')->timestamp);
+
+		return;
+	}
 }
