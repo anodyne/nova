@@ -168,11 +168,11 @@ class Model_User extends \Model
 		'\\User' => array(
 			'events' => array('after_insert', 'before_insert', 'after_update', 'before_delete')
 		),
-		'\\Orm\\Observer_CreatedAt' => array(
+		'Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
 			'mysql_timestamp' => true,
 		),
-		'\\Orm\\Observer_UpdatedAt' => array(
+		'Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save'),
 			'mysql_timestamp' => true,
 		),

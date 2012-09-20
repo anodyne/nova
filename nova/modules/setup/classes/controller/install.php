@@ -204,7 +204,7 @@ class Controller_Install extends Controller_Base_Setup
 						Setup::register('install');
 
 						// create an event
-						\SystemEvent::add(false, __('event.setup.installed', array('version' => \Config::get('nova.app_version_full'))));
+						\SystemEvent::add(false, '[[event.setup.installed|{{'.\Config::get('nova.app_name').'}}|{{'.\Config::get('nova.app_version_full').'}}]]');
 					}
 					else
 					{

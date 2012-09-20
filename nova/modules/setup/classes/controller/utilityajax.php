@@ -137,7 +137,7 @@ class Controller_UtilityAjax extends \Controller
 		$retval = (count(\DB::list_tables('%_'.$genre)) > 0) ? array('code' => 1) : array('code' => 0);
 
 		// create an event
-		\SystemEvent::add('user', __('event.setup.genre_installed', array('genre' => $genre)));
+		\SystemEvent::add('user', '[[event.setup.genre|{{'.$genre.'}}|action.installed]]');
 		
 		return json_encode($retval);
 	}
@@ -258,7 +258,7 @@ class Controller_UtilityAjax extends \Controller
 		$retval = (count(\DB::list_tables('%_'.$genre)) > 0) ? array('code' => 0) : array('code' => 1);
 
 		// create an event
-		\SystemEvent::add('user', __('event.setup.genre_uninstalled', array('genre' => $genre)));
+		\SystemEvent::add('user', '[[event.setup.genre|{{'.$genre.'}}|action.removed]]');
 		
 		return json_encode($retval);
 	}

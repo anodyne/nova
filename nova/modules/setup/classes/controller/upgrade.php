@@ -158,10 +158,7 @@ class Controller_Upgrade extends Controller_Base_Setup
 						Setup::register('upgrade');
 
 						// create an event
-						\SystemEvent::add(false, __('event.setup.upgraded', array(
-							'product' => \Config::get('nova.app_name'),
-							'version' => \Config::get('nova.app_version_full')
-						)));
+						\SystemEvent::add(false, '[[event.setup.upgraded|{{'.\Config::get('nova.app_name').'}}|{{'.\Config::get('nova.app_version_full').'}}]]');
 					}
 					else
 					{

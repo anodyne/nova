@@ -45,7 +45,7 @@ class Model_SystemEvent extends \Model
 	 * Observers
 	 */
 	protected static $_observers = array(
-		'\\Orm\\Observer_CreatedAt' => array(
+		'Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
 			'mysql_timestamp' => true,
 		),

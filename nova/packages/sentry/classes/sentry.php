@@ -200,10 +200,10 @@ class Sentry
 					// get the user
 					$u = \Model_User::getItem($login_column_value, 'email');
 
-					// create a system event entry
-					\SystemEvent::add($login_column_value, Input::real_ip(), $u, null, __('event.login.suspended'));
+					// create an event
+					\SystemEvent::add(false, '[[event.login.suspended|{{'.$u->name.'}}]]');
 					
-					return \Login\Controller_Login::SUSPEND_START;
+					return \Login\Controller_Login::SUSPEND_DURING;
 				}
 			}
 		}

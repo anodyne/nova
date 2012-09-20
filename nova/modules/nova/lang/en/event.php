@@ -43,8 +43,8 @@ return array(
 	),
 
 	'login' => array(
-		'suspend' => "User suspended for too many log in attempts",
-		'suspended' => "User is currently suspended for too many log in attempts",
+		'suspend' => ":0 has been suspended for too many log in attempts",
+		'suspended' => ":0 is currently suspended for too many log in attempts",
 	),
 
 	'main' => array(
@@ -54,10 +54,9 @@ return array(
 	),
 
 	'setup' => array(
-		'installed' => "System installed with version :0",
-		'updated' => "System was updated to :0",
-		'upgraded' => "System was upgraded from :0 2 to :1 :version",
-		'genre_installed' => "Genre :0 was installed",
-		'genre_uninstalled' => "Genre :0 was uninstalled",
+		'installed' => ":0 :1 was installed",
+		'upgraded' => ":0 was upgraded from :0 2 to version :1",
+		'updated' => ":0 was updated to version :1",
+		'genre' => "The :0 genre was :1",
 	),
 );

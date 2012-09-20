@@ -139,11 +139,11 @@ class Model_Character extends \Model
 		'\\Character' => array(
 			'events' => array('after_insert')
 		),
-		'\\Orm\\Observer_CreatedAt' => array(
+		'Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
 			'mysql_timestamp' => true,
 		),
-		'\\Orm\\Observer_UpdatedAt' => array(
+		'Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save'),
 			'mysql_timestamp' => true,
 		),

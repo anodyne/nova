@@ -216,9 +216,7 @@ class Controller_Update extends Controller_Base_Setup
 						Setup::register('update');
 
 						// create an event
-						\SystemEvent::add(false, __('event.setup.updated', array(
-							'version' => $system_info['version_major'].'.'.$system_info['version_minor'].'.'.$system_info['version_update']
-						)));
+						\SystemEvent::add(false, '[[event.setup.updated|{{'.\Config::get('nova.app_name').'}}|{{'.\Config::get('nova.app_version_full').'}}]]');
 					}
 					else
 					{

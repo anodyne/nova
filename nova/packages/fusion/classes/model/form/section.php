@@ -74,7 +74,7 @@ class Model_Form_Section extends \Model
 		'\\Form_Section' => array(
 			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
-		'\\Orm\\Observer_UpdatedAt' => array(
+		'Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save'),
 			'mysql_timestamp' => true,
 		),

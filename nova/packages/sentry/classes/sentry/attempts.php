@@ -250,8 +250,8 @@ class Sentry_Attempts
 		$u = \Model_User::getItem($login_column_value, 'email');
 
 		// create an event
-		\SystemEvent::add('user', __('event.login.suspend'));
+		\SystemEvent::add(false, '[[event.login.suspend|{{'.$u->name.'}}]]');
 
-		return 7;
+		return \Login\Controller_Login::SUSPEND_START;
 	}
 }

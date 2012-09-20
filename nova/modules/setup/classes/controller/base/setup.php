@@ -90,6 +90,14 @@ abstract class Controller_Base_Setup extends \Controller_Template
 		
 		// load the language file
 		\Lang::load('setup', 'setup');
+		\Lang::load('app');
+		\Lang::load('nova::base');
+		\Lang::load('nova::event', 'event');
+		\Lang::load('nova::email', 'email');
+		\Lang::load('nova::error', 'error');
+		\Lang::load('nova::action', 'action');
+		\Lang::load('nova::short', 'short');
+		\Lang::load('nova::sitecontent', 'sitecontent');
 		
 		// manually add the nova module to the paths
 		\Finder::instance()->add_path(NOVAPATH.'nova');

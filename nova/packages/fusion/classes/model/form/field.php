@@ -112,7 +112,7 @@ class Model_Form_Field extends \Model
 		'\\Form_Field' => array(
 			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
-		'\\Orm\\Observer_UpdatedAt' => array(
+		'Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save'),
 			'mysql_timestamp' => true,
 		),
