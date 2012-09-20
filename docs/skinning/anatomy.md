@@ -1,6 +1,6 @@
 # Anatomy of a Nova 3 Skin
 
-At first glance, Nova 3 skins will look incredibly foreign to anyone familiar with Nova 1 and 2 skins. There are a lot less files and a completely different file structure in each skin folder. By the end of this document though, you'll be familiar with all the different components that _can_ make up a skin (but don't necessarily _have_ to make up a skin).
+At first glance, Nova 3 skins will look incredibly foreign to anyone familiar with Nova 1 and 2 skins. There are fewer files and a completely different file structure in each skin folder. By the end of this document though, you'll be familiar with all the different components that _can_ make up a skin (but don't necessarily _have_ to make up a skin).
 
 ## Components
 

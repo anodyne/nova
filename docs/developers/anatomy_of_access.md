@@ -1,10 +1,10 @@
 # The Anatomy of Nova 3's Access Control System
 
-Through the years, we've toyed with a wide range of access control means, working hard to make it incredibly flexible and powerful while still retaining an ease-of-use that didn't make it a chore to manage access and permissions throughout the system.
+Through the years, we've toyed with a wide range of access control means, working hard to make it flexible and powerful while still retaining an ease-of-use that didn't make it a chore to manage access and permissions throughout the system.
 
-In its earliest forms, SMS 1.2 used a simple 1-5 numerical value for access. It was simple, but if you wanted to grant someone access to another area of the system, you didn't have a lot of wiggle room. SMS 1.5 expanded that to 9 different values, so there was a wider range, but still pretty limited. In later versions of SMS 2, we moved to a system where each user had custom permissions, but doing that made it tough to make sweeping changes. As SMS 2 drew to a close, we added the option to set default levels for a few hard-coded groups. This was the beginning of a move to a more formalized access control system.
+In its earliest forms, SMS 1.2 used a simple 1-5 numerical value for access. It was simple, but if you wanted to grant someone access to another area of the system, you didn't have a lot of wiggle room. SMS 1.5 expanded that to 9 different values, so there was a wider range, but still pretty limited. In SMS 2, we moved to a system where each user had custom permissions, but doing that made it tough to make sweeping changes. As SMS 2 drew to a close, we added the option to set default levels for a few hard-coded groups. This was the beginning of a move to a more formalized access control system.
 
-Nova 1 ushered in a real role-based access system that relied on giving users a role. Those roles contained pages that dictated what a role could and couldn't do. For the majority of situations, this worked well, but it lacked true granularity that would give admins even more control over access and permissions. In Nova 3, the old access control system has been expanded to make it both more granular as well as flexible. Additionally, it provides third-party developers an easier interface to add their own permissions and use them as they see fit in their mods.
+Nova 1 ushered in a real role-based access system that relied on giving users a role. Those roles contained pages that dictated what a role could and couldn't do. For the majority of situations, this worked well, but it lacked true granularity that would give admins even more control over access and permissions. In Nova 3, the old access control system has been expanded to make it both more granular as well as flexible. Additionally, it provides third-party developers easier means to add their own permissions and use them as they see fit in their mods.
 
 ## Roles
 
@@ -16,11 +16,11 @@ The basic idea is that the the highest role inherits the majority of its tasks f
 
 ## Tasks
 
-In Nova 1 and 2, every role was made up of pages. Unfortunately, this was a pretty rigid structure that quickly bloated (Nova 2 ships with 66 page records). In Nova 3, each role is made up of tasks. Not only is this a more flexible system, but it allowed us to reduce the number of dependent items a role has to look at. Each task is made up of several different pieces that come together to make a highly flexible and granular system to give admins ultimate control.
+In Nova 1 and 2, every role was made up of pages. Unfortunately, this was a pretty rigid structure. In Nova 3, each role is made up of tasks. Each task is made up of several different pieces that come together to make a highly flexible and granular system to give admins more control.
 
 ### Components
 
-Every task has a component which are general areas found throughout the system. An example is the __form__ component. In Nova 2, each form had its own individual access piece. In Nova 3, all forms are under one piece. Why? Simply put, it's easier. (Additionally, we felt that any situations where an admin wants to give one person access to just one form would be a fringe case that we were okay not covering.) Other components include post, log, announcement, missions, reports, etc.
+Every task has a component which are general areas found throughout the system. An example is the __form__ component. In Nova 2, each form had its own access piece. In Nova 3, all forms are under one piece. Why? Simply put, it's easier. (Additionally, we felt that any situations where an admin wants to give one person access to just one form would be a fringe case that we were okay not covering.) Other components include post, log, announcement, missions, reports, etc.
 
 ### Actions
 
@@ -42,6 +42,12 @@ Once you've stepped in to a component, the next piece is the action. There are f
 
 ### Levels
 
-Within each action, you can have a wide range of levels. Generally, this is one or two levels to allow finer control of what someone can do within an action. Take the _update_ action inside the __post__ component. There are two levels, the first which allows someone to edit their own posts and the second which allows someone to edit all posts.
+Within each action, you can have a wide range of levels. Generally, this is one or two levels to allow finer control of what someone can do within an action. Take the _update_ action inside the __post__ component as an example. There are two levels, the first which allows someone to edit their own posts and the second which allows someone to edit all posts.
 
 ## 3rd Party Developers
+
+When a 3rd party developer builds their own module, sometimes the existing components and actions in a role may not be enough for what they're trying to accomplish. Because of the flexible nature of roles and tasks, it's possible to create additional tasks for use by the existing roles for that module.
+
+The simplest way to accomplish this is to create new tasks during the module's `up()` migration. (Make sure that any items added in the `up()` migration are removed in the `down()` migration as well.) Those roles can then be added to one of the roles or a README can include information about which tasks need to be added to a role for things to work as expected.
+
+<div class="alert alert-important">You should <strong>never</strong> create a new role and should <strong>always</strong> notify a user if roles are being changed.</div>

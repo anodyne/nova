@@ -2,11 +2,11 @@ So you want to play around with Nova 3? That's awesome! Our philosophy is to sta
 
 ## Modifying Controllers
 
-When it comes to modifying existing controllers, there are two options.
+When it comes to modifying existing controllers, there are two options:
 
 ### App
 
-The simplest and most straightforward approach to modifying existing controllers is to do so from the `app` directory. The main controllers have empty alias files in the `classes/controller` directory. Like previous version of Nova, you can simply make your changes to the methods you want from there (additional work has been done to ensure you don't have to copy an entire method, more information on that can be found in other places). Make your changes, upload them, and you're all set.
+The simplest and most straightforward approach to modifying existing controllers is to do so from the `app` directory. The main controllers have empty alias files in the `classes/controller` directory. Like previous versions of Nova, you can simply make your changes to the methods you want from there (additional work has been done to ensure you don't have to copy an entire method, more information on that can be found in other places). Make your changes, upload them, and you're all set.
 
 ### Module
 
