@@ -55,7 +55,14 @@ class Controller_Test extends Nova\Controller_Main
 
 	public function action_date()
 	{
-		\Debug::dump(\Carbon::now()->timestamp, \Carbon::now('UTC')->timestamp);
+		$c = \Carbon::now();
+		$c->timestamp = 1348153423;
+		$c->tz = 'America/New_York';
+
+		\Debug::dump(
+			\Carbon::createFromTimestamp(1348153423, 'UTC')->toDateTimeString(),
+			\Carbon::createFromTimestampUTC(1348153423)->toDateTimeString()
+		);
 
 		return;
 	}
