@@ -103,17 +103,29 @@ class Sentry_Attempts
 		foreach ($result as &$row)
 		{
 			// check if last attempt was more than 15 min ago - if so reset counter
-			if ($row['last_attempt_at'] and ($row['last_attempt_at'] + static::$limit['time'] * 60) <= time())
+			if ($row['last_attempt_at'])
 			{
-				$this->clear($row['login_id'], $row['ip']);
-				$row['attempts'] = 0;
+				// create a last attempt date object
+				$la = \Carbon::createFromFormat('Y-m-d H:i:s', $row['last_attempt_at']);
+
+				if ($la->diffInSeconds($la->copy()->addMinutes(static::$limit['time'])) <= 0)
+				{
+					$this->clear($row['login_id'], $row['ip']);
+					$row['attempts'] = 0;
+				}
 			}
 
 			// check unsuspended time and clear if time is > than it
-			if ($row['unsuspend_at'] and $row['unsuspend_at'] <= time())
+			if ($row['unsuspend_at'])
 			{
-				$this->clear($row['login_id'], $row['ip']);
-				$row['attempts'] = 0;
+				// create an unsuspend at date object
+				$ua = \Carbon::createFromFormat('Y-m-d H:i:s', $row['unsuspend_at']);
+
+				if ($ua->diffInSeconds(null) <= 0)
+				{
+					$this->clear($row['login_id'], $row['ip']);
+					$row['attempts'] = 0;
+				}
 			}
 		}
 
@@ -184,7 +196,7 @@ class Sentry_Attempts
 			// update the record
 			$result = \Model_User_Suspend::updateItem($record->id, array(
 				'attempts' 			=> ++$this->attempts,
-				'last_attempt_at' 	=> time(),
+				'last_attempt_at' 	=> \Carbon::now()->toDateTimeString(),
 			));
 		}
 		else
@@ -193,7 +205,7 @@ class Sentry_Attempts
 				'login_id' 			=> $this->login_id,
 				'ip' 				=> $this->ip_address,
 				'attempts' 			=> ++$this->attempts,
-				'last_attempt_at' 	=> time(),
+				'last_attempt_at' 	=> \Carbon::now()->toDateTimeString(),
 			));
 		}
 	}
@@ -239,11 +251,14 @@ class Sentry_Attempts
 			->where('unsuspend_at', null)
 			->or_where('unsuspend_at', 0)
 			->get();
+
+		// get the current time
+		$now = \Carbon::now();
 		
 		// update the record
 		$result = \Model_User_Suspend::updateItem($record->id, array(
-			'suspended_at' => time(),
-			'unsuspend_at' => time()+(static::$limit['time'] * 60),
+			'suspended_at' => $now->toDateTimeString(),
+			'unsuspend_at' => $now->copy()->addMinutes(static::$limit['time'])->toDateTimeString()
 		));
 
 		// get the user

@@ -252,7 +252,7 @@ class Sentry
 				$update['temp_password'] = '';
 			}
 			
-			$update['last_login'] = time();
+			$update['last_login'] = \Carbon::now()->toDateTimeString();
 			$update['ip_address'] = Input::real_ip();
 
 			// update user
@@ -563,7 +563,7 @@ class Sentry
 			{
 				// update last login
 				$user->update(array(
-					'last_login' => time()
+					'last_login' => \Carbon::now()->toDateTimeString()
 				));
 
 				// set session vars
