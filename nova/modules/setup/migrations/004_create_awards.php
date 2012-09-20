@@ -17,14 +17,14 @@ class Create_awards
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
-		\DBUtil::create_table('awards_categories', array(
+		\DBUtil::create_table('award_categories', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'desc' => array('type' => 'TEXT', 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 		), array('id'));
 
-		\DBUtil::create_table('awards_queue', array(
+		\DBUtil::create_table('award_queue', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'receive_character_id' => array('type' => 'INT', 'constraint' => 11),
 			'receive_user_id' => array('type' => 'INT', 'constraint' => 11),
@@ -35,7 +35,7 @@ class Create_awards
 			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 
-		\DBUtil::create_table('awards_received', array(
+		\DBUtil::create_table('award_received', array(
 			'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true),
 			'receive_character_id' => array('type' => 'INT', 'constraint' => 11),
 			'receive_user_id' => array('type' => 'INT', 'constraint' => 11),
@@ -49,8 +49,8 @@ class Create_awards
 	public function down()
 	{
 		\DBUtil::drop_table('awards');
-		\DBUtil::drop_table('awards_categories');
-		\DBUtil::drop_table('awards_queue');
-		\DBUtil::drop_table('awards_received');
+		\DBUtil::drop_table('award_categories');
+		\DBUtil::drop_table('award_queue');
+		\DBUtil::drop_table('award_received');
 	}
 }
