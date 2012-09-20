@@ -25,11 +25,9 @@ class Model_System extends \Model
 			'constraint' => 32,
 			'null' => true),
 		'install_date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+			'type' => 'datetime'),
 		'last_update' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'version_major' => array(
 			'type' => 'int',

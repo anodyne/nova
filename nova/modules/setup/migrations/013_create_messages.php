@@ -10,10 +10,10 @@ class Create_messages
 			'id' => array('type' => 'BIGINT', 'constraint' => 20, 'auto_increment' => true),
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'subject' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'content' => array('type' => 'TEXT', 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 
 		\DBUtil::create_table('message_recipients', array(

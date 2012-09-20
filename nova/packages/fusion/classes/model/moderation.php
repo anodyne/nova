@@ -32,8 +32,17 @@ class Model_Moderation extends \Model
 			'type' => 'string',
 			'constraint' => 100,
 			'null' => true),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+		'created_at' => array(
+			'type' => 'datetime'),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
+		),
 	);
 }

@@ -44,29 +44,24 @@ class Model_Character extends \Model
 			'type' => 'string',
 			'constraint' => 50,
 			'null' => true),
-		'activated' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
-		'deactivated' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
 		'rank_id' => array(
 			'type' => 'int',
 			'constraint' => 11,
 			'default' => 1),
+		'activated' => array(
+			'type' => 'datetime',
+			'null' => true),
+		'deactivated' => array(
+			'type' => 'datetime',
+			'null' => true),
 		'last_post' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'created_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 	
@@ -145,10 +140,12 @@ class Model_Character extends \Model
 			'events' => array('after_insert')
 		),
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
-			'events' => array('before_save')
+			'events' => array('before_save'),
+			'mysql_timestamp' => true,
 		),
 	);
 

@@ -13,7 +13,7 @@ namespace Fusion;
 
 class Model_User_Preferences extends \Model
 {
-	public static $_table_name = 'users_preferences';
+	public static $_table_name = 'user_preferences';
 	
 	public static $_properties = array(
 		'id' => array(

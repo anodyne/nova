@@ -14,7 +14,7 @@ class Create_comments
 			'item_id' => array('type' => 'INT', 'constraint' => 11),
 			'content' => array('type' => 'TEXT', 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 	}
 

@@ -13,8 +13,8 @@ class Create_media
 			'resource_type' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
 			'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16),
-			'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'created_at' => array('type' => 'DATETIME'),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 	}
 

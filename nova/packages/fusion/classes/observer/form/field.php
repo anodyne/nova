@@ -131,7 +131,7 @@ class Observer_Form_Field extends \Orm\Observer
 			'form_key' 		=> $model->form_key,
 			'field_id' 		=> $model->id,
 			'value' 		=> '',
-			'updated_at'	=> \Carbon::now('UTC')->timestamp,
+			'updated_at'	=> \Carbon::now('UTC')->toDateTimeString(),
 		);
 
 		switch ($model->form_key)

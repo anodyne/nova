@@ -32,9 +32,6 @@ class Model_Post extends \Model
 			'type' => 'string',
 			'constraint' => 255,
 			'null' => true),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
 		'mission_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
@@ -52,10 +49,6 @@ class Model_Post extends \Model
 		'tags' => array(
 			'type' => 'text',
 			'null' => true),
-		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
 		'participants' => array(
 			'type' => 'text',
 			'null' => true),
@@ -64,8 +57,12 @@ class Model_Post extends \Model
 			'constraint' => 11,
 			'null' => true),
 		'lock_date' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
+			'null' => true),
+		'created_at' => array(
+			'type' => 'datetime'),
+		'updated_at' => array(
+			'type' => 'datetime',
 			'null' => true),
 	);
 	
@@ -102,6 +99,16 @@ class Model_Post extends \Model
 			'table_through' => 'post_authors',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 	);
 	

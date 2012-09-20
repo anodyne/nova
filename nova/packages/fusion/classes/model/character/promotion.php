@@ -42,8 +42,7 @@ class Model_Character_Promotion extends \Model
 			'type' => 'string',
 			'constraint' => 100,
 			'null' => true),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+		'created_at' => array(
+			'type' => 'datetime'),
 	);
 }

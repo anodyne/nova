@@ -38,7 +38,7 @@ class Create_forms
 			'character_id' => array('type' => 'VARCHAR', 'constraint' => 11, 'null' => true),
 			'item_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'value' => array('type' => 'TEXT', 'null' => true),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		\DBUtil::create_table('form_fields', array(
@@ -58,7 +58,7 @@ class Create_forms
 			'html_class' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => 'span4'),
 			'html_rows' => array('type' => 'INT', 'constraint' => 3, 'default' => 5),
 			'placeholder' => array('type' => 'TEXT', 'null' => true),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		$data = array(
@@ -338,7 +338,7 @@ class Create_forms
 			'name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		$data = array(
@@ -381,7 +381,7 @@ class Create_forms
 			'link_id' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => true),
 			'order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		$data = array(

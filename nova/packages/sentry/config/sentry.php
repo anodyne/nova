@@ -26,8 +26,8 @@ return array(
 	'table' => array(
 		'users'           => 'users',
 		'groups'          => 'access_roles',
-		'users_groups'    => 'users_groups',
-		'users_suspended' => 'users_suspended',
+		'users_groups'    => 'user_groups',
+		'users_suspended' => 'user_suspended',
 	),
 
 	/*

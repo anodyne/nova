@@ -38,11 +38,9 @@ class Model_Media extends \Model
 			'type' => 'string',
 			'constraint' => 16),
 		'created_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+			'type' => 'datetime'),
 		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 
@@ -51,10 +49,12 @@ class Model_Media extends \Model
 	 */
 	protected static $_observers = array(
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
-			'events' => array('before_save')
+			'events' => array('before_save'),
+			'mysql_timestamp' => true,
 		),
 	);
 }

@@ -39,8 +39,7 @@ class Model_Application_Response extends \Model
 			'type' => 'text',
 			'null' => true),
 		'created_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 
@@ -69,7 +68,8 @@ class Model_Application_Response extends \Model
 	 */
 	protected static $_observers = array(
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 	);
 }

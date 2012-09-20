@@ -13,7 +13,7 @@ namespace Fusion;
 
 class Model_User_Suspend extends \Model
 {
-	public static $_table_name = 'users_suspended';
+	public static $_table_name = 'user_suspended';
 	
 	public static $_properties = array(
 		'id' => array(
@@ -30,15 +30,12 @@ class Model_User_Suspend extends \Model
 			'type' => 'string',
 			'constraint' => 16),
 		'last_attempt_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+			'type' => 'datetime'),
 		'suspended_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'unsuspend_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 

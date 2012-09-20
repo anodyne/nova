@@ -37,12 +37,10 @@ class Model_Application extends \Model
 			'type' => 'text',
 			'null' => true),
 		'created_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 
@@ -104,10 +102,12 @@ class Model_Application extends \Model
 			'events' => array('after_insert')
 		),
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
-			'events' => array('before_save')
+			'events' => array('before_save'),
+			'mysql_timestamp' => true,
 		),
 	);
 
@@ -300,7 +300,7 @@ class Model_Application extends \Model
 		{
 			// update the response
 			$myVote->content = (\Arr::get($data, 'vote.yes') !== false) ? 'yes' : 'no';
-			$myVote->created_at = \Carbon::now('UTC')->timestamp;
+			$myVote->created_at = \Carbon::now('UTC')->toDateTimeString();
 			$myVote->save();
 		}
 		else

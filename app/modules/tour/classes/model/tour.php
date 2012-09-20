@@ -86,7 +86,7 @@ class Model_Tour extends \Model {
 					'character_id' => 0,
 					'item_id' => $item->id,
 					'value' => '',
-					'updated_at' => \Carbon::now('UTC')->timestamp,
+					'updated_at' => \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				\Model_Form_Data::createData($field_data);

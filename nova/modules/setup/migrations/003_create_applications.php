@@ -13,8 +13,8 @@ class Create_applications
 			'position_id' => array('type' => 'INT', 'constraint' => 11),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 			'sample_post' => array('type' => 'TEXT', 'null' => true),
-			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'created_at' => array('type' => 'DATETIME', 'null' => true),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		\DBUtil::create_table('application_responses', array(
@@ -23,7 +23,7 @@ class Create_applications
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
 			'type' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 1),
 			'content' => array('type' => 'TEXT', 'null' => true),
-			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'created_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		\DBUtil::create_table('application_reviewers', array(

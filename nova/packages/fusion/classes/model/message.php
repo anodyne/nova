@@ -26,9 +26,6 @@ class Model_Message extends \Model
 		'character_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
 		'subject' => array(
 			'type' => 'string',
 			'constraint' => 255,
@@ -40,6 +37,8 @@ class Model_Message extends \Model
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => \Status::ACTIVE),
+		'created_at' => array(
+			'type' => 'datetime'),
 	);
 	
 	/**
@@ -52,6 +51,16 @@ class Model_Message extends \Model
 			'key_from' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 	);
 }

@@ -38,8 +38,7 @@ class Model_SystemEvent extends \Model
 		'content' => array(
 			'type' => 'text'),
 		'created_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+			'type' => 'datetime'),
 	);
 
 	/**
@@ -47,7 +46,8 @@ class Model_SystemEvent extends \Model
 	 */
 	protected static $_observers = array(
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 	);
 }

@@ -87,7 +87,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 					// update the user
 					$user->role_id = \Model_Access_Role::INACTIVE;
 					$user->status = \Status::REMOVED;
-					$user->leave_date = \Carbon::now('UTC')->timestamp;
+					$user->leave_date = \Carbon::now('UTC')->toDateTimeString();
 					$user->save();
 
 					// deactivate all characters associated with the user

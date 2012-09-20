@@ -78,8 +78,7 @@ class Model_Form_Field extends \Model
 			'type' => 'text',
 			'null' => true),
 		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 	
@@ -114,7 +113,8 @@ class Model_Form_Field extends \Model
 			'events' => array('before_delete', 'after_insert', 'after_update')
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
-			'events' => array('before_save')
+			'events' => array('before_save'),
+			'mysql_timestamp' => true,
 		),
 	);
 

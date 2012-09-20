@@ -33,9 +33,6 @@ class Model_PersonalLog extends \Model
 		'content' => array(
 			'type' => 'text',
 			'null' => true),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
 		'status' => array(
 			'type' => 'tinyint',
 			'constraint' => 1,
@@ -43,9 +40,10 @@ class Model_PersonalLog extends \Model
 		'tags' => array(
 			'type' => 'text',
 			'null' => true),
+		'created_at' => array(
+			'type' => 'datetime'),
 		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 	
@@ -66,6 +64,16 @@ class Model_PersonalLog extends \Model
 			'key_from' => 'user_id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
+		),
+	);
+
+	/**
+	 * Observers
+	 */
+	protected static $_observers = array(
+		'\\Orm\\Observer_CreatedAt' => array(
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 	);
 	

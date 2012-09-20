@@ -32,11 +32,10 @@ class Model_Award_Receive extends \Model
 		'award_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
 		'reason' => array(
 			'type' => 'text',
 			'null' => true),
+		'created_at' => array(
+			'type' => 'datetime'),
 	);
 }

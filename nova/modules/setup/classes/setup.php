@@ -152,7 +152,7 @@ class Setup
 					\DB::escape($request[5]),
 					\DB::escape($request[6]),
 					\DB::escape($request[7]),
-					\DB::escape(\Carbon::now('UTC')->timestamp)
+					\DB::escape(\Carbon::now('UTC')->toDateTimeString())
 				);
 				
 				// send the email

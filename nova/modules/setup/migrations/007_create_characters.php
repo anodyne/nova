@@ -14,12 +14,12 @@ class Create_characters
 			'middle_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'last_name' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
 			'suffix' => array('type' => 'VARCHAR', 'constraint' => 50, 'null' => true),
-			'activated' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
-			'deactivated' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
 			'rank_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 1),
-			'last_post' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
-			'created_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'activated' => array('type' => 'DATETIME', 'null' => true),
+			'deactivated' => array('type' => 'DATETIME', 'null' => true),
+			'last_post' => array('type' => 'DATETIME', 'null' => true),
+			'created_at' => array('type' => 'DATETIME', 'null' => true),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 
 		\DBUtil::create_table('character_images', array(
@@ -29,7 +29,7 @@ class Create_characters
 			'image' => array('type' => 'TEXT', 'null' => true),
 			'primary_image' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => 0),
 			'created_by' => array('type' => 'INT', 'constraint' => 11),
-			'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 
 		\DBUtil::create_table('character_positions', array(
@@ -47,7 +47,7 @@ class Create_characters
 			'old_rank' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
 			'new_order' => array('type' => 'INT', 'constraint' => 5, 'null' => true),
 			'new_rank' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 	}
 

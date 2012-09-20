@@ -39,8 +39,7 @@ class Model_Award_Queue extends \Model
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => \Status::PENDING),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+		'created_at' => array(
+			'type' => 'datetime'),
 	);
 }

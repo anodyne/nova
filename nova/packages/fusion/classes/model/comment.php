@@ -40,8 +40,7 @@ class Model_Comment extends \Model
 			'type' => 'tinyint',
 			'constraint' => 1,
 			'default' => \Status::ACTIVE),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
+		'created_at' => array(
+			'type' => 'datetime'),
 	);
 }

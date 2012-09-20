@@ -9,8 +9,8 @@ class Create_system
 		\DBUtil::create_table('system_info', array(
 			'id' => array('type' => 'INT', 'constraint' => 1, 'auto_increment' => true),
 			'uid' => array('type' => 'VARCHAR', 'constraint' => 32, 'null' => true),
-			'install_date' => array('type' => 'BIGINT', 'constraint' => 20),
-			'last_update' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'install_date' => array('type' => 'DATETIME'),
+			'last_update' => array('type' => 'DATETIME', 'null' => true),
 			'version_major' => array('type' => 'INT', 'constraint' => 1, 'default' => 3),
 			'version_minor' => array('type' => 'INT', 'constraint' => 2),
 			'version_update' => array('type' => 'INT', 'constraint' => 4),
@@ -20,7 +20,7 @@ class Create_system
 		$data = array(
 			array(
 				'uid' => \Str::random('alnum', 32),
-				'install_date' => \Carbon::now('UTC')->timestamp,
+				'install_date' => \Carbon::now('UTC')->toDateTimeString(),
 				'version_major' => 3,
 				'version_minor' => 0,
 				'version_update' => 0)
@@ -38,7 +38,7 @@ class Create_system
 			'user_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'character_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'content' => array('type' => 'TEXT'),
-			'created_at' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 	}
 

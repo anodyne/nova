@@ -32,7 +32,7 @@ class Create_awards
 			'award_id' => array('type' => 'INT', 'constraint' => 11),
 			'reason' => array('type' => 'TEXT', 'null' => true),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::PENDING),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 
 		\DBUtil::create_table('awards_received', array(
@@ -41,8 +41,8 @@ class Create_awards
 			'receive_user_id' => array('type' => 'INT', 'constraint' => 11),
 			'nominate_character_id' => array('type' => 'INT', 'constraint' => 11),
 			'award_id' => array('type' => 'INT', 'constraint' => 11),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'reason' => array('type' => 'TEXT', 'null' => true),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 	}
 

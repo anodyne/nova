@@ -33,9 +33,6 @@ class Model_Announcement extends \Model
 		'category_id' => array(
 			'type' => 'int',
 			'constraint' => 11),
-		'date' => array(
-			'type' => 'bigint',
-			'constraint' => 20),
 		'content' => array(
 			'type' => 'blob'),
 		'status' => array(
@@ -49,9 +46,11 @@ class Model_Announcement extends \Model
 		'tags' => array(
 			'type' => 'text',
 			'null' => true),
+		'created_at' => array(
+			'type' => 'datetime',
+			'null' => true),
 		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 	
@@ -87,10 +86,12 @@ class Model_Announcement extends \Model
 	 */
 	protected static $_observers = array(
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
-			'events' => array('before_save')
+			'events' => array('before_save'),
+			'mysql_timestamp' => true,
 		),
 	);
 	

@@ -40,12 +40,10 @@ class Model_Mission extends \Model
 			'constraint' => 1,
 			'default' => \Status::PENDING),
 		'start_date' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'end_date' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 		'desc' => array(
 			'type' => 'text',
@@ -57,8 +55,7 @@ class Model_Mission extends \Model
 			'type' => 'text',
 			'null' => true),
 		'notes_updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
+			'type' => 'datetime',
 			'null' => true),
 	);
 	

@@ -9,6 +9,33 @@
  * @copyright	2012 Anodyne Productions
  */
 
+/**
+ * DateTime adjustments
+	announcements
+	applications
+	application_responses
+	awards_queue
+	awards_received
+	bans
+	characters
+	character_promotions
+	comments
+	form_fields
+	form_sections
+	form_tabs
+	media
+	messages
+	missions
+	moderation
+	personal_logs
+	posts
+	system_info
+	system_events
+	users
+	user_loa
+	user_suspended
+ */
+
 namespace Setup;
 
 class Controller_Upgradeajax extends \Controller
@@ -1667,7 +1694,7 @@ class Controller_Upgradeajax extends \Controller
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
 					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
+					'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				// create the field record
@@ -1729,7 +1756,7 @@ class Controller_Upgradeajax extends \Controller
 					'character_id' 	=> $r['data_char'],
 					'item_id' 		=> 0,
 					'value' 		=> $r['data_value'],
-					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
+					'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				// create the data record
@@ -1755,7 +1782,7 @@ class Controller_Upgradeajax extends \Controller
 						'character_id' 	=> 0,
 						'item_id' 		=> 0,
 						'value' 		=> $r['location'],
-						'updated_at' 	=> \Carbon::now('UTC')->timestamp),
+						'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString()),
 					'interests' => array(
 						'form_key' 		=> 'user',
 						'field_id' 		=> 51,
@@ -1763,7 +1790,7 @@ class Controller_Upgradeajax extends \Controller
 						'character_id'	=> 0,
 						'item_id'		=> 0,
 						'value'			=> $r['interests'],
-						'updated_at'	=> \Carbon::now('UTC')->timestamp),
+						'updated_at'	=> \Carbon::now('UTC')->toDateTimeString()),
 					'bio' => array(
 						'form_key'		=> 'user',
 						'field_id'		=> 52,
@@ -1771,7 +1798,7 @@ class Controller_Upgradeajax extends \Controller
 						'character_id'	=> 0,
 						'item_id'		=> 0,
 						'value'			=> $r['bio'],
-						'updated_at'	=> \Carbon::now('UTC')->timestamp),
+						'updated_at'	=> \Carbon::now('UTC')->toDateTimeString()),
 				);
 				
 				// insert the records
@@ -1836,7 +1863,7 @@ class Controller_Upgradeajax extends \Controller
 							'user_id' => ((int) $c['user_id'] === 0 or $c['user_id'] === null) ? 0 : $c['user_id'],
 							'character_id' => $c['id'],
 							'image' => $i,
-							'created_at' => \Carbon::now('UTC')->timestamp,
+							'created_at' => \Carbon::now('UTC')->toDateTimeString(),
 							'created_by' => 0,
 							'primary_image' => ($loop === 0) ? (int) true : (int) false,
 						);
@@ -2166,7 +2193,7 @@ class Controller_Upgradeajax extends \Controller
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
 					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
+					'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				// create the field record
@@ -2225,7 +2252,7 @@ class Controller_Upgradeajax extends \Controller
 					'character_id' 	=> 0,
 					'item_id' 		=> $r['data_item'],
 					'value' 		=> $r['data_value'],
-					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
+					'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				// create the data record
@@ -2278,7 +2305,7 @@ class Controller_Upgradeajax extends \Controller
 					'placeholder' 	=> '',
 					'order' 		=> $r['field_order'],
 					'status' 		=> ($r['field_display'] == 'y') ? \Status::ACTIVE : \Status::INACTIVE,
-					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
+					'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				// create the field record
@@ -2337,7 +2364,7 @@ class Controller_Upgradeajax extends \Controller
 					'character_id' 	=> 0,
 					'item_id' 		=> $r['data_tour_item'],
 					'value' 		=> $r['data_value'],
-					'updated_at' 	=> \Carbon::now('UTC')->timestamp,
+					'updated_at' 	=> \Carbon::now('UTC')->toDateTimeString(),
 				);
 				
 				// create the data record
@@ -2511,7 +2538,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'posts',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 				
@@ -2521,7 +2548,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'logs',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 				
@@ -2531,7 +2558,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'news',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 				
@@ -2541,7 +2568,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'post_comments',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 				
@@ -2551,7 +2578,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'log_comments',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 				
@@ -2561,7 +2588,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'news_comments',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 				
@@ -2571,7 +2598,7 @@ class Controller_Upgradeajax extends \Controller
 						'user_id' => $u['userid'],
 						'character_id' => 0,
 						'type' => 'wiki_comments',
-						'date' => \Carbon::now('UTC')->timestamp
+						'date' => \Carbon::now('UTC')->toDateTimeString()
 					));
 				}
 			}

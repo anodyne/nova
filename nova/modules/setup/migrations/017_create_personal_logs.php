@@ -12,10 +12,10 @@ class Create_personal_logs
 			'user_id' => array('type' => 'INT', 'constraint' => 11),
 			'character_id' => array('type' => 'INT', 'constraint' => 11),
 			'content' => array('type' => 'TEXT', 'null' => true),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
 			'status' => array('type' => 'TINYINT', 'constraint' => 1, 'default' => \Status::ACTIVE),
 			'tags' => array('type' => 'TEXT', 'null' => true),
-			'updated_at' => array('type' => 'BIGINT', 'constraint' => 20, 'null' => true),
+			'created_at' => array('type' => 'DATETIME'),
+			'updated_at' => array('type' => 'DATETIME', 'null' => true),
 		), array('id'));
 	}
 

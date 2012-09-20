@@ -44,18 +44,6 @@ class Model_User extends \Model
 			'type' => 'int',
 			'constraint' => 11,
 			'default' => 0),
-		'leave_date' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
-		'last_post' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
-		'last_login' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
 		'password_reset_hash' => array(
 			'type' => 'string',
 			'constraint' => 24,
@@ -68,17 +56,24 @@ class Model_User extends \Model
 			'type' => 'string',
 			'constraint' => 24,
 			'null' => true),
-		'created_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
-		'updated_at' => array(
-			'type' => 'bigint',
-			'constraint' => 20,
-			'null' => true),
 		'ip_address' => array(
 			'type' => 'string',
 			'constraint' => 16,
+			'null' => true),
+		'leave_date' => array(
+			'type' => 'datetime',
+			'null' => true),
+		'last_post' => array(
+			'type' => 'datetime',
+			'null' => true),
+		'last_login' => array(
+			'type' => 'datetime',
+			'null' => true),
+		'created_at' => array(
+			'type' => 'datetime',
+			'null' => true),
+		'updated_at' => array(
+			'type' => 'datetime',
 			'null' => true),
 	);
 	
@@ -174,10 +169,12 @@ class Model_User extends \Model
 			'events' => array('after_insert', 'before_insert', 'after_update', 'before_delete')
 		),
 		'\\Orm\\Observer_CreatedAt' => array(
-			'events' => array('before_insert')
+			'events' => array('before_insert'),
+			'mysql_timestamp' => true,
 		),
 		'\\Orm\\Observer_UpdatedAt' => array(
-			'events' => array('before_save')
+			'events' => array('before_save'),
+			'mysql_timestamp' => true,
 		),
 	);
 

@@ -64,7 +64,7 @@ class Observer_User extends \Orm\Observer
 					'character_id' 	=> 0,
 					'item_id' 		=> 0,
 					'value' 		=> '',
-					'updated_at'	=> \Carbon::now('UTC')->timestamp,
+					'updated_at'	=> \Carbon::now('UTC')->toDateTimeString(),
 				));
 			}
 		}

@@ -195,7 +195,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						// update the character record
 						$app->character->status = ($decision == 'approve') ? \Status::ACTIVE : \Status::REMOVED;
-						$app->character->activated = ($decision == 'approve') ? \Carbon::now('UTC')->timestamp : 0;
+						$app->character->activated = ($decision == 'approve') ? \Carbon::now('UTC')->toDateTimeString() : 0;
 						$app->character->rank_id = ($decision == 'approve') 
 							? \Security::xss_clean(\Input::post('rank')) 
 							: 1;

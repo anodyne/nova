@@ -11,7 +11,7 @@ class Create_moderation
 			'user_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'character_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true),
 			'type' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => true),
-			'date' => array('type' => 'BIGINT', 'constraint' => 20),
+			'created_at' => array('type' => 'DATETIME'),
 		), array('id'));
 	}
 
