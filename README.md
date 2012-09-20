@@ -14,4 +14,4 @@ The milestone [roadmap](https://github.com/anodyne/nova/wiki/Nova-3-Milestones) 
 
 ## Upgrades
 
-The original plan with Nova 3 was to offer upgrade paths from SMS 2, Nova 1 and Nova 2. After careful consideration though, we've decided to make the only upgrade path through Nova 2. If you're coming from SMS 2, you'll need to upgrade from SMS 2 to Nova 2, then to Nova 3. If you're coming from Nova 1, you'll need to upgrade from Nova 1 to Nova 2, then to Nova 3.
+You must be running Nova 2.0 or higher to upgrade to Nova 3. If you're running a version of the system prior to 2.0 (or even a version of SMS), your only upgrade path is to upgrade to Nova 2 and then to Nova 3.
