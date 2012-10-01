@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><?php echo $title;?></title>
 		
 		<meta name="description" content="<?php echo $meta_desc;?>">
@@ -10,8 +11,10 @@
 		
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 
-		<!-- Bootstrap Toolkit -->
+		<!-- Bootstrap styles -->
 		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/bootstrap.min.css">
+
+		<!-- IcoMoon icon font -->
 		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/icomoon.css">
 		
 		<!-- Nova's base styles and any user-defined styles -->
@@ -24,6 +27,9 @@
 				<link rel="stylesheet" href="<?php echo Uri::base(false);?>app/views/<?php echo $skin;?>/design/custom.login.css">
 			<?php endif;?>
 		<?php endif;?>
+
+		<!-- Bootstrap responsive design -->
+		<link rel="stylesheet" href="<?php echo Uri::base(false);?>nova/modules/assets/css/bootstrap-responsive.min.css">
 	</head>
 	<body>
 		<?php echo $layout;?>

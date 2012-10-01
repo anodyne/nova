@@ -14,7 +14,7 @@ if ( ! function_exists('joinData'))
 }
 
 ?><form method="post" id="joinForm">
-	<div class="btn-group pull-right">
+	<div class="btn-group pull-right hidden-phone">
 		<a href="#" class="btn btn-small icn16 joinNavButton tooltip-top" data-direction="prev" title="<?php echo lang('previous step', 1);?>"><div class="icn icn-50" data-icon="<"></div></a>
 		<a href="#" class="btn btn-small icn16 joinNavButton tooltip-top" data-direction="next" title="<?php echo lang('next step', 1);?>"><div class="icn icn-50" data-icon=">"></div></a>
 	</div>
