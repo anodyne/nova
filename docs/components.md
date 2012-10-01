@@ -15,18 +15,17 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/packages/parser
 * Sentry
     * Version: 1.1
-    * Site: http://sentry.cartalyst.com/
     * Location
         * nova/packages/sentry
     * Notes
-        * This is a __highly__ modified version of Sentry 1.1.
+        * This is a __highly__ modified version of Sentry 1.1. Cartalyst has since stopped developing Sentry for FuelPHP.
 * Carbon
     * Version: 1.1
     * Site: https://github.com/briannesbitt/Carbon
     * Location
         * nova/packages/carbon
     * Notes
-        * A simple API extension for DateTime with PHP 5.3+
+        * A simple API extension for DateTime with PHP 5.3+.
 * Nova (module)
     * Version: 3.0
     * Location
@@ -52,10 +51,10 @@ Nova is made up of a wide range of plugins and components to help make it what i
 ## CSS and JavaScript
 
 * jQuery
-    * Version: 1.8.1
+    * Version: 1.8.2
     * Site: http://jquery.com/
     * Location
-        * http://code.jquery.com/jquery-1.7.2.min.js
+        * http://code.jquery.com/jquery-1.8.2.min.js
 * Bootstrap
     * Version: 2.1.1
     * Site: http://twitter.github.com/bootstrap/
@@ -114,3 +113,4 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/modules/assets/js/jquery.ui.sortable.min.js
         * nova/modules/assets/js/jquery.ui.tabs.min.js
         * nova/modules/assets/js/jquery.ui.widget.min.js
+    * Notes: jQuery UI is stored in Nova instead of pulled down through a CDN (like jQuery) to allow for the UI components to be loaded on an "as needed" basis instead of as a whole library.
