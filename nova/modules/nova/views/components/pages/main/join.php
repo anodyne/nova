@@ -19,7 +19,18 @@ if ( ! function_exists('joinData'))
 		<a href="#" class="btn btn-small icn16 joinNavButton tooltip-top" data-direction="next" title="<?php echo lang('next step', 1);?>"><div class="icn icn-50" data-icon=">"></div></a>
 	</div>
 
-	<ul id="joinTabs" class="nav nav-pills">
+	<ul id="joinTabs" class="nav nav-pills hidden-phone">
+		<li class="active"><a href="#user" data-toggle="pill"><?php echo lang('user info', 2);?></a></li>
+		<li><a href="#characterInfo" data-toggle="pill"><?php echo lang('character info', 2);?></a></li>
+		<li><a href="#characterForm" data-toggle="pill"><?php echo lang('character bio', 2);?></a></li>
+		
+		<?php if ( ! empty($samplePostContent)): ?>
+			<li><a href="#samplePost" data-toggle="pill"><?php echo lang('sample_post', 2);?></a></li>
+		<?php endif;?>
+	</ul>
+
+	<!-- These tabs are specific to mobile devices -->
+	<ul id="joinTabs" class="nav nav-pills nav-stacked hidden-desktop hidden-tablet">
 		<li class="active"><a href="#user" data-toggle="pill"><?php echo lang('user info', 2);?></a></li>
 		<li><a href="#characterInfo" data-toggle="pill"><?php echo lang('character info', 2);?></a></li>
 		<li><a href="#characterForm" data-toggle="pill"><?php echo lang('character bio', 2);?></a></li>

@@ -14,7 +14,14 @@ if ( ! function_exists('data'))
 }
 
 if ($tabs !== false): ?>
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs hidden-phone">
+	<?php foreach ($tabs as $t): ?>
+		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?></a></li>
+	<?php endforeach;?>
+	</ul>
+
+	<!-- These tabs are specific to mobile devices -->
+	<ul class="nav nav-tabs nav-stacked hidden-desktop hidden-tablet">
 	<?php foreach ($tabs as $t): ?>
 		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?></a></li>
 	<?php endforeach;?>
