@@ -15,8 +15,16 @@
 	<div class="control-group">
 		<div class="controls">
 			<br>
-			<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
-			<a href="<?php echo Uri::create('login/index');?>" class="btn"><?php echo lang('short.cancel_password_reset');?></a>
+
+			<div class="hidden-phone">
+				<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
+				<a href="<?php echo Uri::create('login/index');?>" class="btn"><?php echo lang('short.cancel_password_reset');?></a>
+			</div>
+
+			<div class="hidden-desktop hidden-tablet">
+				<button class="btn btn-primary btn-block btn-large"><?php echo lang('action.submit', 1);?></button>
+				<a href="<?php echo Uri::create('login/index');?>" class="btn btn-block btn-large"><?php echo lang('short.cancel_password_reset');?></a>
+			</div>
 		</div>
 	</div>
 	<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
