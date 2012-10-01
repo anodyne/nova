@@ -1,7 +1,3 @@
-## Join Page
-
-* A user should be asked for their email address first. Once they've filled that in, an Ajax call should check to see if that email address exists in the system. If it does, it won't show any of the user information fields since they'll be ignored anyway. If the email address doesn't exist in the system, it will show the user information fields so they can fill them out.
-
 ## Form Builder
 
 * Much like Wufoo, Nova really needs a form builder that will help admins creating their forms. (Likely a future update.)
