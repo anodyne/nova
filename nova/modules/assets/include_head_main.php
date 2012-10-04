@@ -22,7 +22,7 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/main/css/jquery.ui.them
 			@import url('<?php echo $uiTheme;?>');
 		</style>
 		
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER .'/assets/js/jquery.lazy.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER .'/assets/js/jquery.ui.core.min.js';?>"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER .'/assets/js/jquery.ui.widget.min.js';?>"></script>
