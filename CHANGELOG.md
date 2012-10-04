@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.2
+
+### Nova Core
+
+* Update to jQuery 1.8.2.
+* Update to jQuery UI 1.8.24.
+* Update to markItUp! 1.1.13.
+
 ## 2.1.1 (12 September 2012)
 
 ### Nova Core
