@@ -205,19 +205,21 @@ abstract class Controller_Base_Core extends \Controller_Template
 		}
 		
 		// set the final title content
-		$this->template->title.= (array_key_exists($this->request->action, $this->_titles)) 
-			? $this->_titles[$this->request->action] 
-			: ((property_exists($this->_data, 'title')) ? $this->_data->title : null);
+		$this->template->title.= (property_exists($this->_data, 'title')) 
+			? $this->_data->title 
+			: ((array_key_exists($this->request->action, $this->_titles)) ? $this->_titles[$this->request->action] : null);
 		
 		// set the final header content
-		$this->template->layout->header = (array_key_exists($this->request->action, $this->_headers)) 
-			? $this->_headers[$this->request->action]
-			: ((property_exists($this->_data, 'header')) ? $this->_data->header : null);
+		$this->template->layout->header = (property_exists($this->_data, 'header')) 
+			? $this->_data->header 
+			: ((array_key_exists($this->request->action, $this->_headers)) ? $this->_headers[$this->request->action] : null);
 		
 		// set the final message content
-		$this->template->layout->message = (array_key_exists($this->request->action, $this->_messages)) 
-			? \Markdown::parse($this->_messages[$this->request->action])
-			: ((property_exists($this->_data, 'message') === true) ? \Markdown::parse($this->_data->message) : null);
+		$this->template->layout->message = (property_exists($this->_data, 'message')) 
+			? \Markdown::parse($this->_data->message)
+			: ((array_key_exists($this->request->action, $this->_messages)) 
+				? \Markdown::parse($this->_messages[$this->request->action])
+				: null);
 
 		if ($this->_editable === true)
 		{
