@@ -93,7 +93,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * nova/modules/assets/js/jquery.ajaxq.js
 * jQuery UI
-    * Version: 1.8.23
+    * Version: 1.8.24
     * Site: http://jqueryui.com
     * Location
         * nova/modules/assets/js/jquery.ui.accordion.min.js
@@ -113,4 +113,6 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/modules/assets/js/jquery.ui.sortable.min.js
         * nova/modules/assets/js/jquery.ui.tabs.min.js
         * nova/modules/assets/js/jquery.ui.widget.min.js
-    * Notes: jQuery UI is stored in Nova instead of pulled down through a CDN (like jQuery) to allow for the UI components to be loaded on an "as needed" basis instead of as a whole library.
+    * Notes
+        * jQuery UI is stored in Nova instead of pulled down through a CDN (like jQuery) to allow for the UI components to be loaded on an "as needed" basis instead of as a whole library.
+        * Nova does not store any themes for jQuery UI. If you need to use the components with visual elements, you'll need to include a theme yourself.
