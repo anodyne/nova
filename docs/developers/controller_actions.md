@@ -20,17 +20,17 @@ Any data that should be sent through the view needs to be stored in the `_data` 
 
 The `_data` object can accept 3 special properties to be used in specific situations.
 
-<p class="alert alert-info">These 3 special properties will only be used in the event that there isn't content coming out of the database. If there's content in the database for that page, it will always be used instead of what's set in these properties.</p>
+<p class="alert alert-info">These 3 special properties will always be used if they've been populated with data, even if that page has content coming out of the database.</p>
 
-__title__: Setting a title property on the `_data` object lets you manually set the title of the page in the event there isn't a page title coming out of the database. This should be a simple string and will display in the browser's title bar and the open tab.
+__title__: Setting a title property on the `_data` object lets you manually set the title of the page. This should be a simple string and will display in the browser's title bar and the open tab.
 
 <pre>$this->_data->title = 'Test Page';</pre>
 
-__header__: Setting a header property on the `_data` object lets you manually set the header of the page in the event there isn't a header coming out of the database. This should be a simple string and will display above the content of the page.
+__header__: Setting a header property on the `_data` object lets you manually set the header of the page. This should be a simple string and will display above the content of the page.
 
 <pre>$this->_data->header = 'Testing 1 ... 2 ... 3';</pre>
 
-__message__: Setting a message property on the `_data` object lets you manually set the message of the page in the event there isn't a message coming out of the database. This should be text and will display below the header and above the rest of the content of the page.
+__message__: Setting a message property on the `_data` object lets you manually set the message of the page. This should be text and will display below the header and above the rest of the content of the page.
 
 <pre>$this->_data->message = "This is the intro text that will be shown on the page before the rest of the content.";</pre>
 

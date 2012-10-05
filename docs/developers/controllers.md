@@ -14,7 +14,7 @@ So why have both a base controller and a section base controller? Using a base c
 
 This can be a little tough to wrap your head around, especially if you're new to object oriented programming, so let's use a concrete example to illustrate how this works.
 
-Let's think of our base controller like a car. Every car has an engine, transmission, and headlights. Those are the things that make a car a car. By themselves, they don't do very much, just tells us that this is the basis for something being a car. That's what our base controller is. On its own, it's not much, but it's the foundation for what we're building.
+Let's think of our base controller like a car. Every car has an engine, transmission, and headlights. Those are the things that make a car a car. By themselves, they don't do very much, just tells us that this is the foundation for something being a car. That's what our base controller is. On its own, it's not much, but it's the foundation for what we're building.
 
 <pre>class Car
 {
