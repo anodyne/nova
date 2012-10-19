@@ -16,6 +16,11 @@ namespace Fusion;
 class Nav
 {
 	/**
+	 * @var	string	the nav category
+	 */
+	protected static $category;
+
+	/**
 	 * @var	array	an array of data for the main nav
 	 */
 	protected static $dataMain;
@@ -46,6 +51,8 @@ class Nav
 	 */
 	public static function display($style, $type, $category)
 	{
+		static::$category = $category;
+
 		if ($style == 'classic' or $style == 'dropdown')
 		{
 			switch ($type)
@@ -217,32 +224,15 @@ class Nav
 	 */
 	protected static function buildClassicMainNav()
 	{
-		// open the nav
-		$output = '<ul class="nav">';
+		// create the view
+		$view = \View::forge(\Location::file('nav/classic', \Utility::getSkin(static::$category), 'partials'));
 
-		foreach (static::$dataMain as $item)
-		{
-			// get the url segments
-			$segments = explode('/', $item->url);
+		// set the data
+		$view->set('items', static::$dataMain);
+		$view->set('name', \Model_Settings::getItems('sim_name'));
 
-			// get the first item of the URI
-			$first = strtolower(\Uri::segment(1));
-
-			// class output
-			$active_output = ($segments[0] == $first) ? ' class="active"' : false;
-
-			// figure out what should be shown
-			$target_output = ($item->url_target == 'offsite') ? ' target="_blank"' : false;
-
-			// generate the output for the nav item
-			$output.= '<li'.$active_output.'><a href="'.\Uri::create($item->url).'"'.$target_output.'>'.$item->name.'</a></li>';
-		}
-
-		// close the nav
-		$output.= '</ul>';
-
-		// send the final output to the class
-		static::$output = $output;
+		// set the view output
+		static::$output = $view->render();
 	}
 
 	/**
@@ -253,30 +243,22 @@ class Nav
 	 */
 	protected static function buildClassicSubNav()
 	{
-		// open the nav
-		$output = '<ul>';
+		// create the view
+		$view = \View::forge(\Location::file('nav/subnav', \Utility::getSkin(static::$category), 'partials'));
 
-		foreach (static::$dataSub as $item)
-		{
-			if ($item->order == 0 and $item->group != 0)
-			{
-				$output.= '<li class="divider">';
-			}
+		// set the data
+		$view->set('items', static::$dataSub);
 
-			// figure out what should be shown
-			$target_output = ($item->url_target == 'offsite') ? ' target="_blank"' : false;
-
-			// generate the output for the nav item
-			$output.= '<li><a href="'.\Uri::create($item->url).'"'.$target_output.'>'.$item->name.'</a></li>';
-		}
-
-		// close the nav
-		$output.= '</ul>';
-
-		// send the final output to the class
-		static::$output = $output;
+		// set the view output
+		static::$output = $view->render();
 	}
 
+	/**
+	 * Generate the dropdown navigation.
+	 *
+	 * @internal
+	 * @return	void
+	 */
 	protected static function buildDropdownNav($data, $sub_type = 'sub')
 	{
 		// open the nav
