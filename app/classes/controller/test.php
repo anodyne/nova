@@ -29,4 +29,19 @@ class Controller_Test extends Nova\Controller_Main
 
 		return;
 	}
+
+	public function action_menu()
+	{
+		//echo \Nav::display('classic', 'sub', 'main');
+
+		$nav = new \Menu;
+		echo $nav->getUserOutput();
+
+		//\Debug::dump($nav->getData());
+		
+		//echo $nav->build();
+
+		//$output = $nav->setType('sub')->build();
+		//echo $output;
+	}
 }
