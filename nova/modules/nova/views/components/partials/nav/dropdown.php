@@ -7,14 +7,14 @@
 				<span class="icon-bar"></span>
 			</a>
 
-			<a href="<?php echo Uri::create('main/index');?>" class="brand"><?php echo $sim_name;?></a>
+			<a href="<?php echo Uri::create('main/index');?>" class="brand"><?php echo $name;?></a>
 
 			<div class="nav-collapse">
 				<ul class="nav">
 
 				</ul>
 				<?php echo $navmain;?>
-				<?php echo $navuser;?>
+				<?php echo $user;?>
 			</div>
 		</div>
 	</div>
