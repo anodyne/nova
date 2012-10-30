@@ -34,10 +34,11 @@ class Controller_Test extends Nova\Controller_Main
 	{
 		//echo \Nav::display('classic', 'sub', 'main');
 
-		$nav = new \Menu;
-		echo $nav->getUserOutput();
+		//$nav = new \Menu;
+		//echo $nav->getUserOutput();
+		//echo $nav->build();
 
-		//\Debug::dump($nav->getData());
+		//\Debug::dump($nav->build());
 		
 		//echo $nav->build();
 

@@ -24,43 +24,32 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 	{
 		parent::before();
 
-		// make sure we're logged in
+		// Make sure we're logged in
 		if ( ! \Sentry::check())
 		{
 			\Response::redirect('login/index/'.\Login\Controller_Login::NOT_LOGGED_IN);
 		}
 
-		// pull these additional settings
-		$additional_settings = array(
-			'skin_admin',
-		);
-		
-		// merge the settings arrays
-		$this->_settings_setup = array_merge($this->_settings_setup, $additional_settings);
-		
-		// pull the settings and put them into the options object
-		$this->options = \Model_Settings::getItems($this->_settings_setup);
-		
-		// set the variables
-		$this->skin			= $this->session->get('skin_admin', $this->options->skin_admin);
-		$this->rank			= $this->session->get('rank', $this->options->rank);
-		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
+		// Set the variables
+		$this->skin			= $this->session->get('skin_admin', $this->settings->skin_admin);
+		$this->rank			= $this->session->get('rank', $this->settings->rank);
+		$this->timezone		= $this->session->get('timezone', $this->settings->timezone);
 		$this->images		= \Utility::getImageIndex($this->skin);
 		
-		// set the values to be passed to the template
+		// Set the values to be passed to the structure
 		$vars = array(
 			'skin'			=> $this->skin,
 			'sec'			=> 'admin',
-			'meta_desc'		=> $this->options->meta_description,
-			'meta_keywords'	=> $this->options->meta_keywords,
-			'meta_author'	=> $this->options->meta_author,
+			'meta_desc'		=> $this->settings->meta_description,
+			'meta_keywords'	=> $this->settings->meta_keywords,
+			'meta_author'	=> $this->settings->meta_author,
 		);
 		
-		// set the structure file
+		// Set the structure file
 		$this->template = \View::forge(\Location::file('admin', $this->skin, 'structure'), $vars);
 		
-		// set the variables in the template
-		$this->template->title 						= $this->options->sim_name.' :: ';
+		// Set the variables in the template
+		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= \View::forge(\Location::file('admin', $this->skin, 'templates'), $vars);
 		$this->template->layout->navmain 			= \Nav::display('dropdown', 'admin', false);

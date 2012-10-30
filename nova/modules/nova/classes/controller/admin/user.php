@@ -54,7 +54,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 					\NovaMail::send('user_add', array(
 						'to' => array($user->id),
 						'subject' => lang('email.subject.user.add'),
-						'content' => array('message' => lang('[[email.content.user.add|user|{{'.$this->options->sim_name.'}}|{{'.\Uri::base().'}}|action.login|{{'.$user->name.'}}|{{'.$password.'}}]]')),
+						'content' => array('message' => lang('[[email.content.user.add|user|{{'.$this->settings->sim_name.'}}|{{'.\Uri::base().'}}|action.login|{{'.$user->name.'}}|{{'.$password.'}}]]')),
 					));
 
 					if ($user)

@@ -25,39 +25,28 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 	{
 		parent::before();
 
-		// change the fallback module
+		// Change the fallback module
 		$this->_module_fallback = 'login';
 		
-		// pull these additional settings
-		$additional_settings = array(
-			'skin_login',
-		);
+		// Set the variables
+		$this->skin			= $this->session->get('skin_login', $this->settings->skin_login);
+		$this->rank			= $this->session->get('rank', $this->settings->rank);
+		$this->timezone		= $this->session->get('timezone', $this->settings->timezone);
 		
-		// merge the settings arrays
-		$this->_settings_setup = array_merge($this->_settings_setup, $additional_settings);
-		
-		// pull the settings and put them into the options object
-		$this->options = \Model_Settings::getItems($this->_settings_setup);
-		
-		// set the variables
-		$this->skin			= $this->session->get('skin_login', $this->options->skin_login);
-		$this->rank			= $this->session->get('rank', $this->options->rank);
-		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
-		
-		// set the values to be passed to the template
+		// Set the values to be passed to the structure
 		$vars = array(
 			'skin'			=> $this->skin,
 			'sec'			=> 'login',
-			'meta_desc'		=> $this->options->meta_description,
-			'meta_keywords'	=> $this->options->meta_keywords,
-			'meta_author'	=> $this->options->meta_author,
+			'meta_desc'		=> $this->settings->meta_description,
+			'meta_keywords'	=> $this->settings->meta_keywords,
+			'meta_author'	=> $this->settings->meta_author,
 		);
 		
-		// set the structure file
+		// Set the structure file
 		$this->template = \View::forge(\Location::file('login', $this->skin, 'structure', 'login'), $vars);
 		
-		// set the variables in the template
-		$this->template->title 						= $this->options->sim_name.' :: ';
+		// Set the variables in the template
+		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= \View::forge(\Location::file('login', $this->skin, 'templates', 'login'), $vars);
 		$this->template->layout->ajax 				= false;

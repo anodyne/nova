@@ -29,41 +29,30 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 	{
 		parent::before();
 		
-		// pull these additional settings
-		$additional_settings = array(
-			'skin_main',
-		);
-		
-		// merge the settings arrays
-		$this->_settings_setup = array_merge($this->_settings_setup, $additional_settings);
-		
-		// pull the settings and put them into the options object
-		$this->options = \Model_Settings::getItems($this->_settings_setup);
-		
-		// set the variables
-		$this->skin			= $this->session->get('skin_main', $this->options->skin_main);
-		$this->rank			= $this->session->get('rank', $this->options->rank);
-		$this->timezone		= $this->session->get('timezone', $this->options->timezone);
+		// Set the variables
+		$this->skin			= $this->session->get('skin_main', $this->settings->skin_main);
+		$this->rank			= $this->session->get('rank', $this->settings->rank);
+		$this->timezone		= $this->session->get('timezone', $this->settings->timezone);
 		$this->images		= \Utility::getImageIndex($this->skin);
 
-		// get the skin section info
+		// Get the skin section info
 		$this->_section_info = \Model_Catalog_SkinSec::getItem($this->skin, 'skin');
 		
-		// set the values to be passed to the template
+		// Set the values to be passed to the structure
 		$vars = array(
 			'skin'			=> $this->skin,
 			'sec'			=> 'main',
-			'sim_name'		=> $this->options->sim_name,
-			'meta_desc'		=> $this->options->meta_description,
-			'meta_keywords'	=> $this->options->meta_keywords,
-			'meta_author'	=> $this->options->meta_author,
+			'sim_name'		=> $this->settings->sim_name,
+			'meta_desc'		=> $this->settings->meta_description,
+			'meta_keywords'	=> $this->settings->meta_keywords,
+			'meta_author'	=> $this->settings->meta_author,
 		);
 		
-		// set the structure file
+		// Set the structure file
 		$this->template = \View::forge(\Location::file('main', $this->skin, 'structure'), $vars);
 		
-		// set the variables in the template
-		$this->template->title 						= $this->options->sim_name.' :: ';
+		// Set the variables in the template
+		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= \View::forge(\Location::file('main', $this->skin, 'templates'), $vars);
 
@@ -73,7 +62,7 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 		$this->template->layout->header				= false;
 		$this->template->layout->message			= false;
 
-		$this->template->layout->navuser 			= \Nav::display('user', false, false);
+		//$this->template->layout->navuser 			= \Nav::display('user', false, false);
 
 		$this->template->layout->navsub 			= \View::forge(\Location::file('navsub', $this->skin, 'partials'));
 		$this->template->layout->navsub->menu		= false;
@@ -86,7 +75,12 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 
 		if ($this->_section_info->nav == 'dropdown')
 		{
-			$this->template->layout->navmain 		= \Nav::display('dropdown', 'main', 'main');
+			//$this->template->layout->navmain 		= \Nav::display('dropdown', 'main', 'main');
+			$this->nav->setStyle($this->_section_info->nav)
+				->setSection('main')
+				->setCategory('main')
+				->setType('main');
+			$this->template->layout->navmain = $this->nav->build();
 		}
 		else
 		{

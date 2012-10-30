@@ -19,7 +19,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 	/**
 	 * @var	object	An object that stores all of the setting values from the database.
 	 */
-	public $options;
+	public $settings;
 	
 	/**
 	 * @var	array	All the image information from the image indices.
@@ -45,6 +45,11 @@ abstract class Controller_Base_Core extends \Controller_Template
 	 * @var	string	The current timezone.
 	 */
 	public $timezone;
+
+	/**
+	 * @var	Nav		The navigation object.
+	 */
+	protected $nav;
 	
 	/**
 	 * @var	array	An array of setting keys used to make the final pull from the database.
@@ -117,31 +122,37 @@ abstract class Controller_Base_Core extends \Controller_Template
 	{
 		parent::before();
 		
-		// if the config file isn't set
+		// If the config file isn't set
 		if ( ! file_exists(APPPATH.'config/'.\Fuel::$env.'/db.php'))
 		{
 			\Response::redirect('setup/main/config');
 		}
 
-		// make sure the system is installed
+		// Make sure the system is installed
 		if ( ! \Utility::installed())
 		{
 			\Response::redirect('setup/main/index');
 		}
 		
-		// load the session library
+		// Get an instance of the Session
 		$this->session = \Session::instance();
 
-		// load the nova config file
-		\Config::load('nova', 'nova');
-
-		// set the genre as a variable
+		// Set the genre
 		$this->genre = \Config::get('nova.genre');
+
+		// Create a new Nav
+		$this->nav = new \Menu;
+
+		// Load all of the settings
+		$this->settings = \Model_Settings::getItems(false);
+
+		// Load the nova config file
+		\Config::load('nova', 'nova');
 		
-		// set the language
+		// Set the language
 		\Config::set('language', $this->session->get('language', 'en'));
 
-		// load the language files
+		// Now, load the language files
 		\Lang::load('app');
 		\Lang::load('nova::base');
 		\Lang::load('nova::event', 'event');
@@ -151,33 +162,23 @@ abstract class Controller_Base_Core extends \Controller_Template
 		\Lang::load('nova::short', 'short');
 		\Lang::load('nova::sitecontent', 'sitecontent');
 		
-		// these are the settings we pull for every controller
-		$this->_settings_setup = array(
-			'rank',
-			'timezone',
-			'date_format',
-			'sim_name',
-			'meta_description',
-			'meta_keywords',
-			'meta_author',
-		);
-		
-		// set up the controller name without the Controller_ prefix
-		$controller_name = strtolower(str_replace('Controller_', '', $this->request->controller));
+		// Set up the controller name without the Controller_ prefix
+		$controllerName = strtolower(str_replace('Controller_', '', $this->request->controller));
 
-		// make sure the namespace is removed
-		$controller_name = \Inflector::denamespace($controller_name);
+		// Make sure the namespace is removed
+		$controllerName = \Inflector::denamespace($controllerName);
 
-		// make sure we've removed the prefixes
-		$controller_name = str_replace('admin_', '', $controller_name);
+		// Make sure we've removed the prefixes
+		$controllerName = str_replace('admin_', '', $controllerName);
 
+		// Create empty objects for the data
 		$this->_data = new \stdClass;
 		$this->_js_data = new \stdClass;
 		
-		// grab the content for the current section
-		$this->_headers		= \Model_SiteContent::getSectionContent('header', $controller_name);
-		$this->_messages	= \Model_SiteContent::getSectionContent('message', $controller_name);
-		$this->_titles		= \Model_SiteContent::getSectionContent('title', $controller_name);
+		// Grab the content for the current section
+		$this->_headers		= \Model_SiteContent::getSectionContent('header', $controllerName);
+		$this->_messages	= \Model_SiteContent::getSectionContent('message', $controllerName);
+		$this->_titles		= \Model_SiteContent::getSectionContent('title', $controllerName);
 	}
 	
 	/**
@@ -192,24 +193,24 @@ abstract class Controller_Base_Core extends \Controller_Template
 	{
 		parent::after($response);
 
-		// set the content view (if it's been set)
+		// Set the content view (if it's been set)
 		if ( ! empty($this->_view))
 		{
 			$this->template->layout->content = \View::forge(\Location::file($this->_view, $this->skin, 'pages', $this->_module_fallback), $this->_data);
 		}
 		
-		// set the javascript view (if it's been set)
+		// Set the javascript view (if it's been set)
 		if ( ! empty($this->_js_view))
 		{
 			$this->template->javascript = \View::forge(\Location::file($this->_js_view, $this->skin, 'js', $this->_module_fallback), $this->_js_data);
 		}
 		
-		// set the final title content
+		// Set the final title content
 		$this->template->title.= (property_exists($this->_data, 'title')) 
 			? $this->_data->title 
 			: ((array_key_exists($this->request->action, $this->_titles)) ? $this->_titles[$this->request->action] : null);
 		
-		// set the final header content
+		// Set the final header content
 		$this->template->layout->header = (property_exists($this->_data, 'header')) 
 			? $this->_data->header 
 			: ((array_key_exists($this->request->action, $this->_headers)) ? $this->_headers[$this->request->action] : null);
@@ -223,24 +224,24 @@ abstract class Controller_Base_Core extends \Controller_Template
 
 		if ($this->_editable === true)
 		{
-			// set up the controller name without the Controller_ prefix
-			$controller_name = strtolower(str_replace('Controller_', '', $this->request->controller));
+			// Set up the controller name without the Controller_ prefix
+			$controllerName = strtolower(str_replace('Controller_', '', $this->request->controller));
 
-			// make sure the namespace is removed
-			$controller_name = \Inflector::denamespace($controller_name);
+			// Make sure the namespace is removed
+			$controllerName = \Inflector::denamespace($controllerName);
 
-			// set the final header content key
+			// Set the final header content key
 			$this->template->layout->header_key = (array_key_exists($this->request->action, $this->_headers)) 
-				? $controller_name.'_'.$this->request->action.'_header' 
+				? $controllerName.'_'.$this->request->action.'_header' 
 				: false;
 
-			// set the final message content key
+			// Set the final message content key
 			$this->template->layout->message_key = (array_key_exists($this->request->action, $this->_messages)) 
-				? $controller_name.'_'.$this->request->action.'_message' 
+				? $controllerName.'_'.$this->request->action.'_message' 
 				: false;
 		}
 		
-		// flash messages
+		// Flash messages
 		if (count($this->_flash) > 0)
 		{
 			foreach ($this->_flash as $flash)
@@ -251,7 +252,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 			}
 		}
 
-		// return the response object
+		// Return the response object
 		return \Response::forge($this->template, $this->_status);
 	}
 	

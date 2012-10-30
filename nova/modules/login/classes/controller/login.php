@@ -105,12 +105,12 @@ class Controller_Login extends Controller_Base_Login
 
 					case self::SUSPEND_DURING:
 						$error_status = 'warning';
-						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::getItems('login_lockout_time')."}}]]");
+						$error_message = lang("[[error.login.error_$error|{{".$this->settings->login_lockout_time."}}]]");
 					break;
 
 					case self::SUSPEND_START:
 						$error_status = 'danger';
-						$error_message = lang("[[error.login.error_$error|{{".\Model_Settings::getItems('login_lockout_time')."}}]]");
+						$error_message = lang("[[error.login.error_$error|{{".$this->settings->login_lockout_time."}}]]");
 					break;
 
 					case self::PASS_RESET:
@@ -188,9 +188,9 @@ class Controller_Login extends Controller_Base_Login
 
 						// set up the email
 						$email = \Email::forge();
-						$email->from($this->options->email_address, $this->options->email_name)
+						$email->from($this->settings->email_address, $this->settings->email_name)
 							->to($address)
-							->subject($this->options->email_subject.' '.lang('email.subject.password_reset'))
+							->subject($this->settings->email_subject.' '.lang('email.subject.password_reset'))
 							->body($email_content);
 
 						try

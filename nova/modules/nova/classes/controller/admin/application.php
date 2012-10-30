@@ -145,20 +145,13 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							$bcc[$user->email] = $user->name;
 						}
 
-						// get the email preferences
-						$email_prefs = \Model_Settings::getItems(array(
-							'email_subject',
-							'email_name',
-							'email_address',
-						));
-
 						// setup the mailer
 						$mailer = \NovaMail::setup();
 
 						// build the message
 						$message = \Swift_Message::newInstance()
-							->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.email_applicant'))
-							->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
+							->setSubject($this->settings->email_subject.' '.lang('email.subject.arc.email_applicant'))
+							->setFrom(array($this->settings->email_address => $this->settings->email_name))
 							->setTo(array($app->user->email => $app->user->name))
 							->setBcc($bcc)
 							->setReplyTo(\Sentry::user()->email)
@@ -224,13 +217,6 @@ class Controller_Admin_Application extends Controller_Base_Admin
 							'content'	=> $app->substituteMessageKeys(\Security::xss_clean(\Input::post('message')))
 						));
 
-						// get the email preferences
-						$email_prefs = \Model_Settings::getItems(array(
-							'email_subject',
-							'email_name',
-							'email_address',
-						));
-
 						// loop through the reviewers and build the array for sending data
 						foreach ($app->reviewers as $r)
 						{
@@ -242,8 +228,8 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						// build the message
 						$message = \Swift_Message::newInstance()
-							->setSubject($email_prefs->email_subject.' '.lang('email.subject.arc.response'))
-							->setFrom(array($email_prefs->email_address => $email_prefs->email_name))
+							->setSubject($this->settings->email_subject.' '.lang('email.subject.arc.response'))
+							->setFrom(array($this->settings->email_address => $this->settings->email_name))
 							->setTo(array($app->user->email => $app->user->name))
 							->setBcc($bcc)
 							->setReplyTo(\Sentry::user()->email)
@@ -329,7 +315,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 			// set the date the user applied on
 			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->get()->getPreferences('timezone'))
-				->format($this->options->date_format);
+				->format($this->settings->date_format);
 		}
 
 		return;
