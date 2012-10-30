@@ -13,13 +13,13 @@
 <div class="database-content">
 	<?php if (Uri::segment(4) == 'table'): ?>
 		<?php $data_array = array('images' => $images);?>
-		<?php echo View::forge('setup::components/pages/utility/db_table', $data_array)->render();?>
+		<?php echo View::forge('setup::components/page/utility/db_table', $data_array)->render();?>
 	<?php elseif (Uri::segment(4) == 'field'): ?>
 		<?php $data_array = array('images' => $images, 'options' => $options, 'fieldtypes' => $fieldtypes);?>
-		<?php echo View::forge('setup::components/pages/utility/db_field', $data_array)->render();?>
+		<?php echo View::forge('setup::components/page/utility/db_field', $data_array)->render();?>
 	<?php elseif (Uri::segment(4) == 'query'): ?>
 		<?php $data_array = array('images' => $images);?>
-		<?php echo View::forge('setup::components/pages/utility/db_query', $data_array)->render();?>
+		<?php echo View::forge('setup::components/page/utility/db_query', $data_array)->render();?>
 	<?php else: ?>
 		<a href="<?php echo Uri::create('setup/utility/database/table');?>" class="btn-alt">
 			<span class="secoptions-dbtable">Create a new database table</span>

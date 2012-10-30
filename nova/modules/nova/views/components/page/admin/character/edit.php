@@ -109,7 +109,7 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 								<?php if (is_array($sections) and array_key_exists($t->id, $sections)): ?>
 									<?php foreach ($sections[$t->id] as $s): ?>
 										
-										<?php echo View::forge(Location::file('forms/section', $skin, 'partials'), array('s' => $s, 'fields' => $fields, 'skin' => $skin, 'data' => $data))->render();?>
+										<?php echo View::forge(Location::file('forms/section', $skin, 'partial'), array('s' => $s, 'fields' => $fields, 'skin' => $skin, 'data' => $data))->render();?>
 
 									<?php endforeach;?>
 								<?php endif;?>
@@ -120,14 +120,14 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 							<?php if ($sections !== false): ?>
 								<?php foreach ($sections as $s): ?>
 									
-									<?php echo View::forge(Location::file('forms/section', $skin, 'partials'), array('s' => $s, 'fields' => $fields, 'skin' => $skin, 'data' => $data))->render();?>
+									<?php echo View::forge(Location::file('forms/section', $skin, 'partial'), array('s' => $s, 'fields' => $fields, 'skin' => $skin, 'data' => $data))->render();?>
 
 								<?php endforeach;?>
 							<?php else: ?>
 								<?php if ($fields !== false): ?>
 									<?php foreach ($fields[$s->id] as $f): ?>
 										
-										<?php echo View::forge(Location::file('forms/field', $skin, 'partials'), array('f' => $f, 'data' => $data))->render();?>
+										<?php echo View::forge(Location::file('forms/field', $skin, 'partial'), array('f' => $f, 'data' => $data))->render();?>
 
 									<?php endforeach;?>
 								<?php endif;?>
