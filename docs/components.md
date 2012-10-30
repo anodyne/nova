@@ -56,7 +56,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * http://code.jquery.com/jquery-1.8.2.min.js
 * Bootstrap
-    * Version: 2.1.1
+    * Version: 2.2
     * Site: http://twitter.github.com/bootstrap/
     * Location
         * nova/modules/assets/css/bootstrap-responsive.min.css
@@ -93,7 +93,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * nova/modules/assets/js/jquery.ajaxq.js
 * jQuery UI
-    * Version: 1.8.24
+    * Version: 1.9.1
     * Site: http://jqueryui.com
     * Location
         * nova/modules/assets/js/jquery.ui.accordion.min.js
@@ -104,6 +104,20 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/modules/assets/js/jquery.ui.dialog.min.js
         * nova/modules/assets/js/jquery.ui.draggable.min.js
         * nova/modules/assets/js/jquery.ui.droppable.min.js
+        * nova/modules/assets/js/jquery.ui.effect-blind.min.js
+        * nova/modules/assets/js/jquery.ui.effect-bounce.min.js
+        * nova/modules/assets/js/jquery.ui.effect-clip.min.js
+        * nova/modules/assets/js/jquery.ui.effect-drop.min.js
+        * nova/modules/assets/js/jquery.ui.effect-explode.min.js
+        * nova/modules/assets/js/jquery.ui.effect-fade.min.js
+        * nova/modules/assets/js/jquery.ui.effect-highlight.min.js
+        * nova/modules/assets/js/jquery.ui.effect-pulsate.min.js
+        * nova/modules/assets/js/jquery.ui.effect-scale.min.js
+        * nova/modules/assets/js/jquery.ui.effect-shake.min.js
+        * nova/modules/assets/js/jquery.ui.effect-slide.min.js
+        * nova/modules/assets/js/jquery.ui.effect-transfer.min.js
+        * nova/modules/assets/js/jquery.ui.effect.min.js
+        * nova/modules/assets/js/jquery.ui.menu.min.js
         * nova/modules/assets/js/jquery.ui.mouse.min.js
         * nova/modules/assets/js/jquery.ui.position.min.js
         * nova/modules/assets/js/jquery.ui.progressbar.min.js
@@ -111,7 +125,9 @@ Nova is made up of a wide range of plugins and components to help make it what i
         * nova/modules/assets/js/jquery.ui.selectable.min.js
         * nova/modules/assets/js/jquery.ui.slider.min.js
         * nova/modules/assets/js/jquery.ui.sortable.min.js
+        * nova/modules/assets/js/jquery.ui.spinner.min.js
         * nova/modules/assets/js/jquery.ui.tabs.min.js
+        * nova/modules/assets/js/jquery.ui.tooltip.min.js
         * nova/modules/assets/js/jquery.ui.widget.min.js
     * Notes
         * jQuery UI is stored in Nova instead of pulled down through a CDN (like jQuery) to allow for the UI components to be loaded on an "as needed" basis instead of as a whole library.
