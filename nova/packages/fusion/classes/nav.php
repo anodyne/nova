@@ -13,7 +13,7 @@
 
 namespace Fusion;
 
-class Menu
+class Nav
 {
 	/**
 	 * @var	array	An array of nav data.
