@@ -67,14 +67,30 @@ class Model_Settings extends \Model
 		}
 		else
 		{
-			$query = static::find()->where('key', $keys)->get_one();
-			
-			if ($value_only === true)
+			if ($keys === false or $keys === null)
 			{
-				return $query->value;
+				$obj = new \stdClass;
+				
+				$settings = static::find('all');
+				
+				foreach ($settings as $s)
+				{
+					$obj->{$s->key} = $s->value;
+				}
+				
+				return $obj;
 			}
-			
-			return $query;
+			else
+			{
+				$query = static::find()->where('key', $keys)->get_one();
+				
+				if ($value_only === true)
+				{
+					return $query->value;
+				}
+				
+				return $query;
+			}
 		}
 	}
 	
