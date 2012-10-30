@@ -51,7 +51,7 @@ if (is_numeric(Uri::segment(4))): ?>
 			<label class="control-label"><?php echo lang('preview', 1);?></label>
 			<div id="rankPreview">
 				<?php if ( ! $rankPreview): ?>
-					<div rel="rankBaseImage" style="width:144px; height:40px; position:relative; z-index:100; background:transparent url() no-repeat top left;"><div rel="rankPipImage" style="width:144px; height:40px; position:relative; z-index:10; background:transparent url() no-repeat top left;"></div></div>
+					<?php echo \Location::rank('', '');?>
 				<?php else: ?>
 					<?php echo $rankPreview;?>
 				<?php endif;?>
