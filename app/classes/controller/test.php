@@ -43,4 +43,26 @@ class Controller_Test extends Nova\Controller_Main
 		//$output = $nav->setType('sub')->build();
 		//echo $output;
 	}
+
+	public function action_location()
+	{
+		$l = new \Location('main', $this->skin, $this->_module_fallback);
+
+		\Debug::dump(
+			$l->setType('structure')->findFile(),
+			\Location::file('main', $this->skin, 'structure', $this->_module_fallback)
+		);
+		\Debug::dump(
+			$l->setFile('image.jpg')->setType('asset')->findImage('urlpath'),
+			\Location::asset('image.jpg', 'urlpath', array(), $this->_module_fallback)
+		);
+		\Debug::dump(
+			$l->setFile('clock.png')->setType('image')->findImage('urlpath'),
+			\Location::image('clock.png', $this->skin, 'urlpath', array(), $this->_module_fallback)
+		);
+		\Debug::dump(
+			$l->setFile(false)->setType('rank')->findRank('red', 'o6', 'default'),
+			\Location::rank('red', 'o6', 'default')
+		);
+	}
 }
