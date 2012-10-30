@@ -205,7 +205,7 @@ class Location
 				'pip' => "background:transparent url(".\Uri::base(false).'app/assets/common/'.$genre.'/ranks/'.$catalog->location.'/pips/'.$pip.$catalog->extension.") no-repeat top left;",
 			);
 
-			return \View::forge(\Location::file('common/rank', $this->skin, 'partials'))
+			return \View::forge(\Location::file('common/rank', $this->skin, 'partial'))
 				->set('props', $properties)
 				->render();
 		}

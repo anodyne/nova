@@ -90,14 +90,14 @@ class Nav
 			case 'classic':
 				if ($this->type == 'main')
 				{
-					$output = \View::forge(\Location::file('nav/classic', \Utility::getSkin($this->section), 'partials'))
+					$output = \View::forge(\Location::file('nav/classic', \Utility::getSkin($this->section), 'partial'))
 						->set('items', $this->data[$this->type]['items'][$this->category])
 						->set('name', \Model_Settings::getItems('sim_name'))
 						->render();
 				}
 				else
 				{
-					$output = \View::forge(\Location::file('nav/subnav', \Utility::getSkin($this->section), 'partials'))
+					$output = \View::forge(\Location::file('nav/subnav', \Utility::getSkin($this->section), 'partial'))
 						->set('items', $this->data[$this->section][$this->category])
 						->render();
 				}
@@ -105,7 +105,7 @@ class Nav
 			
 			case 'dropdown':
 			default:
-				$output = \View::forge(\Location::file('nav/dropdown', \Utility::getSkin($this->section), 'partials'))
+				$output = \View::forge(\Location::file('nav/dropdown', \Utility::getSkin($this->section), 'partial'))
 					->set('items', $this->data)
 					->set('name', \Model_Settings::getItems('sim_name'))
 					->set('userMenu', $this->userOutput)
@@ -215,7 +215,7 @@ class Nav
 	protected function setUserDataAndOutput()
 	{
 		// Start to build the output
-		$output = \View::forge(\Location::file('nav/user', \Utility::getSkin($this->section), 'partials'));
+		$output = \View::forge(\Location::file('nav/user', \Utility::getSkin($this->section), 'partial'));
 		
 		if (\Sentry::check())
 		{
@@ -238,11 +238,11 @@ class Nav
 
 			// Figure out the outputs
 			$writingOutput = ($writingCount > 0) 
-				? \View::forge(\Location::file('common/label', \Utility::getSkin($this->section), 'partials'))
+				? \View::forge(\Location::file('common/label', \Utility::getSkin($this->section), 'partial'))
 					->set('class', $writingClass)->set('value', $writingCount)->render()
 				: false;
 			$messageOutput = ($messageCount > 0) 
-				? \View::forge(\Location::file('common/label', \Utility::getSkin($this->section), 'partials'))
+				? \View::forge(\Location::file('common/label', \Utility::getSkin($this->section), 'partial'))
 					->set('class', $messageClass)->set('value', $messageCount)->render()
 				: false;
 

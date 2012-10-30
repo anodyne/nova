@@ -19,7 +19,7 @@ class Controller_Update extends Controller_Base_Setup
 		parent::before();
 
 		$this->template->layout->steps = ($this->request->action == 'step')
-			? \View::forge('setup::components/partials/setup_update')
+			? \View::forge('setup::components/partial/setup_update')
 			: false;
 	}
 

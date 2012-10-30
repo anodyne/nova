@@ -18,7 +18,7 @@ class Controller_Install extends Controller_Base_Setup
 	{
 		parent::before();
 		
-		$this->template->layout->steps = \View::forge('setup::components/partials/setup_install');
+		$this->template->layout->steps = \View::forge('setup::components/partial/setup_install');
 	}
 	
 	/**

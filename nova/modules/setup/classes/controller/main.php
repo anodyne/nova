@@ -59,7 +59,7 @@ class Controller_Main extends Controller_Base_Setup
 				$this->_data->header->text = 'Update Nova 3';
 
 				// pull in the steps indicators
-				$this->template->layout->steps = \View::forge('setup::components/partials/setup_update');
+				$this->template->layout->steps = \View::forge('setup::components/partial/setup_update');
 				
 				$this->_data->update = new \stdClass;
 				$this->_data->update->version = 'Nova '.$update->version;
@@ -109,7 +109,7 @@ class Controller_Main extends Controller_Base_Setup
 					$this->_data->header->text = 'Upgrade From Nova 2';
 
 					// pull in the steps indicators
-					$this->template->layout->steps = \View::forge('setup::components/partials/setup_upgrade');
+					$this->template->layout->steps = \View::forge('setup::components/partial/setup_upgrade');
 				}
 				
 				// nova 1 means they can't do the upgrade
@@ -134,7 +134,7 @@ class Controller_Main extends Controller_Base_Setup
 				$this->_data->header->text = 'Install Nova 3';
 
 				// pull in the steps indicators
-				$this->template->layout->steps = \View::forge('setup::components/partials/setup_install');
+				$this->template->layout->steps = \View::forge('setup::components/partial/setup_install');
 			}
 		}
 		

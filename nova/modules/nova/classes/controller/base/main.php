@@ -54,7 +54,7 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 		// Set the variables in the template
 		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
-		$this->template->layout						= \View::forge(\Location::file('main', $this->skin, 'templates'), $vars);
+		$this->template->layout						= \View::forge(\Location::file('main', $this->skin, 'template'), $vars);
 
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
@@ -64,13 +64,13 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 
 		//$this->template->layout->navuser 			= \Nav::display('user', false, false);
 
-		$this->template->layout->navsub 			= \View::forge(\Location::file('navsub', $this->skin, 'partials'));
+		$this->template->layout->navsub 			= \View::forge(\Location::file('navsub', $this->skin, 'partial'));
 		$this->template->layout->navsub->menu		= false;
 		$this->template->layout->navsub->widget1	= false;
 		$this->template->layout->navsub->widget2	= false;
 		$this->template->layout->navsub->widget3	= false;
 		
-		$this->template->layout->footer				= \View::forge(\Location::file('footer', $this->skin, 'partials'));
+		$this->template->layout->footer				= \View::forge(\Location::file('footer', $this->skin, 'partial'));
 		$this->template->layout->footer->extra 		= \Model_SiteContent::getContent('footer');
 
 		if ($this->_section_info->nav == 'dropdown')

@@ -17,7 +17,7 @@ class Controller_Upgrade extends Controller_Base_Setup
 	{
 		parent::before();
 
-		$this->template->layout->steps = \View::forge('setup::components/partials/setup_upgrade');
+		$this->template->layout->steps = \View::forge('setup::components/partial/setup_upgrade');
 	}
 	
 	public function action_index($step = 0)

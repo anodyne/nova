@@ -48,7 +48,7 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 		// Set the variables in the template
 		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
-		$this->template->layout						= \View::forge(\Location::file('login', $this->skin, 'templates', 'login'), $vars);
+		$this->template->layout						= \View::forge(\Location::file('login', $this->skin, 'template', 'login'), $vars);
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;

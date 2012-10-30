@@ -311,7 +311,7 @@ class QuickInstall
 		if ($location === null)
 		{
 			// get the directory listing
-			$dir = self::directory_list(MODPATH.'app/views/components/widgets/');
+			$dir = self::directory_list(MODPATH.'app/views/components/widget/');
 			
 			// get all the installed widgets
 			$widgets = Model_CatalogueWidget::getItems();
@@ -335,7 +335,7 @@ class QuickInstall
 			foreach ($dir as $key => $value)
 			{
 				// assign our path to a variable
-				$file = MODPATH.'app/views/components/widgets/'.$value.'/widget.json';
+				$file = MODPATH.'app/views/components/widget/'.$value.'/widget.json';
 				
 				// make sure the file exists first
 				if (file_exists($file))
@@ -361,7 +361,7 @@ class QuickInstall
 		else
 		{
 			// assign our path to a variable
-			$file = MODPATH.'app/views/components/widgets/'.$location.'/widget.json';
+			$file = MODPATH.'app/views/components/widget/'.$location.'/widget.json';
 			
 			// make sure the file exists first
 			if (file_exists($file))

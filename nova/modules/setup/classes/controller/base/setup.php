@@ -114,7 +114,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 		// set the variables in the template
 		$this->template->title 				= 'Nova :: ';
 		$this->template->javascript			= false;
-		$this->template->layout				= \View::forge('setup::components/templates/setup');
+		$this->template->layout				= \View::forge('setup::components/template/setup');
 		$this->template->layout->flash		= false;
 		$this->template->layout->content	= false;
 	}
@@ -132,7 +132,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 		parent::after($response);
 		
 		// set the content view
-		$this->template->layout->content = \View::forge('setup::components/pages/'.$this->_view, $this->_data);
+		$this->template->layout->content = \View::forge('setup::components/page/'.$this->_view, $this->_data);
 		
 		// set the javascript view (if it's been set)
 		if ( ! empty($this->_js_view))
@@ -151,7 +151,7 @@ abstract class Controller_Base_Setup extends \Controller_Template
 		{
 			foreach ($this->_flash as $flash)
 			{
-				$this->template->layout->flash = \View::forge('setup::components/partials/flash');
+				$this->template->layout->flash = \View::forge('setup::components/partial/flash');
 				$this->template->layout->flash->status = $flash['status'];
 				$this->template->layout->flash->message = $flash['message'];
 			}

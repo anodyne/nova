@@ -102,7 +102,7 @@ class NovaForm
 			}
 		}
 
-		return \View::forge(\Location::file('form', $skin, 'partials'), $data);
+		return \View::forge(\Location::file('form', $skin, 'partial'), $data);
 	}
 
 	/**

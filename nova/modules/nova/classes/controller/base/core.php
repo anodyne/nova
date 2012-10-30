@@ -196,7 +196,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 		// Set the content view (if it's been set)
 		if ( ! empty($this->_view))
 		{
-			$this->template->layout->content = \View::forge(\Location::file($this->_view, $this->skin, 'pages', $this->_module_fallback), $this->_data);
+			$this->template->layout->content = \View::forge(\Location::file($this->_view, $this->skin, 'page', $this->_module_fallback), $this->_data);
 		}
 		
 		// Set the javascript view (if it's been set)
@@ -246,7 +246,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 		{
 			foreach ($this->_flash as $flash)
 			{
-				$this->template->layout->flash = \View::forge(\Location::file('flash', $this->skin, 'partials', $this->_module_fallback));
+				$this->template->layout->flash = \View::forge(\Location::file('flash', $this->skin, 'partial', $this->_module_fallback));
 				$this->template->layout->flash->status = $flash['status'];
 				$this->template->layout->flash->message = $flash['message'];
 			}
