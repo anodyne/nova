@@ -30,11 +30,9 @@ class Controller_Test extends Nova\Controller_Main
 		return;
 	}
 
-	public function action_menu()
+	public function action_nav()
 	{
-		//echo \Nav::display('classic', 'sub', 'main');
-
-		//$nav = new \Menu;
+		//$nav = new \Nav;
 		//echo $nav->getUserOutput();
 		//echo $nav->build();
 

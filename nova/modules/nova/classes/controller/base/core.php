@@ -141,7 +141,7 @@ abstract class Controller_Base_Core extends \Controller_Template
 		$this->genre = \Config::get('nova.genre');
 
 		// Create a new Nav
-		$this->nav = new \Menu;
+		$this->nav = new \Nav;
 
 		// Load all of the settings
 		$this->settings = \Model_Settings::getItems(false);

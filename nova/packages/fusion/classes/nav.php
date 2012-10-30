@@ -13,350 +13,241 @@
 
 namespace Fusion;
 
-class Nav
+class Menu
 {
 	/**
-	 * @var	string	the nav category
+	 * @var	array	An array of nav data.
 	 */
-	protected static $category;
+	protected $data = array();
 
 	/**
-	 * @var	array	an array of data for the main nav
+	 * @var	array	An array of user data.
 	 */
-	protected static $dataMain;
+	protected $userData = array();
 
 	/**
-	 * @var	array	an array of data for the admin nav
+	 * @var	string	The output of the final nav.
 	 */
-	protected static $dataAdmin;
+	protected $output;
 
 	/**
-	 * @var	array	an array of data for the sub nav
+	 * @var	string	The output of the final user nav.
 	 */
-	protected static $dataSub;
+	protected $userOutput;
 
 	/**
-	 * @var	string	the final output of the nav
+	 * @var	string	The nav style.
 	 */
-	protected static $output;
+	protected $style;
 
 	/**
-	 * Display the navigation item requested.
+	 * @var	string	The nav type.
+	 */
+	protected $type;
+
+	/**
+	 * @var	string	The nav category.
+	 */
+	protected $category;
+
+	/**
+	 * @var	string	The nav section.
+	 */
+	protected $section;
+
+	/**
+	 * Create a new Nav.
 	 *
-	 * @api
-	 * @param	string	the style of nav to display (classic, dropdown, user)
-	 * @param	string	the type of nav to display (main, sub)
-	 * @param	string	the category of nav to display (main, personnel, sim, etc.)
+	 * @param	string	The style of nav (classic or dropdown)
+	 * @param	string	The type of nav (main, sub, admin or adminsub)
+	 * @param	string	The category of the nav (main, admin, messages, write, etc.)
+	 * @param	string	The section of the nav (main or admin)
+	 * @return	void
+	 */
+	public function __construct($style = 'dropdown', $type = 'main', $category = 'main', $section = 'main')
+	{
+		$this->style	= $style;
+		$this->type		= $type;
+		$this->category	= $category;
+		$this->section	= $section;
+
+		// Set the nav data
+		$this->setData();
+
+		// Set the user data
+		$this->setUserDataAndOutput();
+	}
+
+	/**
+	 * Build the output of the specified nav.
+	 *
 	 * @return	string
 	 */
-	public static function display($style, $type, $category)
+	public function build()
 	{
-		static::$category = $category;
-
-		if ($style == 'classic' or $style == 'dropdown')
+		switch ($this->style)
 		{
-			switch ($type)
-			{
-				case 'admin':
-					// generate the data
-					static::getAdminNavData();
-
-					// generate the nav
-					static::buildDropdownNav(static::$dataAdmin, 'adminsub');
-				break;
-
-				case 'main':
-					// generate the data
-					static::getMainNavData();
-
-					if ($style == 'classic')
-					{
-						// generate the classic menu
-						static::buildClassicMainNav();
-					}
-					elseif ($style == 'dropdown')
-					{
-						// generate the classic menu
-						static::buildDropdownNav(static::$dataMain);
-					}
-				break;
-
-				case 'sub':
-					// generate the data
-					static::getSubNavData($category);
-
-					if ($style == 'classic')
-					{
-						// generate the classic menu
-						static::buildClassicSubNav();
-					}
-				break;
-			}
-		}
-		elseif ($style == 'user')
-		{
-			// generate the user nav
-			static::buildUserNav();
-		}
-
-		return static::$output;
-	}
-
-	/**
-	 * Gather the data for the admin nav and store it in the class.
-	 *
-	 * @internal
-	 * @return	void
-	 */
-	protected static function getAdminNavData()
-	{
-		// get the items
-		static::$dataAdmin = \Model_Nav::getItems('admin', false);
-
-		// loop through the items
-		foreach (static::$dataAdmin as $key => $item)
-		{
-			if (($item->needs_login == 'y' and \Sentry::check() === false) or ($item->needs_login == 'n' and \Sentry::check() === true))
-			{
-				unset(static::$dataAdmin[$key]);
-			}
-
-			if ( ! empty($item->access))
-			{
-				// get the access info for the nav item
-				$navaccess = explode('|', $item->access);
-
-				// find if the user has access
-				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
-
-				// find if the user has the proper level
-				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
-
-				if ($access === false or ($access === true and $level === false))
+			case 'classic':
+				if ($this->type == 'main')
 				{
-					unset(static::$dataAdmin[$key]);
+					$output = \View::forge(\Location::file('nav/classic', \Utility::getSkin($this->section), 'partials'))
+						->set('items', $this->data[$this->type]['items'][$this->category])
+						->set('name', \Model_Settings::getItems('sim_name'))
+						->render();
 				}
-			}
-		}
-	}
-
-	/**
-	 * Gather the data for the main nav and store it in the class.
-	 *
-	 * @internal
-	 * @return	void
-	 */
-	protected static function getMainNavData()
-	{
-		// get the items
-		static::$dataMain = \Model_Nav::getItems('main', false);
-
-		// loop through the items
-		foreach (static::$dataMain as $key => $item)
-		{
-			if (($item->needs_login == 'y' and \Sentry::check() === false) or ($item->needs_login == 'n' and \Sentry::check() === true))
-			{
-				unset(static::$dataMain[$key]);
-			}
-
-			if ( ! empty($item->access))
-			{
-				// get the access info for the nav item
-				$navaccess = explode('|', $item->access);
-
-				// find if the user has access
-				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
-
-				// find if the user has the proper level
-				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
-
-				if ($access === false or ($access === true and $level === false))
+				else
 				{
-					unset(static::$dataMain[$key]);
+					$output = \View::forge(\Location::file('nav/subnav', \Utility::getSkin($this->section), 'partials'))
+						->set('items', $this->data[$this->section][$this->category])
+						->render();
 				}
-			}
+			break;
+			
+			case 'dropdown':
+			default:
+				$output = \View::forge(\Location::file('nav/dropdown', \Utility::getSkin($this->section), 'partials'))
+					->set('items', $this->data)
+					->set('name', \Model_Settings::getItems('sim_name'))
+					->set('userMenu', $this->userOutput)
+					->set('section', $this->section)
+					->set('category', $this->category)
+					->render();
+			break;
 		}
+		
+		return $output;
 	}
 
 	/**
-	 * Gather the data for the sub nav and store it in the class.
+	 * Get the nav data.
+	 *
+	 * @return	array
+	 */
+	public function getData()
+	{
+		return $this->data;
+	}
+
+	/**
+	 * Set the nav data.
 	 *
 	 * @internal
 	 * @return	void
 	 */
-	protected static function getSubNavData($category)
+	protected function setData()
 	{
-		// get the items
-		static::$dataSub = \Model_Nav::getItems('sub', $category);
+		$data = \Model_Nav::find('all');
 
-		// loop through the items
-		foreach (static::$dataSub as $key => $item)
+		foreach ($data as $key => $item)
 		{
-			if (($item->needs_login == 'y' and \Sentry::check() === false) or ($item->needs_login == 'n' and \Sentry::check() === true))
-			{
-				unset(static::$dataSub[$key]);
-			}
+			$type = $item->type;
+			$type = ($type == 'sub') ? 'main' : $type;
+			$type = ($type == 'adminsub') ? 'admin' : $type;
 
-			if ( ! empty($item->access))
-			{
-				// get the access info for the nav item
-				$navaccess = explode('|', $item->access);
+			$cat = ($item->type == 'main' or $item->type == 'admin') ? 'items' : $item->category;
 
-				// find if the user has access
-				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
-
-				// find if the user has the proper level
-				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
-
-				if ( ! $level)
-				{
-					unset(static::$dataSub[$key]);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Generate the classic main navigation.
-	 *
-	 * @internal
-	 * @return	void
-	 */
-	protected static function buildClassicMainNav()
-	{
-		// create the view
-		$view = \View::forge(\Location::file('nav/classic', \Utility::getSkin(static::$category), 'partials'));
-
-		// set the data
-		$view->set('items', static::$dataMain);
-		$view->set('name', \Model_Settings::getItems('sim_name'));
-
-		// set the view output
-		static::$output = $view->render();
-	}
-
-	/**
-	 * Generate the classic sub navigation.
-	 *
-	 * @internal
-	 * @return	void
-	 */
-	protected static function buildClassicSubNav()
-	{
-		// create the view
-		$view = \View::forge(\Location::file('nav/subnav', \Utility::getSkin(static::$category), 'partials'));
-
-		// set the data
-		$view->set('items', static::$dataSub);
-
-		// set the view output
-		static::$output = $view->render();
-	}
-
-	/**
-	 * Generate the dropdown navigation.
-	 *
-	 * @internal
-	 * @return	void
-	 */
-	protected static function buildDropdownNav($data, $sub_type = 'sub')
-	{
-		// open the nav
-		$output = '<ul class="nav">';
-
-		foreach ($data as $item)
-		{
 			// get the sub nav items under this section
-			$sub = \Model_Nav::getItems($sub_type, $item->category);
+			$sub = ($type == 'sub' or $type == 'adminsub') ? \Model_Nav::getItems($type, $item->category) : false;
 
-			// figure out what should be shown
-			$target_output = ($item->url_target == 'offsite') ? ' target="_blank"' : false;
-
-			if ($sub !== false)
+			if ($cat == 'items')
 			{
-				$output.= '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$item->name.' <b class="caret"></b></a>';
-				$output.= '<ul class="dropdown-menu">';
-
-				foreach ($sub as $i)
-				{
-					// default to allow access
-					$level = true;
-
-					if ( ! empty($i->access))
-					{
-						// get the access info for the nav item
-						$navaccess = explode('|', $i->access);
-
-						// find if the user has the proper level
-						$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
-					}
-
-					if ($level)
-					{
-						if ($i->order == 0 and $i->group != 0)
-						{
-							$output.= '<li class="divider"></li>';
-						}
-
-						// figure out what should be shown
-						$i_target_output = ($i->url_target == 'offsite') ? ' target="_blank"' : false;
-
-						$output.= '<li><a href="'.\Uri::create($i->url).'"'.$target_output.'>'.$i->name.'</a></li>';
-					}
-				}
-
-				$output.= '</ul>';
-				$output.= '</li>';
+				$retval[$type][$cat][$item->category][$item->id] = $item;
 			}
 			else
 			{
-				// generate the output for the nav item
-				$output.= '<li><a href="'.\Uri::create($item->url).'"'.$target_output.'>'.$item->name.'</a></li>';
+				$retval[$type][$cat][$item->id] = $item;
+			}
+
+			if (($item->needs_login == 'y' and ! \Sentry::check()) or ($item->needs_login == 'n' and \Sentry::check()))
+			{
+				unset($retval[$type][$cat][$item->id]);
+				unset($retval[$type][$cat][$item->category][$item->id]);
+			}
+
+			if ( ! empty($item->access))
+			{
+				// get the access info for the nav item
+				$navaccess = explode('|', $item->access);
+
+				// find if the user has access
+				$access = \Sentry::user()->hasAccess("$navaccess[0].$navaccess[1]");
+
+				// find if the user has the proper level
+				$level = \Sentry::user()->atLeastLevel("$navaccess[0].$navaccess[1]", $navaccess[2]);
+
+				if ( ! $access or ($access and ! $level))
+				{
+					unset($retval[$type][$cat][$item->id]);
+					unset($retval[$type][$cat][$item->category][$item->id]);
+				}
 			}
 		}
 
-		// close the nav
-		$output.= '</ul>';
-
-		// send the final output to the class
-		static::$output = $output;
+		$this->data = $retval;
 	}
 
 	/**
-	 * Generate the user nav.
+	 * Get the user data.
 	 *
-	 * Note: because of notifcations and dynamic elements, this menu cannot be cached.
+	 * @return	array
+	 */
+	public function getUserData()
+	{
+		return $this->userData;
+	}
+
+	/**
+	 * Get the user nav output.
+	 *
+	 * @return	string
+	 */
+	public function getUserOutput()
+	{
+		return $this->userOutput;
+	}
+
+	/**
+	 * Set the user data and output.
 	 *
 	 * @internal
 	 * @return	void
 	 */
-	protected static function buildUserNav()
+	protected function setUserDataAndOutput()
 	{
+		// Start to build the output
+		$output = \View::forge(\Location::file('nav/user', \Utility::getSkin($this->section), 'partials'));
+		
 		if (\Sentry::check())
 		{
-			// get the user
+			// Get the user
 			$user = \Sentry::user();
 
-			// get the message count
-			$message_count = 0;
+			// Get the message count
+			$messageCount = 0;
 
-			// get the writing count
-			$writing_count = 0;
+			// Get the writing count
+			$writingCount = 0;
 			
-			// create a total count
-			$total = $writing_count + $message_count;
+			// Create a total count
+			$total = $writingCount + $messageCount;
 
-			// figure out what the classes should be
-			$total_class = ($total == 0) ? '' : ' label-warning';
-			$writing_class = ($writing_count == 0) ? '' : ' label-warning';
-			$message_class = ($message_count == 0) ? '' : ' label-important';
+			// Figure out what the classes should be
+			$totalClass = ($total == 0) ? '' : ' label-warning';
+			$writingClass = ($writingCount == 0) ? '' : ' label-warning';
+			$messageClass = ($messageCount == 0) ? '' : ' label-important';
 
-			// figure out the outputs
-			$writing_output = ($writing_count > 0) ? '<span class="label'.$writing_class.'">'.$writing_count.'</span> ' : false;
-			$message_output = ($message_count > 0) ? '<span class="label'.$message_class.'">'.$message_count.'</span> ' : false;
+			// Figure out the outputs
+			$writingOutput = ($writingCount > 0) 
+				? \View::forge(\Location::file('common/label', \Utility::getSkin($this->section), 'partials'))
+					->set('class', $writingClass)->set('value', $writingCount)->render()
+				: false;
+			$messageOutput = ($messageCount > 0) 
+				? \View::forge(\Location::file('common/label', \Utility::getSkin($this->section), 'partials'))
+					->set('class', $messageClass)->set('value', $messageCount)->render()
+				: false;
 
-			// build the list of items that should be in the user nav
-			$usernav = array(
+			// Build the list of items that should be in the user nav
+			$userNav = array(
 				0 => array(
 					array(
 						'name' => ucwords(__('cp')),
@@ -383,80 +274,143 @@ class Nav
 				),
 				2 => array(
 					array(
-						'name' => $message_output.ucfirst(\Inflector::pluralize(__('message'))),
+						'name' => $messageOutput.ucfirst(\Inflector::pluralize(__('message'))),
 						'url' => 'admin/messages',
 						'extra' => array(),
 						'additional' => ''),
 					array(
-						'name' => $writing_output.ucfirst(__('writing')),
+						'name' => $writingOutput.lang('writing', 1),
 						'url' => 'admin/writing',
 						'extra' => array(),
 						'additional' => ''),
 				),
 				3 => array(
 					array(
-						'name' => ucwords(__('action.request').' '.__('loa')),
+						'name' => lang('action.request loa', 1),
 						'url' => 'admin/user/loa',
 						'extra' => array(),
 						'additional' => ''),
 					array(
-						'name' => ucfirst(__('action.nominate')).' '.__('for').' '.ucfirst(__('award')),
+						'name' => lang('action.nominate for award', 1),
 						'url' => 'admin/user/nominate',
 						'extra' => array(),
 						'additional' => ''),
 				),
 				4 => array(
 					array(
-						'name' => ucfirst(__('action.logout')),
+						'name' => lang('action.logout', 1),
 						'url' => 'login/logout',
 						'extra' => array(),
 						'additional' => ''),
 				),
 			);
 
-			// start the output
-			$output = '<ul class="nav pull-right">';
-
-			$output.= '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">';
-			
-			if ($total > 0)
-			{
-				$output.= '<span class="label'.$total_class.'">'.$total.'</span> ';
-			}
-
-			$output.= $user->get('name');
-			$output.= ' <b class="caret"></b></a>';
-			$output.= '<ul class="dropdown-menu">';
-
-			foreach ($usernav as $key => $section)
-			{
-				if ($key != 0)
-				{
-					$output.= '<li class="divider"></li>';
-				}
-
-				foreach ($section as $item)
-				{
-					//$output.= '<li><a href="'.\Uri::create($item['url']).'">'.$item['name'].'</a></li>';
-					$output.= '<li>'.\Html::anchor($item['url'], $item['name'].$item['additional'], $item['extra']).'</li>';
-				}
-			}
-
-			$output.= '</ul>';
-			$output.= '</li>';
-
-			// close the output
-			$output.= '</ul>';
+			// Set the data for the output
+			$output->set('data', $this->userData)
+				->set('name', \Sentry::user()->get('name'))
+				->set('notifyClass', $totalClass)
+				->set('notifyTotal', $total)
+				->set('loggedIn', true);
 		}
 		else
 		{
-			// we aren't logged in, so show a log in link
-			$output = '<ul class="nav pull-right">';
-			$output.= '<li><a href="'.\Uri::create('login/index').'">'.ucwords(__('action.login')).'</a></li>';
-			$output.= '</ul>';
+			// Set the data for the output
+			$output->set('loggedIn', false);
 		}
 
-		// dump the output into the class
-		static::$output = $output;
+		// Set the output render to the class variable
+		$this->userOutput = $output->render();
+	}
+
+	/**
+	 * Get the nav style.
+	 *
+	 * @return	string
+	 */
+	public function getStyle()
+	{
+		return $this->style;
+	}
+
+	/**
+	 * Set the nav style.
+	 *
+	 * @param	string	The style
+	 * @return	Nav
+	 */
+	public function setStyle($value)
+	{
+		$this->style = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Get the nav type.
+	 *
+	 * @return	string
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * Set the nav type.
+	 *
+	 * @param	string	The type
+	 * @return	Nav
+	 */
+	public function setType($value)
+	{
+		$this->type = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Get the nav category.
+	 *
+	 * @return	string
+	 */
+	public function getCategory()
+	{
+		return $this->category;
+	}
+
+	/**
+	 * Set the nav category.
+	 *
+	 * @param	string	The category
+	 * @return	Nav
+	 */
+	public function setCategory($value)
+	{
+		$this->category = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Get the nav section.
+	 *
+	 * @return	string
+	 */
+	public function getSection()
+	{
+		return $this->section;
+	}
+
+	/**
+	 * Set the nav section.
+	 *
+	 * @param	string	The section
+	 * @return	Nav
+	 */
+	public function setSection($value)
+	{
+		$this->section = $value;
+
+		return $this;
 	}
 }
