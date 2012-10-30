@@ -428,7 +428,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					$data['join'][$sid]['name'] = $sec->section_name;
 					
 					// grab the fields for the given section
-					$fields = $this->char->get_bio_fields($sec->section_id);
+					$fields = $this->char->get_bio_fields($sec->section_id, false, false);
 					
 					if ($fields->num_rows() > 0)
 					{
@@ -438,6 +438,9 @@ abstract class Nova_site extends Nova_controller_admin {
 							
 							// set the page label
 							$data['join'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+
+							// set the display
+							$data['join'][$sid]['fields'][$f_id]['display'] = $field->field_display;
 							
 							switch ($field->field_type)
 							{
@@ -672,6 +675,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'type' => ucwords(lang('labels_field') .' '. lang('labels_type')),
 			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
 			'yes' => ucfirst(lang('labels_yes')),
+			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
@@ -2183,7 +2187,7 @@ abstract class Nova_site extends Nova_controller_admin {
 				{
 					$data['docking']['sections'][$sec->section_id]['name'] = $sec->section_name;
 					
-					$fields = $this->docking->get_docking_fields($sec->section_id, '');
+					$fields = $this->docking->get_docking_fields($sec->section_id, '', false);
 					
 					if ($fields->num_rows() > 0)
 					{
@@ -2192,6 +2196,7 @@ abstract class Nova_site extends Nova_controller_admin {
 							$fid = $field->field_id;
 							
 							$data['docking']['sections'][$sec->section_id]['fields'][$fid]['label'] = $field->field_label_page;
+							$data['docking']['sections'][$sec->section_id]['fields'][$fid]['display'] = $field->field_display;
 							
 							switch ($field->field_type)
 							{
@@ -2416,6 +2421,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'yes' => ucfirst(lang('labels_yes')),
+			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
@@ -5455,6 +5461,7 @@ abstract class Nova_site extends Nova_controller_admin {
 							$fid = $field->field_id;
 							
 							$data['specs']['sections'][$sec->section_id]['fields'][$fid]['label'] = $field->field_label_page;
+							$data['specs']['sections'][$sec->section_id]['fields'][$fid]['display'] = $field->field_display;
 							
 							switch ($field->field_type)
 							{
@@ -5682,6 +5689,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'yes' => ucfirst(lang('labels_yes')),
+			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
@@ -6123,6 +6131,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					$fid = $field->field_id;
 					
 					$data['tour'][$fid]['label'] = $field->field_label_page;
+					$data['tour'][$fid]['display'] = $field->field_display;
 					
 					switch ($field->field_type)
 					{
@@ -6329,6 +6338,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'yes' => ucfirst(lang('labels_yes')),
+			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
