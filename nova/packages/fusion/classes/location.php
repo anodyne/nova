@@ -14,84 +14,42 @@
 namespace Fusion;
 
 class Location
-{	
+{
+	/**
+	 * Finds and returns the path to an asset image. Asset images are not part of 
+	 * seamless substitution since they're stored entirely outside of the Nova core.
+	 *
+	 * @param	string	the name and extension of the image
+	 * @param	string	what to return (image, path, abspath, urlpath)
+	 * @param	array 	an array of attributes to be used on the image
+	 * @return	string
+	 */
+	public static function asset($image, $return = 'image', $attr = array(), $module = 'nova')
+	{
+		// Create a new Location object
+		$path = new static($image, false, $module);
+
+		return $path->setType('asset')->findImage($return, $attr);
+	}
+
 	/**
 	 * Searches to find where to pull the specified file from. If the file exists
 	 * in the skin, it'll use that that one and stop searching. If the file exists
 	 * in the override module (app/modules/override), it'll use that and stop searching.
 	 * Otherwise, it'll use whatever's found in the nova module (core/modules/nova).
 	 *
-	 * <code>
-	 * echo Location::file('main', $this->skin, 'templates');
-	 * echo Location::file('main', $this->skin, 'layouts');
-	 * echo Location::file('footer', $this->skin, 'partials');
-	 * echo Location::file('main/index', $this->skin, 'pages');
-	 * echo Location::file('personnel/character_js', $this->skin, 'js');
-	 * </code>
-	 *
-	 * @api
-	 * @param	string	the file
-	 * @param	string	the current skin
-	 * @param	string	the type of file (structure, template, partial, pages, js)
-	 * @param	string	the module to fall back to
-	 * @return	string	path to the file
+	 * @param	string	The file
+	 * @param	string	The current skin
+	 * @param	string	The type of file (structure, template, partial, pages, js)
+	 * @param	string	The module to fall back to
+	 * @return	string
 	 */
 	public static function file($file, $skin, $type, $module = 'nova')
 	{
-		if (is_file(APPPATH."views/{$skin}/components/{$type}/{$file}.php"))
-		{
-			return "{$skin}/components/{$type}/{$file}";
-		}
-		elseif (is_file(APPPATH."modules/override/views/components/{$type}/{$file}.php"))
-		{
-			return "override::components/{$type}/{$file}";
-		}
-		
-		return $module."::components/{$type}/{$file}";
-	}
-	
-	/**
-	 * Finds and returns the path to an asset image. Asset images are not part of 
-	 * seamless substitution since they're stored entirely outside of the Nova core.
-	 *
-	 * <code>
-	 * Location::asset('image.png');
-	 * // will return <img src="http://{yoursite}/app/assets/images/image.png" alt="image.png">
-	 *
-	 * Location::asset('characters/john-smith.jpg', 'urlpath');
-	 * // will return http://{yoursite}/app/assets/images/characters/john-smith.jpg
-	 *
-	 * Location::asset('missions/mission01.png', 'abspath');
-	 * // will return public_html/app/assets/images/missions/mission01.png
-	 * </code>
-	 *
-	 * @api
-	 * @param	string	the name and extension of the image
-	 * @param	string	what to return (image, path, abspath, urlpath)
-	 * @param	array 	an array of attributes to be used on the image
-	 * @return	string	the path to the image
-	 */
-	public static function asset($image, $return = 'image', $attr = array())
-	{
-		// find the path to the image
-		$path = static::findImage('asset', $image);
-		
-		if ($return == 'image')
-		{
-			return \Html::img(\Uri::base(false).$path, $attr);
-		}
-		
-		if ($return == 'urlpath')
-		{
-			return \Uri::base(false).$path;
-		}
-		
-		if ($return == 'abspath')
-		{
-			return APPPATH.$path;
-		}
-		
-		return $path;
+		// Create a new Location object
+		$path = new static($file, $skin, $module);
+
+		return $path->setType($type)->findFile();
 	}
 	
 	/**
@@ -101,39 +59,19 @@ class Location
 	 * check there. Again, if the image is found, it'll use that and stop looking,
 	 * otherwise it'll finally look in the nova module and use that image.
 	 *
-	 * <code>
-	 * Location::image('feed.png', $this->skin, 'main');
-	 * </code>
-	 *
-	 * @api
-	 * @param	string	the name of the directory the rank set is stored in
-	 * @param	string	the name of the image (usually from the database)
-	 * @param	string	the extension of the rank set (usually from the database)
-	 * @param	string	what to return (image, path, abspath, urlpath)
-	 * @param	array 	an array of attributes to be used on the image
-	 * @return	string	the path to the image
+	 * @param	string	The name of the image
+	 * @param	string	The name of the skin
+	 * @param	string	The fallback module
+	 * @param	string	What to return (image, path, abspath, urlpath)
+	 * @param	array 	An array of attributes to be used on the image
+	 * @return	string
 	 */
-	public static function image($image, $skin, $section, $return = 'image', $attr = array())
+	public static function image($image, $skin, $return = 'image', $attr = array(), $module = 'nova')
 	{
-		// find the path to the image
-		$path = static::findImage('image', $image, $skin, $section);
-		
-		if ($return == 'image')
-		{
-			return \Html::img(\Uri::base(false).$path, $attr);
-		}
-		
-		if ($return == 'urlpath')
-		{
-			return \Uri::base(false).$path;
-		}
-		
-		if ($return == 'abspath')
-		{
-			return APPPATH.$path;
-		}
-		
-		return $path;
+		// Create a new Location object
+		$path = new static($image, $skin, $module);
+
+		return $path->setType('image')->findImage($return, $attr);
 	}
 
 	/**
@@ -141,86 +79,178 @@ class Location
 	 * Rank images are not part of seamless substitution since they're stored
 	 * entirely outside of the Nova core.
 	 *
-	 * <code>
-	 * Location::rank('red', 'o6', 'default');
-	 * </code>
-	 *
-	 * @api
-	 * @param	string	the name of the base image
-	 * @param	string	the name of the pip image
-	 * @param	string	the location of the rank set
+	 * @param	string	The name of the base image
+	 * @param	string	The name of the pip image
+	 * @param	string	The location of the rank set
 	 * @return	string
 	 */
-	public static function rank($base, $pip, $location = false)
+	public static function rank($base, $pip, $location = false, $module = 'nova')
 	{
-		// get the genre
+		// Create a new Location object
+		$path = new static(false, false, $module);
+
+		return $path->setType('rank')->findRank($base, $pip, $location);
+	}
+
+	/**
+	 * @var	string	The file name.
+	 */
+	protected $file;
+
+	/**
+	 * @var	string	The current skin.
+	 */
+	protected $skin;
+
+	/**
+	 * @var	string	The type of asset.
+	 */
+	protected $type;
+
+	/**
+	 * @var	string	The fallback module.
+	 */
+	protected $module;
+
+	/**
+	 * Create a new Location object.
+	 *
+	 * @param	string	The file name
+	 * @param	string	The skin name
+	 * @param	string	The fallback module
+	 * @return	void
+	 */
+	public function __construct($file, $skin, $module)
+	{
+		$this->file = $file;
+		$this->skin = $skin;
+		$this->module = $module;
+	}
+
+	/**
+	 * Find the right path to a view.
+	 *
+	 * @return	string
+	 */
+	public function findFile()
+	{
+		if (is_file(APPPATH."modules/override/views/components/{$this->type}/{$this->file}.php"))
+		{
+			return "override::components/{$this->type}/{$this->file}";
+		}
+		elseif (is_file(APPPATH."views/{$this->skin}/components/{$this->type}/{$this->file}.php"))
+		{
+			return "{$this->skin}/components/{$this->type}/{$this->file}";
+		}
+		
+		return $this->module."::components/{$this->type}/{$this->file}";
+	}
+
+	/**
+	 * Find the right path to an image.
+	 *
+	 * @param	string	What to return (image, urlpath, abspath, path)
+	 * @param	array	Attributes for the image return type
+	 * @return	string
+	 */
+	public function findImage($return = 'path', $attributes = array())
+	{
+		// Find the path to the image
+		$path = $this->findAssetPath();
+
+		switch ($return)
+		{
+			case 'image':
+				return \Html::img(\Uri::base(false).$path, $attributes);
+			break;
+
+			case 'urlpath':
+				return \Uri::base(false).$path;
+			break;
+
+			case 'abspath':
+				return APPPATH.$path;
+			break;
+
+			default:
+				return $path;
+			break;
+		}
+	}
+
+	/**
+	 * Find the right path to a rank.
+	 *
+	 * @param	string	The base image
+	 * @param	string	The pip image
+	 * @param	string	An optional rank location
+	 * @return	string
+	 */
+	public function findRank($base, $pip, $location = false)
+	{
+		// Get the genre
 		$genre = \Config::get('nova.genre');
 
-		// get the rank catalog object
+		// Get the rank catalog object
 		$catalog = ( ! $location)
 			? \Model_Catalog_Rank::getItem(\Utility::getRank(), 'location')
 			: \Model_Catalog_Rank::getItem($location, 'location');
 
-		if (is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/base") 
-				and is_dir(APPPATH."assets/common/$genre/ranks/".$catalog->location."/pips"))
+		if (is_dir(APPPATH."assets/common/{$genre}/ranks/{$catalog->location}/base") 
+				and is_dir(APPPATH."assets/common/{$genre}/ranks/{$catalog->location}/pips"))
 		{
-			// set up the properties
+			// Set up the properties
 			$properties = array(
-				'base' => "width:144px; height:40px; position:relative; z-index:100; background:transparent url(".\Uri::base(false).'app/assets/common/'.$genre.'/ranks/'.$catalog->location.'/base/'.$base.$catalog->extension.") no-repeat top left;",
-				'pip' => "width:144px; height:40px; position:relative; z-index:10; background:transparent url(".\Uri::base(false).'app/assets/common/'.$genre.'/ranks/'.$catalog->location.'/pips/'.$pip.$catalog->extension.") no-repeat top left;",
+				'base' => "background:transparent url(".\Uri::base(false).'app/assets/common/'.$genre.'/ranks/'.$catalog->location.'/base/'.$base.$catalog->extension.") no-repeat top left;",
+				'pip' => "background:transparent url(".\Uri::base(false).'app/assets/common/'.$genre.'/ranks/'.$catalog->location.'/pips/'.$pip.$catalog->extension.") no-repeat top left;",
 			);
 
-			return '<div rel="rankBaseImage" style="'.$properties['base'].'"><div rel="rankPipImage" style="'.$properties['pip'].'"></div></div>';
+			return \View::forge(\Location::file('common/rank', $this->skin, 'partials'))
+				->set('props', $properties)
+				->render();
 		}
 
-		// clean up the base
+		// Clean up the base
 		$base = str_replace('cadet/', '', $base);
 
-		// clean up the pip
+		// Clean up the pip
 		$pip = (strpos($pip, '/') !== false) ? substr_replace($pip, '', 0, (strpos($pip, '/') + 1)) : $pip;
 
-		// set the image name now
+		// Set the image name now
 		$imageName = (empty($pip)) ? $base.$catalog->extension : $base."-".$pip.$catalog->extension;
 
-		// return the old rank style
-		return \Html::img("app/assets/common/$genre/ranks/".$catalog->location."/".$imageName);
+		// Return the old rank style
+		return \Html::img("app/assets/common/{$genre}/ranks/{$catalog->location}/{$imageName}");
 	}
-	
+
 	/**
 	 * Executes the search and return of images from the file system. Alias
 	 * methods exist to interact with this since it uses dynamic arguments to
 	 * make the API a little cleaner.
 	 *
 	 * @internal
-	 * @param	mixed	a dynamic list of parameters
-	 * @return	string	the path to the image
+	 * @return	string	The path to the asset
 	 * @throws	NovaImageNotFoundException
 	 */
-	protected static function findImage()
+	protected function findAssetPath()
 	{
-		// get the complete list of arguments
-		$args = func_get_args();
-		
-		// the first one needs to always be the type
-		$type = $args[0];
-		
-		switch ($type)
+		switch ($this->type)
 		{
 			case 'asset':
-				return "app/assets/images/{$args[1]}";
+				return "app/assets/images/{$this->file}";
 			break;
 			
 			case 'image':
-				if (is_file(APPPATH."views/{$args[2]}/design/images/{$args[1]}"))
+				if (is_file(APPPATH."modules/override/views/design/images/{$this->file}"))
 				{
-					return "app/views/{$skin}/design/images/{$args[1]}";
+					return "app/modules/override/views/design/images/{$this->file}";
 				}
-				elseif (is_file(APPPATH."modules/override/views/design/images/{$args[1]}"))
+				elseif (is_file(APPPATH."views/{$this->skin}/design/images/{$this->file}"))
 				{
-					return "app/modules/override/views/design/images/{$args[1]}";
+					return "app/views/{$this->skin}/design/images/{$this->file}";
 				}
 				
-				return "nova/modules/nova/views/design/images/{$args[1]}";
+				return "nova/modules/{$this->module}/views/design/images/{$this->file}";
 			break;
 			
 			case 'rank':
@@ -231,5 +261,97 @@ class Location
 				throw new \NovaInvalidImageTypeException(lang('error.exception.invalid_image'));
 			break;
 		}
+	}
+
+	/**
+	 * Get the file.
+	 *
+	 * @return	string
+	 */
+	public function getFile()
+	{
+		return $this->file;
+	}
+
+	/**
+	 * Get the skin.
+	 *
+	 * @return	string
+	 */
+	public function getSkin()
+	{
+		return $this->skin;
+	}
+
+	/**
+	 * Get the type.
+	 *
+	 * @return	string
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * Get the fallback module.
+	 *
+	 * @return	string
+	 */
+	public function getModule()
+	{
+		return $this->module;
+	}
+
+	/**
+	 * Set the file name.
+	 *
+	 * @param	string	The name of the file (including extension if anything except .php)
+	 * @return	Location
+	 */
+	public function setFile($value)
+	{
+		$this->file = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Set the skin name.
+	 *
+	 * @param	string	The name of the skin
+	 * @return	Location
+	 */
+	public function setSkin($value)
+	{
+		$this->skin = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Set the type of file.
+	 *
+	 * @param	string	The type of file (only necessary when searching for files, not images)
+	 * @return	Location
+	 */
+	public function setType($value)
+	{
+		$this->type = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Set the fallback module.
+	 *
+	 * @param	string	The name of the module to fall back to
+	 * @return	Location
+	 */
+	public function setModule($value)
+	{
+		$this->module = $value;
+
+		return $this;
 	}
 }
