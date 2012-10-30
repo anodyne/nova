@@ -2,24 +2,7 @@
 	<div class="system_warning"><?php echo lang("{{You need to have Javascript turned on to use all of Nova 3's features.}}");?></div>
 </noscript>
 
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</a>
-
-			<a href="<?php echo \Uri::create('main/index');?>" class="brand"><?php echo $sim_name;?></a>
-
-			<div class="nav-collapse">
-				<?php echo $navmain;?>
-				<?php echo $navuser;?>
-			</div>
-		</div>
-	</div>
-</div>
+<?php echo $navmain;?>
 
 <div class="container">
 	<div class="content">
