@@ -56,7 +56,7 @@ class CI_Loader {
 	 * @var array
 	 * @access protected
 	 */
-	public $_ci_model_paths		= array();
+	protected $_ci_model_paths		= array();
 	/**
 	 * List of paths to load helpers from
 	 *
@@ -738,7 +738,7 @@ class CI_Loader {
 	 * @param	array
 	 * @return	void
 	 */
-	public function _ci_load($_ci_data)
+	protected function _ci_load($_ci_data)
 	{
 		// Set the default data variables
 		foreach (array('_ci_view', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val)
@@ -1196,7 +1196,7 @@ class CI_Loader {
 	 * @param	object
 	 * @return	array
 	 */
-	public function _ci_object_to_array($object)
+	protected function _ci_object_to_array($object)
 	{
 		return (is_object($object)) ? get_object_vars($object) : $object;
 	}
