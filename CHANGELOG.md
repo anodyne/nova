@@ -7,6 +7,8 @@
 * Update to jQuery 1.8.2.
 * Update to jQuery UI 1.8.24.
 * Update to markItUp! 1.1.13.
+* Update to CodeIgniter 2.1.3.
+* Update Nova to address a security issue.
 
 ### Bug Fixes
 
