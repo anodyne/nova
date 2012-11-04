@@ -2244,7 +2244,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 2,
 		'sys_version_minor' => 1,
-		'sys_version_update' => 1)
+		'sys_version_update' => 2)
 );
 
 $tour_fields = array(
