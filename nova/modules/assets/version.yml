@@ -1,9 +1,9 @@
-version: 2.1.1
+version: 2.1.2
 version_major: 2
 version_minor: 1
-version_update: 1
-severity: minor
+version_update: 2
+severity: critical
 notes: |
-  Nova 2.1.1 addresses several small bugs that remained from the Nova 2.1 development.
-date: 12 September 2012
+  Nova 2.1.2 addresses several small bugs with dynamic forms and patches a security vulnerability in Nova.
+date: 04 November 2012
 link: http://www.anodyne-productions.com/nova/index.php

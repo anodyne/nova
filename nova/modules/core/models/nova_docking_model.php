@@ -68,7 +68,7 @@ abstract class Nova_docking_model extends CI_Model {
 		return $query;
 	}
 	
-	public function get_docking_fields($section = '', $type = '')
+	public function get_docking_fields($section = '', $type = '', $display = 'y')
 	{
 		$this->db->from('docking_fields');
 		
@@ -81,8 +81,12 @@ abstract class Nova_docking_model extends CI_Model {
 		{
 			$this->db->where('field_type', $type);
 		}
+
+		if ( ! empty($display))
+		{
+			$this->db->where('field_display', $display);
+		}
 		
-		$this->db->where('field_display', 'y');
 		$this->db->order_by('field_order', 'asc');
 		
 		$query = $this->db->get();

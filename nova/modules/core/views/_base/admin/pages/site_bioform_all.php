@@ -24,7 +24,12 @@
 					
 				<?php foreach ($a['fields'] as $f): ?>
 					<tr>
-						<td class="cell-label"><?php echo $f['field_label'];?></td>
+						<td class="cell-label">
+							<?php echo $f['field_label'];?>
+							<?php if ($f['display'] == 'n'): ?>
+								<?php echo text_output($label['off'], 'div', 'fontSmall red bold');?>
+							<?php endif;?>
+						</td>
 						<td class="cell-spacer"></td>
 						<td><?php echo $f['input'];?></td>
 						<td class="col_75 align_right">

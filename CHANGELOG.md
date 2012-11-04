@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.1.2 (04 November 2012)
+
+### Nova Core
+
+* Update to jQuery 1.8.2.
+* Update to jQuery UI 1.8.24.
+* Update to markItUp! 1.1.13.
+* Update to CodeIgniter 2.1.3.
+* Update Nova to address a security issue.
+
+### Bug Fixes
+
+* Once a bio field is turned off, the only way to turn it back on is by going in to the database and changing the display value. ([#214](https://github.com/anodyne/nova/issues/214))
+* Once a docking field is turned off, the only way to turn it back on is by going in to the database and changing the display value. ([#214](https://github.com/anodyne/nova/issues/214))
+* Any spec form field that is turned off has no indication that it's disabled.
+* Any tour form field that is turned off has no indication that it's disabled.
+
 ## 2.1.1 (12 September 2012)
 
 ### Nova Core

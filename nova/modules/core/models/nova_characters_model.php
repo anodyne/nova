@@ -100,7 +100,7 @@ abstract class Nova_characters_model extends CI_Model {
 		return false;
 	}
 	
-	public function get_bio_fields($section = '', $type = '')
+	public function get_bio_fields($section = '', $type = '', $display = 'y')
 	{
 		$this->db->from('characters_fields');
 		
@@ -114,7 +114,11 @@ abstract class Nova_characters_model extends CI_Model {
 			$this->db->where('field_type', $type);
 		}
 		
-		$this->db->where('field_display', 'y');
+		if ( ! empty($display))
+		{
+			$this->db->where('field_display', $display);
+		}
+		
 		$this->db->order_by('field_order', 'asc');
 		
 		$query = $this->db->get();
