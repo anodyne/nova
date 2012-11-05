@@ -50,6 +50,7 @@
 			</tbody>
 		</table><br />
 	<?php endforeach;?>
+	<?php echo form_open().form_close();?>
 <?php else: ?>
 	<?php echo text_output($label['no_tour'], 'h3', 'orange');?>
 <?php endif; ?>

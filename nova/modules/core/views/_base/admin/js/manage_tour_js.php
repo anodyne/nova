@@ -27,7 +27,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_tour_image') .'/'. $id .'/'. $string;?>",
-				data: { image: image },
+				data: { image: image, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					var content = '<li id="img_' + jq(image) +'"><a href="#" class="image upload-close" remove="' + jq(image) + '">x</a>' + data + '</li>';
 					$(content).hide().appendTo('#list-grid').fadeIn();
@@ -39,6 +39,7 @@
 		
 		$(document).on('click', '#update', function(){
 			var list = $('#list-grid').sortable('serialize');
+			var data = list + '&' + $.param({'nova_csrf_token': $('input[name=nova_csrf_token]').val()});
 			
 			$.ajax({
 				beforeSend: function(){
@@ -46,7 +47,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_tour_images') .'/'. $id .'/'. $string;?>",
-				data: list,
+				data: data,
 				complete: function(){
 					$('#loading_upload_update').hide();
 				}
@@ -62,7 +63,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/del_tour_image') .'/'. $id .'/'. $string;?>",
-				data: { image: image },
+				data: { image: image, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(){
 					$('#list-grid').children().eq(index).fadeOut('slow', function(){
 						$(this).remove();

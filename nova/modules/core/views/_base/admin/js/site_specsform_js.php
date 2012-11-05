@@ -38,6 +38,7 @@
 		$(document).on('click', '#update', function(){
 			var parent = $(this).parent().attr('class');
 			var list = $('#list').sortable('serialize');
+			var data = list + '&' + $.param({'nova_csrf_token': $('input[name=nova_csrf_token]').val()});
 			
 			$.ajax({
 				beforeSend: function(){
@@ -46,7 +47,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_spec_field_value');?>",
-				data: list,
+				data: data,
 				success: function(data){
 					$('.' + parent + ' .flash_message').remove();
 					$('.' + parent).prepend(data);
@@ -67,7 +68,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/del_spec_field_value');?>",
-				data: { field: id },
+				data: { field: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('.' + parent + ' .flash_message').remove();
 					$('.' + parent).prepend(data);
@@ -95,7 +96,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/add_spec_field_value');?>",
-				data: { value: value, content: content, field: field },
+				data: { value: value, content: content, field: field, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#list').append(data);
 				},

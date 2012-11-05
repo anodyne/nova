@@ -101,6 +101,7 @@
 			</div>
 		<?php endforeach;?>
 	</div>
+	<?php echo form_open().form_close();?>
 <?php else: ?>
 	<?php echo text_output($label['nopages'], 'h3', 'orange');?>
 <?php endif;?>

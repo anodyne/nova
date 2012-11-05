@@ -12,7 +12,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/wiki_create_category').'/'.$string;?>",
-				data: { category: $('#category-panel-name').val() },
+				data: { category: $('#category-panel-name').val(), 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					if (data > 0)
 					{

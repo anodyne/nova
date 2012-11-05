@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.3 (05 November 2012)
+
+### Bug Fixes
+
+* Restoring lost functionality on some pages due to the security vulnerability update. ([#215](https://github.com/anodyne/nova/issues/215))
+
 ## 2.1.2 (04 November 2012)
 
 ### Nova Core

@@ -12,10 +12,11 @@
 		{
 			$('.submit-div').show();
 		}
-		
+
 		$(document).on('click', '#update', function(){
 			var parent = $(this).parent().parent().attr('class');
 			var list = $('#list').sortable('serialize');
+			var data = list + '&' + $.param({'nova_csrf_token': $('input[name=nova_csrf_token]').val()});
 			
 			$.ajax({
 				beforeSend: function(){
@@ -24,7 +25,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_coc');?>",
-				data: list,
+				data: data,
 				success: function(data){
 					$('.flash_message').remove();
 					$('.' + parent).prepend(data);
@@ -45,7 +46,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/del_coc');?>",
-				data: { coc: id },
+				data: { coc: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('.flash_message').remove();
 					$('.' + parent).prepend(data);
@@ -79,7 +80,7 @@
 					},
 					type: "POST",
 					url: "<?php echo site_url('ajax/add_coc_entry');?>",
-					data: { user: id },
+					data: { user: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 					success: function(data){
 						var content = '<li class="ui-state-default" id="coc_' + id;
 						content += '"><div class="float_right"><a href="#" class="remove image" name="remove" id="' + id + '">x</a></div>' + user + '</li>';

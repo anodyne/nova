@@ -45,7 +45,7 @@
 		$('select.skins').each(function(){
 			var type = $(this).attr('myType');
 			var selected = $('option:selected', this).val();
-			var send = { section: type, skin: selected };
+			var send = { section: type, skin: selected, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 			
 			$.ajax({
 				type: "POST",
@@ -65,7 +65,7 @@
 		$('select.skins').change(function(){
 			var type = $(this).attr('myType');
 			var selected = $('option:selected', this).val();
-			var send = { section: type, skin: selected };
+			var send = { section: type, skin: selected, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 			
 			$.ajax({
 				type: "POST",
@@ -86,7 +86,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/info_show_rank_preview_img');?>",
-				data: { rank: location },
+				data: { rank: location, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#rank_img').html('');
 					$('#rank_img').append(data);

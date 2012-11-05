@@ -10,7 +10,7 @@
 		$('select.skins').each(function(){
 			var type = $(this).attr('myType');
 			var selected = $('option:selected', this).val();
-			var send = { section: type, skin: selected };
+			var send = { section: type, skin: selected, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 			
 			$.ajax({
 				type: "POST",
@@ -30,7 +30,7 @@
 		$('select.skins').change(function(){
 			var type = $(this).attr('myType');
 			var selected = $('option:selected', this).val();
-			var send = { section: type, skin: selected };
+			var send = { section: type, skin: selected, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 			
 			$.ajax({
 				type: "POST",

@@ -361,3 +361,5 @@
 </div>
 
 <br /> <!-- need this because IE is stupid beyond stupid ... of course it doesn't fix IE7 tho -->
+
+<?php echo form_open().form_close();?>

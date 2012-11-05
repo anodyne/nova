@@ -20,6 +20,7 @@
 		$('#update').click(function(){
 			var parent = $(this).parent().attr('class');
 			var list = $('#list').sortable('serialize');
+			var data = list + '&' + $.param({'nova_csrf_token': $('input[name=nova_csrf_token]').val()});
 			
 			$('#loading').ajaxStart(function(){
 				$(this).show();
@@ -29,7 +30,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_deck');?>",
-				data: list,
+				data: data,
 				success: function(data){
 					$('.' + parent + ' .flash_message').remove();
 					$('.' + parent).prepend(data);
@@ -51,7 +52,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/del_deck');?>",
-				data: { deck: id },
+				data: { deck: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('.' + parent + ' .flash_message').remove();
 					$('.' + parent).prepend(data);
@@ -79,7 +80,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/add_deck');?>",
-				data: { deck: value },
+				data: { deck: value, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#list').append(data).fadeIn('slow');
 				}

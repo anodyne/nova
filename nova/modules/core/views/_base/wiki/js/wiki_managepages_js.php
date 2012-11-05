@@ -110,6 +110,7 @@
 					
 					$.ajax({
 						type: "POST",
+						data: { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 						url: "<?php echo site_url('ajax/wiki_get_page_drafts');?>/" + item + "/<?php echo $string;?>",
 						success: function(data){
 							$('#page-' + item + ' .page-supplemental .page-history .loaded').html(data);
@@ -132,6 +133,7 @@
 					
 					$.ajax({
 						type: "POST",
+						data: { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 						url: "<?php echo site_url('ajax/wiki_get_page_restrictions');?>/" + item + "/<?php echo $string;?>",
 						success: function(data){
 							$('#page-' + item + ' .page-supplemental .page-restrictions .loaded').html(data);
@@ -164,7 +166,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/wiki_set_page_restrictions').'/'.$string;?>",
-				data: { page: item, roles: roles },
+				data: { page: item, roles: roles, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#page-' + item + ' .page-supplemental .page-restrictions .loaded #submit-loading').hide();
 					
