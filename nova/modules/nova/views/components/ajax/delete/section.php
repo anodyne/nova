@@ -1,5 +1,4 @@
 <p><?php echo lang('[[short.delete_confirm|section|{{'.$name.'}}]]');?></p>
-<br>
 
 <form method="post">
 	<?php if (count($sections) > 0): ?>

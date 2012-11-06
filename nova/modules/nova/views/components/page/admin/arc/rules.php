@@ -5,7 +5,6 @@
 		<a href="<?php echo Uri::create('admin/application/rules/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.add rule', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
 	<?php endif;?>
 </div>
-<br>
 
 <?php if (count($rules) > 0): ?>
 	<table class="table table-striped">

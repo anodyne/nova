@@ -1,4 +1,3 @@
-<br>
 <?php echo Form::open('login/reset');?>
 	<div class="control-group">
 		<div class="controls">
@@ -14,8 +13,6 @@
 
 	<div class="control-group">
 		<div class="controls">
-			<br>
-
 			<div class="hidden-phone">
 				<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 				<a href="<?php echo Uri::create('login/index');?>" class="btn"><?php echo lang('short.cancel_password_reset');?></a>

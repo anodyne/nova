@@ -34,11 +34,9 @@ if ( ! function_exists('ruleData'))
 }
 
 ?>
-<br>
 <div class="btn-group">
 	<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to rules', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 </div>
-<br>
 
 <form method="post" action="<?php echo Uri::create('admin/application/rules');?>">
 	<div class="control-group">
@@ -71,7 +69,6 @@ if ( ! function_exists('ruleData'))
 		</div>
 	</div>
 
-	<br>
 	<div class="controls">
 		<?php echo Form::hidden('action', $action);?>
 		<?php echo Form::hidden('id', Uri::segment(4));?>

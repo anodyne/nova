@@ -13,7 +13,6 @@
 <p><?php echo lang('[[short.delete_confirm|rank group|{{'.$name.'}}]]');?></p>
 
 <form method="post">
-	<br>
 	<div class="control-group">
 		<label class="checkbox"><input type="checkbox" name="delete_ranks" id="deleteRanks" value="1" checked="checked"> <?php echo lang('action.delete ranks', 1);?></label>
 	</div>

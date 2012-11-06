@@ -1,5 +1,4 @@
 <p>Nova gives you the ability to upgrade only the items you want. Using the list below, please select which items you want Nova to upgrade.</p>
-<br>
 
 <?php echo Form::open('setup/upgrade/index/3');?>
 	<table class="table table-bordered table-striped">

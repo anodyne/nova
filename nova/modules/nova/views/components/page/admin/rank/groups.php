@@ -1,4 +1,3 @@
-<br>
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/rank/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('ranks index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
@@ -9,7 +8,6 @@
 		<a href="<?php echo Uri::create('admin/rank/manage');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit ranks', 1);?>"><div class="icn icn-75" data-icon="^"></div></a>
 	</div>
 </div>
-<br>
 
 <form method="post">
 	<?php echo Form::hidden('action', 'create');?>

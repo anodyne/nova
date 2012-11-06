@@ -10,7 +10,6 @@
 		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show action.rejected', 1);?>" data-status="rejected"><div class="icn icn-75" data-icon="2"></div></a>
 	</div>
 </div>
-<br>
 
 <?php if ($applications): ?>
 	<table class="table table-striped">

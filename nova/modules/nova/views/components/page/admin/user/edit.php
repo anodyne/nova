@@ -224,7 +224,7 @@
 								</label>
 							</div>
 						</div>
-					</fieldset><br>
+					</fieldset>
 
 					<div class="controls">
 						<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>

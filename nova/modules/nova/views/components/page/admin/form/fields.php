@@ -1,4 +1,3 @@
-<br>
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('all forms', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
@@ -10,7 +9,6 @@
 		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.edit sections', 1);?>"><?php echo $images['sections'];?></a>
 	</div>
 </div>
-<br>
 
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">
@@ -74,7 +72,7 @@
 					<?php else: ?>
 						<p class="alert"><?php echo lang('[[error.not_found|fields]] for this section', 1);?></p>
 					<?php endif;?>
-				</fieldset><br>
+				</fieldset>
 			<?php endforeach;?>
 		<?php else: ?>
 			<p class="alert"><?php echo lang('[[error.not_found|sections]] for this tab', 1);?></p>

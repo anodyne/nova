@@ -13,13 +13,11 @@ function section($obj, $property, $default = false)
 ?>
 
 <?php if (is_numeric(Uri::segment(5))): ?>
-	<br>
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4));?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to sections', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 <?php endif;?>
 
-<br>
 <form method="post" action="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4));?>">
 	<div class="control-group">
 		<label class="control-label"><?php echo lang('name', 1);?></label>
@@ -48,7 +46,6 @@ function section($obj, $property, $default = false)
 	<?php endif;?>
 
 	<div class="controls">
-		<br>
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 	</div>
 

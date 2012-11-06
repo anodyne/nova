@@ -1,4 +1,3 @@
-<br>
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('all forms', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
@@ -10,7 +9,6 @@
 		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.edit fields', 1);?>"><?php echo $images['fields'];?></a>
 	</div>
 </div>
-<br>
 
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">

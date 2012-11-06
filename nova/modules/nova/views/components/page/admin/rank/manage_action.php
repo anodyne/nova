@@ -14,11 +14,9 @@ if ( ! function_exists('rankData'))
 }
 
 if (is_numeric(Uri::segment(4))): ?>
-	<br>
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/rank/manage');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to ranks', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
-	<br>
 <?php endif;?>
 
 <form method="post" action="<?php echo Uri::create('admin/ranks/manage');?>">
@@ -58,7 +56,6 @@ if (is_numeric(Uri::segment(4))): ?>
 			</div>
 		</div>
 	<?php endif;?>
-	<br>
 
 	<?php if (isset($bases) and isset($pips)): ?>
 		<ul class="nav nav-tabs">
@@ -89,7 +86,7 @@ if (is_numeric(Uri::segment(4))): ?>
 		</div>
 	<?php else: ?>
 		<fieldset>
-			<legend><?php echo lang('images', 1);?></legend><br>
+			<legend><?php echo lang('images', 1);?></legend>
 
 			<ul class="thumbnails">
 			<?php foreach($imgs as $base => $image): ?>
@@ -100,7 +97,6 @@ if (is_numeric(Uri::segment(4))): ?>
 			<?php endforeach;?>
 			</ul>
 	<?php endif;?>
-	<br>
 
 	<div class="controls">
 		<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>

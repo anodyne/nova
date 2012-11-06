@@ -1,7 +1,6 @@
 <div class="btn-group">
 	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 </div>
-<br>
 
 <div class="row">
 	<div class="span10">

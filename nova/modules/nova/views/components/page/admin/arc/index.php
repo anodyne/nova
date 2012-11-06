@@ -5,10 +5,9 @@
 	
 	<a href="<?php echo Uri::create('admin/application/history');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.view history', 1);?>"><div class="icn icn-75" data-icon="h"></div></a>
 </div>
-<br>
 
 <?php if ($reviews !== false): ?>
-		<table class="table table-striped">
+	<table class="table table-striped">
 		<tbody>
 		<?php foreach ($reviews as $r): ?>
 			<tr>

@@ -13,13 +13,11 @@ function field($obj, $property, $default = false)
 ?>
 
 <?php if (is_numeric(Uri::segment(5))): ?>
-	<br>
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to fields', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 <?php endif;?>
 
-<br>
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#general" data-toggle="tab"><?php echo lang('general attributes', 2);?></a></li>
 	<li><a href="#html" data-toggle="tab"><?php echo lang('html attributes', 2);?></a></li>
@@ -197,7 +195,6 @@ function field($obj, $property, $default = false)
 	</div>
 
 	<div class="controls">
-		<br>
 		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
 
 		<?php if (Uri::segment(5) == 0): ?>

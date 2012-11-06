@@ -1,4 +1,3 @@
-<br>
 <ul class="thumbnails">
 	<li class="span6">
 		<div class="thumbnail">

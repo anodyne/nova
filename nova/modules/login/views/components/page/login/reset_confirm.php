@@ -1,5 +1,4 @@
 <?php echo Form::open('login/reset_confirm/'.Uri::segment(3).'/'.Uri::segment(4));?>
-	<br>
 	<div class="controls">
 		<div class="hidden-phone">
 			<button class="btn btn-primary"><?php echo lang('action.confirm password action.reset', 2);?></button>

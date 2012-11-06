@@ -10,7 +10,6 @@
 </script>
 
 <form method="post">
-	<br>
 	<div class="control-group">
 		<label class="control-label"><?php echo lang('name', 1);?></label>
 		<div class="controls">

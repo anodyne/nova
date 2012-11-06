@@ -1,4 +1,3 @@
-<br>
 <?php if (count($forms) > 0): ?>
 	<ul class="thumbnails">
 	<?php foreach ($forms as $form): ?>

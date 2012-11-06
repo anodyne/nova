@@ -14,7 +14,7 @@
 			<a href="#" class="btn tooltip-top user-action" data-action="link" title="<?php echo lang('action.link character to user', 1);?>"><div class="icn icn-75" data-icon="-"></div></a>
 		<?php endif;?>
 	</div>
-</div><br>
+</div>
 
 <div id="actives">
 	<table class="table table-striped" id="users-active">
