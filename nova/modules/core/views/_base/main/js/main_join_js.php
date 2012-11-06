@@ -31,7 +31,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/info_show_position_desc');?>",
-				data: { position: id },
+				data: { position: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#position_desc').html('');
 					$('#position_desc').append(data);

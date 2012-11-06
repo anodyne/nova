@@ -35,7 +35,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('upgradeajax/upgrade_final_password');?>",
-				data: { password: password },
+				data: { password: password, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				dataType: 'json',
 				success: function(data){
 					$('.loading-password').addClass('hidden');
@@ -65,7 +65,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('upgradeajax/upgrade_final_roles');?>",
-				data: { roles: roles },
+				data: { roles: roles, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				dataType: 'json',
 				success: function(data){
 					$('.loading-admins').addClass('hidden');

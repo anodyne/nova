@@ -8,7 +8,8 @@
 	function checkLock() {
 		var send = {
 			post: "<?php echo $this->uri->segment(3);?>",
-			content: $('#content-textarea').val()
+			content: $('#content-textarea').val(),
+			'nova_csrf_token': $('input[name=nova_csrf_token]').val()
 		}
 		
 		$.ajax({
@@ -79,7 +80,7 @@
 				$.ajax({
 					type: "POST",
 					url: "<?php echo site_url('ajax/add_mission_action');?>",
-					data: { title: title, desc: desc, option: option }
+					data: { title: title, desc: desc, option: option, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() }
 				});
 			});
 		<?php endif;?>

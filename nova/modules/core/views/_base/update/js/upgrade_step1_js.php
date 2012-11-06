@@ -77,7 +77,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// characters and users
 			if ($('input[name=upgrade_characters_users]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -117,7 +117,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// awards
 			if ($('input[name=upgrade_awards]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -149,7 +149,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// settings and messages
 			if ($('input[name=upgrade_settings]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -189,7 +189,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// personal logs
 			if ($('input[name=upgrade_logs]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -229,7 +229,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// news categories and items
 			if ($('input[name=upgrade_news]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -269,7 +269,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// missions and mission posts
 			if ($('input[name=upgrade_missions]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -309,7 +309,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// database entries
 			if ($('input[name=upgrade_database]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -349,7 +349,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// specs
 			if ($('input[name=upgrade_specs]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){
@@ -389,7 +389,7 @@ $tourhash = md5(implode('', array_keys($tourarray))); // 781e5e245d69b566979b86e
 			// tour items
 			if ($('input[name=upgrade_tour]:checked').val() == 1)
 			{
-				var send;
+				var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 				
 				$.ajaxq('queue', {
 					beforeSend: function(){

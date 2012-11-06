@@ -47,4 +47,6 @@
 		<br />
 		<?php echo form_button($buttons['submit']);?>
 	</div>
+
+	<?php echo form_open().form_close();?>
 <?php endif;?>

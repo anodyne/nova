@@ -13,7 +13,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/info_show_position_desc');?>",
-				data: { position: id },
+				data: { position: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#position1_desc').html('');
 					$('#position1_desc').append(data);
@@ -35,7 +35,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/info_show_position_desc');?>",
-				data: { position: id },
+				data: { position: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#position2_desc').html('');
 					$('#position2_desc').append(data);
@@ -52,7 +52,8 @@
 			var id = $('#rank option:selected').val();
 			var send = {
 				rank: id,
-				location: '<?php echo $rankloc;?>'
+				location: '<?php echo $rankloc;?>',
+				'nova_csrf_token': $('input[name=nova_csrf_token]').val()
 			};
 			
 			$.ajax({

@@ -46,7 +46,7 @@ if ($password_reset == 1)
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/save_ignore_update_version');?>",
-				data: { version: myVersion },
+				data: { version: myVersion, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('#update').fadeOut('normal', function(){
 						$('#update').remove();

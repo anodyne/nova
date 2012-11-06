@@ -17,7 +17,7 @@
 				},
 				type: "POST",
 				url: "<?php echo site_url('ajax/info_show_award_desc');?>",
-				data: { award: id },
+				data: { award: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(data){
 					$('.award-desc').html('');
 					$('.award-desc').append(data);
@@ -36,7 +36,7 @@
 			$.ajax({
 				type: "POST",
 				url: "<?php echo site_url('ajax/del_character_award');?>",
-				data: { award: id },
+				data: { award: id, 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				success: function(){
 					$('tr#' + id).fadeOut('normal', function(){
 						$(this).remove();

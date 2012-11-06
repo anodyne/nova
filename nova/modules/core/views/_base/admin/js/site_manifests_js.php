@@ -23,7 +23,8 @@
 			drop: function(event, ui){
 				var send = {
 					manifest: $(this).attr('mid'),
-					dept: ui.draggable.attr('did')
+					dept: ui.draggable.attr('did'),
+					'nova_csrf_token': $('input[name=nova_csrf_token]').val()
 				}
 				
 				$.ajax({

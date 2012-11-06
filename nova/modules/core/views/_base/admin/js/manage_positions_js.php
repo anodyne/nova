@@ -84,7 +84,8 @@
 				'desc': $('#' + id + '_desc').val(),
 				'display': $('#' + id + '_display').val(),
 				'dept': $('#' + id + '_dept').val(),
-				'type': $('#' + id + '_type').val()
+				'type': $('#' + id + '_type').val(),
+				'nova_csrf_token': $('input[name=nova_csrf_token]').val()
 			}
 			
 			$.ajax({

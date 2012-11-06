@@ -23,6 +23,7 @@
 		$('#mark_read').click(function(){
 			$.ajax({
 				type: "POST",
+				data: { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() },
 				url: "<?php echo site_url('ajax/update_mark_messages_as_read');?>/" + $(this).data('user') + "/<?php echo $string;?>",
 				success: function(data){
 					window.location.reload(true);

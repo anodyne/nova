@@ -19,7 +19,7 @@
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$(document).on('click', '#start', function(){
-			var send;
+			var send = { 'nova_csrf_token': $('input[name=nova_csrf_token]').val() };
 			
 			var twipsyOptions = {
 				placement: 'right',
