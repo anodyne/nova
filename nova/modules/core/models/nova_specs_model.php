@@ -17,8 +17,25 @@ abstract class Nova_specs_model extends CI_Model {
 		$this->load->dbutil();
 	}
 	
-	public function get_field_data($id = 0, $field = '')
+	/**
+	 * Get spec field data.
+	 *
+	 * @since	2.1.4
+	 * @param	int		The spec ID
+	 * @param	mixed	The field ID or field_name field
+	 * @param	bool	Whether to return only the value or the entire object
+	 * @return	mixed
+	 */
+	public function get_field_data($id = 0, $field = '', $value_only = false)
 	{
+		if ( ! is_numeric($field))
+		{
+			$q = $this->db->get_where('specs_fields', array('field_name' => $field));
+			$r = ($q->num_rows() > 0) ? $q->row() : false;
+
+			$field = ($r !== false) ? $r->field_id : false;
+		}
+
 		$this->db->from('specs_data');
 		$this->db->where('data_item', $id);
 		$this->db->where('data_field', $field);
@@ -27,7 +44,14 @@ abstract class Nova_specs_model extends CI_Model {
 		
 		if ($query->num_rows() > 0)
 		{
-			return $query->row();
+			$row = $query->row();
+
+			if ($value_only)
+			{
+				return $row->data_value;
+			}
+
+			return $row;
 		}
 		
 		return false;
