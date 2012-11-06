@@ -45,8 +45,25 @@ abstract class Nova_docking_model extends CI_Model {
 		return $query;
 	}
 	
-	public function get_docking_data($item = '', $field = '')
+	/**
+	 * Get the docking data.
+	 *
+	 * @since	2.1.4
+	 * @param	int		The docking item
+	 * @param	mixed	The field ID or field_name field
+	 * @param	bool	Whether to pull back only the value or the entire object
+	 * @return	mixed
+	 */
+	public function get_docking_data($item = '', $field = '', $value_only = false)
 	{
+		if ( ! is_numeric($field))
+		{
+			$q = $this->db->get_where('docking_fields', array('field_name' => $field));
+			$r = ($q->num_rows() > 0) ? $q->row() : false;
+
+			$field = ($r !== false) ? $r->field_id : false;
+		}
+
 		$this->db->from('docking_data');
 		$this->db->where('data_docking_item', $item);
 		$this->db->where('data_field', $field);
@@ -55,7 +72,14 @@ abstract class Nova_docking_model extends CI_Model {
 		
 		if ($query->num_rows() > 0)
 		{
-			return $query->row();
+			$row = $query->row();
+
+			if ($value_only)
+			{
+				return $row->data_value;
+			}
+
+			return $row;
 		}
 		
 		return false;
