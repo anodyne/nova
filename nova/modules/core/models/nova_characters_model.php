@@ -341,13 +341,38 @@ abstract class Nova_characters_model extends CI_Model {
 		return $query;
 	}
 	
-	public function get_field_data($field = '', $character = '')
+	/**
+	 * Get the field data.
+	 *
+	 * @since	2.1.4
+	 * @param	mixed	The field ID or the field_name
+	 * @param	int		The character ID
+	 * @param	bool	Whether to return just the value or the whole query object
+	 * @return	mixed
+	 */
+	public function get_field_data($field = '', $character = '', $value_only = false)
 	{
+		if ( ! is_numeric($field))
+		{
+			$q = $this->db->get_where('characters_fields', array('field_name' => $field));
+			$r = ($q->num_rows() > 0) ? $q->row() : false;
+
+			$field = ($r !== false) ? $r->field_id : false;
+		}
+
 		$this->db->from('characters_data');
 		$this->db->where('data_char', $character);
 		$this->db->where('data_field', $field);
 		
 		$query = $this->db->get();
+
+		if ($value_only)
+		{
+			$row = ($query->num_rows() > 0) ? $query->row() : false;
+			$retval = ($row !== false) ? $row->data_value : false;
+
+			return $retval;
+		}
 		
 		return $query;
 	}
