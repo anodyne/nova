@@ -149,14 +149,7 @@ class Nav
 			// get the sub nav items under this section
 			$sub = ($type == 'sub' or $type == 'adminsub') ? \Model_Nav::getItems($type, $item->category) : false;
 
-			if ($cat == 'items')
-			{
-				$retval[$type][$cat][$item->category][$item->id] = $item;
-			}
-			else
-			{
-				$retval[$type][$cat][$item->id] = $item;
-			}
+			$retval[$type][$cat][$item->id] = $item;
 
 			if (($item->needs_login == 'y' and ! \Sentry::check()) or ($item->needs_login == 'n' and \Sentry::check()))
 			{
@@ -216,7 +209,7 @@ class Nav
 	{
 		// Start to build the output
 		$output = \View::forge(\Location::file('nav/user', \Utility::getSkin($this->section), 'partial'));
-		
+
 		if (\Sentry::check())
 		{
 			// Get the user
@@ -247,7 +240,7 @@ class Nav
 				: false;
 
 			// Build the list of items that should be in the user nav
-			$userNav = array(
+			$this->userData = array(
 				0 => array(
 					array(
 						'name' => ucwords(__('cp')),
@@ -315,7 +308,8 @@ class Nav
 		else
 		{
 			// Set the data for the output
-			$output->set('loggedIn', false);
+			$output->set('loggedIn', false)
+			 ->set('loginText', lang('action.login', 2));
 		}
 
 		// Set the output render to the class variable

@@ -35,6 +35,9 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		$this->rank			= $this->session->get('rank', $this->settings->rank);
 		$this->timezone		= $this->session->get('timezone', $this->settings->timezone);
 		$this->images		= \Utility::getImageIndex($this->skin);
+
+		// Get the skin section info
+		$this->_section_info = \Model_Catalog_SkinSec::getItem($this->skin, 'skin');
 		
 		// Set the values to be passed to the structure
 		$vars = array(
@@ -52,8 +55,8 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= \View::forge(\Location::file('admin', $this->skin, 'template'), $vars);
-		$this->template->layout->navmain 			= \Nav::display('dropdown', 'admin', false);
-		$this->template->layout->navuser 			= \Nav::display('user', false, false);
+		//$this->template->layout->navmain 			= \Nav::display('dropdown', 'admin', false);
+		//$this->template->layout->navuser 			= \Nav::display('user', false, false);
 		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;
@@ -68,5 +71,19 @@ abstract class Controller_Base_Admin extends Controller_Base_Core
 		
 		$this->template->layout->footer				= \View::forge(\Location::file('footer', $this->skin, 'partial'));
 		$this->template->layout->footer->extra 		= \Model_SiteContent::getContent('footer');
+
+		if ($this->_section_info->nav == 'dropdown')
+		{
+			//$this->template->layout->navmain 		= \Nav::display('dropdown', 'main', 'main');
+			$this->nav->setStyle($this->_section_info->nav)
+				->setSection('admin')
+				->setCategory('admin')
+				->setType('admin');
+			$this->template->layout->navmain = $this->nav->build();
+		}
+		else
+		{
+			$this->template->layout->navmain		= \Nav::display('classic', 'main', 'main');
+		}
 	}
 }

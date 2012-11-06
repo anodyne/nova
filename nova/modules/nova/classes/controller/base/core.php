@@ -140,9 +140,6 @@ abstract class Controller_Base_Core extends \Controller_Template
 		// Set the genre
 		$this->genre = \Config::get('nova.genre');
 
-		// Create a new Nav
-		$this->nav = new \Nav;
-
 		// Load all of the settings
 		$this->settings = \Model_Settings::getItems(false);
 
@@ -161,6 +158,9 @@ abstract class Controller_Base_Core extends \Controller_Template
 		\Lang::load('nova::action', 'action');
 		\Lang::load('nova::short', 'short');
 		\Lang::load('nova::sitecontent', 'sitecontent');
+
+		// Create a new Nav
+		$this->nav = new \Nav;
 		
 		// Set up the controller name without the Controller_ prefix
 		$controllerName = strtolower(str_replace('Controller_', '', $this->request->controller));

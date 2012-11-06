@@ -13,13 +13,13 @@
 				<?php echo $userMenu;?>
 
 				<ul class="nav">
-				<?php foreach ($items[$section]['items'][$category] as $item): ?>
-					<?php if (is_array($items[$section][$category])): ?>
+				<?php foreach ($items[$section]['items'] as $item): ?>
+					<?php if (isset($items[$section][$item->category]) and is_array($items[$section][$item->category])): ?>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $item->name;?> <b class="caret"></b></a>
 
 							<ul class="dropdown-menu">
-							<?php foreach ($items[$section][$category] as $i): ?>
+							<?php foreach ($items[$section][$item->category] as $i): ?>
 								<?php if ($i->order == 0 and $i->group != 0): ?>
 									<li class="divider"></li>
 								<?php endif;?>

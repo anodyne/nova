@@ -18,6 +18,6 @@
 			</ul>
 		</li>
 	<?php else: ?>
-		<li><a href="<?php echo Uri::create('login/index');?>"><?php echo lang('action.login', 2);?></a></li>
+		<li><a href="<?php echo Uri::create('login/index');?>"><?php echo $loginText;?></a></li>
 	<?php endif;?>
 </ul>
