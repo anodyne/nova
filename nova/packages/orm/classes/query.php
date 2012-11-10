@@ -85,9 +85,19 @@ class Query
 	protected $order_by = array();
 
 	/**
+	 * @var  array  group by clauses
+	 */
+	protected $group_by = array();
+
+	/**
 	 * @var  array  values for insert or update
 	 */
 	protected $values = array();
+
+	/**
+	 * @var  array  select filters
+	 */
+	protected $select_filter = array();
 
 	protected function __construct($model, $connection, $options, $table_alias = null)
 	{
@@ -154,7 +164,7 @@ class Query
 				}
 				foreach ($fields as $field)
 				{
-					$this->select($field);
+					in_array($field, $this->select_filter) or $this->select($field);
 				}
 
 				if ($this->view)
@@ -195,7 +205,19 @@ class Query
 		$i = count($this->select);
 		foreach ($fields as $val)
 		{
-			$this->select[$this->alias.'_c'.$i++] = (strpos($val, '.') === false ? $this->alias.'.' : '').$val;
+			is_array($val) or $val = array($val => true);
+
+			foreach ($val as $field => $include)
+			{
+				if ($include)
+				{
+					$this->select[$this->alias.'_c'.$i++] = (strpos($field, '.') === false ? $this->alias.'.' : '').$field;
+				}
+				else
+				{
+					$this->select_filter[] = $field;
+				}
+			}
 		}
 
 		return $this;
@@ -217,6 +239,22 @@ class Query
 
 		$this->view = $views[$view];
 		$this->view['_name'] = $view;
+		return $this;
+	}
+
+	/**
+	 * Creates a "GROUP BY ..." filter.
+	 *
+	 * @param   mixed   column name or array($column, $alias) or object
+	 * @param   ...
+	 * @return  $this
+	 */
+	public function group_by($columns)
+	{
+		$columns = func_get_args();
+
+		$this->group_by = array_merge($this->group_by, $columns);
+
 		return $this;
 	}
 
@@ -598,26 +636,8 @@ class Query
 			$query->offset($this->offset);
 		}
 
-		// Get the order
-		$order_by = $this->order_by;
-
-		// create a backup for subquery
-		$order_by_backup = $order_by;
-		if ( ! empty($order_by))
-		{
-			foreach ($order_by as $key => $ob)
-			{
-				if ( ! $ob[0] instanceof \Fuel\Core\Database_Expression and strpos($ob[0], $this->alias.'.') === 0)
-				{
-					$query->order_by($type == 'select' ? $ob[0] : substr($ob[0], strlen($this->alias.'.')), $ob[1]);
-
-					// order by has been updated to Database_Query_Builder_Where instance, set it to empty to avoid duplicate entries
-					unset($order_by[$key]);
-				}
-			}
-		}
-
-
+		$where_conditions = call_user_func($this->model.'::condition', 'where');
+		empty($where_conditions) or $this->where($where_conditions);
 
 		$where_backup = $this->where;
 		if ( ! empty($this->where))
@@ -691,9 +711,6 @@ class Query
 			// make current query subquery of ultimate query
 			$new_query = call_user_func_array('DB::select', $columns);
 			$query = $new_query->from(array($query, $this->alias));
-
-			// set order_by from backup
-			$order_by = $order_by_backup;
 		}
 		else
 		{
@@ -730,6 +747,10 @@ class Query
 			}
 		}
 
+		// Get the order, if none set see if we have an order_by condition set
+		empty($this->order_by) and $this->order_by(call_user_func($this->model.'::condition', 'order_by'));
+		$order_by = $order_by_backup = $this->order_by;
+
 		// Add any additional order_by and where clauses from the relations
 		foreach ($models as $m_name => $m)
 		{
@@ -760,6 +781,7 @@ class Query
 				$this->_parse_where_array($m['where'], $m_name.'.');
 			}
 		}
+
 		// Get the order
 		if ( ! empty($order_by))
 		{
@@ -767,17 +789,30 @@ class Query
 			{
 				if ( ! $ob[0] instanceof \Fuel\Core\Database_Expression)
 				{
-					// try to rewrite conditions on the relations to their table alias
-					$dotpos = strrpos($ob[0], '.');
-					$relation = substr($ob[0], 0, $dotpos);
-					if ($dotpos > 0 and array_key_exists($relation, $models))
+					if (strpos($ob[0], $this->alias.'.') === 0)
 					{
-						$ob[0] = $models[$relation]['table'][1].substr($ob[0], $dotpos);
+						// order by on the current model
+						$type == 'select' or $ob[0] = substr($ob[0], strlen($this->alias.'.'));
+					}
+					else
+					{
+						// try to rewrite conditions on the relations to their table alias
+						$dotpos = strrpos($ob[0], '.');
+						$relation = substr($ob[0], 0, $dotpos);
+						if ($dotpos > 0 and array_key_exists($relation, $models))
+						{
+							$ob[0] = $models[$relation]['table'][1].substr($ob[0], $dotpos);
+						}
 					}
 				}
-
 				$query->order_by($ob[0], $ob[1]);
 			}
+		}
+
+		// Get the grouping
+		if ( ! empty($this->group_by))
+		{
+			call_user_func_array(array($query, 'group_by'), $this->group_by);
 		}
 
 		// put omitted where conditions back
@@ -803,6 +838,7 @@ class Query
 		}
 
 		$this->where = $where_backup;
+		$this->order_by = $order_by_backup;
 
 		// Set the row limit and offset, these are applied to the outer query when a subquery
 		// is used or overwrite limit/offset when it's a normal query
@@ -873,6 +909,18 @@ class Query
 				unset($row[$s[1]]);
 			}
 			$obj = $model::forge($obj, false, $this->view ? $this->view['_name'] : null);
+		}
+		else
+		{
+			// add fields not present in the already cached version
+			foreach ($select as $s)
+			{
+				$f = substr($s[0], strpos($s[0], '.') + 1);
+				if ($obj->{$f} === null and $row[$s[1]] !== null)
+				{
+					$obj->{$f} = $row[$s[1]];
+				}
+			}
 		}
 
 		// if the result to be generated is an array and the current object is not yet in there
@@ -1022,15 +1070,28 @@ class Query
 	 */
 	public function get_one()
 	{
-		// get current limit and save it while fetching the first result
+		// save the current limits
 		$limit = $this->limit;
-		$this->limit = 1;
+		$rows_limit = $this->rows_limit;
+
+		// if a row limit is set, use that
+		if ($this->rows_limit !== null)
+		{
+			$this->limit = null;
+			$this->rows_limit = 1;
+		}
+		else
+		{
+			$this->limit = 1;
+			$this->rows_limit = null;
+		}
 
 		// get the result using normal find
 		$result = $this->get();
 
-		// put back the old limit
+		// put back the old limits
 		$this->limit = $limit;
+		$this->rows_limit = $rows_limit;
 
 		return $result ? reset($result) : null;
 	}
