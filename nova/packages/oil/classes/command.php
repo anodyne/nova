@@ -32,7 +32,7 @@ class Command
 			{
 				if (\Cli::option('v', \Cli::option('version')))
 				{
-					\Cli::write('Fuel: '.\Fuel::VERSION);
+					\Cli::write('Fuel: '.\Fuel::VERSION.' running in "'.\Fuel::$env.'" mode');
 					return;
 				}
 
@@ -59,6 +59,7 @@ class Command
 						case 'controller':
 						case 'model':
 						case 'migration':
+						case 'task':
 							call_user_func('Oil\Generate::'.$action, array_slice($args, 3));
 						break;
 
@@ -174,8 +175,9 @@ class Command
 					// CD to the root of Fuel and call up phpunit with the path to our config
 					$command = 'cd '.DOCROOT.'; phpunit -c "'.$phpunit_config.'"';
 
-					// Respect the group option
+					// Respect the group options
 					\Cli::option('group') and $command .= ' --group '.\Cli::option('group');
+					\Cli::option('exclude-group') and $command .= ' --exclude-group '.\Cli::option('exclude-group');
 
 					// Respect the coverage-html option
 					\Cli::option('coverage-html') and $command .= ' --coverage-html '.\Cli::option('coverage-html');
