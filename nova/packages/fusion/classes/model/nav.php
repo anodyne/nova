@@ -76,7 +76,7 @@ class Model_Nav extends \Model
 	 */
 	public static function getItems($type, $category, $active = \Status::ACTIVE)
 	{
-		$query = static::find();
+		$query = static::query();
 
 		if ( ! empty($type))
 		{

@@ -119,7 +119,7 @@ class Model_Application extends \Model
 	 */
 	public function getComments()
 	{
-		return \Model_Application_Response::find()
+		return \Model_Application_Response::query()
 			->where('app_id', $this->id)
 			->where('type', \Model_Application_Response::COMMENT)
 			->order_by('created_at', 'desc')
@@ -156,7 +156,7 @@ class Model_Application extends \Model
 	 */
 	public static function getItems($only_active = true)
 	{
-		$query = static::find();
+		$query = static::query();
 
 		if ($only_active)
 		{
@@ -175,7 +175,7 @@ class Model_Application extends \Model
 	 */
 	public function getVotes($response = false)
 	{
-		$items = \Model_Application_Response::find()
+		$items = \Model_Application_Response::query()
 			->where('app_id', $this->id)
 			->where('type', \Model_Application_Response::VOTE)
 			->order_by('created_at', 'desc');
@@ -239,7 +239,7 @@ class Model_Application extends \Model
 		$data = ( ! is_array($data)) ? array($data) : $data;
 
 		// get the reviewers for this application
-		$reviewers = \Model_Application_Reviewer::find()->where('app_id', $this->id)->get();
+		$reviewers = \Model_Application_Reviewer::query()->where('app_id', $this->id)->get();
 
 		// loop through the reviewers and remove them
 		foreach ($reviewers as $r)

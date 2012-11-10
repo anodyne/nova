@@ -57,6 +57,6 @@ class Model_Catalog_Module extends \Model
 	 */
 	public static function getItems($status = \Status::ACTIVE)
 	{
-		return static::find()->where('status', $status)->get();
+		return static::query()->where('status', $status)->get();
 	}
 }

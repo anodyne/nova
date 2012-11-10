@@ -107,7 +107,7 @@ class Model_User_Preferences extends \Model
 	public static function updateUserPreferences($id, array $data)
 	{
 		// load the items
-		$items = static::find()->where('user_id', $id)->get();
+		$items = static::query()->where('user_id', $id)->get();
 
 		// set the count to 0
 		$count = 0;

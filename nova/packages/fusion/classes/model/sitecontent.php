@@ -58,7 +58,7 @@ class Model_SiteContent extends \Model
 	 */
 	public static function getContent($key, $value_only = true)
 	{
-		$query = static::find()->where('key', $key)->get_one();
+		$query = static::query()->where('key', $key)->get_one();
 		
 		if ($value_only === true)
 		{
@@ -86,7 +86,7 @@ class Model_SiteContent extends \Model
 		}
 		catch (\CacheNotFoundException $e)
 		{
-			$query = static::find()
+			$query = static::query()
 				->where('type', $type)
 				->where('section', $section)
 				->get();
@@ -144,7 +144,7 @@ class Model_SiteContent extends \Model
 	{
 		foreach ($data as $key => $value)
 		{
-			$record = static::find()->where('key', $key)->get_one();
+			$record = static::query()->where('key', $key)->get_one();
 			
 			// track what we need to clear and re-cache
 			$clear[$record->section][] = $record->type;

@@ -49,7 +49,7 @@ class Model_User_Suspend extends \Model
 	public static function clearItem(array $conditions)
 	{
 		// start the find process
-		$items = static::find();
+		$items = static::query();
 
 		// loop through all the conditions and build the find
 		foreach ($conditions as $col => $val)

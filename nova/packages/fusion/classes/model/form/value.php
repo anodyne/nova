@@ -55,6 +55,6 @@ class Model_Form_Value extends \Model
 	 */
 	public static function getItems($field)
 	{
-		return static::find()->where('field_id', $field)->order_by('order', 'asc')->get();
+		return static::query()->where('field_id', $field)->order_by('order', 'asc')->get();
 	}
 }

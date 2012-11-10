@@ -43,7 +43,7 @@ class Model_Form extends \Model
 	 */
 	public static function getForm($key)
 	{
-		return static::find()->where('key', $key)->get_one();
+		return static::query()->where('key', $key)->get_one();
 	}
 
 	/**

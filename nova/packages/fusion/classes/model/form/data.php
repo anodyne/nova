@@ -91,7 +91,7 @@ class Model_Form_Data extends \Model
 			break;
 		}
 		
-		return static::find()->where($field_column, $id)->get();
+		return static::query()->where($field_column, $id)->get();
 	}
 	
 	/**
@@ -148,7 +148,7 @@ class Model_Form_Data extends \Model
 		foreach ($data as $key => $value)
 		{
 			// get the record
-			$record = static::find()->where('field_id', $key)->where($field, $id)->get_one();
+			$record = static::query()->where('field_id', $key)->where($field, $id)->get_one();
 			
 			// update the values
 			$record->value = \Security::xss_clean($value);

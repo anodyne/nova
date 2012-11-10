@@ -129,7 +129,7 @@ class Model_Form_Field extends \Model
 	 */
 	public static function getItems($key, $section = null, $active = true)
 	{
-		$items = static::find();
+		$items = static::query();
 		$items->where('form_key', $key);
 
 		if ($section !== null)

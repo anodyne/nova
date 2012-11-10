@@ -63,7 +63,7 @@ class Model_Access_Task extends \Model
 		// break the task up into its components
 		list($component, $action, $level) = $taskArray;
 
-		return static::find()
+		return static::query()
 			->where('component', $component)
 			->where('action', $action)
 			->where('level', $level)

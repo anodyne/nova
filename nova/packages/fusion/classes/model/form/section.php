@@ -89,7 +89,7 @@ class Model_Form_Section extends \Model
 	 */
 	public static function getItems($key)
 	{
-		$items = static::find()->where('form_key', $key)->order_by('name', 'asc')->get();
+		$items = static::query()->where('form_key', $key)->order_by('name', 'asc')->get();
 
 		$sections = array();
 

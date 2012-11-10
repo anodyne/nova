@@ -56,7 +56,7 @@ class Model_Catalog_Widget extends \Model
 	{
 		$status_where = ( ! empty($status)) ? array('status', $status) : array();
 		
-		$result = static::find()
+		$result = static::query()
 			->where($status_where)
 			->get();
 			

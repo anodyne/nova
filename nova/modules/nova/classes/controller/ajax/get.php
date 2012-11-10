@@ -34,8 +34,8 @@ class Controller_Ajax_Get extends Controller_Base_Ajax
 			$value = $v;
 		}
 
-		// find the user
-		$user = \Model_User::find()->where($field, $value)->get_one();
+		// Find the user
+		$user = \Model_User::query()->where($field, $value)->get_one();
 
 		if ($user)
 		{

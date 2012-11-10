@@ -68,7 +68,7 @@ class Model_Catalog_SkinSec extends \Model
 	 */
 	public static function getDefault($section, $value_only = false)
 	{
-		$result = static::find()
+		$result = static::query()
 			->where(array('default', 1))
 			->where(array('section', $section))
 			->get_one();

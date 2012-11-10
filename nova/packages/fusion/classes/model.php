@@ -91,7 +91,7 @@ class Model extends \Orm\Model
 		if (is_array($value))
 		{
 			// start the find
-			$record = static::find();
+			$record = static::query();
 			
 			// loop through the arguments and build the where clause
 			foreach ($value as $col => $val)
@@ -111,10 +111,10 @@ class Model extends \Orm\Model
 			{
 				if ( ! $search)
 				{
-					return static::find()->where($column, $value)->get_one();
+					return static::query()->where($column, $value)->get_one();
 				}
 
-				return static::find()->where($column, 'like', $value)->get();
+				return static::query()->where($column, 'like', $value)->get();
 			}
 		}
 		
@@ -132,7 +132,7 @@ class Model extends \Orm\Model
 	public static function getFormItems($key, $only_active = false)
 	{
 		// get the object
-		$items = static::find();
+		$items = static::query();
 
 		// make sure we're pulling back the right form
 		$items->where('form_key', $key);
@@ -233,7 +233,7 @@ class Model extends \Orm\Model
 		if (is_array($args))
 		{
 			// start the find
-			$item = static::find();
+			$item = static::query();
 
 			// loop through the arguments to build the where
 			foreach ($args as $column => $value)

@@ -80,7 +80,7 @@ class Model_Catalog_Rank extends \Model
 	 */
 	public static function getItems($status = \Status::ACTIVE, $limit_to_genre = true)
 	{
-		$result = static::find();
+		$result = static::query();
 
 		if ($limit_to_genre)
 		{
@@ -104,7 +104,7 @@ class Model_Catalog_Rank extends \Model
 	 */
 	public static function getDefault($value_only = false)
 	{
-		$result = static::find()->where('default', 1)->get_one();
+		$result = static::query()->where('default', 1)->get_one();
 		
 		if ($value_only)
 		{

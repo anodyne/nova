@@ -82,7 +82,7 @@ class Model_Settings extends \Model
 			}
 			else
 			{
-				$query = static::find()->where('key', $keys)->get_one();
+				$query = static::query()->where('key', $keys)->get_one();
 				
 				if ($value_only === true)
 				{
@@ -109,7 +109,7 @@ class Model_Settings extends \Model
 	{
 		foreach ($data as $key => $value)
 		{
-			$record = static::find()->where('key', $key)->get_one();
+			$record = static::query()->where('key', $key)->get_one();
 
 			if ($record)
 			{

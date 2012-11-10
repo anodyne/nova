@@ -86,7 +86,7 @@ class Sentry_Attempts
 			}
 		}
 
-		$query = \Model_User_Suspend::find();
+		$query = \Model_User_Suspend::query();
 
 		if ($this->login_id)
 		{
@@ -245,7 +245,7 @@ class Sentry_Attempts
 		}
 		
 		// find the record
-		$record = \Model_User_Suspend::find()
+		$record = \Model_User_Suspend::query()
 			->where('login_id', $this->login_id)
 			->where('ip', $this->ip_address)
 			->where('unsuspend_at', null)

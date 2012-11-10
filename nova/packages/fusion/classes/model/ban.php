@@ -60,6 +60,6 @@ class Model_Ban extends \Model
 	 */
 	public static function getItems($value, $column = 'email')
 	{
-		return static::find()->where($column, $value)->get();
+		return static::query()->where($column, $value)->get();
 	}
 }

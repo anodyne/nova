@@ -708,7 +708,7 @@ class Sentry
 		$direct = $task->roles;
 
 		// get any role that INDIRECTLY has this task
-		$indirect = \Model_Access_Role::find()
+		$indirect = \Model_Access_Role::query()
 			->or_where('inherits', 'LIKE', "%,$task->id,%")
 			->or_where('inherits', 'LIKE', "$task->id,%")
 			->or_where('inherits', 'LIKE', "%,$task->id")

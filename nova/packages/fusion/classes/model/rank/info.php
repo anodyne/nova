@@ -88,7 +88,7 @@ class Model_Rank_Info extends \Model
 	public static function getItems($only_active = false)
 	{
 		// start the find
-		$query = static::find();
+		$query = static::query();
 
 		// add a where statement only if we want just displayed items
 		if ($only_active)

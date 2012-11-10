@@ -45,7 +45,7 @@ class Model_Character_Positions extends \Model
 		if (is_array($value))
 		{
 			// start the find
-			$query = static::find();
+			$query = static::query();
 
 			// loop through the array of values and build the WHERE
 			foreach ($value as $col => $val)
@@ -56,6 +56,6 @@ class Model_Character_Positions extends \Model
 			return $query->get();
 		}
 
-		return static::find()->where($column, $value)->get();
+		return static::query()->where($column, $value)->get();
 	}
 }
