@@ -108,8 +108,7 @@ class View
 			throw new \InvalidArgumentException('The data parameter only accepts objects and arrays.');
 		}
 
-		// @TODO in v1.2 remove the auto_encode_view_data reference.
-		$this->auto_filter = is_null($filter) ? \Config::get('security.auto_filter_output', \Config::get('security.auto_encode_view_data', true)) : $filter;
+		$this->auto_filter = is_null($filter) ? \Config::get('security.auto_filter_output', true) : $filter;
 
 		if ($file !== null)
 		{
@@ -393,6 +392,8 @@ class View
 	 *
 	 *     $value = $view->get('foo', 'bar');
 	 *
+	 * If the key is not given or null, the entire data array is returned.
+	 *
 	 * If a default parameter is not given and the variable does not
 	 * exist, it will throw an OutOfBoundsException.
 	 *
@@ -401,9 +402,13 @@ class View
 	 * @return  mixed
 	 * @throws  OutOfBoundsException
 	 */
-	public function &get($key, $default = null)
+	public function &get($key = null, $default = null)
 	{
-		if (array_key_exists($key, $this->data))
+		if (func_num_args() === 0 or $key === null)
+		{
+			return $this->data;
+		}
+		elseif (array_key_exists($key, $this->data))
 		{
 			return $this->data[$key];
 		}

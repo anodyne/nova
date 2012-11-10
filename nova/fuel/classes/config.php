@@ -41,6 +41,7 @@ class Config
 	 *
 	 * @param    mixed    $file         string file | config array | Config_Interface instance
 	 * @param    mixed    $group        null for no group, true for group is filename, false for not storing in the master config
+	 * @param    bool     $reload       true to force a reload even if the file is already loaded
 	 * @param    bool     $overwrite    true for array_merge, false for \Arr::merge
 	 * @return   array                  the (loaded) config array
 	 */
@@ -51,11 +52,11 @@ class Config
 		     ! is_object($file) and
 		    array_key_exists($file, static::$loaded_files))
 		{
+			$group === true and $group = $file;
 			if ($group === null or $group === false or ! isset(static::$items[$group]))
 			{
 				return false;
 			}
-			$group === true and $group = $file;
 			return static::$items[$group];
 		}
 
@@ -94,7 +95,7 @@ class Config
 		{
 			try
 			{
-				$config = $file->load($overwrite);
+				$config = $file->load($overwrite, ! $reload);
 			}
 			catch (\ConfigException $e)
 			{

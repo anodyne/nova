@@ -128,6 +128,11 @@ class Fieldset
 	protected $config = array();
 
 	/**
+	 * @var  array  disabled fields array
+	 */
+	protected $disabled = array();
+
+	/**
 	 * Object constructor
 	 *
 	 * @param  string
@@ -434,7 +439,14 @@ class Fieldset
 		$config = is_array($config) ? $config : array($config => $value);
 		foreach ($config as $key => $value)
 		{
-			$this->config[$key] = $value;
+			if (strpos($key, '.') === false)
+			{
+				$this->config[$key] = $value;
+			}
+			else
+			{
+				\Arr::set($this->config, $key, $value);
+			}
 		}
 
 		return $this;
@@ -459,12 +471,19 @@ class Fieldset
 			$output = array();
 			foreach ($key as $k)
 			{
-				$output[$k] = array_key_exists($k, $this->config) ? $this->config[$k] : $default;
+				$output[$k] = $this->get_config($k, $default);
 			}
 			return $output;
 		}
 
-		return array_key_exists($key, $this->config) ? $this->config[$key] : $default;
+		if (strpos($key, '.') === false)
+		{
+			return array_key_exists($key, $this->config) ? $this->config[$key] : $default;
+		}
+		else
+		{
+			return \Arr::get($this->config, $key, $default);
+		}
 	}
 
 	/**
@@ -546,7 +565,7 @@ class Fieldset
 		$fields_output = '';
 		foreach ($this->field() as $f)
 		{
-			$fields_output .= $f->build().PHP_EOL;
+			in_array($f->name, $this->disabled) or $fields_output .= $f->build().PHP_EOL;
 		}
 
 		$close = ($this->fieldset_tag == 'form' or empty($this->fieldset_tag))
@@ -560,6 +579,45 @@ class Fieldset
 			$template);
 
 		return $template;
+	}
+
+	/**
+	 * Enable a disabled field from being build
+	 *
+	 * @return  Fieldset      this, to allow chaining
+	 */
+	public function enable($name = null)
+	{
+		// Check if it exists. if not, bail out
+		if ( ! $this->field($name))
+		{
+			throw new \RuntimeException('Field "'.$name.'" does not exist in this Fieldset.');
+		}
+
+		if (isset($this->disabled[$name]))
+		{
+			unset($this->disabled[$name]);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Disable a field from being build
+	 *
+	 * @return  Fieldset      this, to allow chaining
+	 */
+	public function disable($name = null)
+	{
+		// Check if it exists. if not, bail out
+		if ( ! $this->field($name))
+		{
+			throw new \RuntimeException('Field "'.$name.'" does not exist in this Fieldset.');
+		}
+
+		isset($this->disabled[$name]) or $this->disabled[$name] = $name;
+
+		return $this;
 	}
 
 	/**
@@ -630,6 +688,16 @@ class Fieldset
 	public function show_errors(array $config = array())
 	{
 		return $this->validation()->show_errors($config);
+	}
+
+	/**
+	 * Get instance id
+	 *
+	 * @return string
+	 */
+	public function get_name()
+	{
+		return $this->name;
 	}
 }
 

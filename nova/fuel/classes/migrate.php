@@ -83,19 +83,20 @@ class Migrate
 	}
 
 	/**
-	 * migrate to a specific version or range of versions
+	 * migrate to a specific version, range of versions, or all
 	 *
 	 * @param   mixed	version to migrate to (up or down!)
 	 * @param   string  name of the package, module or app
 	 * @param   string  type of migration (package, module or app)
+	 * @param	bool	if true, also run out-of-sequence migrations
 	 *
 	 * @throws	UnexpectedValueException
 	 * @return	array
 	 */
-	public static function version($version = null, $name = 'default', $type = 'app')
+	public static function version($version = null, $name = 'default', $type = 'app', $all = false)
 	{
 		// get the current version from the config
-		$current = \Config::get('migrations.version.'.$type.'.'.$name);
+		$all or $current = \Config::get('migrations.version.'.$type.'.'.$name);
 
 		// any migrations defined?
 		if ( ! empty($current))
@@ -137,13 +138,14 @@ class Migrate
 	 *
 	 * @param   string  name of the package, module or app
 	 * @param   string  type of migration (package, module or app)
+	 * @param	bool	if true, also run out-of-sequence migrations
 	 *
 	 * @return	array
 	 */
-	public static function latest($name = 'default', $type = 'app')
+	public static function latest($name = 'default', $type = 'app', $all = false)
 	{
-		// equivalent to from current version to latest
-		return static::version(null, $name, $type);
+		// equivalent to from current version (or all) to latest
+		return static::version(null, $name, $type, $all);
 	}
 
 	/**
@@ -268,7 +270,13 @@ class Migrate
 		foreach ($migrations as $ver => $migration)
 		{
 			logger(Fuel::L_INFO, 'Migrating to version: '.$ver);
-			call_user_func(array(new $migration['class'], $method));
+			$result = call_user_func(array(new $migration['class'], $method));
+			if ($result === false)
+			{
+				logger(Fuel::L_INFO, 'Skipped migration to '.$ver.'.');
+				return $done;
+			}
+
 			$file = basename($migration['path'], '.php');
 			$method == 'up' ? static::write_install($name, $type, $file) : static::write_revert($name, $type, $file);
 			$done[] = $file;
@@ -469,6 +477,8 @@ class Migrate
 	 */
 	protected static function _find_module($name = null)
 	{
+		$files = array();
+
 		if ($name)
 		{
 			// find a module
@@ -484,7 +494,6 @@ class Migrate
 		else
 		{
 			// find all modules
-			$files = array();
 			foreach (\Config::get('module_paths') as $m)
 			{
 				$files = array_merge($files, glob($m.'*/'.\Config::get('migrations.folder').'*_*.php'));
@@ -503,6 +512,8 @@ class Migrate
 	 */
 	protected static function _find_package($name = null)
 	{
+		$files = array();
+
 		if ($name)
 		{
 			// find a package
@@ -518,7 +529,6 @@ class Migrate
 		else
 		{
 			// find all packages
-			$files = array();
 			foreach (\Config::get('package_paths', array(PKGPATH)) as $p)
 			{
 				$files = array_merge($files, glob($p.'*/'.\Config::get('migrations.folder').'*_*.php'));
@@ -533,7 +543,7 @@ class Migrate
 	 *
 	 * @return	void
 	 *
-	 * @deprecated	Remove upgrade check in 1.3
+	 * @deprecated	Remove upgrade check in 1.4
 	 */
 	protected static function table_version_check()
 	{

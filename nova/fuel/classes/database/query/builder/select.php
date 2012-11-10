@@ -89,11 +89,12 @@ class Database_Query_Builder_Select extends \Database_Query_Builder_Where
 	 * Choose the columns to select from, using an array.
 	 *
 	 * @param   array  list of column names or aliases
+	 * @param	bool	if true, don't merge but overwrite
 	 * @return  $this
 	 */
-	public function select_array(array $columns)
+	public function select_array(array $columns, $reset = false)
 	{
-		$this->_select = array_merge($this->_select, $columns);
+		$this->_select = $reset ? $columns : array_merge($this->_select, $columns);
 
 		return $this;
 	}
@@ -146,13 +147,26 @@ class Database_Query_Builder_Select extends \Database_Query_Builder_Where
 	/**
 	 * Creates a "GROUP BY ..." filter.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
+	 * @param   mixed   column name or array($column, $column) or object
 	 * @param   ...
 	 * @return  $this
 	 */
 	public function group_by($columns)
 	{
 		$columns = func_get_args();
+
+		foreach($columns as $idx => $column)
+		{
+			// if an array of columns is passed, flatten it
+			if (is_array($column))
+			{
+				foreach($column as $c)
+				{
+					$columns[] = $c;
+				}
+				unset($columns[$idx]);
+			}
+		}
 
 		$this->_group_by = array_merge($this->_group_by, $columns);
 
@@ -324,7 +338,7 @@ class Database_Query_Builder_Select extends \Database_Query_Builder_Where
 			// Get the database instance
 			$db = \Database_Connection::instance($db);
 		}
-		
+
 		// Callback to quote identifiers
 		$quote_ident = array($db, 'quote_identifier');
 

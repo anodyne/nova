@@ -36,6 +36,11 @@ abstract class Controller_Rest extends \Controller
 	protected $http_status = null;
 
 	/**
+	 * @var  string  xml basenode name
+	 */
+	protected $xml_basenode = null;
+
+	/**
 	 * @var  array  List all supported methods
 	 */
 	protected $_supported_formats = array(
@@ -73,7 +78,7 @@ abstract class Controller_Rest extends \Controller
 
 		// If the response is a Response object, we will use their
 		// instead of ours.
-		if ( ! $response instanceof \Response)
+		if ( ! $response instanceof Response)
 		{
 			$response = $this->response;
 		}
@@ -165,8 +170,21 @@ abstract class Controller_Rest extends \Controller
 			// Set the correct format header
 			$this->response->set_header('Content-Type', $this->_supported_formats[$this->format]);
 
-			// Set the formatted response
-			$this->response->body(\Format::forge($data)->{'to_'.$this->format}());
+			// Handle XML output
+			if ($this->format === 'xml')
+			{
+				// Detect basenode
+				$xml_basenode = $this->xml_basenode;
+				$xml_basenode or $xml_basenode = \Config::get('rest.xml_basenode', 'xml');
+
+				// Set the XML response
+				$this->response->body(\Format::forge($data)->{'to_'.$this->format}(null, null, $xml_basenode));
+			}
+			else
+			{
+				// Set the formatted response
+				$this->response->body(\Format::forge($data)->{'to_'.$this->format}());
+			}
 
 			// Set the reponse http status
 			$http_status and $this->response->status = $http_status;
@@ -175,7 +193,7 @@ abstract class Controller_Rest extends \Controller
 		// Format not supported, output directly
 		else
 		{
-			$this->response->body((string) $data);
+			$this->response->body($data);
 		}
 
 		return $this->response;

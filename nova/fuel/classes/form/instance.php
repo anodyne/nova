@@ -574,6 +574,12 @@ class Form_Instance
 			$attributes['id'] = $this->get_config('auto_id_prefix', '').$attributes['name'];
 		}
 
+		// if it's a multiselect, make sure the name is an array
+		if (isset($attributes['multiple']) and substr($attributes['name'],-2) != '[]')
+		{
+			$attributes['name'] .= '[]';
+		}
+
 		return html_tag('select', $this->attr_to_string($attributes), $input);
 	}
 
@@ -602,7 +608,7 @@ class Form_Instance
 		unset($attributes['label']);
 		unset($attributes['id']);
 
-		return html_tag('label', $attributes, \Lang::get($label) ?: $label);
+		return html_tag('label', $attributes, \Lang::get($label, array(), false) ?: $label);
 	}
 
 	/**

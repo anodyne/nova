@@ -105,6 +105,7 @@ class Theme
 		'view_ext' => '.html',
 		'require_info_file' => false,
 		'info_file_name' => 'theme.info.php',
+		'use_modules' => false,
 	);
 
 	/**
@@ -210,17 +211,6 @@ class Theme
 		}
 
 		return \View::forge($this->find_file($view), $data, $auto_filter);
-	}
-
-	/**
-	 * This method is deprecated...use asset_path() instead.
-	 *
-	 * @deprecated until 1.3
-	 */
-	public function asset($path)
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a asset_path() instead.', __METHOD__);
-		return $this->asset_path($path);
 	}
 
 	/**
@@ -490,17 +480,6 @@ class Theme
 	}
 
 	/**
-	 * This method is deprecated...use get_info() instead.
-	 *
-	 * @deprecated until 1.3
-	 */
-	public function info($var = null, $default = null, $theme = null)
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a get_info() instead.', __METHOD__);
-		return $this->get_info($var, $default, $theme);
-	}
-
-	/**
 	 * Get a value from the info array
 	 *
 	 * @return  mixed
@@ -564,17 +543,6 @@ class Theme
 	}
 
 	/**
-	 * This method is deprecated...use load_info() instead.
-	 *
-	 * @deprecated until 1.3
-	 */
-	public function all_info($theme = null)
-	{
-		logger(\Fuel::L_WARNING, 'This method is deprecated.  Please use a load_info() instead.', __METHOD__);
-		return $this->load_info($theme);
-	}
-
-	/**
 	 * Load in the theme.info file for the given (or active) theme.
 	 *
 	 * @param   string  $theme  Name of the theme (null for active)
@@ -619,7 +587,7 @@ class Theme
 			}
 		}
 
-		return \Config::load($file, false);
+		return \Config::load($file, false, true);
 	}
 
 	/**
@@ -657,6 +625,22 @@ class Theme
 	}
 
 	/**
+	 * Enable or disable the use of modules. If enabled, every theme view loaded
+	 * will be prefixed with the module name, so you don't have to hardcode the
+	 * module name as a view file prefix
+	 *
+	 * @param	$enable	enable if true, disable if false
+	 * @return	Theme
+	 */
+	public function use_modules($enable = true)
+	{
+		$this->config['use_modules'] = (bool) $enable;
+
+		// return for chaining
+		return $this;
+	}
+
+	/**
 	 * Find the absolute path to a file in a set of Themes.  You can optionally
 	 * send an array of themes to search.  If you do not, it will search active
 	 * then fallback (in that order).
@@ -673,6 +657,13 @@ class Theme
 			$themes = array($this->active, $this->fallback);
 		}
 
+		// determine the path prefix
+		$path_prefix = '';
+		if ($this->config['use_modules'] and $module = \Request::active()->module)
+		{
+			$path_prefix = $module.DS;
+		}
+
 		foreach ($themes as $theme)
 		{
 			$ext   = pathinfo($view, PATHINFO_EXTENSION) ?
@@ -682,14 +673,18 @@ class Theme
 				pathinfo($view, PATHINFO_FILENAME);
 			if (empty($theme['find_file']))
 			{
-				if (is_file($path = $theme['path'].$file.$ext))
+				if (is_file($path = $theme['path'].$path_prefix.$file.$ext))
+				{
+					return $path;
+				}
+				elseif (is_file($path = $theme['path'].$file.$ext))
 				{
 					return $path;
 				}
 			}
 			else
 			{
-				if ($path = \Finder::search($theme['path'], $file, $ext))
+				if ($path = \Finder::search($theme['path'].$path_prefix, $file, $ext))
 				{
 					return $path;
 				}

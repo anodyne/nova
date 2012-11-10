@@ -56,6 +56,41 @@ class Uri
 	}
 
 	/**
+	 * Replace all * wildcards in a URI by the current segment in that location
+	 *
+	 * @return  string
+	 */
+	public static function segment_replace($url)
+	{
+		// get the path from the url
+		$parts = parse_url($url);
+
+		// explode it in it's segments
+		$segments = explode('/', trim($parts['path'], '/'));
+
+		// fetch any segments needed
+		$wildcards = 0;
+		foreach ($segments as $index => &$segment)
+		{
+			if (strpos($segment, '*') !== false)
+			{
+				$wildcards++;
+				if (($new = static::segment($index)) === null)
+				{
+					throw new \OutofBoundsException('Segment replace on "'.$url.'" failed. No segment exists for wildcard '.$wildcards.'.');
+				}
+				$segment = str_replace('*', $new, $segment);
+			}
+		}
+
+		// re-assemble the path
+		$parts['path'] = implode('/', $segments);
+		$url = implode('/', $parts);
+
+		return $url;
+	}
+
+	/**
 	 * Converts the current URI segments to an associative array.  If
 	 * the URI has an odd number of segments, an exception will be thrown.
 	 *
@@ -206,7 +241,23 @@ class Uri
 		is_object($uri) and $uri = null;
 
 		$this->uri = trim($uri ?: \Input::uri(), '/');
-		$this->segments = $this->uri === '' ? array() : explode('/', $this->uri);
+
+		if (empty($this->uri))
+		{
+			$this->segments = array();
+		}
+		else
+		{
+			if (strpos($this->uri, $ext = \Input::extension()) !== false)
+			{
+				$uri = substr($this->uri, 0, -(strlen($ext)+1));
+			}
+			else
+			{
+				$uri = $this->uri;
+			}
+			$this->segments = explode('/', $uri);
+		}
 
 		if (\Fuel::$profiling)
 		{

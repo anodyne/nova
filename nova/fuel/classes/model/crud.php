@@ -12,7 +12,8 @@
 
 namespace Fuel\Core;
 
-class Model_Crud extends \Model implements \Iterator, \ArrayAccess {
+class Model_Crud extends \Model implements \Iterator, \ArrayAccess, \Serializable
+{
 
 	/**
 	 * @var  string  $_table_name  The table name (must set this in your Model)
@@ -423,7 +424,7 @@ class Model_Crud extends \Model implements \Iterator, \ArrayAccess {
 		// Set default if there are any
 		isset(static::$_defaults) and $vars = $vars + static::$_defaults;
 
-		if ($validate and isset(static::$_rules) and count(static::$_rules) > 0)
+		if ($validate and isset(static::$_rules) and ! empty(static::$_rules))
 		{
 			$vars = $this->pre_validate($vars);
 			$validated = $this->post_validate($this->run_validation($vars));
@@ -433,6 +434,7 @@ class Model_Crud extends \Model implements \Iterator, \ArrayAccess {
 				$validated = array_filter($this->validation()->validated(), function($val){
 					return ($val !== null);
 				});
+
 				$vars = $validated + $vars;
 			}
 			else
@@ -809,4 +811,33 @@ class Model_Crud extends \Model implements \Iterator, \ArrayAccess {
 		return $values;
 	}
 
+	/**
+	 * Serializable implementation: serialize
+	 *
+	 * @return  array  model data
+	 */
+	public function serialize()
+	{
+		$data = $this->to_array();
+
+		$data['_is_new'] = $this->_is_new;
+		$data['_is_frozen'] = $this->_is_frozen;
+
+		return serialize($data);
+	}
+
+	/**
+	 * Serializable implementation: unserialize
+	 *
+	 * @return  array  model data
+	 */
+	public function unserialize($data)
+	{
+		$data = unserialize($data);
+
+		foreach ($data as $key => $value)
+		{
+			$this->__set($key, $value);
+		}
+	}
 }

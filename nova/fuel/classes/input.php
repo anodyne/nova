@@ -176,12 +176,23 @@ class Input
 			}
 		}
 
+		// Deal with any trailing dots
+		$uri = rtrim($uri, '.');
+
 		// Strip the defined url suffix from the uri if needed
 		$uri_info = pathinfo($uri);
+
 		if ( ! empty($uri_info['extension']))
 		{
-			static::$detected_ext = $uri_info['extension'];
-			$uri = $uri_info['dirname'].'/'.$uri_info['filename'];
+			if (strpos($uri_info['extension'],'/') === false)
+			{
+				static::$detected_ext = $uri_info['extension'];
+
+				if (\Config::get('routing.strip_extension', true))
+				{
+					$uri = $uri_info['dirname'].'/'.$uri_info['filename'];
+				}
+			}
 		}
 
 		// Do some final clean up of the uri
@@ -235,12 +246,9 @@ class Input
 				$ip = trim($ip);
 			});
 
-			if ($exclude_reserved)
-			{
-				$ips = array_filter($ips, function($ip) {
-					return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
-				});
-			}
+			$ips = array_filter($ips, function($ip) use($exclude_reserved) {
+				return filter_var($ip, FILTER_VALIDATE_IP, $exclude_reserved ? FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE : null);
+			});
 
 			if ($ips)
 			{

@@ -76,12 +76,19 @@ abstract class Session_Driver
 	 */
 	public function read()
 	{
-		// auto expire flash variables if needed
-		if ($this->config['flash_auto_expire'] === true)
+		// do we need to create a new session?
+		empty($this->keys) and $this->create();
+
+		// mark the loaded flash data, auto-expire if configured
+		foreach($this->flash as $key => $value)
 		{
-			foreach($this->flash as $key => $value)
+			if ($this->config['flash_auto_expire'] === true)
 			{
-				$this->flash[$key]['state'] = 'old';
+				$this->flash[$key]['state'] = 'expire';
+			}
+			else
+			{
+				$this->flash[$key]['state'] = 'loaded';
 			}
 		}
 
@@ -250,10 +257,36 @@ abstract class Session_Driver
 				$default[$key] = $value;
 			}
 		}
-		elseif (isset($this->flash[$this->config['flash_id'].'::'.$name]))
+		else
 		{
-			$this->flash[$this->config['flash_id'].'::'.$name]['state'] = 'old';
-			$default = $this->flash[$this->config['flash_id'].'::'.$name]['value'];
+			// check if we need to run an Arr:get()
+			if (strpos($name, '.') !== false)
+			{
+				$keys = explode('.', $name, 2);
+				$name = array_shift($keys);
+			}
+			else
+			{
+				$keys = false;
+			}
+
+			if (isset($this->flash[$this->config['flash_id'].'::'.$name]))
+			{
+				// if it's not a var set in this request, mark it for expiration
+				if ($this->flash[$this->config['flash_id'].'::'.$name]['state'] !== 'new')
+				{
+					$this->flash[$this->config['flash_id'].'::'.$name]['state'] = 'expire';
+				}
+
+				if ($keys)
+				{
+					$default = \Arr::get($this->flash[$this->config['flash_id'].'::'.$name]['value'], $keys[0], $default);
+				}
+				else
+				{
+					$default = $this->flash[$this->config['flash_id'].'::'.$name]['value'];
+				}
+			}
 		}
 
 		return ($default instanceof \Closure) ? $default() : $default;
@@ -380,7 +413,7 @@ abstract class Session_Driver
 	{
 		foreach($this->flash as $key => $value)
 		{
-			if ($value['state'] === 'old')
+			if ($value['state'] === 'expire')
 			{
 				unset($this->flash[$key]);
 			}
@@ -453,7 +486,7 @@ abstract class Session_Driver
 	 protected function _get_cookie()
 	 {
 		// was the cookie posted?
-		$cookie = \Input::cookie($this->config['post_cookie_name'], false);
+		$cookie = \Input::post($this->config['post_cookie_name'], false);
 
 		// if not found, fetch the regular cookie
 		if ($cookie === false)
