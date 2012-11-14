@@ -16,8 +16,8 @@
 	<div class="control-group">
 		<label class="control-label"><?php echo lang('display', 1);?></label>
 		<div class="controls">
-			<label class="radio inline"><?php echo lang('on', 1).' '.Form::radio('status', Status::ACTIVE, $display);?></label>
-			<label class="radio inline"><?php echo lang('off', 1).' '.Form::radio('status', Status::INACTIVE, $display);?></label>
+			<label class="radio inline"><?php echo lang('on', 1).' '.Form::radio('status', Status::ACTIVE, $status);?></label>
+			<label class="radio inline"><?php echo lang('off', 1).' '.Form::radio('status', Status::INACTIVE, $status);?></label>
 		</div>
 	</div>
 
