@@ -16,7 +16,6 @@ namespace Sentry;
 use Config;
 use Cookie;
 use FuelException;
-use Session;
 use Lang;
 use Input;
 
@@ -128,7 +127,7 @@ class Sentry
 			// if session exists - default to user session
 			else if(static::check())
 			{
-				$user_id = Session::get('user');
+				$user_id = \Session::get('user');
 				static::$current_user = new \Sentry_User($user_id);
 				return static::$current_user;
 			}
@@ -262,9 +261,9 @@ class Sentry
 			}
 
 			// set session vars
-			Session::set('user', (int) $user->get('id'));
-			Session::set('role', $user->groups());
-			Session::set('preferences', \Model_User::find($user->get('id'))->getPreferences());
+			\Session::set('user', (int) $user->get('id'));
+			\Session::set('role', $user->groups());
+			\Session::set('preferences', \Model_User::find($user->get('id'))->getPreferences());
 			
 			return \Login\Controller_Login::OK;
 		}
@@ -292,9 +291,9 @@ class Sentry
 			throw new \SentryAuthException(__('sentry.user_not_found'));
 		}
 
-		Session::set('user', $id);
-		Session::set('role', $user->getUserRole());
-		Session::set('preferences', \Model_User::find($id)->getPreferences());
+		\Session::set('user', $id);
+		\Session::set('role', $user->getUserRole());
+		\Session::set('preferences', \Model_User::find($id)->getPreferences());
 		
 		return true;
 	}
@@ -307,7 +306,7 @@ class Sentry
 	public static function check()
 	{
 		// get session
-		$user_id = Session::get('user');
+		$user_id = \Session::get('user');
 		
 		// invalid session values - kill the user session
 		if ($user_id === null or ! is_numeric($user_id))
@@ -337,9 +336,9 @@ class Sentry
 		Cookie::delete(Config::get('sentry.remember_me.cookie_name'));
 		
 		// delete the session info
-		Session::delete('user');
-		Session::delete('role');
-		Session::delete('preferences');
+		\Session::delete('user');
+		\Session::delete('role');
+		\Session::delete('preferences');
 	}
 
 	/**
@@ -567,8 +566,8 @@ class Sentry
 				));
 
 				// set session vars
-				Session::set(Config::get('sentry.session.user'), (int) $user->get('id'));
-				Session::set(Config::get('sentry.session.provider'), 'Sentry');
+				\Session::set(Config::get('sentry.session.user'), (int) $user->get('id'));
+				\Session::set(Config::get('sentry.session.provider'), 'Sentry');
 
 				return true;
 			}
