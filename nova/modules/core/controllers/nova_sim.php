@@ -2168,7 +2168,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$data['header'] = lang('error_title_invalid_id');
 				$data['msg_error'] = lang('error_msg_id_numeric');
 			}
-			elseif ($query->num_rows() == 0)
+			elseif ($row === false)
 			{
 				$data['header'] = lang('error_title_id_not_found');
 				$data['msg_error'] = lang('error_msg_not_found');

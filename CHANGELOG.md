@@ -9,6 +9,10 @@
 * Updated the specs model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 * Updated the tour model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 
+### Bug Fixes
+
+* Error thrown on viewing a post that doesn't exist.
+
 ## 2.1.3 (05 November 2012)
 
 ### Bug Fixes
