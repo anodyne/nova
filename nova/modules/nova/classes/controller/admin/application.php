@@ -313,9 +313,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			// get the role information
 			$this->_data->roles = array();
 
+			# FIXME: this displays wrong
+
 			// set the date the user applied on
-			$this->_data->applied_date = \Date::forge($app->created_at, \Sentry::user()->get()->getPreferences('timezone'))
-				->format($this->settings->date_format);
+			$this->_data->applied_date = \Carbon::createFromFormat('Y-m-d H:i:s', $app->created_at, \Sentry::user()->get()->getPreferences('timezone'))->format($this->settings->date_format);
 		}
 
 		return;
