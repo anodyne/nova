@@ -45,12 +45,12 @@ try
 catch (HttpNotFoundException $e)
 {
 	$route = array_key_exists('_404_', Router::$routes) ? Router::$routes['_404_']->translation : Config::get('routes._404_');
-	
-	if ($route instanceof Closure)
+
+	if($route instanceof Closure)
 	{
 		$response = $route();
-		
-		if ( ! $response instanceof Response)
+
+		if( ! $response instanceof Response)
 		{
 			$response = Response::forge($response);
 		}
