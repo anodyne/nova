@@ -133,19 +133,19 @@ abstract class Controller_Base_Core extends \Controller_Template
 		{
 			\Response::redirect('setup/main/index');
 		}
-		
+
 		// Get an instance of the Session
 		$this->session = \Session::instance();
-
+		
+		// Load the nova config file
+		\Config::load('nova', 'nova');
+		
 		// Set the genre
 		$this->genre = \Config::get('nova.genre');
 
 		// Load all of the settings
 		$this->settings = \Model_Settings::getItems(false);
 
-		// Load the nova config file
-		\Config::load('nova', 'nova');
-		
 		// Set the language
 		\Config::set('language', $this->session->get('language', 'en'));
 
