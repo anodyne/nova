@@ -1,12 +1,12 @@
 <div class="btn-toolbar">
 	<?php if (Sentry::user()->hasAccess('user.read')): ?>
-		<div class="btn-group">
-			<a href="<?php echo Uri::create('admin/user/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to all users', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
-		</div>
+	<div class="btn-group">
+		<a href="<?php echo Uri::create('admin/user/index');?>" class="btn tooltip-top" title="<?php echo lang('action.back to all users', 1);?>"><div class="icn icn16 icn-75" data-icon="<"></div></a>
+	</div>
 	<?php endif;?>
 
 	<div class="btn-group">
-		<a href="#" class="btn icn16 tooltip-top" title="<?php echo lang('action.request loa', 1);?>"><div class="icn icn-75" data-icon="!"></div></a>
+		<a href="#" class="btn tooltip-top" title="<?php echo lang('action.request loa', 1);?>"><div class="icn icn16 icn-75" data-icon="!"></div></a>
 	</div>
 </div>
 
