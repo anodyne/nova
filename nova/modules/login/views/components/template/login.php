@@ -13,5 +13,9 @@
 		<div style="clear:both;">&nbsp;</div>
 	</div>
 
-	<footer>&copy; <?php echo date('Y');?> Anodyne Productions</footer>
+	<footer>
+		<hr>
+
+		&copy; <?php echo date('Y');?> Anodyne Productions
+	</footer>
 </div>
