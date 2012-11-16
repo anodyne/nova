@@ -77,4 +77,20 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		
 		echo $output;
 	}
+
+	public function action_skin_preview($location = false)
+	{
+		// get the URI variable
+		$location = \Security::xss_clean($location);
+		
+		// pull the skin catalog record
+		$skin = \Model_Catalog_Skin::getItem($location, 'location');
+		
+		// set the output
+		$output = (count($rank) > 0) 
+			? \Html::img(\Uri::base(false).'app/assets/common/'.$rank->genre.'/ranks/'.$location.'/'.$rank->preview) 
+			: '';
+		
+		echo $output;
+	}
 }
