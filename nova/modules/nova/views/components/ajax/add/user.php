@@ -9,14 +9,14 @@
 	</div>
 
 	<div class="control-group">
-		<label class="control-label"><?php echo lang('email_address', 1);?></label>
+		<label class="control-label"><?php echo lang('email_address', 2);?></label>
 		<div class="controls">
 			<input type="email" name="email" value="" class="span4">
 		</div>
 	</div>
 
 	<div class="form-actions">
-		<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
+		<button class="btn btn-primary"><?php echo lang('action.create', 1);?></button>
 	</div>
 
 	<?php echo Form::hidden('action', 'create');?>
