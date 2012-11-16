@@ -21,6 +21,8 @@
 
 <div class="container">
 	<footer>
+		<hr>
+		
 		<?php echo $footer;?>
 	</footer>
 </div>

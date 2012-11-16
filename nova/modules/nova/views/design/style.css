@@ -38,3 +38,14 @@ label.control-label {
 .font-small {
 	font-size: 11px;
 }
+
+footer {
+	color: #888;
+}
+footer a {
+	color: #666;
+	text-decoration: underline;
+}
+footer a:hover {
+	color: #444;
+}
