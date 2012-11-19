@@ -43,8 +43,8 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				if (is_object($entry))
 				{
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|form|action.updated]]', 1),
+						'status' 	=> 'success',
+						'message'	=> ucfirst(lang('short.alert.success.update', lang('form'))),
 					);
 
 					\SystemEvent::add('user', '[[event.form.update|{{'.$entry->name.'}}]]');
@@ -52,16 +52,16 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('[[short.flash.failure|form|action.update]]', 1),
+						'status'	=> 'danger',
+						'message'	=> ucfirst(lang('short.alert.failure.update', lang('form'))),
 					);
 				}
 			}
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -106,15 +106,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|field|action.deleted]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.delete', lang('field'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|field|action.deletion]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.delete', lang('field'))),
 						);
 					}
 				}
@@ -127,15 +127,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|field|action.added]]', 1),
+							'status' 	=> 'success',
+							'message'	=> ucfirst(lang('short.alert.success.create', lang('field'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|field|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message'	=> ucfirst(lang('short.alert.failure.create', lang('field'))),
 						);
 					}
 				}
@@ -148,15 +148,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|field|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', lang('field'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|field|action.update]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.update', lang('field'))),
 						);
 					}
 				}
@@ -164,8 +164,8 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -230,10 +230,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				}
 			}
 
-			// manually set the header, footer, and message
-			$this->_headers['fields'] = lang('action.manage form fields', 2);
-			$this->_titles['fields'] = lang('action.manage form fields', 2);
-			$this->_messages['fields'] = lang('sitecontent.message.fields_all');
+			// Manually set the header, footer, and message
+			$title = ucwords(lang('manage', langConcat('form fields')));
+			$this->_headers['fields'] = $this->_titles['fields'] = $title;
+			$this->_messages['fields'] = lang('sitecontent.message.fieldsAll');
 		}
 		else
 		{
@@ -262,9 +262,9 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// set the action
 				$this->_data->action = 'add';
 
-				// manually set the header, footer, and message
-				$this->_headers['fields'] = lang('action.create status.new form field', 2);
-				$this->_titles['fields'] = lang('action.create status.new form field', 2);
+				// Manually set the header, footer, and message
+				$title = ucwords(lang('short.create', langConcat('status.new form field')));
+				$this->_headers['fields'] = $this->_titles['fields'] = $title;
 				$this->_messages['fields'] = false;
 			}
 			else
@@ -290,10 +290,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// set the action
 				$this->_data->action = 'update';
 
-				// manually set the header, footer, and message
-				$this->_headers['fields'] = lang('action.update form field', 2);
-				$this->_titles['fields'] = lang('action.update form field', 2);
-				$this->_messages['fields'] = lang('sitecontent.message.fields_edit');
+				// Manually set the header, footer, and message
+				$title = ucwords(lang('short.update', langConcat('form field')));
+				$this->_headers['fields'] = $this->_titles['fields'] = $title;
+				$this->_messages['fields'] = lang('sitecontent.message.fieldsEdit');
 			}
 		}
 
@@ -355,15 +355,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|section|action.deleted]]', 1),
+							'status' 	=> 'success',
+							'message'	=> ucfirst(lang('short.alert.success.delete', lang('section'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|section|action.deletion]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.delete', lang('section'))),
 						);
 					}
 				}
@@ -376,15 +376,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|section|action.added]]', 1),
+							'status' 	=> 'success',
+							'message'	=> ucfirst(lang('short.alert.failure.create', lang('section'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|section|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message'	=> ucfirst(lang('short.alert.failure.create', lang('section'))),
 						);
 					}
 				}
@@ -397,15 +397,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|section|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.failure.update', lang('section'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|section|action.update]]', 1),
+							'status' 	=> 'danger',
+							'message'	=> ucfirst(lang('short.alert.failure.update', lang('section'))),
 						);
 					}
 				}
@@ -413,8 +413,8 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -459,10 +459,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				}
 			}
 
-			// manually set the header, footer, and message
-			$this->_headers['sections'] = lang('action.manage form sections', 2);
-			$this->_titles['sections'] = lang('action.manage form sections', 2);
-			$this->_messages['sections'] = lang('sitecontent.message.sections_all');
+			// Manually set the header, footer, and message
+			$title = ucwords(lang('short.manage', langConcat('form sections')));
+			$this->_headers['sections'] = $this->_titles['sections'] = $title;
+			$this->_messages['sections'] = lang('sitecontent.message.sectionsAll');
 		}
 		else
 		{
@@ -483,9 +483,9 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// set the action
 				$this->_data->action = 'add';
 
-				// manually set the header, footer, and message
-				$this->_headers['sections'] = lang('action.create status.new form section', 2);
-				$this->_titles['sections'] = lang('action.create status.new form section', 2);
+				// Manually set the header, footer, and message
+				$title = ucwords(lang('short.create', langConcat('form section')));
+				$this->_headers['sections'] = $this->_titles['sections'] = $title;
 				$this->_messages['sections'] = false;
 			}
 			else
@@ -508,9 +508,9 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// set the action
 				$this->_data->action = 'update';
 
-				// manually set the header, footer, and message
-				$this->_headers['sections'] = lang('action.update form section', 2);
-				$this->_titles['sections'] = lang('action.update form section', 2);
+				// Manually set the header, footer, and message
+				$title = ucwords(lang('short.update', langConcat('form section')));
+				$this->_headers['sections'] = $this->_titles['sections'] = $title;
 				$this->_messages['sections'] = false;
 			}
 		}
@@ -573,15 +573,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|tab|action.deleted]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.delete', lang('tab'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|tab|action.deletion]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.delete', lang('tab'))),
 						);
 					}
 				}
@@ -594,15 +594,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|tab|action.added]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.create', lang('tab'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|tab|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.create', lang('tab'))),
 						);
 					}
 				}
@@ -615,15 +615,15 @@ class Controller_Admin_Form extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|tab|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', lang('tab'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|tab|action.update]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.update', lang('tab'))),
 						);
 					}
 				}
@@ -631,8 +631,8 @@ class Controller_Admin_Form extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -657,10 +657,10 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				}
 			}
 
-			// manually set the header, footer, and message
-			$this->_headers['tabs'] = lang('action.manage form tabs', 2);
-			$this->_titles['tabs'] = lang('action.manage form tabs', 2);
-			$this->_messages['tabs'] = lang('sitecontent.message.tabs_all');
+			// Manually set the header, footer, and message
+			$title = ucwords(lang('short.manage', langConcat('form tabs')));
+			$this->_headers['tabs'] = $this->_titles['tabs'] = $title;
+			$this->_messages['tabs'] = lang('sitecontent.message.tabsAll');
 		}
 		else
 		{
@@ -678,9 +678,9 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// set the action
 				$this->_data->action = 'add';
 
-				// manually set the header, footer, and message
-				$this->_headers['tabs'] = lang('action.create status.new form tab', 2);
-				$this->_titles['tabs'] = lang('action.create status.new form tab', 2);
+				// Manually set the header, footer, and message
+				$title = ucwords(lang('short.create', langConcat('form tab')));
+				$this->_headers['tabs'] = $this->_titles['tabs'] = $title;
 				$this->_messages['tabs'] = false;
 			}
 			else
@@ -703,9 +703,9 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				// set the action
 				$this->_data->action = 'update';
 
-				// manually set the header, footer, and message
-				$this->_headers['tabs'] = lang('action.update form tab', 2);
-				$this->_titles['tabs'] = lang('action.update form tab', 2);
+				// Manually set the header, footer, and message
+				$title = ucwords(lange('short.update', langConcat('form tab')));
+				$this->_headers['tabs'] = $this->_titles['tabs'] = $title;
 				$this->_messages['tabs'] = false;
 			}
 		}

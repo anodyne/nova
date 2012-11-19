@@ -37,7 +37,7 @@
 		var user = $(this).data('user');
 
 		$('<div/>').dialog2({
-			title: "<?php echo lang('action.ban user', 2);?>",
+			title: "<?php echo ucwords(langConcat('action.ban user'));?>",
 			content: "<?php echo Uri::create('ajax/add/arc_banuser');?>/" + user
 		});
 
@@ -49,7 +49,7 @@
 		var user = $(this).data('user');
 
 		$('<div/>').dialog2({
-			title: "<?php echo lang('action.remove action.ban', 2);?>",
+			title: "<?php echo ucwords(langConcat('action.remove ban'));?>",
 			content: "<?php echo Uri::create('ajax/delete/arc_unbanuser');?>/" + user
 		});
 

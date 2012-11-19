@@ -2,21 +2,21 @@
 
 <?php echo Form::open();?>
 	<div class="control-group">
-		<label class="control-label"><?php echo lang('user', 1);?></label>
+		<label class="control-label"><?php echo ucfirst(lang('user'));?></label>
 		<div class="controls">
 			<?php echo NovaForm::users('user', array(), array('class' => 'span5 chzn'));?>
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label class="control-label"><?php echo lang('character', 1);?></label>
+		<label class="control-label"><?php echo ucfirst(lang('character'));?></label>
 		<div class="controls">
 			<?php //echo NovaForm::characters('character', array(), array('class' => 'span5 chzn'));?>
 		</div>
 	</div>
 
 	<div class="controls">
-		<button type="submit" name="submit" class="btn"><?php echo lang('action.submit', 1);?></button>
+		<button type="submit" name="submit" class="btn"><?php echo ucfirst(lang('action.submit'));?></button>
 	</div>
 
 	<?php echo Form::hidden('action', 'link');?>

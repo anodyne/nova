@@ -113,7 +113,7 @@
 		if (doaction == 'delete')
 		{
 			$('<div/>').dialog2({
-				title: "<?php echo lang('action.delete user', 2);?>",
+				title: "<?php echo ucwords(lang('short.delete', lang('user')));?>",
 				content: "<?php echo Uri::create('ajax/delete/user');?>/" + id
 			});
 		}
@@ -121,7 +121,7 @@
 		if (doaction == 'create')
 		{
 			$('<div/>').dialog2({
-				title: "<?php echo lang('action.create user', 2);?>",
+				title: "<?php echo ucwords(lang('short.create', lang('user')));?>",
 				content: "<?php echo Uri::create('ajax/add/user');?>"
 			});
 		}
@@ -129,7 +129,7 @@
 		if (doaction == 'link')
 		{
 			$('<div/>').dialog2({
-				title: "<?php echo lang('action.create user', 2);?>",
+				title: "<?php echo ucwords(lang('short.create', lang('user')));?>",
 				content: "<?php echo Uri::create('ajax/add/user');?>"
 			});
 		}

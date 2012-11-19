@@ -10,6 +10,7 @@ return array(
 	'application' => 'application',
 	'applications' => 'applications',
 	'applicant' => 'applicant',
+	'approved' => 'approved',
 	'admin' => 'admin',
 	'access_role' => 'access role',
 	'active' => 'active',
@@ -19,6 +20,7 @@ return array(
 	'and' => 'and',
 
 	'bio'	=> 'bio',
+	'ban' => 'ban',
 	'base' => 'base',
 	'by' => 'by',
 	'basic' => 'basic',
@@ -47,6 +49,7 @@ return array(
 
 	'field' => "field",
 	'fields' => "fields",
+	'filter' => 'filter',
 	'for' => "for",
 	'form' => "form",
 	'forms' => "forms",
@@ -134,6 +137,7 @@ return array(
 	'readme' => 'readme',
 	'rank' => 'rank',
 	'ranks' => 'ranks',
+	'rejected' => 'rejected',
 	'review' => 'review',
 	'reviews' => 'reviews',
 	'reviewer' => 'reviewer',

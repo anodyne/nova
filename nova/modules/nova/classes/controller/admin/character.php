@@ -49,9 +49,9 @@ class Controller_Admin_Character extends Controller_Base_Admin
 					$this->_data->characters[] = $c;
 				}
 
-				// manually set the header, footer, and message
-				$this->_headers['edit'] = lang('action.choose character to action.edit', 2);
-				$this->_titles['edit'] = lang('action.choose character to action.edit', 2);
+				// Manually set the header, footer, and message
+				$title = ucwords(lang('action.choose').' '.lang('character').' '.lang('to').' '.lang('action.edit'));
+				$this->_headers['edit'] = $this->_titles['edit'] = $title;
 				$this->_messages['edit'] = false;
 			}
 			else
@@ -62,9 +62,9 @@ class Controller_Admin_Character extends Controller_Base_Admin
 				// get the character
 				$this->_data->character = \Model_Character::find($id);
 
-				// manually set the header, footer, and message
-				$this->_headers['edit'] = lang('{{'.$this->_data->character->getName(false).'}}').' - '.lang('action.edit character', 2);
-				$this->_titles['edit'] = lang('action.edit character', 2);
+				// Manually set the header, footer, and message
+				$this->_headers['edit'] = $this->_data->character->getName(false).' - '.ucwords(lang('action.edit', lang('character')));
+				$this->_titles['edit'] = ucwords(lang('action.edit', lang('character')));
 				$this->_messages['edit'] = false;
 			}
 		}
@@ -75,8 +75,8 @@ class Controller_Admin_Character extends Controller_Base_Admin
 
 			# TODO: is the user allowed to edit this character?
 
-			// manually set the header, footer, and message
-			$this->_headers['edit'] = lang('{{'.$this->_data->character->getName(false).'}}').' - '.lang('action.edit character', 2);
+			// Manually set the header, footer, and message
+			$this->_headers['edit'] = $this->_data->character->getName(false).' - '.ucwords(lang('action.edit', lang('character')));
 			$this->_titles['edit'] = lang('action.edit character', 2);
 			$this->_messages['edit'] = false;
 		}

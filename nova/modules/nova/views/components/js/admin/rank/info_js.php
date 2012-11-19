@@ -35,7 +35,7 @@
 			if (doaction == 'delete')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.delete rank info', 2);?>",
+					title: "<?php echo ucwords(lang('short.delete', langConcat('rank info')));?>",
 					content: "<?php echo Uri::create('ajax/delete/rankinfo');?>/" + id
 				});
 			}
@@ -43,7 +43,7 @@
 			if (doaction == 'update')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.update rank info', 2);?>",
+					title: "<?php echo ucwords(lang('short.update', langConcat('rank info')));?>",
 					content: "<?php echo Uri::create('ajax/update/rankinfo');?>/" + id
 				});
 			}
@@ -51,7 +51,7 @@
 			if (doaction == 'create')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.create rank info', 2);?>",
+					title: "<?php echo ucwords(lang('short.create', langConcat('rank info')));?>",
 					content: "<?php echo Uri::create('ajax/add/rankinfo');?>"
 				});
 			}

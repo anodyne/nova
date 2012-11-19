@@ -38,7 +38,7 @@
 			if (doaction == 'delete')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.delete section', 2);?>",
+					title: "<?php echo ucwords(lang('short.delete', lang('section')));?>",
 					content: "<?php echo Uri::create('ajax/delete/formsection');?>/" + id
 				});
 			}

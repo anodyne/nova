@@ -35,20 +35,20 @@ if ( ! function_exists('ruleData'))
 
 ?>
 <div class="btn-group">
-	<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to rules', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
+	<a href="<?php echo Uri::create('admin/application/rules');?>" class="btn icn16 tooltip-top" title="<?php echo lang('short.back', lang('rules'));?>"><div class="icn icn-75" data-icon="<"></div></a>
 </div>
 
 <form method="post" action="<?php echo Uri::create('admin/application/rules');?>">
 	<div class="control-group">
-		<label class="control-label"><?php echo lang('type', 1);?></label>
+		<label class="control-label"><?php echo ucfirst(lang('type'));?></label>
 		<div class="controls">
-			<?php echo Form::select('type', ruleData($rule, 'type'), array('global' => lang('global', 1), 'dept' => lang('department', 1)), array('id' => 'ruleType', 'class' => 'chzn span2'));?>
+			<?php echo Form::select('type', ruleData($rule, 'type'), array('global' => ucfirst(lang('global')), 'dept' => ucfirst(lang('department'))), array('id' => 'ruleType', 'class' => 'chzn span2'));?>
 		</div>
 	</div>
 
 	<div id="deptRule" class="hide">
 		<div class="control-group">
-			<label class="control-label"><?php echo lang('department is', 1);?>...</label>
+			<label class="control-label"><?php echo ucfirst(langConcat('department is'));?>...</label>
 			<div class="controls">
 				<?php echo NovaForm::department('condition', ruleData($rule, 'condition'), array('class' => 'chzn span4'));?>
 			</div>
@@ -56,14 +56,14 @@ if ( ! function_exists('ruleData'))
 	</div>
 
 	<div class="control-group">
-		<label class="control-label"><?php echo lang('action.add users', 1);?>...</label>
+		<label class="control-label"><?php echo ucfirst(lang('short.add', lang('users'));?>...</label>
 		<div class="controls">
 			<?php echo NovaForm::users('users[user]', ruleData($rule, 'users.user'), array('multiple' => 'multiple', 'class' => 'chzn span4'));?>
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label class="control-label"><?php echo lang('action.add users in positions', 1);?>...</label>
+		<label class="control-label"><?php echo ucfirst(lang('short.add', langConcat('users in positions'));?>...</label>
 		<div class="controls">
 			<?php echo NovaForm::position('users[position]', ruleData($rule, 'users.position'), array('multiple' => 'multiple', 'class' => 'chzn span4'));?>
 		</div>
@@ -74,6 +74,6 @@ if ( ! function_exists('ruleData'))
 		<?php echo Form::hidden('id', Uri::segment(4));?>
 		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>
 
-		<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
+		<button type="submit" class="btn btn-primary"><?php echo ucfirst(lang('action.submit'));?></button>
 	</div>
 </form>

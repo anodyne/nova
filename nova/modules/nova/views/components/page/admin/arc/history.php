@@ -1,13 +1,13 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
+		<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('short.backToIndex');?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 
 	<div class="btn-group">
-		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.clear action.filter', 1);?>" data-status="all"><div class="icn icn-75" data-icon="x"></div></a>
-		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show in_progress', 1);?>" data-status="inprogress"><div class="icn icn-75" data-icon="'"></div></a>
-		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show action.approved', 1);?>" data-status="approved"><div class="icn icn-75" data-icon="4"></div></a>
-		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo lang('action.show action.rejected', 1);?>" data-status="rejected"><div class="icn icn-75" data-icon="2"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo ucfirst(lang('short.clear', lang('filter')));?>" data-status="all"><div class="icn icn-75" data-icon="x"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo ucfirst(lang('short.show', lang('in_progress')));?>" data-status="inprogress"><div class="icn icn-75" data-icon="'"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo ucfirst(lang('short.show', lang('approved')));?>" data-status="approved"><div class="icn icn-75" data-icon="4"></div></a>
+		<a href="#" class="btn icn16 status-toggle tooltip-top" title="<?php echo ucfirst(lang('short.show', lang('rejected')));?>" data-status="rejected"><div class="icn icn-75" data-icon="2"></div></a>
 	</div>
 </div>
 
@@ -33,15 +33,15 @@
 					<div class="btn-toolbar">
 						<div class="btn-group">
 							<?php if (count($r->getComments()) > 0): ?>
-								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo lang('comments', 1);?>"><span class="icn icn-50" data-icon="c"></span> <?php echo count($r->getComments());?></span>
+								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo ucfirst(lang('comments'));?>"><span class="icn icn-50" data-icon="c"></span> <?php echo count($r->getComments());?></span>
 							<?php endif;?>
 
 							<?php if (count($r->getVotes('yes')) > 0): ?>
-								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo lang('yes votes', 1);?>"><span class="icn icn-50" data-icon="."></span> <?php echo count($r->getVotes('yes'));?></span>
+								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo ucfirst(langConcat('yes votes'));?>"><span class="icn icn-50" data-icon="."></span> <?php echo count($r->getVotes('yes'));?></span>
 							<?php endif;?>
 
 							<?php if (count($r->getVotes('no')) > 0): ?>
-								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo lang('no votes', 1);?>"><span class="icn icn-50" data-icon="/"></span> <?php echo count($r->getVotes('no'));?></span>
+								<span class="btn btn-small btn-noclick tooltip-top" title="<?php echo ucfirst(langConcat('no votes'));?>"><span class="icn icn-50" data-icon="/"></span> <?php echo count($r->getVotes('no'));?></span>
 							<?php endif;?>
 						</div>
 					</div>
@@ -51,9 +51,9 @@
 						<?php if ($r->status == Status::REJECTED): ?>
 							<div class="btn-group">
 								<?php if (Model_Ban::getItems($r->user->email)): ?>
-									<a href="#" class="btn btn-mini btn-danger tooltip-top unban-user" title="<?php echo lang('action.remove user action.ban', 1);?>" data-user="<?php echo $r->user->id;?>"><div class="icn icn-50" data-icon="2"></div></a>
+									<a href="#" class="btn btn-mini btn-danger tooltip-top unban-user" title="<?php echo ucfirst(lang('short.remove', langConcat('user ban')));?>" data-user="<?php echo $r->user->id;?>"><div class="icn icn-50" data-icon="2"></div></a>
 								<?php else:?>
-									<a href="#" class="btn btn-mini btn-danger tooltip-top ban-user" title="<?php echo lang('action.ban user', 1);?>" data-user="<?php echo $r->user->id;?>"><div class="icn icn-50" data-icon="2"></div></a>
+									<a href="#" class="btn btn-mini btn-danger tooltip-top ban-user" title="<?php echo ucfirst(langConcat('action.ban user'));?>" data-user="<?php echo $r->user->id;?>"><div class="icn icn-50" data-icon="2"></div></a>
 								<?php endif;?>
 							</div>
 						<?php endif;?>
@@ -68,5 +68,5 @@
 		</tbody>
 	</table>
 <?php else: ?>
-	<p class="alert"><?php echo lang('[[error.not_found|applications]]');?></p>
+	<p class="alert"><?php echo lang('error.notFound', lang('applications'));?></p>
 <?php endif;?>

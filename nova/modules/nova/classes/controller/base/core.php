@@ -150,14 +150,14 @@ abstract class Controller_Base_Core extends \Controller_Template
 		\Config::set('language', $this->session->get('language', 'en'));
 
 		// Now, load the language files
-		\Lang::load('app');
 		\Lang::load('nova::base');
-		\Lang::load('nova::event', 'event');
-		\Lang::load('nova::email', 'email');
-		\Lang::load('nova::error', 'error');
-		\Lang::load('nova::action', 'action');
-		\Lang::load('nova::short', 'short');
-		\Lang::load('nova::sitecontent', 'sitecontent');
+		\Lang::load('nova::event');
+		\Lang::load('nova::email');
+		\Lang::load('nova::error');		
+		\Lang::load('nova::short');
+		\Lang::load('nova::action');
+		\Lang::load('nova::sitecontent');
+		\Lang::load('app');
 
 		// Create a new Nav
 		$this->nav = new \Nav;

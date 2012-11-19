@@ -39,7 +39,7 @@
 		if (doaction == 'delete')
 		{
 			$('<div/>').dialog2({
-				title: "<?php echo lang('action.delete application rule', 2);?>",
+				title: "<?php echo ucwords(lang('short.delete', langConcat('application rule')));?>",
 				content: "<?php echo Uri::create('ajax/delete/apprule');?>/" + id
 			});
 		}

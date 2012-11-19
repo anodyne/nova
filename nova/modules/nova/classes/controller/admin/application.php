@@ -85,7 +85,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|reviewers|action.updated]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.update', lang('reviewers'))),
 						);
 					}
 
@@ -99,7 +99,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|vote|action.saved]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.save', lang('vote'))),
 						);
 					}
 
@@ -118,7 +118,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|comment|action.added]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.add', lang('comment'))),
 						);
 					}
 
@@ -150,7 +150,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						// build the message
 						$message = \Swift_Message::newInstance()
-							->setSubject($this->settings->email_subject.' '.lang('email.subject.arc.email_applicant'))
+							->setSubject($this->settings->email_subject.' '.lang('email.subject.arc.emailApplicant'))
 							->setFrom(array($this->settings->email_address => $this->settings->email_name))
 							->setTo(array($app->user->email => $app->user->name))
 							->setBcc($bcc)
@@ -167,7 +167,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|action.email|action.sent]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.sent', lang('email_short'))),
 						);
 					}
 
@@ -245,15 +245,15 @@ class Controller_Admin_Application extends Controller_Base_Admin
 
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|final decision|action.saved]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.save', langContact('final decision'))),
 						);
 					}
 				}
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('error.csrf'),
+						'status' 	=> 'danger',
+						'message' 	=> lang('error.csrf'),
 					);
 				}
 			}
@@ -269,7 +269,10 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			foreach ($app->reviewers as $reviewer)
 			{
 				// add the reviewers to a string
-				$reviewerString.= '<span class="label">'.$reviewer->name.'</span> ';
+				$reviewerString.= \View::forge(\Location::file('common/label', 'admin', 'partial'))
+					->set('class', false)
+					->set('value', $reviewer->name)
+					->render();
 
 				// now add them to an array
 				$reviewerArray[] = $reviewer->id;
@@ -371,14 +374,14 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					{
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|application rule|action.created]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.create', langContact('application rule'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
 							'status'	=> 'danger',
-							'message'	=> lang('[[short.flash.failure|application rule|action.creation]]', 1),
+							'message'	=> ucfirst(lang('short.alert.failure.create', langContact('application rule'))),
 						);
 					}
 				}
@@ -395,14 +398,14 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					{
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|application rule|action.updated]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.update', langConcat('application rule'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
 							'status'	=> 'danger',
-							'message'	=> lang('[[short.flash.failure|application rule|action.update]]', 1),
+							'message'	=> ucfirst(lang('short.alert.failure.update', langConcat('application rule'))),
 						);
 					}
 				}
@@ -418,14 +421,14 @@ class Controller_Admin_Application extends Controller_Base_Admin
 					{
 						$this->_flash[] = array(
 							'status'	=> 'success',
-							'message'	=> lang('[[short.flash.success|application rule|action.deleted]]', 1),
+							'message'	=> ucfirst(lang('short.alert.success.delete', langConcat('application rule'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
 							'status'	=> 'danger',
-							'message'	=> lang('[[short.flash.failure|application rule|action.deletion]]', 1),
+							'message'	=> ucfirst(lang('short.alert.failure.delete', langConcat('application rule'))),
 						);
 					}
 				}
@@ -433,7 +436,7 @@ class Controller_Admin_Application extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
+					'status' 	=> 'danger',
 					'message' => lang('error.csrf'),
 				);
 			}

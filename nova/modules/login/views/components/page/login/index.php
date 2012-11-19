@@ -2,27 +2,27 @@
 	<?php echo Form::open('login/index');?>
 		<div class="control-group">
 			<div class="controls">
-				<input type="email" name="email" id="email" class="span4" placeholder="<?php echo lang("email_address", 2);?>">
+				<input type="email" name="email" id="email" class="span4" placeholder="<?php echo ucwords(lang("email_address"));?>">
 			</div>
 		</div>
 		
 		<div class="control-group">
 			<div class="controls">
-				<input type="password" name="password" id="password" class="span4" placeholder="<?php echo lang("password", 1);?>">
-				<p class="help-block"><a href="<?php echo Uri::create('login/reset');?>"><?php echo lang("short.forgot_password", 1);?></a></p>
+				<input type="password" name="password" id="password" class="span4" placeholder="<?php echo ucfirst(lang("password"));?>">
+				<p class="help-block"><a href="<?php echo Uri::create('login/reset');?>"><?php echo lang("short.forgotPassword");?></a></p>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<div class="controls">
 				<div class="hidden-phone">
-					<button class="btn btn-primary"><?php echo lang('action.login', 2);?></button>
-					<a href="<?php echo Uri::create('main/index');?>" class="btn"><?php echo lang('action.back to site', 1);?></a>
+					<button class="btn btn-primary"><?php echo ucwords(lang('action.login'));?></button>
+					<a href="<?php echo Uri::create('main/index');?>" class="btn"><?php echo lang('short.backToSite');?></a>
 				</div>
 
 				<div class="hidden-desktop hidden-tablet">
-					<button class="btn btn-primary btn-block btn-large"><?php echo lang('action.login', 2);?></button>
-					<a href="<?php echo Uri::create('main/index');?>" class="btn btn-block btn-large"><?php echo lang('action.back to site', 1);?></a>
+					<button class="btn btn-primary btn-block btn-large"><?php echo ucwords(lang('action.login'));?></button>
+					<a href="<?php echo Uri::create('main/index');?>" class="btn btn-block btn-large"><?php echo lang('short.backToSite');?></a>
 				</div>
 			</div>
 		</div>

@@ -11,7 +11,7 @@
 		// when creating a new field, we have next/previous buttons for moving between tabs
 		$(document).on('click', '.next-tab', function(){
 			$('.nav-tabs a[href="#html"]').tab('show');
-			$(this).removeClass('next-tab').addClass('prev-tab').text('<?php echo lang("previous", 1);?>');
+			$(this).removeClass('next-tab').addClass('prev-tab').text('<?php echo ucfirst(lang("previous"));?>');
 
 			return false;
 		});
@@ -19,7 +19,7 @@
 		// when creating a new field, we have next/previous buttons for moving between tabs
 		$(document).on('click', '.prev-tab', function(){
 			$('.nav-tabs a[href="#general"]').tab('show');
-			$(this).removeClass('prev-tab').addClass('next-tab').text('<?php echo lang("next", 1);?>');
+			$(this).removeClass('prev-tab').addClass('next-tab').text('<?php echo ucfirst(lang("next"));?>');
 
 			return false;
 		});
@@ -67,7 +67,7 @@
 			if (doaction == 'delete')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.delete field', 2);?>",
+					title: "<?php echo ucwords(lang('short.delete', lang('field')));?>",
 					content: "<?php echo Uri::create('ajax/delete/formfield');?>/" + id
 				});
 			}
@@ -96,7 +96,7 @@
 			if (doaction == 'update')
 			{
 				$('<div/>').dialog2({
-					title: "<?php echo lang('action.edit value', 2);?>",
+					title: "<?php echo ucwords(lang('short.edit', lang('value')));?>",
 					content: "<?php echo Uri::create('ajax/update/formfield_value');?>/" + id
 				});
 			}

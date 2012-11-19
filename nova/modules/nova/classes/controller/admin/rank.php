@@ -65,15 +65,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank group|action.created]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.create', langConcat('rank group'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank group|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.create', langConcat('rank group'))),
 						);
 					}
 				}
@@ -115,15 +115,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank group|action.duplicated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.duplicate', langConcat('rank group'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
 							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank group|action.duplication]]', 1),
+							'message' => ucfirst(lang('short.alert.failure.duplicate', langConcat('rank group'))),
 						);
 					}
 				}
@@ -140,15 +140,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank group|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', langConcat('rank group'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank group|action.update]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.update', langConcat('rank group'))),
 						);
 					}
 				}
@@ -194,15 +194,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank group|action.deleted]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.delete', langConcat('rank group'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank group|action.deletion]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.delete', langConcat('rank group'))),
 						);
 					}
 				}
@@ -210,8 +210,8 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -259,15 +259,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank info|action.created]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.create', langConcat('rank info'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank info|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.create', langConcat('rank info'))),
 						);
 					}
 				}
@@ -284,15 +284,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank info|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', langConcat('rank info'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank info|action.update]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.update', langConcat('rank info'))),
 						);
 					}
 				}
@@ -338,15 +338,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank info|action.deleted]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.delete', langConcat('rank info'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank info|action.deletion]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.delete', langConcat('rank info'))),
 						);
 					}
 				}
@@ -354,8 +354,8 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -415,15 +415,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank|action.created]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.create', lang('rank'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.create', lang('rank'))),
 						);
 					}
 				}
@@ -438,15 +438,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', lang('rank'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank|action.update]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.update', lang('rank'))),
 						);
 					}
 				}
@@ -463,15 +463,15 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 					if ($item)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|rank|action.deleted]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.delete', lang('rank'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|rank|action.deletion]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.delete', lang('rank'))),
 						);
 					}
 				}
@@ -487,8 +487,8 @@ class Controller_Admin_Rank extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}

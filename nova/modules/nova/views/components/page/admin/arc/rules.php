@@ -1,8 +1,8 @@
 <div class="btn-group">
-	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('applications index', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
+	<a href="<?php echo Uri::create('admin/application/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('short.backToIndex');?>"><div class="icn icn-75" data-icon="<"></div></a>
 	
 	<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
-		<a href="<?php echo Uri::create('admin/application/rules/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.add rule', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
+		<a href="<?php echo Uri::create('admin/application/rules/0');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.add', lang('rule'));?>"><div class="icn icn-75" data-icon="+"></div></a>
 	<?php endif;?>
 </div>
 
@@ -14,9 +14,9 @@
 			<tr>
 				<td>
 					<?php if ($r->type == 'global'): ?>
-						<?php echo lang('for all applications action.add', 1);?>
+						<?php echo ucfirst(langConcat('for all applications action.add'));?>
 					<?php else: ?>
-						<?php echo lang('for all applications to the', 1).' '.Model_Department::find($r->condition)->name.' '.lang('department action.add');?>
+						<?php echo ucfirst(langConcat('for all applications to the')).' '.Model_Department::find($r->condition)->name.' '.langConcat('department action.add');?>
 					<?php endif;?>
 						
 					<?php if (property_exists($users, 'position')):?>
@@ -31,17 +31,17 @@
 						<?php endforeach;?>
 					<?php endif;?>
 
-					<?php echo lang('to the review');?>.
+					<?php echo langConcat('to the review');?>.
 				</td>
 				<td class="span2">
 					<?php if (Sentry::user()->hasLevel('character.create', 2)): ?>
 						<div class="btn-toolbar pull-right">
 							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
+								<a href="<?php echo Uri::create('admin/application/rules/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('action.edit'));?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 
 							<div class="btn-group">
-								<a href="#" class="btn btn-danger btn-mini tooltip-top apprule-action" title="<?php echo lang('action.delete', 1);?>" data-action="delete" data-id="<?php echo $r->id;?>"><div class="icn icn-75" data-icon="x"></div></a>
+								<a href="#" class="btn btn-danger btn-mini tooltip-top apprule-action" title="<?php echo ucfirst(lang('action.delete'));?>" data-action="delete" data-id="<?php echo $r->id;?>"><div class="icn icn-75" data-icon="x"></div></a>
 							</div>
 						</div>
 					<?php endif;?>
@@ -51,5 +51,5 @@
 		</tbody>
 	</table>
 <?php else: ?>
-	<p class="alert"><?php echo lang('[[error.not_found|application rules]]');?></p>
+	<p class="alert"><?php echo lang('error.notFound', langConcat('application rules'));?></p>
 <?php endif;?>

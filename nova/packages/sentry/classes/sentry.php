@@ -75,7 +75,7 @@ class Sentry
 		// load config
 		Config::load('sentry', true);
 		Lang::load('sentry', 'sentry');
-		Lang::load('nova::event', 'event');
+		Lang::load('nova::event');
 
 		// set static vars for later use
 		static::$login_column = trim(Config::get('sentry.login_column'));

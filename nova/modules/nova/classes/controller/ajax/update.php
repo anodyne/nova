@@ -71,8 +71,8 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 					'id' => $form->id,
 
 					'values' => array(
-						'vertical' => lang('vertical', 1),
-						'horizontal' => lang('horizontal', 1)
+						'vertical' => ucfirst(lang('vertical')),
+						'horizontal' => ucfirst(lang('horizontal'))
 					),
 				);
 

@@ -48,8 +48,8 @@ class Controller_Login extends Controller_Base_Login
 		if ( (int) $lockout > \Sentry::attempts()->getLimit())
 		{
 			$this->_flash[] = array(
-				'status' => 'warning',
-				'message' => lang('error.login.locked_out'),
+				'status' 	=> 'warning',
+				'message' 	=> lang('error.login.lockedOut'),
 			);
 
 			// now we're locked out
@@ -83,8 +83,8 @@ class Controller_Login extends Controller_Base_Login
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('error.csrf'),
+						'status' 	=> 'danger',
+						'message' 	=> lang('error.csrf'),
 					);
 				}
 			}
@@ -94,40 +94,40 @@ class Controller_Login extends Controller_Base_Login
 				switch ($error)
 				{
 					case self::WRONG_EMAIL:
-						$error_status = 'danger';
-						$error_message = lang("[[error.login.error_$error|{{".\Uri::create('main/contact')."}}]]");
+						$errorStatus = 'danger';
+						$errorMsg = lang("error.login.error$error", \Uri::create('main/contact'));
 					break;
 
 					case self::WRONG_PASS:
-						$error_status = 'danger';
-						$error_message = lang("[[error.login.error_$error|{{".\Uri::create('login/reset')."}}]]");
+						$errorStatus = 'danger';
+						$errorMsg = lang("error.login.error$error", \Uri::create('login/reset'));
 					break;
 
 					case self::SUSPEND_DURING:
-						$error_status = 'warning';
-						$error_message = lang("[[error.login.error_$error|{{".$this->settings->login_lockout_time."}}]]");
+						$errorStatus = 'warning';
+						$errorMsg = lang("error.login.error$error", $this->settings->login_lockout_time);
 					break;
 
 					case self::SUSPEND_START:
-						$error_status = 'danger';
-						$error_message = lang("[[error.login.error_$error|{{".$this->settings->login_lockout_time."}}]]");
+						$errorStatus = 'danger';
+						$errorMsg = lang("error.login.error$error", $this->settings->login_lockout_time);
 					break;
 
 					case self::PASS_RESET:
-						$error_status = 'info';
-						$error_message = lang("error.login.error_$error");
+						$errorStatus = 'info';
+						$errorMsg = lang("error.login.error$error");
 					break;
 					
 					default:
-						$error_status = 'danger';
-						$error_message = lang("error.login.error_$error");
+						$errorStatus = 'danger';
+						$errorMsg = lang("error.login.error$error");
 					break;
 				}
 
 				// set the flash data
 				$this->_flash[] = array(
-					'status' => $error_status,
-					'message' => $error_message,
+					'status' 	=> $errorStatus,
+					'message' 	=> $errorMsg,
 				);
 			}
 		}
@@ -141,11 +141,11 @@ class Controller_Login extends Controller_Base_Login
 	 */
 	public function action_logout()
 	{
-		// do the log out
+		// Do the log out
 		\Sentry::logout();
 
-		// manually set the logout message
-		$this->_data->message = lang('[[short.login.logout|{{'.\Uri::create('main/index').'}}|{{'.\Uri::create('login/index').'}}]]');
+		// Manually set the logout message
+		$this->_data->message = lang('short.login.logout', \Uri::create('main/index'), \Uri::create('login/index'));
 
 		return;
 	}
@@ -184,13 +184,13 @@ class Controller_Login extends Controller_Base_Login
 						$link = \Uri::create('login/reset_confirm/'.$reset['link']);
 
 						// parse the content for the message
-						$email_content = lang("email.content.password_reset|[$link]");
+						$email_content = lang('email.content.passwordReset', $link);
 
 						// set up the email
 						$email = \Email::forge();
 						$email->from($this->settings->email_address, $this->settings->email_name)
 							->to($address)
-							->subject($this->settings->email_subject.' '.lang('email.subject.password_reset'))
+							->subject($this->settings->email_subject.' '.lang('email.subject.passwordReset'))
 							->body($email_content);
 
 						try
@@ -199,46 +199,46 @@ class Controller_Login extends Controller_Base_Login
 							$email->send();
 
 							$this->_flash[] = array(
-								'status' => 'success',
-								'message' => lang('short.login.reset_success')
+								'status' 	=> 'success',
+								'message' 	=> lang('short.login.resetSuccess')
 							);
 						}
 						catch(\EmailValidationFailedException $e)
 						{
 							$this->_flash[] = array(
-								'status' => 'danger',
-								'message' => lang('error.email.validation_failed')
+								'status' 	=> 'danger',
+								'message' 	=> lang('error.email.validationFailed')
 							);
 						}
 						catch(\EmailSendingFailedException $e)
 						{
 							$this->_flash[] = array(
-								'status' => 'danger',
-								'message' => lang('error.email.could_not_send')
+								'status' 	=> 'danger',
+								'message' 	=> lang('error.email.couldNotSend')
 							);
 						}
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('error.login.reset_failed')
+							'status' 	=> 'danger',
+							'message' 	=> lang('error.login.resetFailed')
 						);
 					}
 				}
 				catch (\SentryAuthException $e)
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('error.login.auth_exception')
+						'status' 	=> 'danger',
+						'message' 	=> lang('error.login.authException')
 					);
 				}
 			}
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -273,24 +273,24 @@ class Controller_Login extends Controller_Base_Login
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('email.flash.confirmation_failed')
+							'status' 	=> 'danger',
+							'message' 	=> lang('error.login.confirmationFailed')
 						);
 					}
 				}
 				catch (\SentryAuthException $e)
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('email.flash.auth_exception')
+						'status' 	=> 'danger',
+						'message' 	=> lang('error.login.authException')
 					);
 				}
 			}
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}

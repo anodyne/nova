@@ -20,7 +20,7 @@
 			var location = $(this).data('location');
 
 			$('<div/>').dialog2({
-				title: "<?php echo lang('action.install module', 2);?>",
+				title: "<?php echo ucwords(langConcat('action.install module'));?>",
 				content: "<?php echo Uri::create('ajax/add/module');?>/" + location
 			});
 
@@ -31,7 +31,7 @@
 			var location = $(this).data('location');
 
 			$('<div/>').dialog2({
-				title: "<?php echo lang('action.update module', 2);?>",
+				title: "<?php echo ucwords(langConcat('action.update module'));?>",
 				content: "<?php echo Uri::create('ajax/update/module');?>/" + location
 			});
 

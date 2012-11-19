@@ -54,21 +54,21 @@ class Controller_Admin_User extends Controller_Base_Admin
 					\NovaMail::send('user_add', array(
 						'to' => array($user->id),
 						'subject' => lang('email.subject.user.add'),
-						'content' => array('message' => lang('[[email.content.user.add|user|{{'.$this->settings->sim_name.'}}|{{'.\Uri::base().'}}|action.login|{{'.$user->name.'}}|{{'.$password.'}}]]')),
+						'content' => array('message' => lang('email.content.user.add', lang('user'), $this->settings->sim_name, \Uri::base(), lang('action.login'), $user->name, $password)),
 					));
 
 					if ($user)
 					{
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|user|action.created]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.create', lang('user'))),
 						);
 					}
 					else
 					{
 						$this->_flash[] = array(
-							'status' => 'danger',
-							'message' => lang('[[short.flash.failure|user|action.creation]]', 1),
+							'status' 	=> 'danger',
+							'message' 	=> ucfirst(lang('short.alert.failure.create', lang('user'))),
 						);
 					}
 				}
@@ -101,8 +101,8 @@ class Controller_Admin_User extends Controller_Base_Admin
 					}
 
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|user|action.deleted]]', 1),
+						'status' 	=> 'success',
+						'message' 	=> ucfirst(lang('short.alert.success.delete', lang('user'))),
 					);
 				}
 
@@ -117,8 +117,8 @@ class Controller_Admin_User extends Controller_Base_Admin
 			else
 			{
 				$this->_flash[] = array(
-					'status' => 'danger',
-					'message' => lang('error.csrf'),
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
 				);
 			}
 		}
@@ -172,8 +172,8 @@ class Controller_Admin_User extends Controller_Base_Admin
 						\Model_Form_Data::updateData('user', $id, \Input::post());
 
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|user info|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message'	=> ucfirst(lang('short.alert.success.update', langConcat('user info'))),
 						);
 					}
 
@@ -190,16 +190,16 @@ class Controller_Admin_User extends Controller_Base_Admin
 						\Model_User_Preferences::updateUserPreferences($id, \Input::post());
 
 						$this->_flash[] = array(
-							'status' => 'success',
-							'message' => lang('[[short.flash.success|user preferences|action.updated]]', 1),
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', langConcat('user preferences'))),
 						);
 					}
 				}
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('error.csrf'),
+						'status' 	=> 'danger',
+						'message' 	=> lang('error.csrf'),
 					);
 				}
 			}
@@ -226,10 +226,10 @@ class Controller_Admin_User extends Controller_Base_Admin
 			}
 
 			// manually set the header
-			$this->_headers['edit'] = lang('action.edit user', 2).' &ndash; '.$user->name;
+			$this->_headers['edit'] = ucwords(langConcat('action.edit user')).' &ndash; '.$user->name;
 
 			// manually set the title
-			$this->_titles['edit'] = lang('action.edit user', 2);
+			$this->_titles['edit'] = ucwords(langConcat('action.edit user'));
 
 			// send the genre to the JS view
 			$this->_js_data->genre = $this->genre;

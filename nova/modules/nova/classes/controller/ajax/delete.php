@@ -220,7 +220,7 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 				{
 					foreach ($infoItems as $i)
 					{
-						$group = lang('group', 1).' '.$i->group;
+						$group = ucfirst(lang('group')).' '.$i->group;
 
 						if ($i->id != $id)
 						{

@@ -127,15 +127,15 @@ abstract class Controller_Main extends Controller_Base_Main
 
 					// set the flash message
 					$this->_flash[] = array(
-						'status' => 'success',
-						'message' => lang('[[short.flash.success|application|action.submitted]]', 1),
+						'status' 	=> 'success',
+						'message' 	=> ucfirst(lang('short.alert.success.submit', lang('application'))),
 					);
 				}
 				else
 				{
 					$this->_flash[] = array(
-						'status' => 'danger',
-						'message' => lang('error.csrf'),
+						'status' 	=> 'danger',
+						'message' 	=> lang('error.csrf'),
 					);
 				}
 			}
