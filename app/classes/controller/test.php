@@ -65,4 +65,9 @@ class Controller_Test extends Nova\Controller_Main
 			\Location::rank('red', 'o6', 'default')
 		);
 	}
+
+	public function action_lang()
+	{
+		\Debug::dump(langC('action.save action.create'));
+	}
 }
