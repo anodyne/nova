@@ -6,4 +6,6 @@
  *     return array('position' => 'job');
  */
 
-return array();
+return array(
+	//
+);
