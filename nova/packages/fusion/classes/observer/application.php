@@ -173,7 +173,7 @@ class Observer_Application extends \Orm\Observer
 			
 			// send the email
 			\NovaMail::send('arc_review_start', array(
-				'subject' => lang('email.subject.arc.review_start'),
+				'subject' => lang('email.subject.arc.reviewStart'),
 				'to' => array_keys($emailUsers),
 			));
 		}

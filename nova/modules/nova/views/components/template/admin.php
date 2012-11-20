@@ -1,5 +1,5 @@
 <noscript>
-	<div class="system_warning"><?php echo lang("{{You need to have Javascript turned on to use all of Nova 3's features.}}");?></div>
+	<div class="system_warning"><?php echo lang('short.javascript');?></div>
 </noscript>
 
 <?php echo $navmain;?>

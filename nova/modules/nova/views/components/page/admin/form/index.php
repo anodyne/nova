@@ -10,22 +10,22 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#" class="edit-form" data-key="<?php echo $form->key;?>">
-										<?php echo lang('action.edit form', 2);?>
+										<?php echo ucwords(lang('short.edit', lang('form')));?>
 									</a>
 								</li>
 								<li>
 									<a href="<?php echo Uri::create('admin/form/fields/'.$form->key);?>">
-										<?php echo lang('action.edit fields', 2);?>
+										<?php echo ucwords(lang('short.edit', lang('fields')));?>
 									</a>
 								</li>
 								<li>
 									<a href="<?php echo Uri::create('admin/form/tabs/'.$form->key);?>">
-										<?php echo lang('action.edit tabs', 2);?>
+										<?php echo ucwords(lang('short.edit', lang('tabs')));?>
 									</a>
 								</li>
 								<li>
 									<a href="<?php echo Uri::create('admin/form/sections/'.$form->key);?>">
-										<?php echo lang('action.edit sections', 2);?>
+										<?php echo ucwords(lang('short.edit', lang('sections')));?>
 									</a>
 								</li>
 							</ul>

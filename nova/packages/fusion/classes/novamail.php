@@ -37,13 +37,13 @@ class NovaMail
 			// we have to have a `to` index otherwise things will fail
 			if ( ! array_key_exists('to', $data))
 			{
-				throw new \Exception(lang('email.error.no_to_address'));
+				throw new \Exception(lang('email.error.noToAddress'));
 			}
 
 			// we have to have a `subject` index
 			if ( ! array_key_exists('subject', $data))
 			{
-				throw new \Exception(lang('email.error.no_subject'));
+				throw new \Exception(lang('email.error.noSubject'));
 			}
 
 			// do we have data for the email?

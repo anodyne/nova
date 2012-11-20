@@ -15,7 +15,7 @@ if ( ! function_exists('rankData'))
 
 if (is_numeric(Uri::segment(4))): ?>
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/rank/manage');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.back to ranks', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
+		<a href="<?php echo Uri::create('admin/rank/manage');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.back', lang('ranks')));?>"><div class="icn icn-75" data-icon="<"></div></a>
 	</div>
 <?php endif;?>
 
@@ -23,10 +23,10 @@ if (is_numeric(Uri::segment(4))): ?>
 	<div class="row">
 		<div class="span6">
 			<div class="control-group">
-				<label class="control-label"><?php echo lang('rank info', 2);?></label>
+				<label class="control-label"><?php echo ucwords(langConcat('rank info'));?></label>
 				<div class="controls">
 					<div class="input-append">
-						<?php echo Form::select('info_id', rankData($rank, 'info_id', 0), $infos, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/info');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank info', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
+						<?php echo Form::select('info_id', rankData($rank, 'info_id', 0), $infos, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/info');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.edit', langConcat('rank info')));?>"><div class="icn icn-50" data-icon="p"></div></a>
 					</div>
 				</div>
 			</div>
@@ -34,10 +34,10 @@ if (is_numeric(Uri::segment(4))): ?>
 
 		<div class="span6">
 			<div class="control-group">
-				<label class="control-label"><?php echo lang('rank group', 2);?></label>
+				<label class="control-label"><?php echo ucwords(langConcat('rank group'));?></label>
 				<div class="controls">
 					<div class="input-append">
-						<?php echo Form::select('group_id', rankData($rank, 'group_id'), $groups, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.edit rank groups', 1);?>"><div class="icn icn-50" data-icon="p"></div></a>
+						<?php echo Form::select('group_id', rankData($rank, 'group_id'), $groups, array('class' => 'span4'));?><a href="<?php echo Uri::create('admin/rank/groups');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.edit', langConcat('rank groups')));?>"><div class="icn icn-50" data-icon="p"></div></a>
 					</div>
 				</div>
 			</div>
@@ -46,7 +46,7 @@ if (is_numeric(Uri::segment(4))): ?>
 
 	<?php if (isset($bases) and isset($pips)): ?>
 		<div class="control-group">
-			<label class="control-label"><?php echo lang('preview', 1);?></label>
+			<label class="control-label"><?php echo ucfirst(lang('preview'));?></label>
 			<div id="rankPreview">
 				<?php if ( ! $rankPreview): ?>
 					<?php echo \Location::rank('', '');?>
@@ -59,8 +59,8 @@ if (is_numeric(Uri::segment(4))): ?>
 
 	<?php if (isset($bases) and isset($pips)): ?>
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#baseImage" data-toggle="tab"><?php echo lang('base image', 2);?></a></li>
-			<li><a href="#pipImage" data-toggle="tab"><?php echo lang('pip image', 2);?></a></li>
+			<li class="active"><a href="#baseImage" data-toggle="tab"><?php echo ucwords(langConcat('base image'));?></a></li>
+			<li><a href="#pipImage" data-toggle="tab"><?php echo ucwords(langConcat('pip image'));?></a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -86,7 +86,7 @@ if (is_numeric(Uri::segment(4))): ?>
 		</div>
 	<?php else: ?>
 		<fieldset>
-			<legend><?php echo lang('images', 1);?></legend>
+			<legend><?php echo ucfirst(lang('images'));?></legend>
 
 			<ul class="thumbnails">
 			<?php foreach($imgs as $base => $image): ?>
@@ -99,7 +99,7 @@ if (is_numeric(Uri::segment(4))): ?>
 	<?php endif;?>
 
 	<div class="controls">
-		<button class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
+		<button class="btn btn-primary"><?php echo ucfirst(lang('action.submit'));?></button>
 		<?php echo Form::hidden('id', Uri::segment(4));?>
 		<?php echo Form::hidden('action', $action);?>
 		<?php echo Form::hidden(Config::get('security.csrf_token_key'), Security::fetch_token());?>

@@ -53,7 +53,7 @@ class Status
 			break;
 
 			default:
-				$final = lang('[[error.not_found|status]]');
+				$final = lang('error.notFound', lang('status'));
 			break;
 		}
 

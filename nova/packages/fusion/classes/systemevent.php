@@ -53,10 +53,10 @@ class SystemEvent
 
 		// merge two arrays
 		$data = array_merge($data, array(
-			'email' => ($user !== null) ? $user->email : '',
-			'user_id' => ($user !== null) ? $user->id : 0,
-			'ip' => \Input::real_ip(),
-			'content' => lang($content)
+			'email' 	=> ($user !== null) ? $user->email : '',
+			'user_id' 	=> ($user !== null) ? $user->id : 0,
+			'ip' 		=> \Input::real_ip(),
+			'content' 	=> lang($content)
 		));
 
 		// create the new event item

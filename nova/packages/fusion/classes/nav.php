@@ -279,19 +279,19 @@ class Nav
 				),
 				3 => array(
 					array(
-						'name' => lang('action.request loa', 1),
+						'name' => ucfirst(langConcat('action.request loa')),
 						'url' => 'admin/user/loa',
 						'extra' => array(),
 						'additional' => ''),
 					array(
-						'name' => lang('action.nominate for award', 1),
+						'name' => ucfirst(langConcat('action.nominate for award')),
 						'url' => 'admin/user/nominate',
 						'extra' => array(),
 						'additional' => ''),
 				),
 				4 => array(
 					array(
-						'name' => lang('action.logout', 1),
+						'name' => ucfirst(lang('action.logout')),
 						'url' => 'login/logout',
 						'extra' => array(),
 						'additional' => ''),
@@ -309,7 +309,7 @@ class Nav
 		{
 			// Set the data for the output
 			$output->set('loggedIn', false)
-			 ->set('loginText', lang('action.login', 2));
+			 ->set('loginText', ucwords(lang('action.login')));
 		}
 
 		// Set the output render to the class variable

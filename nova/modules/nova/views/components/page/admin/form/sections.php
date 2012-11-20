@@ -1,19 +1,19 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn icn16 tooltip-top" title="<?php echo lang('all forms', 1);?>"><div class="icn icn-75" data-icon="<"></div></a>
-		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4).'/0');?>" class="btn icn16 tooltip-top" title="<?php echo lang('action.add section', 1);?>"><div class="icn icn-75" data-icon="+"></div></a>
+		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(langConcat('all forms'));?>"><div class="icn icn-75" data-icon="<"></div></a>
+		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4).'/0');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.add', lang('section')));?>"><div class="icn icn-75" data-icon="+"></div></a>
 	</div>
 
 	<div class="btn-group">
-		<a href="<?php echo Uri::create('admin/form/tabs/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.edit tabs', 1);?>"><?php echo $images['tabs'];?></a>
-		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo lang('action.edit fields', 1);?>"><?php echo $images['fields'];?></a>
+		<a href="<?php echo Uri::create('admin/form/tabs/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo ucfirst(lang('short.edit', lang('tabs')));?>"><?php echo $images['tabs'];?></a>
+		<a href="<?php echo Uri::create('admin/form/fields/'.Uri::segment(4));?>" class="btn tooltip-top" title="<?php echo ucfirst(lang('short.edit', lang('fields')));?>"><?php echo $images['fields'];?></a>
 	</div>
 </div>
 
 <?php if ($tabs !== false): ?>
 	<ul class="nav nav-tabs">
 	<?php foreach ($tabs as $t): ?>
-		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ($t->status === Status::INACTIVE){ echo ' ('.lang('inactive', 1).')';}?></a></li>
+		<li><a href="#<?php echo $t->link_id;?>" data-toggle="tab"><?php echo $t->name;?><?php if ($t->status === Status::INACTIVE){ echo ' ('.ucfirst(lang('inactive')).')';}?></a></li>
 	<?php endforeach;?>
 	</ul>
 	
@@ -29,19 +29,19 @@
 							<p>
 								<strong><?php echo $s->name;?></strong>
 								<?php if ($s->status === Status::INACTIVE): ?>
-									<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
+									<span class="muted">(<?php echo ucfirst(lang('inactive'));?>)</span>
 								<?php endif;?>
 							</p>
 						</td>
 						<td class="span2">
 							<div class="btn-toolbar pull-right">
 								<div class="btn-group">
-									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
+									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('action.edit')).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
 								</div>
 
 								<?php if (Sentry::user()->hasAccess('form.delete')): ?>
 									<div class="btn-group">
-										<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+										<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo ucfirst(lang('action.delete')).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 									</div>
 								<?php endif;?>
 							</div>
@@ -52,7 +52,7 @@
 				</tbody>
 			</table>
 		<?php else: ?>
-			<p class="alert"><?php echo lang('[[error.not_found|sections]] for this tab', 1);?></p>
+			<p class="alert"><?php echo lang('error.notFound', lang('sections')).' '.langConcat('for this tab');?></p>
 		<?php endif;?>
 		</div>
 	<?php endforeach;?>
@@ -67,19 +67,19 @@
 						<p>
 							<strong><?php echo $s->name;?></strong>
 							<?php if ($s->status === Status::INACTIVE): ?>
-								<span class="muted">(<?php echo lang('inactive', 1);?>)</span>
+								<span class="muted">(<?php echo ucfirst(lang('inactive'));?>)</span>
 							<?php endif;?>
 						</p>
 					</td>
 					<td class="span2">
 						<div class="btn-toolbar pull-right">
 							<div class="btn-group">
-								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo lang('action.edit', 1).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
+								<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('action.edit')).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 
 							<?php if (Sentry::user()->hasAccess('form.delete')): ?>
 								<div class="btn-group">
-									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo lang('action.delete', 1).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo ucfirst(lang('action.delete')).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 								</div>
 							<?php endif;?>
 						</div>
@@ -90,6 +90,6 @@
 			</tbody>
 		</table>
 	<?php else: ?>
-		<p class="alert"><?php echo lang('[[error.not_found|form sections]]', 1);?></p>
+		<p class="alert"><?php echo lang('error.notFound', langConcat('form sections'));?></p>
 	<?php endif;?>
 <?php endif;?>

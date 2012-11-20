@@ -17,7 +17,7 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 			<div class="thumbnail">
 				<div class="caption">
 					<div class="btn-group pull-right">
-						<a href="<?php echo Uri::create('admin/character/edit/'.$c->id);?>" class="btn btn-small"><?php echo lang('action.edit', 1);?></a>
+						<a href="<?php echo Uri::create('admin/character/edit/'.$c->id);?>" class="btn btn-small"><?php echo ucfirst(lang('action.edit'));?></a>
 					</div>
 
 					<h3><?php echo $c->getName(true, true);?></h3>
@@ -35,9 +35,9 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 		<div class="span9">
 			<form class="form-<?php echo $form->orientation;?>" method="post">
 				<ul class="nav nav-pills">
-					<li class="active"><a href="#c-basic" data-toggle="pill" class="tooltip-top" title="<?php echo lang('character info', 2);?>"><i class="icon-user icon-50"></i></a></li>
-					<li><a href="#c-profile" data-toggle="pill" class="tooltip-top" title="<?php echo lang('character bio', 2);?>"><i class="icon-th-list icon-50"></i></a></li>
-					<li><a href="#c-images" data-toggle="pill" class="tooltip-top" title="<?php echo lang('character images', 2);?>"><i class="icon-picture icon-50"></i></a></li>
+					<li class="active"><a href="#c-basic" data-toggle="pill" class="tooltip-top" title="<?php echo ucwords(langConcat('character info'));?>"><i class="icon-user icon-50"></i></a></li>
+					<li><a href="#c-profile" data-toggle="pill" class="tooltip-top" title="<?php echo ucwords(langConcat('character bio'));?>"><i class="icon-th-list icon-50"></i></a></li>
+					<li><a href="#c-images" data-toggle="pill" class="tooltip-top" title="<?php echo ucwords(langConcat('character images'));?>"><i class="icon-picture icon-50"></i></a></li>
 				</ul>
 
 				<div class="pill-content">
@@ -45,28 +45,28 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 						<div class="row">
 							<div class="span4">
 								<div class="control-group">
-									<label class="control-label"><?php echo lang('first name', 2);?></label>
+									<label class="control-label"><?php echo ucwords(langConcat('first name'));?></label>
 									<div class="controls">
 										<?php echo Form::input('first_name', $character->first_name, array('class' => 'span3'));?>
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label"><?php echo lang('middle name', 2);?></label>
+									<label class="control-label"><?php echo ucwords(langConcat('middle name'));?></label>
 									<div class="controls">
 										<?php echo Form::input('middle_name', $character->middle_name, array('class' => 'span3'));?>
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label"><?php echo lang('last name', 2);?></label>
+									<label class="control-label"><?php echo ucwords(langConcat('last name'));?></label>
 									<div class="controls">
 										<?php echo Form::input('last_name', $character->last_name, array('class' => 'span3'));?>
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label"><?php echo lang('suffix', 1);?></label>
+									<label class="control-label"><?php echo ucfirst(lang('suffix'));?></label>
 									<div class="controls">
 										<?php echo Form::input('suffix', $character->suffix, array('class' => 'span1'));?>
 									</div>
@@ -75,14 +75,14 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 
 							<div class="span4">
 								<div class="control-group">
-									<label class="control-label"><?php echo lang('rank', 1);?></label>
+									<label class="control-label"><?php echo ucfirst(lang('rank'));?></label>
 									<div class="controls">
 										<?php echo NovaForm::rank('rank_id', $character->rank_id, array('class' => 'span4 chzn'));?>
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label"><?php echo lang('positions', 1);?></label>
+									<label class="control-label"><?php echo ucfirst(lang('positions'));?></label>
 									<div class="controls">
 										<?php echo NovaForm::position('position_id', array(1,5), array('class' => 'span4 chzn', 'multiple' => 'multiple'));?>
 									</div>
@@ -91,7 +91,7 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 						</div>
 
 						<div class="controls">
-							<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
+							<button type="submit" class="btn btn-primary"><?php echo ucfirst(lang('action.submit'));?></button>
 						</div>
 					</div>
 
@@ -135,7 +135,7 @@ if (isset($characters) and Uri::segment(4) === false): ?>
 						<?php endif;?>
 
 						<div class="controls">
-							<button type="submit" class="btn btn-primary"><?php echo lang('action.submit', 1);?></button>
+							<button type="submit" class="btn btn-primary"><?php echo ucfirst(lang('action.submit'));?></button>
 						</div>
 					</div>
 

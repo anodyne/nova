@@ -275,9 +275,9 @@ class Model_Application extends \Model
 		{
 			// send the email
 			\NovaMail::send('arc_reviewer_add', array(
-				'subject' => lang('email.subject.arc.add_reviewer'),
+				'subject' => lang('email.subject.arc.addReviewer'),
 				'to' => array_values($sendEmail),
-				'content' => array('message' => lang('email.content.arc.add_reviewer')),
+				'content' => array('message' => lang('email.content.arc.addReviewer')),
 			));
 		}
 	}

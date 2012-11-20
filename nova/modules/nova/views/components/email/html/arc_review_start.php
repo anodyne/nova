@@ -13,6 +13,6 @@
 		</style>
 	</head>
 	<body>
-		<?php echo Markdown::parse(lang('email.content.arc.review_start'));?>
+		<?php echo Markdown::parse(lang('email.content.arc.reviewStart'));?>
 	</body>
 </html>
