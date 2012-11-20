@@ -260,6 +260,19 @@ class Controller_Ajax_Update extends Controller_Base_Ajax
 	}
 
 	/**
+	 * Create a user record.
+	 *
+	 * @return	void
+	 */
+	public function action_link_character()
+	{
+		if (\Sentry::check() and \Sentry::user()->hasLevel('user.update', 2))
+		{
+			echo \View::forge(\Location::file('update/link_character_to_user', \Utility::getSkin('admin'), 'ajax'));
+		}
+	}
+
+	/**
 	 * Runs the migrations for a module.
 	 *
 	 * @return	void

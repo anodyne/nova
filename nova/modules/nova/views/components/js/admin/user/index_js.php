@@ -129,8 +129,8 @@
 		if (doaction == 'link')
 		{
 			$('<div/>').dialog2({
-				title: "<?php echo ucwords(lang('short.create', lang('user')));?>",
-				content: "<?php echo Uri::create('ajax/add/user');?>"
+				title: "<?php echo ucwords(langConcat('action.link character to user'));?>",
+				content: "<?php echo Uri::create('ajax/update/link_character');?>"
 			});
 		}
 

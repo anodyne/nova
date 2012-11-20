@@ -30,7 +30,6 @@ class Controller_Admin_User extends Controller_Base_Admin
 		{
 			if (\Security::check_token())
 			{
-				// get the action
 				$action = \Security::xss_clean(\Input::post('action'));
 
 				/**
@@ -38,10 +37,10 @@ class Controller_Admin_User extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->hasAccess('user.create') and $action == 'create')
 				{
-					// generate a password
+					// Generate a password
 					$password = \Str::random('alnum', 8);
 
-					// create the user
+					// Create the user
 					$user = \Model_User::createItem(array(
 						'status' 	=> \Status::ACTIVE,
 						'name' 		=> \Security::xss_clean(\Input::post('name')),
@@ -50,11 +49,11 @@ class Controller_Admin_User extends Controller_Base_Admin
 						'role_id' 	=> \Model_Access_Role::ACTIVE,
 					), true);
 
-					// email the user
+					// Email the user
 					\NovaMail::send('user_add', array(
-						'to' => array($user->id),
-						'subject' => lang('email.subject.user.add'),
-						'content' => array('message' => lang('email.content.user.add', lang('user'), $this->settings->sim_name, \Uri::base(), lang('action.login'), $user->name, $password)),
+						'to' 		=> array($user->id),
+						'subject' 	=> lang('email.subject.user.add'),
+						'content' 	=> array('message' => lang('email.content.user.add', lang('user'), $this->settings->sim_name, \Uri::base(), lang('action.login'), $user->name, $password)),
 					));
 
 					if ($user)
@@ -74,20 +73,22 @@ class Controller_Admin_User extends Controller_Base_Admin
 				}
 
 				/**
-				 * Deletes a user. This doesn't actually delete anything since there are
-				 * far too many pieces that rely on the character and user records being there.
-				 * Instead, this simply sets the user to a status that makes sure it's never
-				 * pulled back. It also goes through and "removes" the characters as well.
+				 * Delete a user.
+				 *
+				 * This doesn't actually delete anything since there are far too many pieces
+				 * that rely on the character and user records being there. Instead, this simply
+				 * sets the user to a status that makes sure it's never pulled back. It also 
+				 * goes through and "removes" the characters as well.
 				 */
 				if (\Sentry::user()->hasAccess('user.delete') and $action == 'delete')
 				{
-					// get the user
+					// Get the user
 					$user = \Model_User::find(\Security::xss_clean(\Input::post('id')));
 
-					// update the user
-					$user->role_id = \Model_Access_Role::INACTIVE;
-					$user->status = \Status::REMOVED;
-					$user->leave_date = \Carbon::now('UTC')->toDateTimeString();
+					// Update the user
+					$user->role_id 		= \Model_Access_Role::INACTIVE;
+					$user->status 		= \Status::REMOVED;
+					$user->leave_date 	= \Carbon::now('UTC')->toDateTimeString();
 					$user->save();
 
 					// deactivate all characters associated with the user
@@ -111,7 +112,35 @@ class Controller_Admin_User extends Controller_Base_Admin
 				 */
 				if (\Sentry::user()->hasLevel('user.update', 2) and $action == 'link')
 				{
-					# code...
+					// Get the data
+					$user 		= \Model_User::find(\Security::xss_clean(\Input::post('user')));
+					$character	= \Model_Character::find(\Security::xss_clean(\Input::post('character')));
+					$main 		= \Security::xss_clean(\Input::post('make_main'));
+					$override 	= \Security::xss_clean(\Input::post('override'));
+
+					// Update the character
+					if ( ! $character->hasUser() or ($character->hasUser() and $override == 'yes'))
+					{
+						$character->user_id = $user->id;
+						$character->save();
+
+						// Update the user if we're setting this character as their main
+						if ($main == 'yes')
+						{
+							$user->character_id = $character->id;
+							$user->save();
+						}
+
+						$this->_flash[] = array(
+							'status' 	=> 'success',
+							'message' 	=> ucfirst(lang('short.alert.success.update', lang('user'))),
+						);
+					}
+
+					$this->_flash[] = array(
+						'status' 	=> 'danger',
+						'message' 	=> ucfirst(lang('short.alert.failure.update', lang('user'))),
+					);
 				}
 			}
 			else
@@ -123,7 +152,7 @@ class Controller_Admin_User extends Controller_Base_Admin
 			}
 		}
 
-		// get all the users
+		// Get all the users
 		$this->_data->active = \Model_User::getItems();
 
 		return;

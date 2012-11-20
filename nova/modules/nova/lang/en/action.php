@@ -43,9 +43,12 @@ return array(
 		'link' => 'link',
 		'linked' => 'linked',
 
+		'make' => 'make',
 		'manage' => 'manage',
 
 		'nominate' => 'nominate',
+
+		'override' => "override",
 
 		'request' => 'request',
 		'reset' => 'reset',

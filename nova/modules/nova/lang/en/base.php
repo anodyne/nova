@@ -86,6 +86,7 @@ return array(
 	'label' => 'label',
 	'labels' => 'labels',
 	'link' => 'link',
+	'linked' => "linked",
 	'last' => 'last',
 	'location' => 'location',
 	'language' => 'language',
@@ -129,6 +130,7 @@ return array(
 	'pending' => 'pending',
 	'personal_log' => "personal log",
 	'personal_logs' => "personal logs",
+	'primary' => 'primary',
 
 	'row' => 'row',
 	'rows' => 'rows',
@@ -149,6 +151,7 @@ return array(
 	'result' => 'result',
 	'results' => 'results',
 
+	'secondary' => "secondary",
 	'section' => "section",
 	'sections' => "sections",
 	'site' => "site",
@@ -177,6 +180,7 @@ return array(
 
 	'user' => 'user',
 	'users' => 'users',
+	'unlinked' => "unlinked",
 
 	'vertical' => "vertical",
 	'value' => 'value',
