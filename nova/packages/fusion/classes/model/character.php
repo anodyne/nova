@@ -183,7 +183,7 @@ class Model_Character extends \Model
 				# TODO: is this right?
 				$result = static::find('all', array(
 					'where' => array(
-						array('user' => 0),
+						array('user_id' => 0),
 						array('status' => \Status::ACTIVE)
 					),
 				));
@@ -211,13 +211,13 @@ class Model_Character extends \Model
 	 * @param	bool	use the rank short name instead of the full name?
 	 * @return	string
 	 */
-	public function getName($include_rank = true, $short_rank = false)
+	public function getName($showRank = true, $showShortRank = false)
 	{
 		$pieces = array(
-			($include_rank) 
-				? ($short_rank) 
-					? $this->rank->short_name 
-					: $this->rank->name 
+			($showRank) 
+				? ($showShortRank) 
+					? $this->rank->info->short_name 
+					: $this->rank->info->name 
 				: '',
 			$this->first_name,
 			$this->last_name
@@ -243,6 +243,16 @@ class Model_Character extends \Model
 	public function getPositions()
 	{
 		return \Model_Character_Positions::getItems($this->id);
+	}
+
+	/**
+	 * Does the character have a user associated with it?
+	 *
+	 * @return	bool
+	 */
+	public function hasUser()
+	{
+		return ($this->user !== null and $this->user->id > 0);
 	}
 	
 	/**
