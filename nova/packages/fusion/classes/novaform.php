@@ -109,20 +109,15 @@ class NovaForm
 	 * Builds a select menu that includes all of the positions from
 	 * the database based on the parameters passed to the method.
 	 *
-	 * <code>
-	 * echo NovaForm::position('positions', 8, array('id' => 'positions', 'open'));
-	 * </code>
-	 *
 	 * @api
-	 * @uses	Form::select
-	 * @param	string	the name of the select menu
-	 * @param	array 	an array of selected items
-	 * @param	array	any extra attributes to be added to the select menu
-	 * @return	string	a select menu output from Form::select
+	 * @param	string	The name of the select menu
+	 * @param	array 	An array of selected items
+	 * @param	array	Extra attributes to be added to the select menu
+	 * @return	string
 	 */
 	public static function department($name, $selected = array(), $extra = null)
 	{
-		// grab the departments
+		// Grab the departments
 		$depts = \Model_Department::find('all');
 
 		if (count($depts) > 0)
@@ -153,10 +148,9 @@ class NovaForm
 	 * Builds a select menu of available languages.
 	 *
 	 * @api
-	 * @uses	Form::select
-	 * @param	string	the name of the select menu
-	 * @param	array 	an array of selected items
-	 * @param	array	any extra attributes to be added to the select menu
+	 * @param	string	The name of the select menu
+	 * @param	array 	An array of selected items
+	 * @param	array	Extra attributes to be added to the select menu
 	 * @return	string
 	 */
 	public static function languages($name, $selected = array(), $extra = array())
@@ -214,10 +208,10 @@ class NovaForm
 			'vi' => 'vietnamese',
 		);
 
-		// get a list of the languges in the system
+		// Get a list of the languges in the system
 		$dir = \File::read_dir(APPPATH.'lang', 1, null);
 
-		// loop through the languages and figure out what should be shown
+		// Loop through the languages and figure out what should be shown
 		foreach ($languages as $code => $lang)
 		{
 			if (array_key_exists($code.DS, $dir))
@@ -233,20 +227,15 @@ class NovaForm
 	 * Builds a select menu that includes all of the positions from
 	 * the database based on the parameters passed to the method.
 	 *
-	 * <code>
-	 * echo NovaForm::position('positions', 8, array('id' => 'positions'), 'open');
-	 * </code>
-	 *
 	 * @api
-	 * @uses	Form::select
-	 * @param	string	the name of the select menu
-	 * @param	array 	an array of selected items
-	 * @param	array	any extra attributes to be added to the select menu
-	 * @param	string	which positions to pull (all, open, or a department ID)
-	 * @param	bool	whether to show just the select menu or everything else too
+	 * @param	string	The name of the select menu
+	 * @param	array 	An array of selected items
+	 * @param	array	Extra attributes to be added to the select menu
+	 * @param	string	The positions to pull (all, open, or a department ID)
+	 * @param	bool	Just the select menu? (default: false)
 	 * @return	string
 	 */
-	public static function position($name, $selected = array(), $extra = array(), $type = 'all', $select_only = false)
+	public static function position($name, $selected = array(), $extra = array(), $type = 'all', $selectOnly = false)
 	{
 		if (is_numeric($type))
 		{
@@ -279,7 +268,7 @@ class NovaForm
 				}
 			}
 
-			if ($select_only)
+			if ($selectOnly)
 			{
 				return \Form::select($name, $selected, $options, (array) $extra);
 			}
@@ -288,7 +277,7 @@ class NovaForm
 			$extra = array_merge(array('id' => 'positionDrop', 'class' => 'span4'), (array) $extra);
 
 			// build the output
-			$output = '<div class="control-group"><label class="control-label">'.lang('position', 1).'</label><div class="controls">';
+			$output = '<div class="control-group"><label class="control-label">'.ucfirst(lang('position')).'</label><div class="controls">';
 			$output.= \Form::select($name, $selected, $options, $extra);
 			$output.= '<div id="positionDesc" class="help-block">';
 
@@ -309,18 +298,14 @@ class NovaForm
 	 * Builds a select menu that includes all of the ranks from
 	 * the database based on the parameters passed to the method.
 	 *
-	 * <code>
-	 * echo NovaForm::rank('ranks', 3, array('id' => 'ranks'));
-	 * </code>
-	 *
 	 * @api
-	 * @param	string	the name of the select menu
-	 * @param	mixed 	an array of selected items
-	 * @param	array	any extra attributes to add to the select menu
-	 * @param	bool	whether to just show the select or everything else as well
+	 * @param	string	The name of the select menu
+	 * @param	mixed 	An array of selected items
+	 * @param	array	Extra attributes to add to the select menu
+	 * @param	bool	Just show the select menu? (default: false)
 	 * @return	string
 	 */
-	public static function rank($name, $selected = false, $extra = array(), $select_only = false)
+	public static function rank($name, $selected = false, $extra = array(), $selectOnly = false)
 	{
 		// grab the rank groups
 		$groups = \Model_Rank_Group::getItems(true);
@@ -335,7 +320,7 @@ class NovaForm
 				}
 			}
 
-			if ($select_only)
+			if ($selectOnly)
 			{
 				return \Form::select($name, $selected, $options, (array) $extra);
 			}
@@ -344,7 +329,7 @@ class NovaForm
 			$extra = array_merge(array('id' => 'rankDrop', 'class' => 'span4'), (array) $extra);
 
 			// build the output
-			$output = '<div class="control-group"><label class="control-label">'.lang('rank', 1).'</label><div class="controls">';
+			$output = '<div class="control-group"><label class="control-label">'.ucfirst(lang('rank')).'</label><div class="controls">';
 			$output.= \Form::select($name, $selected, $options, $extra);
 			$output.= '<div id="rankImg" class="help-block"></div>';
 
@@ -368,25 +353,21 @@ class NovaForm
 	 * Builds a select menu that includes all of the access roles from
 	 * the database based on the parameters passed to the method.
 	 *
-	 * <code>
-	 * echo NovaForm::roles('role', 3, array('id' => 'roles'));
-	 * </code>
-	 *
 	 * @api
-	 * @param	string	the name of the select menu
-	 * @param	mixed 	an array of selected items
-	 * @param	array	any extra attributes to add to the select menu
-	 * @param	bool	whether to just show the select or everything else as well
+	 * @param	string	The name of the select menu
+	 * @param	mixed 	An array of selected items
+	 * @param	array	Extra attributes to add to the select menu
+	 * @param	bool	Just show the select menu? (default: false)
 	 * @return	string
 	 */
-	public static function roles($name, $selected = array(), $extra = array(), $select_only = false)
+	public static function roles($name, $selected = array(), $extra = array(), $selectOnly = false)
 	{
 		// get the access roles
 		$roles = \Model_Access_Role::getRoles();
 
 		if (count($roles) > 0)
 		{
-			if ($select_only)
+			if ($selectOnly)
 			{
 				return \Form::select($name, $selected, $roles, (array) $extra);
 			}
@@ -395,7 +376,7 @@ class NovaForm
 			$extra = array_merge(array('id' => 'roleDrop', 'class' => 'span4'), (array) $extra);
 
 			// build the output
-			$output = '<div class="control-group"><label class="control-label">'.lang('access_role', 2).'</label><div class="controls">';
+			$output = '<div class="control-group"><label class="control-label">'.ucwords(lang('access_role')).'</label><div class="controls">';
 			$output.= \Form::select($name, $selected, $roles, $extra);
 			$output.= '<div id="roleDesc" class="help-block">';
 
@@ -415,16 +396,11 @@ class NovaForm
 	/**
 	 * Builds a select menu that includes all timezones supported in PHP.
 	 *
-	 * <code>
-	 * echo NovaForm::timezones('timezone', 'America/Chicago', array('class' => 'span4 chzn'));
-	 * </code>
-	 *
 	 * @api
-	 * @uses	Form::select
-	 * @param	string	the name of the select menu
-	 * @param	array 	an array of selected items
-	 * @param	array	any extra attributes to be added to the select menu
-	 * @return	string	a select menu output from Form::select
+	 * @param	string	The name of the select menu
+	 * @param	array 	An array of selected items
+	 * @param	array	Extra attributes to be added to the select menu
+	 * @return	string
 	 */
 	public static function timezones($name, $selected = array(), $extra = array())
 	{
@@ -459,20 +435,16 @@ class NovaForm
 	 * Builds a select menu that includes all of the users from
 	 * the database based on the parameters passed to the method.
 	 *
-	 * <code>
-	 * echo NovaForm::position('positions', 8, array('id' => 'positions', 'open'));
-	 * </code>
-	 *
 	 * @api
-	 * @uses	Form::select
-	 * @param	string	the name of the select menu
-	 * @param	array 	an array of selected items
-	 * @param	array	any extra attributes to be added to the select menu
-	 * @return	string	a select menu output from Form::select
+	 * @param	string	The name of the select menu
+	 * @param	array 	An array of selected items
+	 * @param	array	Extra attributes to be added to the select menu
+	 * @param	int		The status of the users to retrieve
+	 * @return	string
 	 */
 	public static function users($name, $selected = array(), $extra = array(), $status = \Status::ACTIVE)
 	{
-		// get the users
+		// Get the users
 		$users = ( ! empty($status)) ? \Model_User::getItems($status) : \Model_User::find('all');
 		
 		if (count($users) > 0)
@@ -486,7 +458,62 @@ class NovaForm
 
 			return \Form::select($name, $selected, $options, (array) $extra);
 		}
+
+		// Figure out the section
+		$section = (\Uri::segment(1) == 'admin') ? 'admin' : 'main';
 		
-		return false;
+		return \View::forge(\Location::file('flash', \Utility::getSkin($section), 'partial'))
+			->set('status', 'danger')
+			->set('message', lang('error.notFound', lang('users')))
+			->render();
+	}
+
+	/**
+	 * Builds a select menu that includes all of the characters from
+	 * the database based on the parameters passed to the method.
+	 *
+	 * @api
+	 * @param	string	The name of the select menu
+	 * @param	array 	An array of selected items
+	 * @param	array	Extra attributes to be added to the select menu
+	 * @param	string	Which characters to pull
+	 * @param	bool	Split characters up by whether they're linked or not (default: false)
+	 * @return	string
+	 */
+	public static function characters($name, $selected = array(), $extra = array(), $status = 'active', $showLinked = false)
+	{
+		// Get the characters
+		$characters = \Model_Character::getCharacters($status);
+		
+		if (count($characters) > 0)
+		{
+			$options[0] = '';
+			
+			foreach ($characters as $c)
+			{
+				if ($showLinked)
+				{
+					$sub = ($c->hasUser()) 
+						? ucwords(langConcat('linked characters')) 
+						: ucwords(langConcat('unlinked characters'));
+
+					$options[$sub][$c->id] = $c->getName();
+				}
+				else
+				{
+					$options[$c->id] = $c->getName();
+				}
+			}
+
+			return \Form::select($name, $selected, $options, (array) $extra);
+		}
+
+		// Figure out the section
+		$section = (\Uri::segment(1) == 'admin') ? 'admin' : 'main';
+		
+		return \View::forge(\Location::file('flash', \Utility::getSkin($section), 'partial'))
+			->set('status', 'danger')
+			->set('message', lang('error.notFound', lang('characters')))
+			->render();
 	}
 }
