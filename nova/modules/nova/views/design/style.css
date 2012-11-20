@@ -49,3 +49,9 @@ footer a {
 footer a:hover {
 	color: #444;
 }
+
+.system-warning {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}

@@ -1,5 +1,5 @@
 <noscript>
-	<div class="system_warning"><?php echo lang('short.javascript');?></div>
+	<div class="alert system-warning"><div class="container"><?php echo lang('short.javascript');?></div></div>
 </noscript>
 
 <?php echo $navmain;?>
