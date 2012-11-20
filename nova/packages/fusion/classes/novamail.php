@@ -24,7 +24,7 @@ class NovaMail
 	 */
 	public static function send($view, array $data)
 	{
-		// get the email preferences
+		// Get the email preferences
 		$options = \Model_Settings::getItems(array(
 			'email_subject',
 			'email_name',
@@ -34,75 +34,75 @@ class NovaMail
 
 		if ($options->email_status == \Status::ACTIVE)
 		{
-			// we have to have a `to` index otherwise things will fail
+			// We have to have a `to` index otherwise things will fail
 			if ( ! array_key_exists('to', $data))
 			{
 				throw new \Exception(lang('email.error.noToAddress'));
 			}
 
-			// we have to have a `subject` index
+			// We have to have a `subject` index
 			if ( ! array_key_exists('subject', $data))
 			{
 				throw new \Exception(lang('email.error.noSubject'));
 			}
 
-			// do we have data for the email?
+			// Do we have data for the email?
 			$content = (array_key_exists('content', $data)) ? $data['content'] : false;
 
-			// set up the mailer
+			// Set up the mailer
 			$mailer = static::setup();
 
-			// set up the users by email format preference
+			// Set up the users by email format preference
 			$to = static::splitUsers($data['to']);
 
-			// build the basic message
+			// Build the basic message
 			$message = \Swift_Message::newInstance()
 				->setSubject($options->email_subject.' '.$data['subject'])
 				->setFrom(array($options->email_address => $options->email_name));
 
-			// if there's a reply to, add it
+			// If there's a reply to, add it
 			if (array_key_exists('replyTo', $data))
 			{
 				$message->setReplyTo($data['replyTo']);
 			}
 
-			// build the html message
+			// Build the html message
 			if (array_key_exists('html', $to))
 			{
 				$html = $message->setTo($to['html'])
 					->setBody(\View::forge(\Location::file("html/$view", false, 'email'), $content), 'text/html');
 			}
 
-			// build the plain text message
+			// Build the plain text message
 			if (array_key_exists('text', $to))
 			{
 				$text = $message->setTo($to['text'])
 					->setBody(\View::forge(\Location::file("text/$view", false, 'email'), $content), 'text/plain');
 			}
 
-			// if there's a CC, add it
+			// If there's a CC, add it
 			if (array_key_exists('cc', $data))
 			{
-				// split the users based on email format preferences
+				// Split the users based on email format preferences
 				$cc = static::splitUsers($data['cc']);
 
-				// add the CC to the emails
+				// Add the CC to the emails
 				$html->setCc($cc['html']);
 				$text->setCc($cc['text']);
 			}
 
-			// if there's a BCC, add it
+			// If there's a BCC, add it
 			if (array_key_exists('bcc', $data))
 			{
-				// split the users based on email format preferences
+				// Split the users based on email format preferences
 				$bcc = static::splitUsers($data['bcc']);
 
-				// add the BCC to the emails
+				// Add the BCC to the emails
 				$html->setBcc($bcc['html']);
 				$text->setBcc($bcc['text']);
 			}
 
-			// send the messages
+			// Send the messages
 			$send = array(
 				'html' => (isset($html) and \Fuel::$env != \Fuel::DEVELOPMENT) ? $mailer->send($html) : false,
 				'text' => (isset($text) and \Fuel::$env != \Fuel::DEVELOPMENT) ? $mailer->send($text) : false,
@@ -122,7 +122,7 @@ class NovaMail
 	 */
 	public static function setup()
 	{
-		// get the email config options from the database
+		// Get the email config options from the database
 		$cfg = \Model_Settings::getItems(array(
 			'email_protocol',
 			'email_smtp_server',
@@ -133,7 +133,7 @@ class NovaMail
 			'email_sendmail_path',
 		));
 
-		// set up the transport based on the protocol the user has set
+		// Set up the transport based on the protocol the user has set
 		switch ($cfg->email_protocol)
 		{
 			case 'smtp':
@@ -168,16 +168,16 @@ class NovaMail
 	 */
 	protected static function splitUsers(array $users)
 	{
-		// create an array for storing users
+		// Create an array for storing users
 		$retval = array();
 
-		// loop through the users
+		// Loop through the users
 		foreach ($users as $user)
 		{
-			// get the user
+			// Get the user
 			$u = \Model_User::find($user);
 
-			// break the users out based on mail format preference
+			// Break the users out based on mail format preference
 			$retval[$u->getPreferences('email_format')][] = $u->email;
 		}
 
