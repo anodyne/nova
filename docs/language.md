@@ -49,3 +49,16 @@ This may look a little daunting, but if we break it down piece-by-piece, you'll 
 First, we're calling the `error` key into the first `lang()` call. This pulls in the error string. Since we have a variable in that, we need a parameter in the first `lang()` instance, but that instance also has its own variable. To address this, we'll simply call another `lang()` function as the parameter so that we can substitute that nested variable. Finally, since _ranks_ is a term we want to be global and able to be substituted for whatever the admin wants, we have a third `lang()` call so that we can get the value of _ranks_.
 
 Fortunately, you won't usually need to do advanced and complex string stuff like this, but you can see that it's pretty easy to deal with complex language strings in Nova 3.
+
+## The `langConcat` function
+
+In addition to the `lang()` function, Nova 3 includes a simpler way to handle language strings that don't include variables. The `langConcat()` function takes multiple language keys and parses them to return a single string of text.
+
+<pre>langConcat('rank group');
+// rank group
+
+langConcat('action.edit rank group');
+// edit rank group
+
+langConcat('character bio');
+// character bio</pre>
