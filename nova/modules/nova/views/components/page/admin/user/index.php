@@ -28,13 +28,13 @@
 					<?php if ((Sentry::user()->hasLevel('user.update', 1) and Sentry::user()->id == $a->id)
 							or Sentry::user()->hasLevel('user.update', 2)): ?>
 						<div class="btn-group">
-							<a href="<?php echo Uri::create('admin/user/edit/'.$a->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('short.edit', lang('user'));?>"><div class="icn icn-50" data-icon="p"></div></a>
+							<a href="<?php echo Uri::create('admin/user/edit/'.$a->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('short.edit', lang('user')));?>"><div class="icn icn-50" data-icon="p"></div></a>
 						</div>
 					<?php endif;?>
 
 					<?php if (Sentry::user()->hasAccess('user.delete')): ?>
 						<div class="btn-group">
-							<a href="#" class="btn btn-mini btn-danger tooltip-top user-action" title="<?php echo ucfirst(lang('short.delete', lang('user'));?>" data-action="delete" data-id="<?php echo $a->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+							<a href="#" class="btn btn-mini btn-danger tooltip-top user-action" title="<?php echo ucfirst(lang('short.delete', lang('user')));?>" data-action="delete" data-id="<?php echo $a->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
 						</div>
 					<?php endif;?>
 					</div>
