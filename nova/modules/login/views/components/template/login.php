@@ -1,3 +1,7 @@
+<noscript>
+	<div class="alert system-warning"><div class="container"><?php echo lang('short.javascript');?></div></div>
+</noscript>
+
 <div class="container">
 	<div class="content">
 		<div class="page-header">
