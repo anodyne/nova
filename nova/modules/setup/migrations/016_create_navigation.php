@@ -263,7 +263,7 @@ class Create_navigation
 				'url' => 'admin/index',
 				'type' => 'admin',
 				'category' => 'admin'),
-			array(
+			/*array(
 				'name' => 'Messages',
 				'group' => 0,
 				'order' => 1,
@@ -275,7 +275,7 @@ class Create_navigation
 				'group' => 0,
 				'order' => 2,
 				'type' => 'admin',
-				'category' => 'write'),
+				'category' => 'write'),*/
 			array(
 				'name' => 'Manage',
 				'group' => 0,
@@ -288,19 +288,19 @@ class Create_navigation
 				'order' => 4,
 				'type' => 'admin',
 				'category' => 'users'),
-			array(
+			/*array(
 				'name' => 'Report Center',
 				'group' => 0,
 				'order' => 5,
 				'url' => 'admin/report/index',
 				'type' => 'admin',
 				'category' => 'report',
-				'access' => 'report|read|1'),
+				'access' => 'report|read|1'),*/
 
 			/**
 			 * Admin Sub Navigation
 			 */
-			array(
+			/*array(
 				'name' => 'Writing Control Panel',
 				'group' => 0,
 				'order' => 0,
@@ -354,8 +354,8 @@ class Create_navigation
 				'url' => 'admin/messages/sent',
 				'type' => 'adminsub',
 				'category' => 'messages',
-				'access' => 'messages|read|0'),
-			array(
+				'access' => 'messages|read|0'),*/
+			/*array(
 				'name' => 'Site',
 				'group' => 0,
 				'order' => 0,
@@ -370,7 +370,7 @@ class Create_navigation
 				'url' => 'admin/data/index',
 				'type' => 'adminsub',
 				'category' => 'manage',
-				'access' => 'rank|read|0'),
+				'access' => 'rank|read|0'),*/
 			array(
 				'name' => 'Forms',
 				'group' => 0,
