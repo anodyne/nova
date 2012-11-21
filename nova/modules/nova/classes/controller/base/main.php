@@ -40,12 +40,9 @@ abstract class Controller_Base_Main extends Controller_Base_Core
 		
 		// Set the values to be passed to the structure
 		$vars = array(
-			'skin'			=> $this->skin,
-			'sec'			=> 'main',
-			'sim_name'		=> $this->settings->sim_name,
-			'meta_desc'		=> $this->settings->meta_description,
-			'meta_keywords'	=> $this->settings->meta_keywords,
-			'meta_author'	=> $this->settings->meta_author,
+			'skin'		=> $this->skin,
+			'sec'		=> 'main',
+			'settings'	=> $this->settings,
 		);
 		
 		// Set the structure file

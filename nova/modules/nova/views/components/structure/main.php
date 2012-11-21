@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><?php echo $title;?></title>
 		
-		<meta name="description" content="<?php echo $meta_desc;?>">
-		<meta name="keywords" content="<?php echo $meta_keywords;?>">
-		<meta name="author" content="<?php echo $meta_author;?>">
+		<meta name="description" content="<?php echo $settings->meta_description;?>">
+		<meta name="keywords" content="<?php echo $settings->meta_keywords;?>">
+		<meta name="author" content="<?php echo $settings->meta_author;?>">
 		
 		<?php if (isset($_redirect)): echo $_redirect; endif;?>
 

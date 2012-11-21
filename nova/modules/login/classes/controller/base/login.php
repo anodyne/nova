@@ -35,11 +35,9 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 		
 		// Set the values to be passed to the structure
 		$vars = array(
-			'skin'			=> $this->skin,
-			'sec'			=> 'login',
-			'meta_desc'		=> $this->settings->meta_description,
-			'meta_keywords'	=> $this->settings->meta_keywords,
-			'meta_author'	=> $this->settings->meta_author,
+			'skin'		=> $this->skin,
+			'sec'		=> 'login',
+			'settings'	=> $this->settings,
 		);
 		
 		// Set the structure file
@@ -49,7 +47,6 @@ abstract class Controller_Base_Login extends \Nova\Controller_Base_Core
 		$this->template->title 						= $this->settings->sim_name.' :: ';
 		$this->template->javascript					= false;
 		$this->template->layout						= \View::forge(\Location::file('login', $this->skin, 'template', 'login'), $vars);
-		$this->template->layout->ajax 				= false;
 		$this->template->layout->flash				= false;
 		$this->template->layout->content			= false;
 		$this->template->layout->header				= false;

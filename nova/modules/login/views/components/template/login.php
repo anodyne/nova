@@ -12,7 +12,6 @@
 
 		<?php echo $flash;?>
 		<?php echo $content;?>
-		<?php echo $ajax;?>
 		
 		<div style="clear:both;">&nbsp;</div>
 	</div>
