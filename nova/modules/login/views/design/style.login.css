@@ -8,3 +8,10 @@ footer a {
 footer a:hover {
 	color: #444;
 }
+
+.align-center {
+	text-align: center;
+}
+.align-right {
+	text-align: right;
+}

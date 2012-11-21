@@ -55,3 +55,10 @@ footer a:hover {
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
+
+.align-center {
+	text-align: center;
+}
+.align-right {
+	text-align: right;
+}
