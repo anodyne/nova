@@ -234,6 +234,34 @@ class Controller_Ajax_Delete extends Controller_Base_Ajax
 		}
 	}
 
+	/**
+	 * Confirm the deletion of an access role.
+	 *
+	 * @param	int		The role ID
+	 */
+	public function action_role($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->hasAccess('role.delete'))
+		{
+			// Sanitize
+			$id = \Security::xss_clean($id);
+
+			// Get the role
+			$role = \Model_Access_Role::find($id);
+
+			if ($role !== null)
+			{
+				$data = array(
+					'name' 	=> $role->name,
+					'id' 	=> $role->id,
+					'roles'	=> \Model_Access_Role::getRoles(array($id)),
+				);
+
+				echo \View::forge(\Location::file('delete/role', \Utility::getSkin('admin'), 'ajax'), $data);
+			}
+		}
+	}
+
 	public function action_user($id)
 	{
 		if (\Sentry::check() and \Sentry::user()->hasAccess('user.delete'))

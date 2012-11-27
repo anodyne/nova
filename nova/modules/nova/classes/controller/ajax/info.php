@@ -12,49 +12,40 @@ namespace Nova;
 
 class Controller_Ajax_Info extends Controller_Base_Ajax
 {
-	public function action_accessrole_desc()
-	{
-		// set the POST variable
-		$role = \Security::xss_clean(\Input::post('role', false));
-		$role = (is_numeric($role)) ? $role : false;
-
-		// grab the role details
-		$item = \Model_Access_Role::find($role);
-
-		// set the output
-		$output = (count($item) > 0) ? $item->desc : '';
-		
-		echo nl2br($output);
-	}
-
+	/**
+	 * Get a position's description.
+	 */
 	public function action_position_desc()
 	{
-		// set the POST variable
+		// Set the variable
 		$position = \Security::xss_clean(\Input::post('position', false));
 		$position = (is_numeric($position)) ? $position : false;
 
-		// grab the position details
+		// Get the position
 		$item = \Model_Position::find($position);
 
-		// set the output
+		// Set the output
 		$output = (count($item) > 0) ? $item->desc : '';
 		
 		echo nl2br($output);
 	}
 
+	/**
+	 * Get the rank image.
+	 */
 	public function action_rank_image()
 	{
-		// set the POST variables
+		// Set the variables
 		$rank = \Security::xss_clean(\Input::post('rank', false));
 		$location = \Security::xss_clean(\Input::post('location', false));
 		
-		// a little sanity check
+		// Do a little sanity checking
 		$rank = (is_numeric($rank)) ? $rank : false;
 		
-		// pull the rank record
+		// Get the rank
 		$rank = \Model_Rank::find($rank);
 		
-		// set the output
+		// Set the output
 		$output = (count($rank) > 0) 
 			? \Location::rank($rank->base, $rank->pip, \Model_Catalog_Rank::getDefault()->location) 
 			: '';
@@ -62,15 +53,18 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		echo $output;
 	}
 
+	/**
+	 * Get the preview for a specific rank set.
+	 */
 	public function action_rank_preview($location = false)
 	{
-		// get the URI variable
+		// Clean the variable
 		$location = \Security::xss_clean($location);
 		
-		// pull the rank catalog record
+		// Get the catalog item
 		$rank = \Model_Catalog_Rank::getItem($location, 'location');
 		
-		// set the output
+		// Set the output
 		$output = (count($rank) > 0) 
 			? \Html::img(\Uri::base(false).'app/assets/common/'.$rank->genre.'/ranks/'.$location.'/'.$rank->preview) 
 			: '';
@@ -78,17 +72,59 @@ class Controller_Ajax_Info extends Controller_Base_Ajax
 		echo $output;
 	}
 
-	public function action_skin_preview($location = false)
+	/**
+	 * Get a role's description.
+	 */
+	public function action_role_desc()
 	{
-		// get the URI variable
+		// Set the variable
+		$role = \Security::xss_clean(\Input::post('role', false));
+		$role = (is_numeric($role)) ? $role : false;
+
+		// Get the role
+		$item = \Model_Access_Role::find($role);
+
+		// Set the output
+		$output = (count($item) > 0) ? $item->desc : '';
+		
+		echo nl2br($output);
+	}
+
+	/**
+	 * Get the users who are assigned a given role.
+	 */
+	public function action_role_users($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->hasAccess('role.read'))
+		{
+			// Clean the variable
+			$id = \Security::xss_clean($id);
+
+			// Get the role
+			$role = \Model_Access_Role::find($id);
+
+			// Get the users
+			$data['users'] = $role->users;
+
+			echo \View::forge(\Location::file('info/role_users', \Utility::getSkin('admin'), 'ajax'), $data);
+		}
+	}
+
+	/**
+	 * Get the preview for a specific skin.
+	 */
+	public function action_skin_preview($section = false, $location = false)
+	{
+		// Clean the variables
+		$section = \Security::xss_clean($section);
 		$location = \Security::xss_clean($location);
 		
-		// pull the skin catalog record
-		$skin = \Model_Catalog_Skin::getItem($location, 'location');
-		
-		// set the output
-		$output = (count($rank) > 0) 
-			? \Html::img(\Uri::base(false).'app/assets/common/'.$rank->genre.'/ranks/'.$location.'/'.$rank->preview) 
+		// Pull the skin catalog record
+		$skin = \Model_Catalog_SkinSec::getItems(array('skin' => $location, 'section' => $section), true);
+
+		// Set the output
+		$output = (count($skin) > 0) 
+			? \Html::img(\Uri::base(false).'app/views/'.$location.'/'.$skin->preview) 
 			: '';
 		
 		echo $output;

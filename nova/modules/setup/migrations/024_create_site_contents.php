@@ -175,6 +175,13 @@ class Create_site_contents
 				'type' => 'header',
 				'section' => 'user',
 				'page' => 'index'),
+			array(
+				'key' => 'admin_role_management_header',
+				'label' => 'Access Role Header',
+				'content' => "Manage Access Roles",
+				'type' => 'header',
+				'section' => 'role',
+				'page' => 'index'),
 
 			/**
 			 * Page Titles
@@ -332,6 +339,13 @@ class Create_site_contents
 				'content' => "Users",
 				'type' => 'title',
 				'section' => 'user',
+				'page' => 'index'),
+			array(
+				'key' => 'admin_role_management_title',
+				'label' => 'Access Role Page Title',
+				'content' => "Manage Access Roles",
+				'type' => 'title',
+				'section' => 'role',
 				'page' => 'index'),
 
 			/**

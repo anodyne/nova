@@ -168,6 +168,29 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	}
 
 	/**
+	 * Duplicate an access role.
+	 *
+	 * @param	int		The ID of the role being duplicated
+	 * @return	void
+	 */
+	public function action_role_duplicate($id)
+	{
+		if (\Sentry::check() and \Sentry::user()->hasAccess('role.create'))
+		{
+			// ID of the role to duplicate
+			$data['id'] = \Security::xss_clean($id);
+
+			// Get the original role
+			$original = \Model_Access_Role::find($data['id']);
+
+			// Get the name from the original role
+			$data['name'] = $original->name;
+
+			echo \View::forge(\Location::file('add/role_duplicate', \Utility::getSkin('admin'), 'ajax'), $data);
+		}
+	}
+
+	/**
 	 * Create a user record.
 	 *
 	 * @return	void

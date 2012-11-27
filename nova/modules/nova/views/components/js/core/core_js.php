@@ -93,7 +93,7 @@
 		
 		$.ajax({
 			type: "POST",
-			url: "<?php echo Uri::create('ajax/info/accessrole_desc');?>",
+			url: "<?php echo Uri::create('ajax/info/role_desc');?>",
 			data: { role: $('#roleDrop option:selected').val() },
 			success: function(data){
 				$('#roleDesc').html('');

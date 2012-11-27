@@ -372,8 +372,16 @@ class Create_navigation
 				'category' => 'manage',
 				'access' => 'rank|read|0'),*/
 			array(
-				'name' => 'Forms',
+				'name' => 'Access Roles',
 				'group' => 0,
+				'order' => 0,
+				'url' => 'admin/role/index',
+				'type' => 'adminsub',
+				'category' => 'manage',
+				'access' => 'role|read|0'),
+			array(
+				'name' => 'Forms',
+				'group' => 1,
 				'order' => 0,
 				'url' => 'admin/form/index',
 				'type' => 'adminsub',
@@ -381,7 +389,7 @@ class Create_navigation
 				'access' => 'form|read|0'),
 			array(
 				'name' => 'Ranks',
-				'group' => 1,
+				'group' => 2,
 				'order' => 0,
 				'url' => 'admin/rank/index',
 				'type' => 'adminsub',
