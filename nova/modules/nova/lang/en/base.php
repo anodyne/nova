@@ -18,6 +18,7 @@ return array(
 	'announcement' => 'announcement',
 	'announcements' => 'announcements',
 	'and' => 'and',
+	'access' => "access",
 
 	'bio'	=> 'bio',
 	'ban' => 'ban',
@@ -115,6 +116,7 @@ return array(
 	'options' => 'options',
 	'on' => 'on',
 	'off' => 'off',
+	'original' => "original",
 	
 	'password' => "password",
 	'preference' => "preference",
@@ -144,6 +146,8 @@ return array(
 	'reviews' => 'reviews',
 	'reviewer' => 'reviewer',
 	'reviewers' => 'reviewers',
+	'role' => 'role',
+	'roles' => 'roles',
 	'rule' => 'rule',
 	'rules' => 'rules',
 	'response' => 'response',
@@ -169,6 +173,8 @@ return array(
 
 	'tab' => "tab",
 	'tabs' => "tabs",
+	'task' => "task",
+	'tasks' => "tasks",
 	'type' => "type",
 	'text_field' => 'text field',
 	'text_area' => 'text area',
@@ -189,6 +195,7 @@ return array(
 	'votes' => 'votes',
 
 	'writing' => "writing",
+	'with' => "with",
 
 	'yes' => 'yes',
 	'your' => 'your',

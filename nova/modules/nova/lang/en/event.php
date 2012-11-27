@@ -38,6 +38,10 @@ return array(
 				'group' => "The :0 rank group was :1",
 			),
 
+			'roles' => array(
+				'duplicated' => "The :0 role was :1",
+			),
+
 			'user' => array(
 				'item' => "The user :0 was :1"
 			),

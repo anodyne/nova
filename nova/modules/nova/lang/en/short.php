@@ -14,6 +14,7 @@ return array(
 		'search'	=> "search :0",
 		'show'		=> "show :0",
 		'update' 	=> "update :0",
+		'view'		=> "view :0",
 
 		'alert' => array(
 			'failure' => array(
@@ -97,6 +98,12 @@ return array(
 			'changeGroup' => "Select the new :0 group for any :1 currently in this :0 group.",
 			'changeInfo' => "Select the new :0 info item for any :1 currently using this :0 info record.",
 			'infoGroupExplain' => "Info groups are used solely for presentation purposes.",
+		),
+
+		'roles' => array(
+			'duplicateSysAdminHeader' => "With Great Power Comes Great Responsibility!",
+			'duplicateSysAdminText' => "You are about to duplicate the System Administrator role. Make sure you understand the impact of assigning :0 to this role.",
+			'removeRole' => "Select the new role you would like any :0 in the :1 role to be moved to.",
 		),
 
 		'users' => array(
