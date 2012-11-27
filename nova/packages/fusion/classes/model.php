@@ -86,7 +86,7 @@ class Model extends \Orm\Model
 	 * @param	bool	is this for a search?
 	 * @return	object
 	 */
-	public static function getItem($value, $column, $search = false)
+	public static function getItem($value, $column = false, $search = false)
 	{
 		if (is_array($value))
 		{
