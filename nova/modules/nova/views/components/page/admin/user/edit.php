@@ -117,16 +117,33 @@
 							</div>
 						</div>
 
-						<div class="control-group">
-							<label class="control-label"><?php echo ucwords(langConcat('main skin'));?></label>
-							<div class="controls">
-
+						<div class="row">
+							<div class="span4">
+								<div class="control-group">
+									<label class="control-label"><?php echo ucwords(langConcat('main skin'));?></label>
+									<div class="controls">
+										<?php echo Form::select('skin_main', $prefs['skin_main'], $skinMain, array('class' => 'span4', 'id' => 'skinMain'));?>
+									</div>
+								</div>
+							</div>
+							<div class="span4">
+								<label class="control-label">&nbsp;</label>
+								<div id="skinMainImage"><?php Request::forge('ajax/info/skin_preview/main/'.$prefs['skin_main'])->execute();?></div>
 							</div>
 						</div>
 
-						<div class="control-group">
-							<label class="control-label"><?php echo ucwords(langConcat('admin skin'));?></label>
-							<div class="controls">
+						<div class="row">
+							<div class="span4">
+								<div class="control-group">
+									<label class="control-label"><?php echo ucwords(langConcat('admin skin'));?></label>
+									<div class="controls">
+										<?php echo Form::select('skin_admin', $prefs['skin_admin'], $skinAdmin, array('class' => 'span4', 'id' => 'skinAdmin'));?>
+									</div>
+								</div>
+							</div>
+							<div class="span4">
+								<label class="control-label">&nbsp;</label>
+								<div id="skinAdminImage"><?php Request::forge('ajax/info/skin_preview/admin/'.$prefs['skin_admin'])->execute();?></div>
 							</div>
 						</div>
 					</fieldset>

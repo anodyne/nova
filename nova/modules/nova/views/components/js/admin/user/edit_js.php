@@ -37,4 +37,32 @@
 			}
 		});
 	});
+
+	$('#skinMain').on('change', function(){
+
+		var skin = $('#skinMain option:selected').val();
+
+		$.ajax({
+			type: "GET",
+			url: "<?php echo Uri::create('ajax/info/skin_preview/main/');?>" + skin,
+			success: function(data){
+				$('#skinMainImage').html('');
+				$('#skinMainImage').append(data);
+			}
+		});
+	});
+
+	$('#skinAdmin').on('change', function(){
+
+		var skin = $('#skinAdmin option:selected').val();
+
+		$.ajax({
+			type: "GET",
+			url: "<?php echo Uri::create('ajax/info/skin_preview/admin/');?>" + skin,
+			success: function(data){
+				$('#skinAdminImage').html('');
+				$('#skinAdminImage').append(data);
+			}
+		});
+	});
 </script>

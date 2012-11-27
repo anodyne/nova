@@ -175,7 +175,6 @@ class Controller_Admin_User extends Controller_Base_Admin
 			{
 				if (\Security::check_token())
 				{
-					// get the action
 					$action = \Security::xss_clean(\Input::post('action'));
 
 					/**
@@ -183,21 +182,21 @@ class Controller_Admin_User extends Controller_Base_Admin
 					 */
 					if ($action == 'basic')
 					{
-						// make sure we hash the password if it's being reset
+						// Make sure we hash the password if it's being reset
 						if (\Input::post('basic.password', false) !== false)
 						{
 							$_POST['basic']['password'] = \Sentry_User::passwordGenerate(\Security::xss_clean(\Input::post('basic.password')));
 						}
 
-						// update the user
+						// Update the user
 						\Model_User::updateItem($id, \Input::post('basic'));
 
-						// clear some of the POST variables
+						// Clear some of the POST variables
 						unset($_POST['action']);
 						unset($_POST['basic']);
 						unset($_POST[\Config::get('security.csrf_token_key')]);
 
-						// update the user form
+						// Update the user form
 						\Model_Form_Data::updateData('user', $id, \Input::post());
 
 						$this->_flash[] = array(
@@ -211,11 +210,11 @@ class Controller_Admin_User extends Controller_Base_Admin
 					 */
 					if ($action == 'preferences')
 					{
-						// clear some of the POST variables
+						// Clear some of the POST variables
 						unset($_POST['action']);
 						unset($_POST[\Config::get('security.csrf_token_key')]);
 
-						// update the preferences
+						// Update the preferences
 						\Model_User_Preferences::updateUserPreferences($id, \Input::post());
 
 						$this->_flash[] = array(
@@ -233,19 +232,23 @@ class Controller_Admin_User extends Controller_Base_Admin
 				}
 			}
 
-			// get the user
+			// Get the user
 			$this->_data->user = $user = \Model_User::find($id);
 
-			// get the user preferences
+			// Get the user preferences
 			$this->_data->prefs = $prefs = $user->getPreferences();
 
-			// get the user form
+			// Get the user form
 			$this->_data->userForm = \NovaForm::build('user', $this->skin, $id);
 
-			// get the rank catalog items
+			/**
+			 * Rank preferences.
+			 */
+
+			// Get the rank catalog items
 			$ranks = \Model_Catalog_Rank::getItems(false);
 
-			// loop through the ranks and build the array for the dropdown
+			// Loop through the ranks and build the array for the dropdown
 			foreach ($ranks as $r)
 			{
 				if ($r->status == \Status::ACTIVE)
@@ -254,13 +257,35 @@ class Controller_Admin_User extends Controller_Base_Admin
 				}
 			}
 
-			// manually set the header
+			/**
+			 * Skin section preferences.
+			 */
+
+			// Get the main skin catalog items
+			$mainSkins = \Model_Catalog_SkinSec::getItems(array('section' => 'main', 'status' => \Status::ACTIVE));
+
+			// Loop through the skins and build the array for the dropdown
+			foreach ($mainSkins as $s)
+			{
+				$this->_data->skinMain[$s->skin] = $s->skins->name;
+			}
+
+			// Get the admin skin catalog items
+			$adminSkins = \Model_Catalog_SkinSec::getItems(array('section' => 'admin', 'status' => \Status::ACTIVE));
+
+			// Loop through the skins and build the array for the dropdown
+			foreach ($adminSkins as $s)
+			{
+				$this->_data->skinAdmin[$s->skin] = $s->skins->name;
+			}
+
+			// Manually set the header
 			$this->_headers['edit'] = ucwords(langConcat('action.edit user')).' &ndash; '.$user->name;
 
-			// manually set the title
+			// Manually set the title
 			$this->_titles['edit'] = ucwords(langConcat('action.edit user'));
 
-			// send the genre to the JS view
+			// Send the genre to the JS view
 			$this->_js_data->genre = $this->genre;
 		}
 		else
