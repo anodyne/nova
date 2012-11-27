@@ -66,18 +66,44 @@ class Model_Catalog_SkinSec extends \Model
 	 * @param	string	the section to pull
 	 * @return	object
 	 */
-	public static function getDefault($section, $value_only = false)
+	public static function getDefault($section, $valueOnly = false)
 	{
 		$result = static::query()
-			->where(array('default', 1))
+			->where(array('default', (int) true))
 			->where(array('section', $section))
 			->get_one();
 		
-		if ($value_only)
+		if ($valueOnly)
 		{
 			return $result->skin;
 		}
 		
 		return $result;
+	}
+
+	/**
+	 * Get all items from the catalog.
+	 *
+	 * @api
+	 * @param	array	The arguments
+	 * @param	string	The status
+	 * @return	object
+	 */
+	public static function getItems(array $arguments, $returnOne = false)
+	{
+		// Start the query
+		$result = static::query();
+
+		foreach ($arguments as $col => $val)
+		{
+			$result->where($col, $val);
+		}
+
+		if ($returnOne)
+		{
+			return $result->get_one();
+		}
+
+		return $result->get();
 	}
 }
