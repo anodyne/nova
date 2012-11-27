@@ -66,9 +66,10 @@ class Model_Access_Role extends \Model
 	 * Get all the roles.
 	 *
 	 * @api
+	 * @param	array	Any items to remove from the final array
 	 * @return	array
 	 */
-	public static function getRoles()
+	public static function getRoles(array $remove = array())
 	{
 		$items = static::find('all');
 
@@ -78,7 +79,10 @@ class Model_Access_Role extends \Model
 		{
 			foreach ($items as $r)
 			{
-				$roles[$r->id] = $r->name;
+				if ( ! in_array($r->id, $remove))
+				{
+					$roles[$r->id] = $r->name;
+				}
 			}
 		}
 
