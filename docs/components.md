@@ -5,7 +5,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
 ## PHP
 
 * FuelPHP
-    * Version: 1.3
+    * Version: 1.4
     * Site: http://fuelphp.com/
     * Location
         * nova/fuel
@@ -20,7 +20,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Notes
         * This is a __highly__ modified version of Sentry 1.1. Cartalyst has since stopped developing Sentry for FuelPHP.
 * Carbon
-    * Version: 1.1
+    * Version: 1.2
     * Site: https://github.com/briannesbitt/Carbon
     * Location
         * nova/packages/carbon
@@ -56,7 +56,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * http://code.jquery.com/jquery-1.8.2.min.js
 * Bootstrap
-    * Version: 2.2
+    * Version: 2.2.1
     * Site: http://twitter.github.com/bootstrap/
     * Location
         * nova/modules/assets/css/bootstrap-responsive.min.css
@@ -93,7 +93,7 @@ Nova is made up of a wide range of plugins and components to help make it what i
     * Location
         * nova/modules/assets/js/jquery.ajaxq.js
 * jQuery UI
-    * Version: 1.9.1
+    * Version: 1.9.2
     * Site: http://jqueryui.com
     * Location
         * nova/modules/assets/js/jquery.ui.accordion.min.js
