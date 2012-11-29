@@ -26,14 +26,14 @@ The simplest usage is to attach the `icn` class to a `span` or `div`. Additional
 * c - Speech bubble, used to indicate comments or conversation
 * d - 
 * e - Envelope, used to indicate email or send operations
-* f - 
+* f - Filter
 * g - 
 * h - Clock, used to indicate history
 * i - Info icon, used to indicate information actions
 * j - 
 * k - 
 * l - 
-* m - 
+* m - Picture
 * n - 
 * o - 
 * p - Pencil, used for edit actions
@@ -48,15 +48,15 @@ The simplest usage is to attach the `icn` class to a `span` or `div`. Additional
 * y - 
 * z - 
 
-* ! - Suitcase, used for LOA requests
-* @ - 
-* # - 
+* ! - Warning
+* @ - Upload
+* # - Paper airplane, used for LOA requests
 * $ - 
 * % - Hourglass
 * ^ - Ranks
 * & - Static loader
 * * - 
-* ( - Key, used to indicate access or roles
+* ( - Lock, used to indicate access or roles
 * ) - Cog, used to indicate settings or preferences
 * _ - Multiple documents icon, used to indicate duplication actions
 * - - Chain link, used for linking actions
@@ -84,8 +84,8 @@ The simplest usage is to attach the `icn` class to a `span` or `div`. Additional
 * 2 - Stop icon, used to indicate a ban or rejection
 * 3 - 
 * 4 - Checkmark, used to indicate something is finished
-* 5 - 
-* 6 - 
+* 5 - Full star
+* 6 - Empty star
 * 7 - 
 * 8 - 
 * 9 - 

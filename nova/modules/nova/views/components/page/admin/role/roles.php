@@ -19,20 +19,20 @@
 					<span class="lead"><?php echo $r->name;?></span><br>
 					<span class="muted"><?php echo Markdown::parse($r->desc);?></span>
 				</td>
-				<td class="span2">
+				<td class="span3">
 					<div class="btn-toolbar pull-right">
 						<div class="btn-group">
-							<a href="#" class="btn btn-mini tooltip-top role-action" title="<?php echo ucfirst(lang('short.view', langConcat('users with this role')));?>" data-action="view" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="s"></div></a>
-							<a href="<?php echo Uri::create('admin/role/edit/'.$r->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('short.edit', lang('role')));?>"><div class="icn icn-50" data-icon="p"></div></a>
+							<a href="#" class="btn btn-small tooltip-top role-action icn16" title="<?php echo ucfirst(lang('short.view', langConcat('users with this role')));?>" data-action="view" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="s"></div></a>
+							<a href="<?php echo Uri::create('admin/role/edit/'.$r->id);?>" class="btn btn-small tooltip-top icn16" title="<?php echo ucfirst(lang('short.edit', lang('role')));?>"><div class="icn icn-50" data-icon="p"></div></a>
 
 							<?php if (Sentry::user()->hasAccess('role.create')): ?>
-								<a href="#" class="btn btn-mini tooltip-top role-action" title="<?php echo ucfirst(lang('short.duplicate', lang('role')));?>" data-action="duplicate" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="_"></div></a>
+								<a href="#" class="btn btn-small tooltip-top role-action icn16" title="<?php echo ucfirst(lang('short.duplicate', lang('role')));?>" data-action="duplicate" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="_"></div></a>
 							<?php endif;?>
 						</div>
 
 						<?php if (Sentry::user()->hasAccess('role.delete')): ?>
 							<div class="btn-group">
-								<a href="#" class="btn btn-mini btn-danger tooltip-top role-action" title="<?php echo ucfirst(lang('short.delete', lang('role')));?>" data-action="delete" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+								<a href="#" class="btn btn-small btn-danger tooltip-top role-action icn16" title="<?php echo ucfirst(lang('short.delete', lang('role')));?>" data-action="delete" data-id="<?php echo $r->id;?>"><div class="icn icn-50" data-icon="t"></div></a>
 							</div>
 						<?php endif;?>
 					</div>

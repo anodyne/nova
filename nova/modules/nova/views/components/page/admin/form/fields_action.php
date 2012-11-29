@@ -174,11 +174,11 @@ function field($obj, $property, $default = false)
 										<td class="span2">
 											<div class="btn-toolbar">
 												<div class="btn-group">
-													<a href="#" class="btn btn-mini value-action tooltip-top" title="<?php echo ucfirst(lang('action.edit'));?>" data-action="update" data-id="<?php echo $v->id;?>"><div class="icn icn-50" data-icon="p"></div></a>
+													<a href="#" class="btn btn-small value-action tooltip-top icn16" title="<?php echo ucfirst(lang('action.edit'));?>" data-action="update" data-id="<?php echo $v->id;?>"><div class="icn icn-50" data-icon="p"></div></a>
 												</div>
 
 												<div class="btn-group">
-													<a href="#" class="btn btn-mini btn-danger value-action tooltip-top" title="<?php echo ucfirst(lang('action.delete'));?>" data-action="delete" data-id="<?php echo $v->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+													<a href="#" class="btn btn-small btn-danger value-action tooltip-top icn16" title="<?php echo ucfirst(lang('action.delete'));?>" data-action="delete" data-id="<?php echo $v->id;?>"><div class="icn icn-50" data-icon="t"></div></a>
 												</div>
 											</div>
 										</td>

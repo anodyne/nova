@@ -1,6 +1,9 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/form/index');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(langConcat('all forms'));?>"><div class="icn icn-75" data-icon="<"></div></a>
+	</div>
+
+	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/form/sections/'.Uri::segment(4).'/0');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.add', lang('section')));?>"><div class="icn icn-75" data-icon="+"></div></a>
 	</div>
 
@@ -36,12 +39,12 @@
 						<td class="span2">
 							<div class="btn-toolbar pull-right">
 								<div class="btn-group">
-									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-mini tooltip-top" title="<?php echo ucfirst(lang('action.edit')).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
+									<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key.'/'.$s->id);?>" class="btn btn-small tooltip-top icn16" title="<?php echo ucfirst(lang('action.edit')).' '.$s->name;?>"><div class="icn icn-50" data-icon="p"></div></a>
 								</div>
 
 								<?php if (Sentry::user()->hasAccess('form.delete')): ?>
 									<div class="btn-group">
-										<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-mini btn-danger tooltip-top section-action" title="<?php echo ucfirst(lang('action.delete')).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+										<a href="<?php echo Uri::create('admin/form/sections/'.$s->form_key);?>" class="btn btn-small btn-danger tooltip-top section-action icn16" title="<?php echo ucfirst(lang('action.delete')).' '.$s->name;?>" data-action="delete" data-id="<?php echo $s->id;?>"><div class="icn icn-50" data-icon="t"></div></a>
 									</div>
 								<?php endif;?>
 							</div>

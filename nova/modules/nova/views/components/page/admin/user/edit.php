@@ -6,7 +6,7 @@
 	<?php endif;?>
 
 	<div class="btn-group">
-		<a href="#" class="btn tooltip-top" title="<?php echo ucfirst(lang('action.request loa'));?>"><div class="icn icn16 icn-75" data-icon="!"></div></a>
+		<a href="#" class="btn tooltip-top" title="<?php echo ucfirst(lang('action.request loa'));?>"><div class="icn icn16 icn-75" data-icon="#"></div></a>
 	</div>
 </div>
 

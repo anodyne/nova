@@ -1,6 +1,9 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/rank/index');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(langConcat('ranks index'));?>"><div class="icn icn-75" data-icon="<"></div></a>
+	</div>
+
+	<div class="btn-group">
 		<a href="#" class="btn icn16 tooltip-top rankinfo-action" title="<?php echo ucfirst(lang('short.create', langConcat('rank info')));?>" data-action="create" data-id="0"><div class="icn icn-75" data-icon="+"></div></a>
 	</div>
 
@@ -26,12 +29,12 @@
 					<td class="span2">
 						<div class="btn-toolbar pull-right">
 							<div class="btn-group">
-								<a href="#" class="btn btn-mini tooltip-top rankinfo-action" title="<?php echo ucfirst(lang('action.edit'));?>" data-action="update" data-id="<?php echo $i->id;?>"><div class="icn icn-50" data-icon="p"></div></a>
+								<a href="#" class="btn btn-small tooltip-top rankinfo-action icn16" title="<?php echo ucfirst(lang('action.edit'));?>" data-action="update" data-id="<?php echo $i->id;?>"><div class="icn icn-50" data-icon="p"></div></a>
 							</div>
 
 							<?php if (Sentry::user()->hasAccess('rank.delete')): ?>
 								<div class="btn-group">
-									<a href="#" class="btn btn-danger btn-mini tooltip-top rankinfo-action" title="<?php echo ucfirst(lang('action.delete'));?>" data-action="delete" data-id="<?php echo $i->id;?>"><div class="icn icn-50" data-icon="x"></div></a>
+									<a href="#" class="btn btn-danger btn-small tooltip-top rankinfo-action icn16" title="<?php echo ucfirst(lang('action.delete'));?>" data-action="delete" data-id="<?php echo $i->id;?>"><div class="icn icn-50" data-icon="t"></div></a>
 								</div>
 							<?php endif;?>
 						</div>

@@ -1,6 +1,9 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/rank/index');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(langConcat('ranks index'));?>"><div class="icn icn-75" data-icon="<"></div></a>
+	</div>
+
+	<div class="btn-group">
 		<a href="<?php echo Uri::create('admin/rank/manage/0');?>" class="btn icn16 tooltip-top" title="<?php echo ucfirst(lang('short.create', lang('rank')));?>"><div class="icn icn-75" data-icon="+"></div></a>
 	</div>
 
