@@ -704,7 +704,7 @@ class Controller_Admin_Form extends Controller_Base_Admin
 				$this->_data->action = 'update';
 
 				// Manually set the header, footer, and message
-				$title = ucwords(lange('short.update', langConcat('form tab')));
+				$title = ucwords(lang('short.update', langConcat('form tab')));
 				$this->_headers['tabs'] = $this->_titles['tabs'] = $title;
 				$this->_messages['tabs'] = false;
 			}
