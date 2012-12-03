@@ -22,14 +22,14 @@ class Setup
 	 */
 	public static function install()
 	{
-		// move to the latest migration
+		// Move to the latest migration
 		\Migrate::latest('setup', 'module');
 		
-		// do the quick installs
-		\QuickInstall::module();
-		\QuickInstall::rank();
-		\QuickInstall::skin();
-		\QuickInstall::widget();
+		// Do the quick installs
+		\Model_Catalog_Module::install();
+		\Model_Catalog_Rank::install();
+		\Model_Catalog_Skin::install();
+		\Model_Catalog_Widget::install();
 
 		// install the dev data
 		static::installDevData();

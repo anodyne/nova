@@ -21,7 +21,6 @@ Autoloader::add_classes(array(
 	'Fusion\\Nav'							=> __DIR__.'/classes/nav.php',
 	'Fusion\\NovaForm'						=> __DIR__.'/classes/novaform.php',
 	'Fusion\\NovaMail'						=> __DIR__.'/classes/novamail.php',
-	'Fusion\\QuickInstall'					=> __DIR__.'/classes/quickinstall.php',
 	'Fusion\\Status'						=> __DIR__.'/classes/status.php',
 	'Fusion\\SystemEvent'					=> __DIR__.'/classes/systemevent.php',
 	'Fusion\\Utility'						=> __DIR__.'/classes/utility.php',
@@ -32,6 +31,11 @@ Autoloader::add_classes(array(
 	'Fusion\\NovaCSRFException'				=> __DIR__.'/classes/exceptions.php',
 	'Fusion\\NovaInvalidImageTypeException'	=> __DIR__.'/classes/exceptions.php',
 	'Fusion\\NovaSetupException'			=> __DIR__.'/classes/exceptions.php',
+
+	/**
+	 * Interfaces
+	 */
+	'Fusion\\QuickInstallInterface'			=> __DIR__.'/classes/interface/quickinstall.php',
 
 	/**
 	 * Models

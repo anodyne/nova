@@ -11,7 +11,7 @@
  
 namespace Fusion;
 
-class Model_Catalog_Rank extends \Model
+class Model_Catalog_Rank extends \Model implements \QuickInstallInterface
 {
 	public static $_table_name = 'catalog_ranks';
 	
@@ -112,6 +112,69 @@ class Model_Catalog_Rank extends \Model
 		}
 		
 		return $result;
+	}
+
+	public static function install($location = null)
+	{
+		if ($location === null)
+		{
+			// get the directory listing for the genre
+			$dir = \File::read_dir(APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/');
+
+			// get all the rank sets locations
+			$ranks = static::getItems();
+
+			if (count($ranks) > 0)
+			{
+				// start by removing anything that's already installed
+				foreach ($ranks as $rank)
+				{
+					if (array_key_exists($rank->location.DS, $dir))
+					{
+						unset($dir[$rank->location.DS]);
+					}
+				}
+			}
+				
+			// loop through the directories now
+			foreach ($dir as $key => $value)
+			{
+				// assign our path to a variable
+				$file = APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/'.$key.'rank.json';
+
+				// make sure the file exists first
+				if (file_exists($file))
+				{
+					// get the contents and decode the JSON
+					$content = file_get_contents($file);
+					$data = json_decode($content);
+
+					// create the item
+					static::createItem($data);
+				}
+			}
+		}
+		else
+		{
+			// assign our path to a variable
+			$file = APPPATH.'assets/common/'.\Config::get('nova.genre').'/ranks/'.$location.'/rank.json';
+			
+			// make sure the file exists first
+			if (file_exists($file))
+			{
+				// get the contents and decode the JSON
+				$content = file_get_contents($file);
+				$data = json_decode($content);
+				
+				// create the item
+				static::createItem($data);
+			}
+		}
+	}
+
+	public static function uninstall($location)
+	{
+		throw new \Exception('Uninstall method is not implemented.');
 	}
 }
 

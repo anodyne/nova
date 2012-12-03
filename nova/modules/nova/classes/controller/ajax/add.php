@@ -79,8 +79,8 @@ class Controller_Ajax_Add extends Controller_Base_Ajax
 	{
 		if (\Sentry::check() and \Sentry::user()->hasAccess('catalog.create'))
 		{
-			// do the quick install
-			\QuickInstall::module($module);
+			// Do the quick install
+			\Model_Catalog_Module::install($module);
 
 			\SystemEvent::add('user', '[[event.admin.catalog.module_create|{{'.$module.'}}]]');
 

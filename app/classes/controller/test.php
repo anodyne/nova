@@ -9,9 +9,7 @@ class Controller_Test extends Nova\Controller_Main
 	
 	public function action_index()
 	{
-		\Debug::dump(
-			lang('[[event.admin.position|position|{{Commanding Officer}}|action.updated]]')
-		);
+		\Debug::dump(\Model_Catalog_Module::uninstall('foo'));
 		
 		return;
 	}
