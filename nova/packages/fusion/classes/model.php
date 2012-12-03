@@ -1,7 +1,7 @@
 <?php
 /**
  * The model class is the foundation for all of Nova's models and provides core
- * functionality that's shared across a lot of the models used in Nova,
+ * functionality that's shared across many of the models used in Nova,
  * including creating a new items, updating an existing item, finding items
  * based on criteria, and deleting items.
  *
@@ -24,19 +24,20 @@ class Model extends \Orm\Model
 	 * Create an item with the data passed.
 	 *
 	 * @api
-	 * @param	mixed	an array or object of data
-	 * @param	bool	should the object be returned?
-	 * @param	bool	should the data be filtered?
+	 * @param	mixed	The data
+	 * @param	bool	Should the object be returned?
+	 * @param	bool	Should the data be filtered?
 	 * @return	mixed
 	 */
-	public static function createItem($data, $return_object = false, $filter = true)
+	public static function createItem($data, $returnObj = false, $filter = true)
 	{
-		// create a forge
+		// Create a forge
 		$item = static::forge();
 		
-		// loop through the data and add it to the item
+		// Loop through the data and add it to the item
 		foreach ($data as $key => $value)
 		{
+			// Don't do anything with the ID field and make sure the column exists
 			if ($key != 'id' and array_key_exists($key, static::$_properties))
 			{
 				if (is_array($data))
@@ -64,9 +65,11 @@ class Model extends \Orm\Model
 			}
 		}
 		
+		// Was the item saved?
 		if ($item->save())
 		{
-			if ($return_object)
+			// Are we returning the object?
+			if ($returnObj)
 			{
 				return $item;
 			}
@@ -78,42 +81,46 @@ class Model extends \Orm\Model
 	}
 
 	/**
-	 * Find a record/records in the table based on the simple arguments.
+	 * Find a record/records in the table based on simple arguments.
 	 *
 	 * @api
-	 * @param	string	the column to use
-	 * @param	mixed	the value to use
-	 * @param	bool	is this for a search?
+	 * @param	string	The column
+	 * @param	mixed	The value
+	 * @param	bool	Is this for a search?
 	 * @return	object
 	 */
 	public static function getItem($value, $column = false, $search = false)
 	{
 		if (is_array($value))
 		{
-			// start the find
+			// Start the find
 			$record = static::query();
 			
-			// loop through the arguments and build the where clause
+			// Loop through the arguments and build the where clause
 			foreach ($value as $col => $val)
 			{
+				// Make sure the column exists
 				if (array_key_exists($col, static::$_properties))
 				{
 					$record->where($col, $val);
 				}
 			}
 			
-			// get the record
+			// Get the record
 			return $record->get_one();
 		}
 		else
 		{
+			// Make sure the column exists
 			if (array_key_exists($column, static::$_properties))
 			{
+				// We aren't searching, so use an equality
 				if ( ! $search)
 				{
 					return static::query()->where($column, $value)->get_one();
 				}
 
+				// We are searching, so make sure we use LIKE in the query
 				return static::query()->where($column, 'like', $value)->get();
 			}
 		}
@@ -125,28 +132,27 @@ class Model extends \Orm\Model
 	 * Find a form item based on the form key.
 	 *
 	 * @api
-	 * @param	string	the form key to use
-	 * @param	bool	pull back displayed items (true) or all items (false)
+	 * @param	string	The form key
+	 * @param	bool	Get displayed items (true) or all items (false)?
 	 * @return	object
 	 */
-	public static function getFormItems($key, $only_active = false)
+	public static function getFormItems($key, $onlyActive = false)
 	{
-		// get the object
+		// Get the object
 		$items = static::query();
 
-		// make sure we're pulling back the right form
+		// Make sure we're pulling back the right form
 		$items->where('form_key', $key);
 
-		// should we be getting all items or just enabled ones?
-		if ($only_active)
+		// Should we be getting all items or just enabled ones?
+		if ($onlyActive)
 		{
 			$items->where('status', \Status::ACTIVE);
 		}
 
-		// order the items
+		// Order the items
 		$items->order_by('order', 'asc');
 
-		// return the object
 		return $items->get();
 	}
 	
@@ -154,23 +160,25 @@ class Model extends \Orm\Model
 	 * Update an item in the table based on the ID and data.
 	 *
 	 * @api
-	 * @param	mixed	a specific ID to update or NULL to update everything
-	 * @param	array 	the array of data to update with
-	 * @param	bool	should the data be run through the XSS filter
+	 * @param	mixed	An ID to update or NULL to update everything
+	 * @param	array 	Array of data
+	 * @param	bool	Should the data be run through the XSS filter
 	 * @return	mixed
 	 */
-	public static function updateItem($id, array $data, $return_object = false, $filter = true)
+	public static function updateItem($id, array $data, $returnObj = false, $filter = true)
 	{
 		if ($id !== null)
 		{
-			// get the item
+			// Get the item
 			$item = static::find($id);
 			
-			// loop through the data array and make the changes
+			// Loop through the data array and make the changes
 			foreach ($data as $key => $value)
 			{
+				// Don't update the ID field and make sure the column exists
 				if ($key != 'id' and array_key_exists($key, static::$_properties))
 				{
+					// Are we doing XSS filtering?
 					if ($filter)
 					{
 						$value = \Security::xss_clean($value);
@@ -180,10 +188,11 @@ class Model extends \Orm\Model
 				}
 			}
 			
-			// save the item
+			// Save the item
 			if ($item->save())
 			{
-				if ($return_object)
+				// Are we returning the object?
+				if ($returnObj)
 				{
 					return $item;
 				}
@@ -195,15 +204,16 @@ class Model extends \Orm\Model
 		}
 		else
 		{
-			// pull everything from the table
+			// Pull everything from the table
 			$items = static::find('all');
 			
-			// loop through all the items
+			// Loop through all the items
 			foreach ($items as $item)
 			{
-				// loop through the data and make the changes
+				// Loop through the data and make the changes
 				foreach ($data as $key => $value)
 				{
+					// Are we filtering this for XSS?
 					if ($filter)
 					{
 						$value = \Security::xss_clean($value);
@@ -212,7 +222,7 @@ class Model extends \Orm\Model
 					$item->{$key} = $value;
 				}
 				
-				// save the item
+				// Save the item
 				$item->save();
 			}
 
@@ -224,36 +234,37 @@ class Model extends \Orm\Model
 	 * Delete an item in the table based on the arguments passed.
 	 *
 	 * @api
-	 * @param	mixed	an array of arguments or the item ID
+	 * @param	mixed	An array of arguments or the item ID
 	 * @return	bool
 	 */
 	public static function deleteItem($args)
 	{
-		// if we have a list of arguments, loop through them
+		// If we have a list of arguments, loop through them
 		if (is_array($args))
 		{
-			// start the find
+			// Start the find
 			$item = static::query();
 
-			// loop through the arguments to build the where
+			// Loop through the arguments to build the where
 			foreach ($args as $column => $value)
 			{
+				// Make sure the column exists
 				if (array_key_exists($column, static::$_properties))
 				{
 					$item->where($column, $value);
 				}
 			}
 
-			// get the item
+			// Get the item
 			$entry = $item->get_one();
 		}
 		else
 		{
-			// go directly to the item
+			// Go directly to the item
 			$entry = static::find($args);
 		}
 
-		// now that we have the item, delete it
+		// Now that we have the item, delete it
 		if ($entry->delete(null, true))
 		{
 			return true;
