@@ -27,7 +27,7 @@ interface QuickInstallInterface
 	 * Uninstall the item.
 	 *
 	 * @api
-	 * @param	mixed	The location of the item.
+	 * @param	string	The location of the item.
 	 */
 	public static function uninstall($location);
 }
