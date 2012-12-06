@@ -153,34 +153,111 @@ class Controller_Admin_Role extends Controller_Base_Admin
 	}
 
 	/**
-	 * @todo	List all tasks
 	 * @todo	Create a new task
 	 * @todo	Edit an existing task
 	 * @todo	Delete a task
 	 */
 	public function action_tasks($taskID = false)
 	{
-		\Sentry::allowed('role.update', true);
+		\Sentry::allowed('role.read', true);
 
 		$this->_js_view = 'admin/role/tasks_js';
 
-		if ($taskID)
+		if (\Input::method() == 'POST')
 		{
-			if ($taskID === 0)
+			$action = \Security::xss_clean(\Input::post('action'));
+
+			if (\Security::check_token())
 			{
-				// create a new task
+				/**
+				 * Create a task.
+				 */
+				if (\Sentry::user()->hasAccess('role.create') and $action == 'create')
+				{
+					// Create the item
+					$item = \Model_Access_Task::createItem(\Input::post(), true);
+
+					// Set the flash message
+					$this->_flash[] = array(
+						'status' => ($item) ? 'success' : 'danger',
+						'message' => ($item) 
+							? ucfirst(lang('short.alert.success.create', langConcat('access task')))
+							: ucfirst(lang('short.alert.failure.create', langConcat('access task'))),
+					);
+				}
+
+				/**
+				 * Update a task.
+				 */
+				if (\Sentry::user()->hasAccess('role.update') and $action == 'update')
+				{
+					// Update a task
+				}
+
+				/**
+				 * Delete a task.
+				 */
+				if (\Sentry::user()->hasAccess('role.delete') and $action == 'delete')
+				{
+					// Delete a task
+				}
 			}
 			else
 			{
-				// edit the selected task
+				$this->_flash[] = array(
+					'status' 	=> 'danger',
+					'message' 	=> lang('error.csrf'),
+				);
 			}
+		}
+
+		if ($taskID !== false)
+		{
+			$this->_view = 'admin/role/task';
+
+			// Get the task
+			$this->_data->task = (is_numeric($taskID)) ? \Model_Access_Task::find($taskID) : false;
+
+			// Get all the task components
+			$components = \Model_Access_Task::getComponents();
+
+			// Storage array
+			$cs = array();
+
+			// Loop through the tasks and get the components
+			foreach ($components as $c)
+			{
+				if ( ! in_array($c->component, $cs))
+				{
+					$cs[] = $c->component;
+				}
+			}
+
+			// Set the list of components
+			$this->_data->componentSource = json_encode($cs);
+
+			// Set the list of actions
+			$this->_data->actionSource = json_encode(array('create', 'read', 'update', 'delete'));
+
+			// Set the action
+			$this->_data->action = ($taskID === false) ? 'create' : 'update';
+
+			// Manually set the header, title and message
+			$title = ucwords(lang('short.manage', langConcat('access task')));
+			$this->_headers['tasks'] = $this->_titles['tasks'] = $title;
 		}
 		else
 		{
 			$this->_view = 'admin/role/tasks';
 
 			// Get all the tasks
-			$this->_data->tasks = \Model_Access_Task::find('all');
+			$tasks = \Model_Access_Task::find('all');
+
+			// Loop through the tasks and group them by component
+			foreach ($tasks as $t)
+			{
+				$this->_data->tasks[$t->component][] = $t;
+			}
 
 			// Manually set the header, title and message
 			$title = ucwords(lang('short.manage', langConcat('access tasks')));

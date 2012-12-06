@@ -20,6 +20,14 @@ class Model_Access_Task extends \Model
 			'type' => 'int',
 			'constraint' => 11,
 			'auto_increment' => true),
+		'name' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'null' => true),
+		'desc' => array(
+			'type' => 'string',
+			'constraint' => 255,
+			'null' => true),
 		'component' => array(
 			'type' => 'string',
 			'constraint' => 100,
@@ -32,13 +40,8 @@ class Model_Access_Task extends \Model
 			'type' => 'int',
 			'constraint' => 2,
 			'default' => 0),
-		'label' => array(
-			'type' => 'string',
-			'constraint' => 255,
-			'null' => true),
-		'help' => array(
-			'type' => 'string',
-			'constraint' => 255,
+		'dependencies' => array(
+			'type' => 'text',
 			'null' => true),
 	);
 
@@ -54,6 +57,11 @@ class Model_Access_Task extends \Model
 			'cascade_delete' => false,
 		),
 	);
+
+	public static function getComponents()
+	{
+		return static::query()->group_by('component')->get();
+	}
 
 	public static function getTask($task)
 	{

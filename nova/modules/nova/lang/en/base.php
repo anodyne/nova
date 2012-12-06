@@ -3,6 +3,7 @@
 return array(
 	
 	'account'		=> 'account',
+	'action_proper' => 'action',
 	'actions'		=> 'actions',
 	'all'			=> 'all',
 	'attributes'	=> 'attributes',
@@ -34,6 +35,7 @@ return array(
 	'catalog' => 'catalog',
 	'comment' => 'comment',
 	'comments' => 'comments',
+	'component' => "component",
 
 	'display' => 'display',
 	'dropdown' => 'dropdown menu',
@@ -43,6 +45,8 @@ return array(
 	'detail' => 'detail',
 	'details' => 'details',
 	'decision' => 'decision',
+	'dependency' => "dependency",
+	'dependencies' => "dependencies",
 
 	'email_address' => "email address",
 	'email_short' => 'email',
@@ -91,6 +95,7 @@ return array(
 	'last' => 'last',
 	'location' => 'location',
 	'language' => 'language',
+	'level' => "level",
 
 	'message' => "message",
 	'my' => "my :thing",
