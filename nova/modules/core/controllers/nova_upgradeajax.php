@@ -533,7 +533,11 @@ abstract class Nova_upgradeajax extends CI_Controller {
 			
 			foreach ($roles as $r)
 			{
-				$saved[] = $this->user->update_user($r, array('access_role' => Access_Model::SYSADMIN));
+				$saved[] = $this->user->update_user($r, array(
+					'access_role'		=> Access_Model::SYSADMIN,
+					'is_sysadmin'		=> 'y',
+					'is_game_master'	=> 'y',
+				));
 			}
 			
 			if ( ! in_array(true, $saved))
