@@ -12,6 +12,7 @@
 ### Bug Fixes
 
 * Error thrown on viewing a post that doesn't exist.
+* Error thrown when using the tour form.
 
 ## 2.1.3 (05 November 2012)
 
