@@ -227,15 +227,20 @@ abstract class Nova_characters extends Nova_controller_admin {
 			
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
+
+							// Get the current user
+							$currentUser = $this->user->get_user($this->session->userdata('userid'));
 							
-							$email_data = array(
-								'message' => $content,
-								'email' => $user->email,
-								'name' => $user->name,
-								'character' => $args['character']
+							$emailData = array(
+								'message' 	=> $content,
+								'email' 	=> $user->email,
+								'name' 		=> $user->name,
+								'character' => $args['character'],
+								'fromEmail' => $currentUser->email,
+								'fromName'	=> $this->char->get_character_name($this->session->userdata('charid'), true, true),
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('accept', $email_data) : false;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('accept', $emailData) : false;
 						}
 						else
 						{
@@ -292,15 +297,20 @@ abstract class Nova_characters extends Nova_controller_admin {
 			
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
+
+							// Get the current user
+							$currentUser = $this->user->get_user($this->session->userdata('userid'));
 							
-							$email_data = array(
-								'message' => $content,
-								'email' => $user->email,
-								'name' => $user->name,
-								'character' => $args['character']
+							$emailData = array(
+								'message' 	=> $content,
+								'email' 	=> $user->email,
+								'name' 		=> $user->name,
+								'character' => $args['character'],
+								'fromEmail' => $currentUser->email,
+								'fromName'	=> $this->char->get_character_name($this->session->userdata('charid'), true, true),
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('reject', $email_data) : false;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('reject', $emailData) : false;
 						}
 						else
 						{
@@ -2064,6 +2074,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				
 				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($data['email']);
+				$this->email->reply_to($data['fromEmail'], $data['fromName']);
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
@@ -2084,6 +2095,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				
 				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($data['email']);
+				$this->email->reply_to($data['fromEmail'], $data['fromName']);
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
@@ -2177,6 +2189,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($to);
+				$this->email->reply_to($data['email'], $data['name']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;

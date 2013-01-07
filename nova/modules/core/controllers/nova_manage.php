@@ -1308,15 +1308,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 			
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
+
+							$currentUser = $this->user->get_user($this->session->userdata('userid'));
 							
-							$email_data = array(
-								'message' => $content,
-								'email' => $item->docking_gm_email,
-								'name' => $item->docking_gm_name,
-								'sim' => $item->docking_sim_name
+							$emailData = array(
+								'message'	=> $content,
+								'email' 	=> $item->docking_gm_email,
+								'name' 		=> $item->docking_gm_name,
+								'sim' 		=> $item->docking_sim_name,
+								'fromEmail' => $currentUser->email,
+								'fromName'	=> $this->char->get_character_name($currentUser->main_char, true, true),
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $email_data) : false;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $emailData) : false;
 						}
 						else
 						{
@@ -1364,15 +1368,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 			
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
+
+							$currentUser = $this->user->get_user($this->session->userdata('userid'));
 							
-							$email_data = array(
-								'message' => $content,
-								'email' => $item->docking_gm_email,
-								'name' => $item->docking_gm_name,
-								'sim' => $item->docking_sim_name
+							$emailData = array(
+								'message'	=> $content,
+								'email' 	=> $item->docking_gm_email,
+								'name' 		=> $item->docking_gm_name,
+								'sim' 		=> $item->docking_sim_name,
+								'fromEmail' => $currentUser->email,
+								'fromName'	=> $this->char->get_character_name($currentUser->main_char, true, true),
 							);
 							
-							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $email_data) : false;
+							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $emailData) : false;
 						}
 						else
 						{
@@ -5144,6 +5152,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
+				$this->email->reply_to($from_email, $from_name);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 			break;
@@ -5182,6 +5191,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
+				$this->email->reply_to($from_email, $from_name);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 			break;
@@ -5240,6 +5250,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
+				$this->email->reply_to($from_email, $from_name);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 			break;
@@ -5277,6 +5288,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $name);
 				$this->email->to($to);
+				$this->email->reply_to($from, $name);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
@@ -5314,6 +5326,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $name);
 				$this->email->to($to);
+				$this->email->reply_to($from, $name);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
@@ -5360,6 +5373,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				
 				$this->email->from(Util::email_sender(), $name);
 				$this->email->to($to);
+				$this->email->reply_to($from, $name);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
@@ -5413,6 +5427,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $name);
 				$this->email->to($to);
+				$this->email->reply_to($from, $name);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
@@ -5432,6 +5447,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				
 				$this->email->from(Util::email_sender(), $this->options['sim_name']);
 				$this->email->to($data['email']);
+				$this->email->reply_to($data['fromEmail'], $data['fromName']);
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
@@ -5452,6 +5468,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				
 				$this->email->from(Util::email_sender(), $this->options['sim_name']);
 				$this->email->to($data['email']);
+				$this->email->reply_to($data['fromEmail'], $data['fromName']);
 				$this->email->cc($cc);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
