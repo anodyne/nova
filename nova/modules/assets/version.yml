@@ -1,9 +1,9 @@
-version: 2.1.3
+version: 2.1.4
 version_major: 2
 version_minor: 1
-version_update: 3
-severity: critical
+version_update: 4
+severity: minor
 notes: |
-  Nova 2.1.3 addresses several small bugs with dynamic forms and patches a security vulnerability in Nova.
-date: 05 November 2012
+  Nova 2.1.4 addresses a bug with viewing posts and adds an option for retrieving specific fields for third-party developers.
+date: 11 November 2013
 link: http://www.anodyne-productions.com/nova/index.php
