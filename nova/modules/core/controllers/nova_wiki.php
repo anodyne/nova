@@ -142,7 +142,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				{
 					$data['pages'][$p->page_id]['id'] = $p->page_id;
 					$data['pages'][$p->page_id]['title'] = $p->draft_title;
-					$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character);
+					$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character, true, true);
 					$data['pages'][$p->page_id]['summary'] = $p->draft_summary;
 				}
 			}
@@ -1091,7 +1091,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						$data['recent']['updates'][] = array(
 							'id' => $u->page_id,
 							'title' => $u->draft_title,
-							'author' => $this->char->get_character_name($u->page_updated_by_character),
+							'author' => $this->char->get_character_name($u->page_updated_by_character, true, false, true),
 							'timespan' => timespan_short($u->page_updated_at, now()),
 							'comments' => $u->draft_changed_comments,
 							'type' => $u->page_type,
@@ -1113,7 +1113,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						$data['recent']['created'][] = array(
 							'id' => $c->page_id,
 							'title' => $c->draft_title,
-							'author' => $this->char->get_character_name($c->page_created_by_character),
+							'author' => $this->char->get_character_name($c->page_created_by_character, true, false, true),
 							'timespan' => timespan_short($c->page_created_at, now()),
 							'summary' => $c->draft_summary,
 							'type' => $c->page_type,
@@ -1314,7 +1314,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 					
 					$data['draft'] = array(
 						'content' => $this->thresher->parse($d->draft_content),
-						'created' => $this->char->get_character_name($d->draft_author_character, true),
+						'created' => $this->char->get_character_name($d->draft_author_character, true, false, true),
 						'created_date' => mdate($datestring, $created),
 						'page' => $d->draft_page,
 						'categories' => $string,
@@ -1402,9 +1402,9 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				$data['page'] = array(
 					'content' => $this->thresher->parse($p->draft_content),
 					'created' => ($p->page_created_by_character != 0) 
-						? $this->char->get_character_name($p->page_created_by_character, true)
+						? $this->char->get_character_name($p->page_created_by_character, true, false, true)
 						: ucfirst(lang('labels_system')),
-					'updated' => ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, true) : false,
+					'updated' => ( ! empty($p->page_updated_by_character)) ? $this->char->get_character_name($p->page_updated_by_character, true, false, true) : false,
 					'created_date' => mdate($datestring, $created),
 					'updated_date' => mdate($datestring, $updated),
 					'categories' => $string,
@@ -1454,7 +1454,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 						'title' => $d->draft_title,
 						'content' => $this->thresher->parse($d->draft_content),
 						'created' => ($d->draft_author_character != 0) 
-							? $this->char->get_character_name($d->draft_author_character) 
+							? $this->char->get_character_name($d->draft_author_character, false, false, true) 
 							: ucfirst(lang('labels_system')),
 						'created_date' => mdate($datestring, $created),
 						'old_id' => ( ! empty($d->draft_id_old)) ? $d->draft_id_old : false,
@@ -1480,7 +1480,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				{
 					$date = gmt_to_local($cm->wcomment_date, $this->timezone, $this->dst);
 					
-					$data['comments'][$cm->wcomment_id]['author'] = $this->char->get_character_name($cm->wcomment_author_character, true);
+					$data['comments'][$cm->wcomment_id]['author'] = $this->char->get_character_name($cm->wcomment_author_character, true, false, true);
 					$data['comments'][$cm->wcomment_id]['content'] = $cm->wcomment_content;
 					$data['comments'][$cm->wcomment_id]['date'] = mdate($datestring, $date);
 				}
