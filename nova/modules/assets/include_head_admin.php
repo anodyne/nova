@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Assets
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 $faceboxcss = ( ! is_file(APPPATH.'views/'.$current_skin.'/admin/css/jquery.facebox.css'))

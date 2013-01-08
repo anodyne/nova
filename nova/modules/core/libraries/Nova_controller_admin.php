@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Library
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
  
 class Nova_controller_admin extends CI_Controller {

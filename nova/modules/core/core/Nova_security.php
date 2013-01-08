@@ -7,7 +7,7 @@
  * @package		Nova
  * @category	Library
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 abstract class Nova_Security extends CI_Security {

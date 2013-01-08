@@ -5,7 +5,7 @@
  * @package		Thresher
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_wiki.php';

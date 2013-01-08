@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Install
  * @author		Anodyne Productions
- * @copyright	2012 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 $user_id_type				= 'INT';
