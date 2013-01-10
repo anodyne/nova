@@ -132,70 +132,71 @@
 		</div>
 	<?php echo form_close();?>
 		
-	<div id="three">
-		<p><?php echo link_to_if(Auth::check_access('upload/index', false), 'upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
-		
-		<div class="subtabs">
-			<ul>
-				<li><a href="#five"><span><?php echo $label['character_images'];?></span></a></li>
-				<li><a href="#six"><span><?php echo $label['available_images'];?></span></a></li>
-			</ul>
+		<div id="three">
+			<p><?php echo link_to_if(Auth::check_access('upload/index', false), 'upload/index', img($images['upload']) .' '. $label['upload'], array('class' => 'image fontMedium bold'));?></p>
 			
-			<div id="five">
-				<p>
-					<?php echo form_button($button['update']);?> &nbsp;&nbsp;
-					<span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
-				</p><br />
-				
-				<ul id="list-grid">
-				<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
-					<?php foreach ($inputs['images'] as $i): ?>
-						<?php if (strpos($i, '://') === FALSE): ?>
-							<?php $image = array('src' => base_url().Location::asset('images/characters', $i), 'height' => 140);?>
-						<?php else: ?>
-							<?php $image = array('src' => $i, 'height' => 140);?>
-						<?php endif;?>
-						<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
-					<?php endforeach;?>
-				<?php endif;?>
+			<div class="subtabs">
+				<ul>
+					<li><a href="#five"><span><?php echo $label['character_images'];?></span></a></li>
+					<li><a href="#six"><span><?php echo $label['available_images'];?></span></a></li>
 				</ul>
-			</div>
-			
-			<div id="six">
-				<?php if (isset($myuploads)): ?>
-					<?php echo text_output($label['myuploads'], 'h3');?>
-					<br />
-					<table class="zebra">
-						<tbody>
-						<?php foreach ($myuploads as $d): ?>
-							<tr>
-								<td class="cell-label"><?php echo $d['file'];?></td>
-								<td class="cell-spacer"></td>
-								<td><?php echo img($d['image']);?></td>
-								<td class="cell-spacer"></td>
-								<td><?php echo form_button($button['use']);?></td>
-							</tr>
-						<?php endforeach;?>
-						</tbody>
-					</table><br />
-				<?php endif;?>
 				
-				<?php if (isset($directory)): ?>
-					<br />
-					<table class="zebra all-uploads">
-						<tbody>
-						<?php foreach ($directory as $d): ?>
-							<tr>
-								<td class="cell-label"><?php echo $d['file'];?></td>
-								<td class="cell-spacer"></td>
-								<td><?php echo img($d['image']);?></td>
-								<td class="cell-spacer"></td>
-								<td><?php echo form_button($button['use']);?></td>
-							</tr>
+				<div id="five">
+					<p>
+						<?php echo form_button($button['update']);?> &nbsp;&nbsp;
+						<span id="loading_upload_update" class="hidden"><?php echo img($images['loading']);?></span>
+					</p><br />
+					
+					<ul id="list-grid">
+					<?php if (is_array($inputs['images']) && count($inputs['images']) > 0): ?>
+						<?php foreach ($inputs['images'] as $i): ?>
+							<?php if (strpos($i, '://') === FALSE): ?>
+								<?php $image = array('src' => base_url().Location::asset('images/characters', $i), 'height' => 140);?>
+							<?php else: ?>
+								<?php $image = array('src' => $i, 'height' => 140);?>
+							<?php endif;?>
+							<li id="img_<?php echo str_replace('.', '\\.', $i);?>"><a href="#" class="image upload-close" remove="<?php echo str_replace('.', '\\.', $i);?>">x</a><?php echo img($image);?></li>
 						<?php endforeach;?>
-						</tbody>
-					</table>
-				<?php endif;?>
+					<?php endif;?>
+					</ul>
+				</div>
+				
+				<div id="six">
+					<?php if (isset($myuploads)): ?>
+						<?php echo text_output($label['myuploads'], 'h3');?>
+						<br />
+						<table class="zebra">
+							<tbody>
+							<?php foreach ($myuploads as $d): ?>
+								<tr>
+									<td class="cell-label"><?php echo $d['file'];?></td>
+									<td class="cell-spacer"></td>
+									<td><?php echo img($d['image']);?></td>
+									<td class="cell-spacer"></td>
+									<td><?php echo form_button($button['use']);?></td>
+								</tr>
+							<?php endforeach;?>
+							</tbody>
+						</table><br />
+					<?php endif;?>
+					
+					<?php if (isset($directory)): ?>
+						<br />
+						<table class="zebra all-uploads">
+							<tbody>
+							<?php foreach ($directory as $d): ?>
+								<tr>
+									<td class="cell-label"><?php echo $d['file'];?></td>
+									<td class="cell-spacer"></td>
+									<td><?php echo img($d['image']);?></td>
+									<td class="cell-spacer"></td>
+									<td><?php echo form_button($button['use']);?></td>
+								</tr>
+							<?php endforeach;?>
+							</tbody>
+						</table>
+					<?php endif;?>
+				</div>
 			</div>
 		</div>
 	</div>

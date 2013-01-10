@@ -18,8 +18,8 @@
 		<?php foreach ($tour as $t): ?>
 			<tr>
 				<td class="cell-label">
-					<?php echo $f['label'];?>
-					<?php if ($f['display'] == 'n'): ?>
+					<?php echo $t['label'];?>
+					<?php if ($t['display'] == 'n'): ?>
 						<?php echo text_output($label['off'], 'div', 'fontSmall red bold');?>
 					<?php endif;?>
 				</td>
