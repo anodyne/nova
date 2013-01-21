@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Model
  * @author		Anodyne Productions
- * @copyright	2012 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 abstract class Nova_privmsgs_model extends CI_Model {

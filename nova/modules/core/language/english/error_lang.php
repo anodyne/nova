@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Language
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  * @version		2.0
  */
 
