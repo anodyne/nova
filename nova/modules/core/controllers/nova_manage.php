@@ -5500,7 +5500,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						
 						$data['entries'][$p->post_id]['id'] = $p->post_id;
 						$data['entries'][$p->post_id]['title'] = $p->post_title;
-						$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true);
+						$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true, true);
 						$data['entries'][$p->post_id]['date'] = mdate($datestring, $date);
 						$data['entries'][$p->post_id]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 						$data['entries'][$p->post_id]['status'] = $p->post_status;
@@ -5572,7 +5572,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 								
 								$data['entries'][$l->log_id]['id'] = $l->log_id;
 								$data['entries'][$l->log_id]['title'] = $l->log_title;
-								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true);
+								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true, false, true);
 								$data['entries'][$l->log_id]['date'] = mdate($datestring, $date);
 								$data['entries'][$l->log_id]['status'] = $l->log_status;
 							}
@@ -5583,7 +5583,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							
 							$data['entries'][$l->log_id]['id'] = $l->log_id;
 							$data['entries'][$l->log_id]['title'] = $l->log_title;
-							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true);
+							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true, false, true);
 							$data['entries'][$l->log_id]['date'] = mdate($datestring, $date);
 							$data['entries'][$l->log_id]['status'] = $l->log_status;
 						}
@@ -5651,7 +5651,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 								
 								$data['entries'][$nid]['id'] = $nid;
 								$data['entries'][$nid]['title'] = $n->news_title;
-								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true);
+								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true, false, true);
 								$data['entries'][$nid]['date'] = mdate($datestring, $date);
 								$data['entries'][$nid]['category'] = $n->newscat_name;
 								$data['entries'][$nid]['status'] = $n->news_status;
@@ -5664,7 +5664,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							
 							$data['entries'][$nid]['id'] = $nid;
 							$data['entries'][$nid]['title'] = $n->news_title;
-							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true);
+							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true, false, true);
 							$data['entries'][$nid]['date'] = mdate($datestring, $date);
 							$data['entries'][$nid]['category'] = $n->newscat_name;
 							$data['entries'][$nid]['status'] = $n->news_status;
