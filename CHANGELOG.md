@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.4 (10 January 2013)
+## 2.2.0 (03 February 2013)
 
 ### Nova Core
 
@@ -8,11 +8,17 @@
 * Updated the docking model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 * Updated the specs model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 * Updated the tour model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
+* Updated copyright dates in source code. ([#224](https://github.com/anodyne/nova/issues/224))
+* Added reply to header to most of the emails that are sent from Nova. ([#217](https://github.com/anodyne/nova/issues/217))
+* Update author listings to provide links to each character's bio page. Thanks to Jordan Jay for his MOD to do this. We've expanded on his idea to provide this functionality for mission posts, personal logs, news items, wiki pages and comments. ([#223](https://github.com/anodyne/nova/issues/223))
 
 ### Bug Fixes
 
 * Error thrown on viewing a post that doesn't exist.
 * Error thrown when using the tour form.
+* Sub-department names and descriptions aren't displayed properly when managing positions. ([#232](https://github.com/anodyne/nova/issues/232))
+* Missing closing tag on the character bio management page.
+* When upgrading from SMS, system administrators didn't have the proper flags set.
 
 ## 2.1.3 (05 November 2012)
 

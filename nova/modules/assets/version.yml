@@ -1,9 +1,9 @@
-version: 2.1.4
+version: 2.2.0
 version_major: 2
-version_minor: 1
-version_update: 4
-severity: minor
+version_minor: 2
+version_update: 0
+severity: major
 notes: |
-  Nova 2.1.4 addresses a bug with viewing posts and adds an option for retrieving specific fields for third-party developers.
-date: 11 November 2013
+  Nova 2.2 adds two features to Nova as well as addressing several bugs. Most emails sent from Nova will now include a reply to header so that any replies to the email notification will go to the original author. The author listings now include links to the character bio pages as well. Thanks to Jordan Jay for his MOD to do this; we've expanded it to include mission posts, personal logs, news items, wiki pages and comments. In addition, we've added an option for retrieving specific fields for third-party developers.
+date: 03 February 2013
 link: http://www.anodyne-productions.com/nova/index.php
