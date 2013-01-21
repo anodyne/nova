@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Helper
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 // ------------------------------------------------------------------------
@@ -98,7 +98,7 @@ if ( ! function_exists('whos_online'))
 			foreach ($online as $value)
 			{
 				$char = $ci->user->get_main_character($value);
-				$array[$value] = $ci->char->get_character_name($char, false);
+				$array[$value] = $ci->char->get_character_name($char, false, false, true);
 			}
 			
 			$string = implode(', ', $array);

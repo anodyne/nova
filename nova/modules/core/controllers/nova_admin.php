@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_admin.php';
@@ -208,7 +208,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 					$data['activity'][$a->userid] = array(
 						'post' => ( ! empty($a->last_post)) ? $a->last_post : lang('error_no_last_post'),
 						'login' => ( ! empty($a->last_login)) ? $a->last_login : lang('error_no_last_login'),
-						'name' => $this->char->get_character_name($a->main_char, true)
+						'name' => $this->char->get_character_name($a->main_char, true, false, true)
 					);
 				}
 
@@ -240,7 +240,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 				if ($time <= 12)
 				{
 					$data['milestones'][] = array(
-						'name' => $this->char->get_character_name($m['char'], true),
+						'name' => $this->char->get_character_name($m['char'], true, false, true),
 						'months' => floor($time),
 						'years' => 0,
 						'timespan' => timespan($m['join'], $now)
@@ -254,7 +254,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 					$months = floor($time - $subt);
 
 					$data['milestones'][] = array(
-						'name' => $this->char->get_character_name($m['char'], true),
+						'name' => $this->char->get_character_name($m['char'], true, false, true),
 						'months' => $months,
 						'years' => $years,
 						'timespan' => timespan($m['join'], $now)
@@ -295,7 +295,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 				$data['posts_all'][$i]['title'] = $p->post_title;
 				$data['posts_all'][$i]['post_id'] = $p->post_id;
 				$data['posts_all'][$i]['date'] = mdate($datestring, gmt_to_local($p->post_date, $this->timezone, $this->dst));
-				$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors);
+				$data['posts_all'][$i]['authors'] = $this->char->get_authors($p->post_authors, true, true);
 				$data['posts_all'][$i]['mission'] = $this->mis->get_mission($p->post_mission, 'mission_title');
 				$data['posts_all'][$i]['mission_id'] = $p->post_mission;
 
@@ -311,7 +311,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 				$data['logs_all'][$i]['title'] = $l->log_title;
 				$data['logs_all'][$i]['log_id'] = $l->log_id;
 				$data['logs_all'][$i]['date'] = mdate($datestring, gmt_to_local($l->log_date, $this->timezone, $this->dst));
-				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, TRUE);
+				$data['logs_all'][$i]['author'] = $this->char->get_character_name($l->log_author_character, true, false, true);
 
 				++$i;
 			}
@@ -325,7 +325,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 				$data['news_all'][$i]['title'] = $n->news_title;
 				$data['news_all'][$i]['news_id'] = $n->news_id;
 				$data['news_all'][$i]['category'] = $n->newscat_name;
-				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, TRUE);
+				$data['news_all'][$i]['author'] = $this->char->get_character_name($n->news_author_character, true, false, true);
 				$data['news_all'][$i]['date'] = mdate($datestring, gmt_to_local($n->news_date, $this->timezone, $this->dst));
 
 				++$i;

@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_admin.php';
@@ -132,7 +132,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$date = gmt_to_local($item->privmsgs_date, $this->timezone, $this->dst);
 				
 				$data['inbox'][$item->pmto_id]['id'] = $item->privmsgs_id;
-				$data['inbox'][$item->pmto_id]['author'] = $this->char->get_character_name($item->privmsgs_author_character, true);
+				$data['inbox'][$item->pmto_id]['author'] = $this->char->get_character_name($item->privmsgs_author_character, true, false, true);
 				$data['inbox'][$item->pmto_id]['subject'] = $item->privmsgs_subject;
 				$data['inbox'][$item->pmto_id]['date'] = mdate($datestring, $date);
 				$data['inbox'][$item->pmto_id]['unread'] = ($item->pmto_unread == 'y') ? img($data['images']['unread']) : false;
@@ -214,12 +214,12 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$data['header'] = text_output($row->privmsgs_subject, 'h1', 'page-head');
 				$data['content'] = $row->privmsgs_content;
 				$data['date'] = mdate($datestring, $date);
-				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, true);
+				$data['author'] = $this->char->get_character_name($row->privmsgs_author_character, true, false, true);
 				$data['to_count'] = count($recips);
 				
 				foreach ($recips as $rec)
 				{
-					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), true);
+					$array[] = $this->char->get_character_name($this->user->get_main_character($rec), true, false, true);
 				}
 				
 				$data['to'] = implode(' &amp; ', $array);
@@ -429,7 +429,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				$recipients_string = (is_array($recipients_array)) ? implode(',', $recipients_array) : false;
 				
 				// get the list of characters
-				$recipients = $this->char->get_authors($recipients_string);
+				$recipients = $this->char->get_authors($recipients_string, true, true);
 				
 				$data['outbox'][$item->privmsgs_id]['id'] = $item->privmsgs_id;
 				$data['outbox'][$item->privmsgs_id]['recipients'] = $recipients;
@@ -676,7 +676,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				
 				// set the data for the previous PM
 				$data['previous'] = array(
-					'from' => $this->char->get_character_name($row->privmsgs_author_character),
+					'from' => $this->char->get_character_name($row->privmsgs_author_character, false, false, true),
 					'date' => mdate($this->options['date_format'], $date),
 					'content' => $row->privmsgs_content
 				);
@@ -713,7 +713,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 				
 				// set the data for the previous PM
 				$data['previous'] = array(
-					'from' => $this->char->get_character_name($row->privmsgs_author_character),
+					'from' => $this->char->get_character_name($row->privmsgs_author_character, false, false, true),
 					'date' => mdate($this->options['date_format'], $date),
 					'content' => $row->privmsgs_content
 				);

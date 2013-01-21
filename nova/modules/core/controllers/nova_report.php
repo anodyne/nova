@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_admin.php';
@@ -235,7 +235,7 @@ abstract class Nova_report extends Nova_controller_admin {
 				$date = gmt_to_local($n->queue_date, $this->timezone, $this->dst);
 				
 				$data['nominations'][$n->queue_id] = array(
-					'nominate' => $this->char->get_character_name($n->queue_nominate, true),
+					'nominate' => $this->char->get_character_name($n->queue_nominate, true, false, true),
 					'awardid' => $n->queue_award,
 					'charid' => $n->queue_nominate,
 					'award' => $this->awards->get_award($n->queue_award, 'award_name'),
@@ -247,12 +247,12 @@ abstract class Nova_report extends Nova_controller_admin {
 				if (empty($n->queue_receive_character))
 				{
 					$charid = $this->user->get_user($n->queue_receive_user, 'main_char');
-					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true);
+					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true, false, true);
 				}
 				else
 				{
 					$charid = $n->queue_receive_character;
-					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true);
+					$data['nominations'][$n->queue_id]['name'] = $this->char->get_character_name($charid, true, false, true);
 				}
 			}
 		}

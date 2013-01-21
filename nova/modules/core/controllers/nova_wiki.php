@@ -5,7 +5,7 @@
  * @package		Thresher
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_wiki.php';
@@ -142,7 +142,7 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				{
 					$data['pages'][$p->page_id]['id'] = $p->page_id;
 					$data['pages'][$p->page_id]['title'] = $p->draft_title;
-					$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character, true, true);
+					$data['pages'][$p->page_id]['author'] = $this->char->get_character_name($p->draft_author_character, true, true, true);
 					$data['pages'][$p->page_id]['summary'] = $p->draft_summary;
 				}
 			}
@@ -661,9 +661,9 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				$data['pages'][$p->page_id]['type'] = $p->page_type;
 				$data['pages'][$p->page_id]['created'] = ($p->page_created_by_user == 0) 
 					? ucfirst(lang('labels_system')) 
-					: $this->char->get_character_name($p->page_created_by_character, true);
+					: $this->char->get_character_name($p->page_created_by_character, true, false, true);
 				$data['pages'][$p->page_id]['updated'] = ( ! empty($p->page_updated_by_character)) 
-					? $this->char->get_character_name($p->page_updated_by_character, true) 
+					? $this->char->get_character_name($p->page_updated_by_character, true, false, true) 
 					: false;
 				$data['pages'][$p->page_id]['created_date'] = mdate($datestring, $created);
 				$data['pages'][$p->page_id]['updated_date'] = mdate($datestring, $updated);

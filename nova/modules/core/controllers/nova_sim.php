@@ -5,7 +5,7 @@
  * @package		Nova
  * @category	Controller
  * @author		Anodyne Productions
- * @copyright	2011 Anodyne Productions
+ * @copyright	2013 Anodyne Productions
  */
 
 require_once MODPATH.'core/libraries/Nova_controller_main.php';
@@ -128,11 +128,11 @@ abstract class Nova_sim extends Nova_controller_main {
 						switch ($award_row->award_cat)
 						{
 							case 'both':
-								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character);
+								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character, true, false, true);
 							break;
 								
 							case 'ic':
-								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character);
+								$data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character, true, false, true);
 							break;
 								
 							case 'ooc':
