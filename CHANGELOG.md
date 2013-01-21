@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0 (03 February 2013)
+## 2.2.0 (01 February 2013)
 
 ### Nova Core
 
