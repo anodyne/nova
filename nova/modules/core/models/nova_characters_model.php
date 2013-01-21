@@ -344,7 +344,7 @@ abstract class Nova_characters_model extends CI_Model {
 	/**
 	 * Get the field data.
 	 *
-	 * @since	2.1.4
+	 * @since	2.2
 	 * @param	mixed	The field ID or the field_name
 	 * @param	int		The character ID
 	 * @param	bool	Whether to return just the value or the whole query object

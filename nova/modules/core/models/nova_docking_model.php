@@ -48,7 +48,7 @@ abstract class Nova_docking_model extends CI_Model {
 	/**
 	 * Get the docking data.
 	 *
-	 * @since	2.1.4
+	 * @since	2.2
 	 * @param	int		The docking item
 	 * @param	mixed	The field ID or field_name field
 	 * @param	bool	Whether to pull back only the value or the entire object

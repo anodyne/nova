@@ -20,7 +20,7 @@ abstract class Nova_specs_model extends CI_Model {
 	/**
 	 * Get spec field data.
 	 *
-	 * @since	2.1.4
+	 * @since	2.2
 	 * @param	int		The spec ID
 	 * @param	mixed	The field ID or field_name field
 	 * @param	bool	Whether to return only the value or the entire object
