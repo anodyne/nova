@@ -3183,7 +3183,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 				{
 					foreach ($subd->result() as $s)
 					{
-						$data['depts'][$d->dept_manifest]['items'][$s->dept_id] = $s->dept_name;
+						$data['depts'][$d->dept_manifest]['items'][$s->dept_id] = array(
+							'name' => $s->dept_name,
+							'desc' => $s->dept_desc,
+						);
 						$data['deptnames'][$s->dept_id] = $s->dept_name;
 					}
 				}
