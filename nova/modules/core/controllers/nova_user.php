@@ -2037,7 +2037,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
-				$this->email->reply_to($from_email, $from_name);
+				$this->email->reply_to($from_email);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 			break;
@@ -2105,7 +2105,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $from_name);
 				$this->email->to($to);
-				$this->email->reply_to($from_email, $from_name);
+				$this->email->reply_to($from_email);
 				$this->email->subject($this->options['email_subject'] .' '. $subject);
 				$this->email->message($message);
 			break;

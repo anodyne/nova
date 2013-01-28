@@ -1006,7 +1006,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($to);
-				$this->email->reply_to($data['email'], $data['name']);
+				$this->email->reply_to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $data['subject']);
 				$this->email->message($message);
 			break;
@@ -1044,7 +1044,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $name);
 				$this->email->to($to);
-				$this->email->reply_to($from, $name);
+				$this->email->reply_to($from);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
@@ -1084,7 +1084,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $name);
 				$this->email->to($to);
-				$this->email->reply_to($from, $name);
+				$this->email->reply_to($from);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
@@ -1205,7 +1205,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->email->from(Util::email_sender(), $data['name']);
 				$this->email->to($to);
-				$this->email->reply_to($data['email'], $data['name']);
+				$this->email->reply_to($data['email']);
 				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->email->message($message);
 			break;
