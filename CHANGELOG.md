@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0 (01 February 2013)
+## 2.2.0 (15 February 2013)
 
 * Added reply to header to most of the emails that are sent from Nova. ([#217](https://github.com/anodyne/nova/issues/217))
 * Update author listings to provide links to each character's bio page. Thanks to Jordan Jay for his MOD to do this. We've expanded on his idea to provide this functionality for mission posts, personal logs, news items, wiki pages and comments. ([#223](https://github.com/anodyne/nova/issues/223))
