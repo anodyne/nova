@@ -4,6 +4,6 @@ version_minor: 2
 version_update: 1
 severity: minor
 notes: |
-  Nova 2.2 adds two features to Nova as well as addressing several bugs. Most emails sent from Nova will now include a reply to header so that any replies to the email notification will go to the original author. The author listings now include links to the character bio pages as well. Thanks to Jordan Jay for his MOD to do this; we've expanded it to include mission posts, personal logs, news items, wiki pages and comments. In addition, we've added an option for retrieving specific fields for third-party developers.
-date: 03 February 2013
+  Nova 2.2.1 fixes an issue where the update notification box showed up all the time because of a wrong version number stored in the Nova core.
+date: 04 March 2013
 link: http://www.anodyne-productions.com/nova/index.php
