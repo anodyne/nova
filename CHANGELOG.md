@@ -1,6 +1,10 @@
 # Changelog
 
-## 2.2.1 (04 March 2013)
+## 2.2.1 (09 March 2013)
+
+### Nova Core
+
+* Updated the jQuery prettyPhoto plugin to version 3.1.5.
 
 ### Bug Fixes
 
