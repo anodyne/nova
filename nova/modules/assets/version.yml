@@ -5,5 +5,5 @@ version_update: 1
 severity: minor
 notes: |
   Nova 2.2.1 fixes an issue where the update notification box showed up all the time because of a wrong version number stored in the Nova core.
-date: 04 March 2013
+date: 09 March 2013
 link: http://www.anodyne-productions.com/nova/index.php
