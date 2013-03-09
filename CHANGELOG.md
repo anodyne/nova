@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.1 (09 March 2013)
+
+### Nova Core
+
+* Updated the jQuery prettyPhoto plugin to version 3.1.5.
+
+### Bug Fixes
+
+* Fixed update message always displaying because of a wrong version number in the core.
+
 ## 2.2.0 (15 February 2013)
 
 * Added reply to header to most of the emails that are sent from Nova. ([#217](https://github.com/anodyne/nova/issues/217))
