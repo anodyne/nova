@@ -1908,14 +1908,14 @@ abstract class Nova_characters extends Nova_controller_admin {
 					$a->suffix
 				);
 				
+				$pos = $this->pos->get_position($a->position_1);
+				
 				if ($level == 1)
 				{
 					$cdept = $dept;
 				}
 				else
-				{
-					$pos = $this->pos->get_position($a->position_1);
-					
+				{					
 					if ($pos !== false and array_key_exists($pos->pos_dept, $data['characters']) === false)
 					{
 						$cdept = $this->dept->get_dept($pos->pos_dept, 'dept_parent');
