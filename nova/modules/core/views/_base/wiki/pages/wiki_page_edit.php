@@ -23,7 +23,7 @@
 		<?php echo text_output($label['categories'], 'p', 'fontMedium bold');?>
 		
 		<div id="category-panel">
-			<?php if (Auth::check_access('wiki/categories')): ?>
+			<?php if (Auth::check_access('wiki/categories', false)): ?>
 				<div class="category-panel-header">
 					<input type="text" id="category-panel-name" placeholder="<?php echo $label['addcategory'];?>" value="" />
 					<button id="category-panel-create"><span></span></button>
