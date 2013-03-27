@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.2
+## 2.2.2 (27 March 2013)
 
 ### Bug Fixes
 

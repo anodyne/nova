@@ -1,9 +1,9 @@
-version: 2.2.1
+version: 2.2.2
 version_major: 2
 version_minor: 2
-version_update: 1
+version_update: 2
 severity: minor
 notes: |
-  Nova 2.2.1 fixes an issue where the update notification box showed up all the time because of a wrong version number stored in the Nova core.
-date: 09 March 2013
+  Nova 2.2.2 fixes an issue where certain users couldn't create or edit wiki pages as well as an error thrown when managing NPCs (thanks to evshell18 for the pull request on this one).
+date: 27 March 2013
 link: http://www.anodyne-productions.com/nova/index.php
