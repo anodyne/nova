@@ -1,9 +1,9 @@
-version: 2.2.2
+version: 2.2.3
 version_major: 2
 version_minor: 2
-version_update: 2
+version_update: 3
 severity: minor
 notes: |
-  Nova 2.2.2 fixes an issue where certain users couldn't create or edit wiki pages as well as an error thrown when managing NPCs (thanks to evshell18 for the pull request on this one).
+  Nova 2.2.3 attempts to fix a long-standing issue for some users when updating to newer versions of Nova.
 date: 27 March 2013
 link: http://www.anodyne-productions.com/nova/index.php
