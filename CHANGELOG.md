@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.3 (7 April 2013)
+
+### Bug Fixes
+
+* Some users have reported errors being thrown during the update process that prevent them from moving up to newer versions of Nova. We've attempted to create a fix for this, but since we haven't been able to recreate the issue, this may or may not work.
+
 ## 2.2.2 (27 March 2013)
 
 ### Bug Fixes

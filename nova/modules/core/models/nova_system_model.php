@@ -610,10 +610,31 @@ abstract class Nova_system_model extends CI_Model {
 		return $query;
 	}
 	
-	public function update_system_info($data = '')
+	/**
+	 * Update the system info.
+	 *
+	 * @param	array	Array of data to use in the update
+	 * @return	int
+	 */
+	public function update_system_info($data = false)
 	{
+		if ( ! is_array($data))
+		{
+			$this->db->set('sys_last_update', now());
+			$this->db->set('sys_version_major', APP_VERSION_MAJOR);
+			$this->db->set('sys_version_minor', APP_VERSION_MINOR);
+			$this->db->set('sys_version_update', APP_VERSION_UPDATE);
+		}
+		else
+		{
+			$this->db->set('sys_last_update', $data['sys_last_update']);
+			$this->db->set('sys_version_major', $data['sys_version_major']);
+			$this->db->set('sys_version_minor', $data['sys_version_minor']);
+			$this->db->set('sys_version_update', $data['sys_version_update']);
+		}
+
 		$this->db->where('sys_id', 1);
-		$query = $this->db->update('system_info', $data);
+		$query = $this->db->update('system_info');
 		
 		$this->dbutil->optimize_table('system_info');
 		
