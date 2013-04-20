@@ -414,7 +414,9 @@ abstract class Nova_personnel extends Nova_controller_main {
 			$data['newscount'] = $this->news->count_character_news($id);
 			$data['awardcount'] = $this->awards->count_character_awards($id);
 			
-			$data['last_post'] = mdate($this->options['date_format'], gmt_to_local($character->last_post, $this->timezone, $this->dst));
+			$data['last_post'] = ( ! empty($character->last_post))
+				? mdate($this->options['date_format'], gmt_to_local($character->last_post, $this->timezone, $this->dst))
+				: false;
 			
 			// set the name items into an array
 			$name_array = array(

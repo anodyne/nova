@@ -2,6 +2,10 @@
 
 ## 2.2.4
 
+### Bug Fixes
+
+* If a character didn't have any posts, their bio would display the start of UNIX time instead of nothing.
+
 ## 2.2.3 (7 April 2013)
 
 ### Bug Fixes

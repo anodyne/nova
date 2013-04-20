@@ -74,9 +74,11 @@
 				</ul><br>
 			<?php endif;?>
 			
-			<h4 class="page-subhead"><?php echo $label['last_post'];?></h4>
+			<?php if ($last_post !== false): ?>
+				<h4 class="page-subhead"><?php echo $label['last_post'];?></h4>
 			
-			<p class="fontSmall"><?php echo $last_post;?></p>
+				<p class="fontSmall"><?php echo $last_post;?></p>
+			<?php endif;?>
 		</div>
 		
 		<div class="span12">
