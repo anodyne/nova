@@ -1,6 +1,10 @@
 # Changelog
 
-## 2.2.4
+## 2.3.0
+
+* When displaying the output of a dynamic form, if there's nothing in the field, we no longer show it.
+* Nova now shows a link back to All Characters when editing a character (if the user has permission).
+* Nova now shows a link back to All Users when editing a user (if the user has permission).
 
 ### Bug Fixes
 
