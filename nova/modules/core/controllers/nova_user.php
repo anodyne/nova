@@ -665,6 +665,7 @@ abstract class Nova_user extends Nova_controller_admin {
 			'webmaster' => ucfirst(lang('global_webmaster')),
 			'yes' => ucfirst(lang('labels_yes')),
 			'your_user' => sprintf(lang('account_your_user'), lang('global_user')),
+			'back' => LARROW.' '.ucwords(lang('labels_all').' '.lang('global_users')),
 		);
 		
 		$this->_regions['content'] = Location::view('user_account', $this->skin, 'admin', $data);

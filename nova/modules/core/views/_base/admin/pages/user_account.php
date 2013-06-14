@@ -2,6 +2,10 @@
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
+<?php if (Auth::check_access('user/account', false) and $level >= 2): ?>
+	<p><a href="<?php echo site_url('user/all');?>" class="fontMedium bold"><?php echo $label['back'];?></a></p>
+<?php endif;?>
+
 <p><?php echo anchor('user/options', img($images['display']) .' '. $label['display'], array('class' => 'bold image'));?></p>
 
 <p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'bold image'));?></p>
