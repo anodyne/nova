@@ -8,6 +8,10 @@
 </div>
 
 <div id="loaded" class="hidden">
+	<?php if (Auth::check_access('characters/index', false)): ?>
+		<p><a href="<?php echo site_url('characters/index');?>" class="fontMedium bold"><?php echo $label['back'];?></a></p>
+	<?php endif;?>
+
 	<?php if ($level == 3 and $inputs['crew_type'] != 'pending'): ?>
 		<p>
 			<kbd><?php echo $label['change'];?></kbd>
