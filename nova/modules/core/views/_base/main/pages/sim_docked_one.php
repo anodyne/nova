@@ -38,11 +38,13 @@
 			<table class="table100 zebra" cellpadding="3">
 				<tbody>
 				<?php foreach ($section['fields'] as $field): ?>
-					<tr>
-						<td class="cell-label"><?php echo $field['field'];?></td>
-						<td class="cell-spacer"></td>
-						<td><?php echo $field['data'];?></td>
-					</tr>
+					<?php if ( ! empty($field['data'])): ?>
+						<tr>
+							<td class="cell-label"><?php echo $field['field'];?></td>
+							<td class="cell-spacer"></td>
+							<td><?php echo $field['data'];?></td>
+						</tr>
+					<?php endif;?>
 				<?php endforeach; ?>
 				</tbody>
 			</table><br />

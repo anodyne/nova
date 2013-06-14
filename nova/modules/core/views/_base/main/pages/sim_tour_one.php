@@ -32,11 +32,13 @@
 	<?php echo text_output($label['info'], 'h2', 'page-subhead');?>
 	<table class="table100 zebra">
 		<?php foreach ($fields as $field): ?>
-			<tr>
-				<td class="cell-label"><?php echo $field['label'];?></td>
-				<td class="cell-spacer"></td>
-				<td><?php echo text_output($field['data'], '');?></td>
-			</tr>
+			<?php if ( ! empty($field['data'])): ?>
+				<tr>
+					<td class="cell-label"><?php echo $field['label'];?></td>
+					<td class="cell-spacer"></td>
+					<td><?php echo text_output($field['data'], '');?></td>
+				</tr>
+			<?php endif;?>
 		<?php endforeach; ?>
 	</table>
 <?php endif; ?>

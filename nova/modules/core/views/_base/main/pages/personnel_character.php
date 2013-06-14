@@ -117,11 +117,13 @@
 										<table class="table100 zebra" cellspacing="0" cellpadding="3">
 											
 										<?php foreach ($fields[$a['id']] as $b): ?>
-											<tr>
-												<td class="cell-label align_top"><?php echo $b['label'];?></td>
-												<td class="cell-spacer"></td>
-												<td><?php echo text_output($b['value'], '');?></td>
-											</tr>
+											<?php if ( ! empty($b['value'])): ?>
+												<tr>
+													<td class="cell-label align_top"><?php echo $b['label'];?></td>
+													<td class="cell-spacer"></td>
+													<td><?php echo text_output($b['value'], '');?></td>
+												</tr>
+											<?php endif;?>
 										<?php endforeach; ?>
 										
 									</table><br />
@@ -140,11 +142,13 @@
 							<table class="table100" cellspacing="0" cellpadding="3">
 								
 							<?php foreach ($fields[$a['id']] as $b): ?>
-								<tr>
-									<td class="cell-label align_top"><?php echo $b['label'];?></td>
-									<td class="cell-spacer"></td>
-									<td><?php echo $b['value'];?></td>
-								</tr>
+								<?php if ( ! empty($b['value'])): ?>
+									<tr>
+										<td class="cell-label align_top"><?php echo $b['label'];?></td>
+										<td class="cell-spacer"></td>
+										<td><?php echo $b['value'];?></td>
+									</tr>
+								<?php endif;?>
 							<?php endforeach; ?>
 							
 							</table>
