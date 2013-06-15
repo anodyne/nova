@@ -1,9 +1,9 @@
-version: 2.2.3
+version: 2.3.0
 version_major: 2
-version_minor: 2
-version_update: 3
-severity: minor
+version_minor: 3
+version_update: 0
+severity: major
 notes: |
-  Nova 2.2.3 attempts to fix a long-standing issue for some users when updating to newer versions of Nova.
-date: 27 March 2013
+  Nova 2.3 addresses several pieces of new functionality related to dynamic forms, manifests and the sim stats. In addition, several bugs have been addressed as well.
+date: 30 July 2013
 link: http://www.anodyne-productions.com/nova/index.php

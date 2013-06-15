@@ -489,7 +489,9 @@ $fields_characters_fields = array(
 	'field_section' => array(
 		'type' => 'INT',
 		'constraint' => 8,
-		'default' => 1)
+		'default' => 1),
+	'field_help' => array(
+		'type' => 'TEXT')
 );
 
 $fields_characters_promotions = array(
@@ -718,6 +720,8 @@ $fields_docking_fields = array(
 		'type' => 'INT',
 		'constraint' => 8,
 		'default' => 1),
+	'field_help' => array(
+		'type' => 'TEXT')
 );
 
 $fields_docking_sections = array(
@@ -801,6 +805,8 @@ $fields_manifests = array(
 		'constraint' => "'y','n'",
 		'default' => 'n'),
 	'manifest_view' => array(
+		'type' => 'TEXT'),
+	'manifest_metadata' => array(
 		'type' => 'TEXT'),
 );
 
@@ -1435,7 +1441,9 @@ $fields_specs_fields = array(
 	'field_section' => array(
 		'type' => 'INT',
 		'constraint' => 8,
-		'default' => 1)
+		'default' => 1),
+	'field_help' => array(
+		'type' => 'TEXT')
 );
 
 $fields_specs_sections = array(
@@ -1590,6 +1598,8 @@ $fields_tour_fields = array(
 		'type' => 'INT',
 		'constraint' => 3,
 		'default' => 5),
+	'field_help' => array(
+		'type' => 'TEXT')
 );
 
 $fields_tour_values = array(
