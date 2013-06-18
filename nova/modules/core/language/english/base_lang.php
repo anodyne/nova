@@ -393,6 +393,7 @@ $lang['labels_group'] 			= 'group';
 $lang['labels_grouping']		= 'grouping';
 $lang['labels_groups']			= 'groups';
 $lang['labels_header']			= 'header';
+$lang['labels_help']			= 'help';
 $lang['labels_history']			= 'history';
 $lang['labels_image'] 			= 'image';
 $lang['labels_images'] 			= 'images';

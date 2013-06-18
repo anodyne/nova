@@ -451,8 +451,9 @@ abstract class Nova_main extends Nova_controller_main {
 						{
 							$f_id = $field->field_id;
 							
-							// set the page label
+							// set the page label and help
 							$data['join'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+							$data['join'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
 							
 							switch ($field->field_type)
 							{
@@ -461,7 +462,7 @@ abstract class Nova_main extends Nova_controller_main {
 										'name' => $field->field_id,
 										'id' => $field->field_fid,
 										'class' => $field->field_class,
-										'value' => $field->field_value
+										'value' => $field->field_value,
 									);
 									
 									$data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);

@@ -1151,8 +1151,9 @@ abstract class Nova_characters extends Nova_controller_admin {
 					{
 						$f_id = $field->field_id;
 						
-						// set the page label
+						// set the page label and help
 						$data['join'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+						$data['join'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
 						
 						$info = $this->char->get_field_data($field->field_id, $data['id']);
 						$row = ($info->num_rows() > 0) ? $info->row() : false;

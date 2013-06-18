@@ -550,6 +550,11 @@ abstract class Nova_site extends Nova_controller_admin {
 						'name' => 'field_label_page',
 						'id' => 'field_label_page',
 						'value' => $row->field_label_page),
+					'help' => array(
+						'name' => 'field_help',
+						'id' => 'field_help',
+						'rows' => 2,
+						'value' => $row->field_help),
 					'value' => array(
 						'name' => 'field_value',
 						'id' => 'field_value',
@@ -676,6 +681,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'value' => ucwords(lang('labels_dropdown') .' '. lang('labels_value')),
 			'yes' => ucfirst(lang('labels_yes')),
 			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
+			'help' => ucwords(lang('labels_field').' '.lang('labels_help')),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);

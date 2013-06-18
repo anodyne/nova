@@ -19,6 +19,10 @@
 			<?php echo form_input($inputs['label']);?>
 		</p>
 		<p>
+			<kbd><?php echo $label['help'];?></kbd>
+			<?php echo form_textarea($inputs['help']);?>
+		</p>
+		<p>
 			<kbd><?php echo $label['order'];?></kbd>
 			<?php echo form_input($inputs['order']);?>
 		</p>
