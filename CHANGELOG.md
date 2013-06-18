@@ -3,6 +3,7 @@
 ## 2.3.0
 
 * When displaying the output of a dynamic form, if there's nothing in the field, we no longer show it.
+* Admins can now add inline help for any dynamic form field to help users filling the forms out. The content will be shown below the label and above the field.
 * Nova now shows a link back to All Characters when editing a character (if the user has permission).
 * Nova now shows a link back to All Users when editing a user (if the user has permission).
 
