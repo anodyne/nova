@@ -90,6 +90,7 @@
 								<td class="col_150"><?php echo img($char['rank_img']);?></td>
 								<td>
 									<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
+									<span class="gray"><?php echo $char['metadata'];?></span><br />
 									<?php echo $pos['name'];?>
 									
 									<?php if ($char['crew_type'] == 'npc'): ?>
@@ -145,6 +146,7 @@
 										<td class="col_150"><?php echo img($char['rank_img']);?></td>
 										<td>
 											<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
+											<span class="gray"><?php echo $char['metadata'];?></span><br />
 											<?php echo $spos['name'];?>
 											
 											<?php if ($char['crew_type'] == 'npc'): ?>

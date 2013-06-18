@@ -2912,6 +2912,9 @@ abstract class Nova_site extends Nova_controller_admin {
 					'name' => 'manifest_desc',
 					'id' => 'manifest_desc',
 					'rows' => 3),
+				'metadata' => array(
+					'name' => 'manifest_metadata',
+					'id' => 'manifest_metadata'),
 				'header' => array(
 					'name' => 'manifest_header_content',
 					'id' => 'manifest_header_content',
@@ -2995,10 +2998,12 @@ abstract class Nova_site extends Nova_controller_admin {
 			'manifest_name' => ucwords(lang('labels_manifest').' '.lang('labels_name')),
 			'manifest_order' => ucwords(lang('labels_manifest').' '.lang('labels_order')),
 			'manifest_view' => ucwords(lang('labels_manifest').' '.lang('labels_default').' '.lang('actions_view')),
+			'manifest_metadata' => ucwords(lang('labels_manifest').' '.lang('labels_metadata')),
 			'off' => strtoupper(lang('labels_off')),
 			'refresh' => ucwords(lang('labels_refresh').' '.lang('labels_page')),
 			'sitemanifests' => ucwords(lang('labels_site').' '.lang('labels_manifests')),
 			'unassigned' => ucwords(lang('labels_unassigned').' '.lang('global_departments')),
+			'metadata_explain' => lang('metadata_explain'),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);

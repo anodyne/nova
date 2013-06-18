@@ -29,6 +29,11 @@
 			<kbd><?php echo $label['manifest_view'];?></kbd>
 			<?php echo form_dropdown('manifest_view', $values['manifest'], '');?>
 		</p>
+		<p>
+			<kbd><?php echo $label['manifest_metadata'];?></kbd>
+			<?php echo form_input($inputs['metadata']);?>
+			<p class="gray fontSmall"><?php echo $label['metadata_explain'];?></p>
+		</p>
 		<p><?php echo form_button($inputs['button']);?></p>
 	<?php echo form_close();?>
 </div>

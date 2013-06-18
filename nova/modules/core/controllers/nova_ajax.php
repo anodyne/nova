@@ -6758,6 +6758,11 @@ abstract class Nova_ajax extends CI_Controller {
 					'value' => 'n',
 					'checked' => ($item->manifest_default == 'n') ? true : false),
 				'view' => $item->manifest_view,
+				'metadata' => array(
+					'name' => 'manifest_metadata',
+					'id' => 'manifest_metadata',
+					'class' => 'hud',
+					'value' => $item->manifest_metadata),
 				'submit' => array(
 					'type' => 'submit',
 					'class' => 'hud_button',
@@ -6795,6 +6800,8 @@ abstract class Nova_ajax extends CI_Controller {
 				'on' => ucfirst(lang('labels_on')),
 				'order' => ucfirst(lang('labels_order')),
 				'yes' => ucfirst(lang('labels_yes')),
+				'metadata_explain' => lang('metadata_explain'),
+				'manifest_metadata' => ucwords(lang('labels_manifest').' '.lang('labels_metadata')),
 			);
 			
 			// figure out the skin

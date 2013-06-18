@@ -46,6 +46,16 @@
 				<td class="cell-spacer"></td>
 				<td><?php echo form_dropdown('manifest_view', $values['manifest'], $inputs['view']);?></td>
 			</tr>
+			<tr>
+				<td class="cell-label"><?php echo $label['manifest_metadata'];?></td>
+				<td class="cell-spacer"></td>
+				<td><?php echo form_input($inputs['metadata']);?></td>
+			</tr>
+			<tr>
+				<td class="cell-label"></td>
+				<td class="cell-spacer"></td>
+				<td><p class="fontSmall gray"><?php echo $label['metadata_explain'];?></p></td>
+			</tr>
 		</tbody>
 	</table>
 	<?php echo form_hidden('id', $id);?>

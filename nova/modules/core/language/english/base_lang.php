@@ -433,6 +433,7 @@ $lang['labels_menu']			= 'menu';
 $lang['labels_menus']			= 'menus';
 $lang['labels_message'] 		= 'message';
 $lang['labels_messages'] 		= 'messages';
+$lang['labels_metadata'] 		= 'metadata';
 $lang['labels_milestones'] 		= 'milestones';
 $lang['labels_mode']			= 'mode';
 $lang['labels_more'] 			= 'more';

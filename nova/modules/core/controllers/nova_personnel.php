@@ -155,6 +155,25 @@ abstract class Nova_personnel extends Nova_controller_main {
 												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['rank_img'] = $rank_img;
 												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['crew_type'] = $char->crew_type;
 												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['combadge'] = $cb_img;
+
+												// Make the metadata info an array
+												$metadataArray = explode('|', $MD->manifest_metadata);
+												$metadataFinalArray = array();
+
+												if (count($metadataArray) > 0)
+												{
+													foreach ($metadataArray as $meta)
+													{
+														$fieldData = $this->char->get_field_data($meta, $char->charid, true);
+
+														if ($fieldData !== false)
+														{
+															$metadataFinalArray[] = $fieldData;
+														}
+													}
+												}
+
+												$data['depts'][$dept]['sub'][$a]['pos'][$b]['chars'][$c]['metadata'] = implode(' ', $metadataFinalArray);
 												
 												++$c;
 											}
@@ -238,6 +257,25 @@ abstract class Nova_personnel extends Nova_controller_main {
 										$data['depts'][$dept]['pos'][$b]['chars'][$c]['rank_img'] = $rank_img;
 										$data['depts'][$dept]['pos'][$b]['chars'][$c]['crew_type'] = $char->crew_type;
 										$data['depts'][$dept]['pos'][$b]['chars'][$c]['combadge'] = $cb_img;
+
+										// Make the metadata info an array
+										$metadataArray = explode('|', $MD->manifest_metadata);
+										$metadataFinalArray = array();
+
+										if (count($metadataArray) > 0)
+										{
+											foreach ($metadataArray as $meta)
+											{
+												$fieldData = $this->char->get_field_data($meta, $char->charid, true);
+
+												if ($fieldData !== false)
+												{
+													$metadataFinalArray[] = $fieldData;
+												}
+											}
+										}
+
+										$data['depts'][$dept]['pos'][$b]['chars'][$c]['metadata'] = implode(' ', $metadataFinalArray);
 										
 										++$c;
 									}

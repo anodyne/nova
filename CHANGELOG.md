@@ -6,6 +6,7 @@
 * Admins can now add inline help for any dynamic form field to help users filling the forms out. The content will be shown below the label and above the field.
 * Nova now shows a link back to All Characters when editing a character (if the user has permission).
 * Nova now shows a link back to All Users when editing a user (if the user has permission).
+* Admins can now specify additional metadata from the bio form to be dispalyed under the character name on the manifest (such as species, gender or any other field).
 
 ### Bug Fixes
 
