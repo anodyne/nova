@@ -1459,6 +1459,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							
 							// set the page label
 							$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+							$data['docking'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
 							
 							$field_data = $this->docking->get_field_data($f_id, $id);
 
@@ -4237,6 +4238,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							
 							// set the page label
 							$data['specs'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+							$data['specs'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
 							
 							switch ($field->field_type)
 							{
@@ -4658,6 +4660,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					
 					// set the page label
 					$data['inputs']['fields'][$tid]['field_label'] = $field->field_label_page;
+					$data['inputs']['fields'][$tid]['field_help'] = $field->field_help;
 					
 					switch ($field->field_type)
 					{

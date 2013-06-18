@@ -620,8 +620,9 @@ abstract class Nova_sim extends Nova_controller_main {
 					{
 						$f_id = $field->field_id;
 						
-						// set the page label
+						// set the page label and help
 						$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
+						$data['docking'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
 						
 						switch ($field->field_type)
 						{

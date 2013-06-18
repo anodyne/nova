@@ -554,6 +554,7 @@ abstract class Nova_site extends Nova_controller_admin {
 						'name' => 'field_help',
 						'id' => 'field_help',
 						'rows' => 2,
+						'style' => 'width:500px',
 						'value' => $row->field_help),
 					'value' => array(
 						'name' => 'field_value',
@@ -2330,7 +2331,13 @@ abstract class Nova_site extends Nova_controller_admin {
 						'name' => 'field_rows',
 						'id' => 'field_rows',
 						'class' => 'small',
-						'value' => $row->field_rows)
+						'value' => $row->field_rows),
+					'help' => array(
+						'name' => 'field_help',
+						'id' => 'field_help',
+						'rows' => 2,
+						'style' => 'width:500px',
+						'value' => $row->field_help),
 				);
 				
 				$data['values']['type'] = array(
@@ -2428,6 +2435,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'yes' => ucfirst(lang('labels_yes')),
 			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
+			'help' => ucwords(lang('labels_field').' '.lang('labels_help')),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
@@ -5233,6 +5241,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					$display = $this->input->post('field_display', true);
 					$select = $this->input->post('select_values', true);
 					$section = $this->input->post('field_section', true);
+					$help = $this->input->post('field_help', true);
 			
 					$insert_array = array(
 						'field_name' => $name,
@@ -5243,7 +5252,8 @@ abstract class Nova_site extends Nova_controller_admin {
 						'field_rows' => $rows,
 						'field_order' => $order,
 						'field_display' => $display,
-						'field_section' => $section
+						'field_section' => $section,
+						'field_help' => $help,
 					);
 							
 					$insert = $this->specs->add_spec_field($insert_array);
@@ -5360,6 +5370,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					$display = $this->input->post('field_display', true);
 					$id = $this->input->post('field_id', true);
 					$section = $this->input->post('field_section', true);
+					$help = $this->input->post('field_help', true);
 					
 					$update_array = array(
 						'field_name' => $name,
@@ -5370,7 +5381,8 @@ abstract class Nova_site extends Nova_controller_admin {
 						'field_rows' => $rows,
 						'field_order' => $order,
 						'field_display' => $display,
-						'field_section' => $section
+						'field_section' => $section,
+						'field_help' => $help,
 					);
 							
 					$update = $this->specs->update_spec_field($id, $update_array);
@@ -5595,7 +5607,13 @@ abstract class Nova_site extends Nova_controller_admin {
 						'name' => 'field_rows',
 						'id' => 'field_rows',
 						'class' => 'small',
-						'value' => $row->field_rows)
+						'value' => $row->field_rows),
+					'help' => array(
+						'name' => 'field_help',
+						'id' => 'field_help',
+						'rows' => 2,
+						'style' => 'width:500px',
+						'value' => $row->field_help),
 				);
 				
 				$data['values']['type'] = array(
@@ -5696,6 +5714,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'yes' => ucfirst(lang('labels_yes')),
 			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
+			'help' => ucwords(lang('labels_field').' '.lang('labels_help')),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
@@ -5905,6 +5924,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					$order = $this->input->post('field_order', true);
 					$display = $this->input->post('field_display', true);
 					$select = $this->input->post('select_values', true);
+					$help = $this->input->post('field_help', true);
 			
 					$insert_array = array(
 						'field_name' => $name,
@@ -5914,7 +5934,8 @@ abstract class Nova_site extends Nova_controller_admin {
 						'field_class' => $class,
 						'field_rows' => $rows,
 						'field_order' => $order,
-						'field_display' => $display
+						'field_display' => $display,
+						'field_help' => $help,
 					);
 							
 					$insert = $this->tour->add_tour_field($insert_array);
@@ -6039,6 +6060,7 @@ abstract class Nova_site extends Nova_controller_admin {
 					$order = $this->input->post('field_order', true);
 					$display = $this->input->post('field_display', true);
 					$id = $this->input->post('field_id', true);
+					$help = $this->input->post('field_help', true);
 					
 					$update_array = array(
 						'field_name' => $name,
@@ -6048,7 +6070,8 @@ abstract class Nova_site extends Nova_controller_admin {
 						'field_class' => $class,
 						'field_rows' => $rows,
 						'field_order' => $order,
-						'field_display' => $display
+						'field_display' => $display,
+						'field_help' => $help,
 					);
 							
 					$update = $this->tour->update_tour_field($id, $update_array);
@@ -6259,7 +6282,13 @@ abstract class Nova_site extends Nova_controller_admin {
 						'name' => 'field_rows',
 						'id' => 'field_rows',
 						'class' => 'small',
-						'value' => $row->field_rows)
+						'value' => $row->field_rows),
+					'help' => array(
+						'name' => 'field_help',
+						'id' => 'field_help',
+						'rows' => 2,
+						'style' => 'width:500px',
+						'value' => $row->field_help),
 				);
 				
 				$data['values']['type'] = array(
@@ -6345,6 +6374,7 @@ abstract class Nova_site extends Nova_controller_admin {
 			'values' => ucwords(lang('labels_dropdown') .' '. lang('labels_menu') .' '. lang('labels_values')),
 			'yes' => ucfirst(lang('labels_yes')),
 			'off' => '[ '.strtoupper(lang('labels_off')).' ]',
+			'help' => ucwords(lang('labels_field').' '.lang('labels_help')),
 		);
 		
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);

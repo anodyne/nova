@@ -50,6 +50,11 @@
 					<?php foreach ($s['fields'] as $field): ?>
 						<p>
 							<kbd><?php echo $field['field_label'];?></kbd>
+
+							<?php if ( ! empty($field['field_help'])): ?>
+								<p class="gray fontSmall"><?php echo $field['field_help'];?></p>
+							<?php endif;?>
+							
 							<?php echo $field['input'];?>
 						</p>
 					<?php endforeach; ?>

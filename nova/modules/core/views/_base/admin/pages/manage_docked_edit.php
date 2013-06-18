@@ -42,6 +42,11 @@
 					<?php foreach ($a['fields'] as $f): ?>
 						<p>
 							<kbd><?php echo $f['field_label'];?></kbd>
+
+							<?php if ( ! empty($f['field_help'])): ?>
+								<p class="gray fontSmall"><?php echo $f['field_help'];?></p>
+							<?php endif;?>
+							
 							<?php echo $f['input'];?>
 						</p>
 					<?php endforeach; ?>
