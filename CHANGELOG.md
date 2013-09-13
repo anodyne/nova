@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.3.0
+## 2.3.0 (14 September 2013)
 
 * When displaying the output of a dynamic form, if there's nothing in the field, we no longer show it.
 * Admins can now add inline help for any dynamic form field to help users filling the forms out. The content will be shown below the label and above the field.
