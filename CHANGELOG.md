@@ -7,6 +7,7 @@
 * Nova now shows a link back to All Characters when editing a character (if the user has permission).
 * Nova now shows a link back to All Users when editing a user (if the user has permission).
 * Admins can now specify additional metadata from the bio form to be dispalyed under the character name on the manifest (such as species, gender or any other field).
+* Sim stats now shows some statistics for the total life of the sim.
 
 ### Bug Fixes
 

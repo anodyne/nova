@@ -495,7 +495,11 @@ abstract class Nova_users_model extends CI_Model {
 	public function count_all_users($status = 'active')
 	{
 		$this->db->from('users');
-		$this->db->where('status', $status);
+
+		if ( ! empty($status))
+		{
+			$this->db->where('status', $status);
+		}
 		
 		return $this->db->count_all_results();
 	}

@@ -1509,6 +1509,9 @@ abstract class Nova_sim extends Nova_controller_main {
 		// load the models
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
+
+		// set the date format
+		$datestring = $this->options['date_format'];
 		
 		// set the times
 		$today = getdate();
@@ -1535,32 +1538,38 @@ abstract class Nova_sim extends Nova_controller_main {
 		// run the methods
 		$data['users'] = array(
 			'current' => $this->user->count_users('current', $this_month, $last_month),
-			'previous' => $this->user->count_users('previous', $this_month, $last_month)
+			'previous' => $this->user->count_users('previous', $this_month, $last_month),
+			'all' => $this->user->count_all_users(false),
 		);
 		
 		$data['characters'] = array(
 			'current' => $this->char->count_characters('active', 'current', $this_month, $last_month),
-			'previous' => $this->char->count_characters('active', 'previous', $this_month, $last_month)
+			'previous' => $this->char->count_characters('active', 'previous', $this_month, $last_month),
+			'all' => $this->char->count_characters(false, false),
 		);
 		
 		$data['npcs'] = array(
 			'current' => $this->char->count_characters('npc', 'current', $this_month, $last_month),
-			'previous' => $this->char->count_characters('npc', 'previous', $this_month, $last_month)
+			'previous' => $this->char->count_characters('npc', 'previous', $this_month, $last_month),
+			'all' => $this->char->count_characters('npc', false),
 		);
 		
 		$data['posts'] = array(
 			'current' => $this->posts->count_posts($this_month, $next_month, $this->options['post_count_format']),
-			'previous' => $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format'])
+			'previous' => $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format']),
+			'all' => $this->posts->count_all_posts()
 		);
 		
 		$data['logs'] = array(
 			'current' => $this->logs->count_logs($this_month, $next_month),
-			'previous' => $this->logs->count_logs($last_month, $this_month)
+			'previous' => $this->logs->count_logs($last_month, $this_month),
+			'all' => $this->logs->count_all_logs(),
 		);
 		
 		$data['post_totals'] = array(
 			'current' => $data['posts']['current'] + $data['logs']['current'],
 			'previous' => $data['posts']['previous'] + $data['logs']['previous'],
+			'all' => $data['posts']['all'] + $data['logs']['all'],
 		);
 		
 		$data['avg_posts'] = array(
@@ -1583,6 +1592,14 @@ abstract class Nova_sim extends Nova_controller_main {
 			'logs' => round((($data['logs']['current']) / ($today['mday'])) * $days, 2),
 			'total' => round((($data['post_totals']['current']) / ($today['mday'])) * $days, 2)
 		);
+
+		$data['start'] = mdate(
+			$datestring, gmt_to_local(
+				$this->sys->get_item('system_info', 'sys_id', 1, 'sys_install_date'),
+				$this->timezone,
+				$this->dst
+			)
+		);
 		
 		// set the header
 		$data['header'] = $title;
@@ -1604,6 +1621,17 @@ abstract class Nova_sim extends Nova_controller_main {
 			'statspace' => lang('text_stats_pace'),
 			'thismonth' => ucwords(lang('labels_this') .' '. lang('time_month')),
 			'totals' => ucwords(lang('labels_totals')),
+			'start_date' => ucwords(lang('status_start').' '.lang('labels_date')),
+			'characters' => ucfirst(lang('global_characters')),
+			'posting' => ucfirst(lang('labels_posting')),
+			'all_users' => ucwords(lang('labels_all').' '.lang('global_users')),
+			'active_users' => ucwords(lang('status_active').' '.lang('global_users')),
+			'all_characters' => ucwords(lang('labels_all').' '.lang('global_characters')),
+			'active_characters' => ucwords(lang('status_active').' '.lang('global_characters')),
+			'all_npcs' => ucwords(lang('labels_all').' '.lang('abbr_npcs')),
+			'total_posts' => ucwords(lang('labels_total').' '.lang('global_posts')),
+			'total_logs' => ucwords(lang('labels_total').' '.lang('global_logs')),
+			'total_posting' => ucwords(lang('labels_total').' '.lang('labels_posting').' '.lang('labels_entries')),
 		);
 		
 		$this->_regions['content'] = Location::view('sim_stats', $this->skin, 'main', $data);
