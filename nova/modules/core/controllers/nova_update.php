@@ -454,7 +454,9 @@ abstract class Nova_update extends CI_Controller {
 				$data['label'] = array(
 					'text' => sprintf(
 						lang('upd_step2_success'),
-						$system_info['sys_version_major'].$system_info['sys_version_minor'].$system_info['sys_version_update']
+						$system_info['sys_version_major'],
+						$system_info['sys_version_minor'],
+						$system_info['sys_version_update']
 					),
 					'back' => lang('upd_step2_site')
 				);
