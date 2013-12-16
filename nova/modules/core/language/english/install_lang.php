@@ -318,7 +318,7 @@ $lang['upd_step1_memory'] = "Your server doesn't have enough available memory to
  * Step 2
  */
 $lang['upd_step2_title'] = 'Step 2: Run Update';
-$lang['upd_step2_success'] = 'You have successfully updated Nova to version %s. You can continue using Nova as normal now. Remember to turn maintenance mode off from the Site Settings page so the rest of your users can use the site!';
+$lang['upd_step2_success'] = 'You have successfully updated Nova to version %u.%u.%u. You can continue using Nova as normal now. Remember to turn maintenance mode off from the Site Settings page so the rest of your users can use the site!';
 $lang['upd_step2_site'] = 'Back to Site';
 
 /*
