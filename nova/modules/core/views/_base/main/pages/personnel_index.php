@@ -166,12 +166,12 @@
 							<?php if ($spos['open'] > 0 && $sub['type'] == 'playing'): ?>
 								<tr class="open fontSmall hidden">
 									<td class="col_15"></td>
-									<td class="col_15"></td>
 									<td class="col_150"><?php echo img($spos['blank_img']);?></td>
 									<td>
 										<strong class="fontMedium"><?php echo $spos['name'];?></strong><br />
 										<?php echo anchor('main/join/'. $spos['pos_id'], $label['apply']);?>
 									</td>
+									<td></td>
 									<td class="col_75"></td>
 								</tr>
 							<?php endif; ?>

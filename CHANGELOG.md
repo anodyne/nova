@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.1
+
+### Bug Fixes
+
+* When toggling open positions, any open positions in sub-departments would throw off the display of the entire manifest.
+
 ## 2.3.0 (14 September 2013)
 
 * When displaying the output of a dynamic form, if there's nothing in the field, we no longer show it.
