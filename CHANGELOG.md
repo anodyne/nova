@@ -1,6 +1,12 @@
 # Changelog
 
-## 2.3.1
+## 2.3.2
+
+### Nova Core
+
+* Updated the email from the contact form to include recipient information. Despite the name and email address are in the headers, we're including those as well as the sender's IP address.
+
+## 2.3.1 (02 February 2014)
 
 ### Bug Fixes
 
