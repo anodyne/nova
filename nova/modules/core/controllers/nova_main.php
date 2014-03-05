@@ -985,11 +985,16 @@ abstract class Nova_main extends Nova_controller_main {
 		switch ($type)
 		{
 			case 'contact':
+				// Build the message
+				$message = nl2br($data['message'])."\r\n\r\n";
+				$message.= "Recipient Information: {$data['name']} ({$data['email']}), ";
+				$message.= $this->input->ip_address();
+
 				// set the email data
 				$email_data = array(
 					'email_subject' => $data['subject'],
-					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
-					'email_content' => nl2br($data['message'])
+					'email_from' => ucfirst(lang('time_from')) .": {$data['name']} - {$data['email']}",
+					'email_content' => $message,
 				);
 				
 				// where should the email be coming from
