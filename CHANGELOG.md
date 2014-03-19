@@ -5,6 +5,7 @@
 ### Nova Core
 
 * Updated the email from the contact form to include recipient information. Despite the name and email address are in the headers, we're including those as well as the sender's IP address.
+* Updated the included head files to allow for using Nova on a secure domain.
 
 ## 2.3.1 (02 February 2014)
 
