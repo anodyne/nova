@@ -2482,11 +2482,16 @@ abstract class Nova_sim extends Nova_controller_main {
 				
 				if ($row !== false)
 				{
+					// Build the message
+					$emailMsg = nl2br(lang('email_content_docking_gm'))."\r\n\r\n";
+					$emailMsg.= "Recipient Information: {$row->docking_gm_name} ({$row->docking_gm_email}), ";
+					$emailMsg.= $this->input->ip_address();
+
 					// create the array passing the data to the email
 					$email_data = array(
 						'email_subject' => lang('email_subject_docking_gm'),
 						'email_from' => ucfirst(lang('time_from')) .': '. $row->docking_gm_name .' - '. $row->docking_gm_email,
-						'email_content' => nl2br(lang('email_content_docking_gm'))
+						'email_content' => $emailMsg,
 					);
 					
 					$email_data['info'] = array(
