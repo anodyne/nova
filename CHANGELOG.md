@@ -6,6 +6,7 @@
 
 * Updated the email from the contact form and the email to the GM from the docking form to include recipient information. Despite the name and email address are in the headers, we're including those as well as the sender's IP address.
 * Updated the included head files to allow for using Nova on a secure domain.
+* Fixed wrong language key being used for the word "sim" in a couple of places.
 
 ## 2.3.1 (02 February 2014)
 
