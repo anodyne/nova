@@ -7,7 +7,7 @@
  * @author		Anodyne Productions
  * @copyright	2013 Anodyne Productions
  */
-?><script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+?><script type="text/javascript" src="//code.jquery.com/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url().MODFOLDER.'/assets/js/jquery.countdown.js';?>"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){

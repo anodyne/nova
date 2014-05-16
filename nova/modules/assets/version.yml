@@ -1,9 +1,8 @@
-version: 2.3.1
+version: 2.3.2
 version_major: 2
 version_minor: 3
-version_update: 1
+version_update: 2
 severity: minor
-notes: |
-  Nova 2.3.1 minor issues with the manifest and incrementing/decrementing open position slots when updating characters.
-date: 14 September 2013
+notes: Nova 2.3.2 addresses several minor issues with the system.
+date: 10 May 2014
 link: http://www.anodyne-productions.com/nova/index.php
