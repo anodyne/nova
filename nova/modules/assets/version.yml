@@ -1,8 +1,8 @@
-version: 2.3.2
+version: 2.3.3
 version_major: 2
 version_minor: 3
-version_update: 2
+version_update: 3
 severity: minor
-notes: Nova 2.3.2 addresses several minor issues with the system.
+notes: Nova 2.3.3 addresses several minor issues with the system.
 date: 10 May 2014
 link: http://www.anodyne-productions.com/nova/index.php

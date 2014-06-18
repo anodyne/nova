@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.3
+
+### Bug Fixes
+
+* When there is no manifest metadata, an extra space is displayed.
+
 ## 2.3.2 (10 May 2014)
 
 ### Nova Core
