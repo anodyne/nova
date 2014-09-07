@@ -2,6 +2,10 @@
 
 ## 2.3.3
 
+### Nova Core
+
+* Updated the install, update, and upgrade processes to reflect upcoming changes to the Anodyne servers.
+
 ### Bug Fixes
 
 * When there is no manifest metadata, an extra space is displayed.

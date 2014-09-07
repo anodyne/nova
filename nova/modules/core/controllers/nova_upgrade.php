@@ -400,7 +400,7 @@ abstract class Nova_upgrade extends CI_Controller {
 				if (isset($_POST['submit']))
 				{
 					// do the registration
-					$this->_register();
+					//$this->_register();
 				}
 				
 				$this->load->model('users_model', 'user');

@@ -444,7 +444,7 @@ abstract class Nova_update extends CI_Controller {
 				// update the system info table
 				$this->sys->update_system_info($system_info);
 				
-				$this->_register();
+				//$this->_register();
 				
 				// update the users to be first launch
 				$this->load->model('users_model', 'user');

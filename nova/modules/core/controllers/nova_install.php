@@ -1592,7 +1592,7 @@ abstract class Nova_install extends CI_Controller {
 					$this->_install_skins();
 					
 					// do the product registration
-					$this->_register();
+					//$this->_register();
 					
 					if ($this->ftp->hostname != 'ftp.example.com')
 					{
