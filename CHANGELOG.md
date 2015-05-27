@@ -1,14 +1,24 @@
 # Changelog
 
+## 2.4.0
+
+* Created a new `Mail` wrapper class around SwiftMailer for better email handling than CodeIgniter's built-in email class.
+
+### Nova Core
+
+* Updated the controllers with the new Mail class calls.
+
 ## 2.3.3
 
 ### Nova Core
 
 * Updated the install, update, and upgrade processes to reflect upcoming changes to the Anodyne servers.
+* Updated the error language file with a new error message.
 
 ### Bug Fixes
 
 * When there is no manifest metadata, an extra space is displayed.
+* Fixed issue where users could view pending and saved mission posts, personal logs, and news items from their respective view pages.
 
 ## 2.3.2 (10 May 2014)
 
