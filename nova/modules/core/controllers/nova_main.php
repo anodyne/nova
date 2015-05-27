@@ -818,93 +818,150 @@ abstract class Nova_main extends Nova_controller_main {
 
 		if ($row !== false)
 		{
-			// set the date
-			$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
-
-			if ($row->news_date < $row->news_last_update)
+			if ($row->news_status != 'activated')
 			{
-				$edited = gmt_to_local($row->news_last_update, $this->timezone, $this->dst);
-				$data['update'] = mdate($datestring, $edited);
-			}
+				$data['header'] = sprintf(
+					lang('error_title_invalid_char'),
+					ucwords(lang('global_newsitem'))
+				);
+				$data['msg_error'] = sprintf(
+					lang('error_msg_news_not_found'),
+					lang('global_newsitem')
+				);
 
-			// grab the next and previous IDs
-			$next = $this->news->get_link_id($id, 'next', $this->session->userdata('userid'));
-			$prev = $this->news->get_link_id($id, 'prev', $this->session->userdata('userid'));
+				// figure out where the view should be coming from
+				$view_loc = 'error';
+				$js_loc = false;
 
-			// set the data being sent to the view
-			$data['id'] = $row->news_id;
-			$data['title'] = $row->news_title;
-			$data['content'] = $row->news_content;
-			$data['date'] = mdate($datestring, $date);
-			$data['author'] = $this->char->get_character_name($row->news_author_character, true, false, true);
-			$data['category'] = $row->newscat_name;
-			$data['tags'] = $row->news_tags;
-			$data['news_id'] = $id;
-			$data['private'] = $row->news_private;
-
-			// determine if they can edit the log
-			if (Auth::is_logged_in() === true and ( (Auth::get_access_level('manage/news') == 2) or
-				(Auth::get_access_level('manage/news') == 1 and $this->session->userdata('userid') == $row->news_author_user)))
-			{
-				$data['edit_valid'] = true;
+				// write the title
+				$this->_regions['title'].= lang('error_pagetitle');
 			}
 			else
 			{
-				$data['edit_valid'] = false;
+				// set the date
+				$date = gmt_to_local($row->news_date, $this->timezone, $this->dst);
+
+				if ($row->news_date < $row->news_last_update)
+				{
+					$edited = gmt_to_local($row->news_last_update, $this->timezone, $this->dst);
+					$data['update'] = mdate($datestring, $edited);
+				}
+
+				// grab the next and previous IDs
+				$next = $this->news->get_link_id($id, 'next', $this->session->userdata('userid'));
+				$prev = $this->news->get_link_id($id, 'prev', $this->session->userdata('userid'));
+
+				// set the data being sent to the view
+				$data['id'] = $row->news_id;
+				$data['title'] = $row->news_title;
+				$data['content'] = $row->news_content;
+				$data['date'] = mdate($datestring, $date);
+				$data['author'] = $this->char->get_character_name($row->news_author_character, true, false, true);
+				$data['category'] = $row->newscat_name;
+				$data['tags'] = $row->news_tags;
+				$data['news_id'] = $id;
+				$data['private'] = $row->news_private;
+
+				// determine if they can edit the log
+				if (Auth::is_logged_in() === true and ( (Auth::get_access_level('manage/news') == 2) or
+					(Auth::get_access_level('manage/news') == 1 and $this->session->userdata('userid') == $row->news_author_user)))
+				{
+					$data['edit_valid'] = true;
+				}
+				else
+				{
+					$data['edit_valid'] = false;
+				}
+
+				if ($next !== false)
+				{
+					$data['next'] = $next;
+				}
+
+				if ($prev !== false)
+				{
+					$data['prev'] = $prev;
+				}
+
+				// input parameters
+				$data['inputs'] = array(
+					'comment_text' => array(
+						'name' => 'comment_text',
+						'id' => 'comment_text',
+						'rows' => 10),
+					'comment_button' => array(
+						'type' => 'submit',
+						'class' => 'button',
+						'name' => 'submit',
+						'value' => 'submit',
+						'content' => ucwords(lang('actions_submit')))
+				);
+
+				// image parameters
+				$data['images'] = array(
+					'next' => array(
+						'src' => Location::img('next.png', $this->skin, 'main'),
+						'alt' => ucfirst(lang('actions_next')),
+						'class' => 'image'),
+					'prev' => array(
+						'src' => Location::img('previous.png', $this->skin, 'main'),
+						'alt' => ucfirst(lang('status_previous')),
+						'class' => 'image'),
+					'feed' => array(
+						'src' => Location::img('feed.png', $this->skin, 'main'),
+						'alt' => lang('labels_subscribe'),
+						'class' => 'image'),
+					'comment' => array(
+						'src' => Location::img('comment-add.png', $this->skin, 'main'),
+						'alt' => '',
+						'class' => 'inline_img_left image'),
+					'edit' => array(
+						'src' => Location::img('write-news-edit.png', $this->skin, 'main'),
+						'alt' => ucfirst(lang('actions_edit')),
+						'title' => ucfirst(lang('actions_edit')),
+						'class' => 'image'),
+				);
+
+				// figure out where the view should be coming from
+				$view_loc = 'main_viewnews';
+				$js_loc = 'main_viewnews_js';
+
+				// grab the comment count
+				$data['comment_count'] = $comments->num_rows();
+
+				if ($comments->num_rows() > 0)
+				{
+					$i = 1;
+
+					foreach ($comments->result() as $c)
+					{
+						$date = gmt_to_local($c->ncomment_date, $this->timezone, $this->dst);
+
+						$data['comments'][$i]['author'] = $this->char->get_character_name($c->ncomment_author_character, true, false, true);
+						$data['comments'][$i]['content'] = $c->ncomment_content;
+						$data['comments'][$i]['date'] = mdate($datestring, $date);
+
+						++$i;
+					}
+				}
+
+				$data['label'] = array(
+					'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
+					'by' => lang('labels_by'),
+					'category' => ucfirst(lang('labels_category')) .':',
+					'tags' => ucfirst(lang('labels_tags')) .':',
+					'addcomment' => ucfirst(lang('actions_add')) .' '. lang('labels_a') .' '.
+						ucfirst(lang('labels_comment')),
+					'comments' => ucfirst(lang('labels_comments')),
+					'on' => lang('labels_on'),
+					'edited' => ucfirst(lang('actions_edited')),
+					'error_pagetitle' => lang('error_pagetitle'),
+					'error_private_news' => lang('error_private_news'),
+					'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
+				);
+
+				$this->_regions['title'].= ucwords(lang('actions_view').' '.lang('global_news'));
 			}
-
-			if ($next !== false)
-			{
-				$data['next'] = $next;
-			}
-
-			if ($prev !== false)
-			{
-				$data['prev'] = $prev;
-			}
-
-			// input parameters
-			$data['inputs'] = array(
-				'comment_text' => array(
-					'name' => 'comment_text',
-					'id' => 'comment_text',
-					'rows' => 10),
-				'comment_button' => array(
-					'type' => 'submit',
-					'class' => 'button',
-					'name' => 'submit',
-					'value' => 'submit',
-					'content' => ucwords(lang('actions_submit')))
-			);
-
-			// image parameters
-			$data['images'] = array(
-				'next' => array(
-					'src' => Location::img('next.png', $this->skin, 'main'),
-					'alt' => ucfirst(lang('actions_next')),
-					'class' => 'image'),
-				'prev' => array(
-					'src' => Location::img('previous.png', $this->skin, 'main'),
-					'alt' => ucfirst(lang('status_previous')),
-					'class' => 'image'),
-				'feed' => array(
-					'src' => Location::img('feed.png', $this->skin, 'main'),
-					'alt' => lang('labels_subscribe'),
-					'class' => 'image'),
-				'comment' => array(
-					'src' => Location::img('comment-add.png', $this->skin, 'main'),
-					'alt' => '',
-					'class' => 'inline_img_left image'),
-				'edit' => array(
-					'src' => Location::img('write-news-edit.png', $this->skin, 'main'),
-					'alt' => ucfirst(lang('actions_edit')),
-					'title' => ucfirst(lang('actions_edit')),
-					'class' => 'image'),
-			);
-
-			// figure out where the view should be coming from
-			$view_loc = 'main_viewnews';
-			$js_loc = 'main_viewnews_js';
 		}
 		else
 		{
@@ -924,43 +981,8 @@ abstract class Nova_main extends Nova_controller_main {
 			$js_loc = false;
 		}
 
-		// grab the comment count
-		$data['comment_count'] = $comments->num_rows();
-
-		if ($comments->num_rows() > 0)
-		{
-			$i = 1;
-
-			foreach ($comments->result() as $c)
-			{
-				$date = gmt_to_local($c->ncomment_date, $this->timezone, $this->dst);
-
-				$data['comments'][$i]['author'] = $this->char->get_character_name($c->ncomment_author_character, true, false, true);
-				$data['comments'][$i]['content'] = $c->ncomment_content;
-				$data['comments'][$i]['date'] = mdate($datestring, $date);
-
-				++$i;
-			}
-		}
-
-		$data['label'] = array(
-			'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
-			'by' => lang('labels_by'),
-			'category' => ucfirst(lang('labels_category')) .':',
-			'tags' => ucfirst(lang('labels_tags')) .':',
-			'addcomment' => ucfirst(lang('actions_add')) .' '. lang('labels_a') .' '.
-				ucfirst(lang('labels_comment')),
-			'comments' => ucfirst(lang('labels_comments')),
-			'on' => lang('labels_on'),
-			'edited' => ucfirst(lang('actions_edited')),
-			'error_pagetitle' => lang('error_pagetitle'),
-			'error_private_news' => lang('error_private_news'),
-			'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
-		);
-
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);
 		$this->_regions['javascript'] = ($js_loc) ? Location::js($js_loc, $this->skin, 'main') : false;
-		$this->_regions['title'].= ucwords(lang('actions_view').' '.lang('global_news'));
 
 		Template::assign($this->_regions);
 
