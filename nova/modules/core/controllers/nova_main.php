@@ -1348,11 +1348,4 @@ abstract class Nova_main extends Nova_controller_main {
 
 		return false;
 	}
-
-	public function test()
-	{
-		$this->load->library('Mail');
-
-		var_dump($this->mail);
-	}
 }

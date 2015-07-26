@@ -185,9 +185,4 @@ abstract class Nova_mail {
 		return $transport;
 	}
 
-	public function test()
-	{
-		return 'mail class';
-	}
-
 }
