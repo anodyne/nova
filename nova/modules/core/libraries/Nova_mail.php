@@ -16,6 +16,29 @@ abstract class Nova_mail {
 	protected $originalMailer;
 	protected $originalMessage;
 
+	public $useragent;
+	public $mailpath;
+	public $protocol;
+	public $smtp_host;
+	public $smtp_user;
+	public $smtp_pass;
+	public $smtp_port;
+	public $smtp_timeout;
+	public $smtp_crypto;
+	public $wordwrap;
+	public $wrapchars;
+	public $mailtype;
+	public $charset;
+	public $multipart;
+	public $alt_message;
+	public $validate;
+	public $priority;
+	public $newline;
+	public $crlf;
+	public $send_multipart;
+	public $bcc_batch_mode;
+	public $bcc_batch_size;
+
 	public function __construct()
 	{
 		// Get an instance of CI
@@ -35,6 +58,26 @@ abstract class Nova_mail {
 
 		// Create the message
 		$this->originalMessage = $this->message = Swift_Message::newInstance();
+
+		// Set the config items from the email config file
+		$this->useragent = $this->config->item('useragent');
+		$this->protocol = $this->config->item('protocol');
+		$this->mailpath = $this->config->item('mailpath');
+		$this->smtp_host = $this->config->item('smtp_host');
+		$this->smtp_user = $this->config->item('smtp_user');
+		$this->smtp_pass = $this->config->item('smtp_pass');
+		$this->smtp_port = $this->config->item('smtp_port');
+		$this->smtp_timeout = $this->config->item('smtp_timeout');
+		$this->wordwrap = $this->config->item('wordwrap');
+		$this->wrapchars = $this->config->item('wrapchars');
+		$this->mailtype = $this->config->item('mailtype');
+		$this->charset = $this->config->item('charset');
+		$this->validate = $this->config->item('validate');
+		$this->priority = $this->config->item('priority');
+		$this->clrf = $this->config->item('clrf');
+		$this->newline = $this->config->item('newline');
+		$this->bcc_batch_mode = $this->config->item('bcc_batch_mode');
+		$this->bcc_batch_size = $this->config->item('bcc_batch_size');
 	}
 
 	public function bcc($address, $name = null)
@@ -74,7 +117,7 @@ abstract class Nova_mail {
 		return $this;
 	}
 
-	public function replyTo($address, $name = null)
+	public function reply_to($address, $name = null)
 	{
 		$this->message->setReplyTo($address, $name);
 
