@@ -2053,7 +2053,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 	protected function _email($type, $data)
 	{
 		// load the libraries
-		$this->load->library('email');
+		$this->load->library('mail');
 		$this->load->library('parser');
 		
 		// define the variables
@@ -2067,19 +2067,19 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_approved') .' - '. $data['character'],
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
-				$em_loc = Location::email('character_action', $this->email->mailtype);
+				$em_loc = Location::email('character_action', $this->mail->mailtype);
 				
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
-				$this->email->from(Util::email_sender(), $data['name']);
-				$this->email->to($data['email']);
-				$this->email->reply_to($data['fromEmail']);
-				$this->email->cc($cc);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $data['name']);
+				$this->mail->to($data['email']);
+				$this->mail->reply_to($data['fromEmail']);
+				$this->mail->cc($cc);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 				
 			case 'reject':
@@ -2088,19 +2088,19 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$email_data = array(
 					'email_subject' => lang('email_subject_character_rejected') .' - '. $data['character'],
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($data['message']) : $data['message']
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
 				
-				$em_loc = Location::email('character_action', $this->email->mailtype);
+				$em_loc = Location::email('character_action', $this->mail->mailtype);
 				
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
-				$this->email->from(Util::email_sender(), $data['name']);
-				$this->email->to($data['email']);
-				$this->email->reply_to($data['fromEmail']);
-				$this->email->cc($cc);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $data['name']);
+				$this->mail->to($data['email']);
+				$this->mail->reply_to($data['fromEmail']);
+				$this->mail->cc($cc);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 				
 			case 'pending':
@@ -2177,7 +2177,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 				}
 				
 				// where should the email be coming from
-				$em_loc = Location::email('main_join_gm', $this->email->mailtype);
+				$em_loc = Location::email('main_join_gm', $this->mail->mailtype);
 				
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
@@ -2189,16 +2189,16 @@ abstract class Nova_characters extends Nova_controller_admin {
 				$to = implode(',', $this->user->get_emails_with_access('characters/index'));
 				
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $data['name']);
-				$this->email->to($to);
-				$this->email->reply_to($data['email']);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $data['name']);
+				$this->mail->to($to);
+				$this->mail->reply_to($data['email']);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 		}
 		
 		// send the email
-		$email = $this->email->send();
+		$email = $this->mail->send();
 		
 		return $email;
 	}

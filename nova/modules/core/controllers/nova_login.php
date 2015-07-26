@@ -432,7 +432,7 @@ abstract class Nova_login extends CI_Controller {
 	protected function _email($type, $data)
 	{
 		// load the libraries
-		$this->load->library('email');
+		$this->load->library('mail');
 		$this->load->library('parser');
 		
 		$email = false;
@@ -453,21 +453,21 @@ abstract class Nova_login extends CI_Controller {
 				);
 				
 				// where should the email be coming from
-				$em_loc = Location::email('reset_password', $this->email->mailtype);
+				$em_loc = Location::email('reset_password', $this->mail->mailtype);
 				
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $data['name']);
-				$this->email->to($data['email']);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $data['name']);
+				$this->mail->to($data['email']);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 		}
 		
 		// send the email
-		$email = $this->email->send();
+		$email = $this->mail->send();
 		
 		return $email;
 	}

@@ -1977,7 +1977,7 @@ abstract class Nova_user extends Nova_controller_admin {
 	protected function _email($type, $data)
 	{
 		// load the libraries
-		$this->load->library('email');
+		$this->load->library('mail');
 		$this->load->library('parser');
 		
 		// define the variables
@@ -2021,13 +2021,13 @@ abstract class Nova_user extends Nova_controller_admin {
 				
 				// set the email data
 				$email_data = array(
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content,
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content,
 					'email_from' => '',
 					'email_subject' => ''
 				);
 				
 				// where should the email be coming from
-				$em_loc = Location::email('user_nominate', $this->email->mailtype);
+				$em_loc = Location::email('user_nominate', $this->mail->mailtype);
 				
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
@@ -2036,11 +2036,11 @@ abstract class Nova_user extends Nova_controller_admin {
 				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
 				
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $from_name);
-				$this->email->to($to);
-				$this->email->reply_to($from_email);
-				$this->email->subject($this->options['email_subject'] .' '. $subject);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $from_name);
+				$this->mail->to($to);
+				$this->mail->reply_to($from_email);
+				$this->mail->subject($this->options['email_subject'] .' '. $subject);
+				$this->mail->message($message);
 			break;
 			
 			case 'reset':
@@ -2057,16 +2057,16 @@ abstract class Nova_user extends Nova_controller_admin {
 				);
 				
 				// where should the email be coming from
-				$em_loc = Location::email('reset_password', $this->email->mailtype);
+				$em_loc = Location::email('reset_password', $this->mail->mailtype);
 				
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 				
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $data['name']);
-				$this->email->to($data['email']);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $data['name']);
+				$this->mail->to($data['email']);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 				
 			case 'status':
@@ -2089,13 +2089,13 @@ abstract class Nova_user extends Nova_controller_admin {
 				
 				// set the email data
 				$email_data = array(
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content,
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content,
 					'email_subject' => $subject,
 					'email_from' => $from_name,
 				);
 				
 				// where should the email be coming from
-				$em_loc = Location::email('user_status_change', $this->email->mailtype);
+				$em_loc = Location::email('user_status_change', $this->mail->mailtype);
 				
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, false);
@@ -2104,16 +2104,16 @@ abstract class Nova_user extends Nova_controller_admin {
 				$to = implode(',', $this->user->get_gm_emails());
 				
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $from_name);
-				$this->email->to($to);
-				$this->email->reply_to($from_email);
-				$this->email->subject($this->options['email_subject'] .' '. $subject);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $from_name);
+				$this->mail->to($to);
+				$this->mail->reply_to($from_email);
+				$this->mail->subject($this->options['email_subject'] .' '. $subject);
+				$this->mail->message($message);
 			break;
 		}
 		
 		// send the email
-		$email = $this->email->send();
+		$email = $this->mail->send();
 		
 		return $email;
 	}

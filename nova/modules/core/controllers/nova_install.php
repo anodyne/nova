@@ -1865,7 +1865,7 @@ abstract class Nova_install extends CI_Controller {
 	private function _register()
 	{
 		$this->load->library('xmlrpc');
-		$this->load->library('email');
+		$this->load->library('mail');
 		
 		// set up the server and method for the request
 		$this->xmlrpc->server(REGISTER, 80);
@@ -1912,12 +1912,12 @@ abstract class Nova_install extends CI_Controller {
 				$this->db->escape(now())
 			);
 			
-			$this->email->from(Util::email_sender());
-			$this->email->to('anodyne.nova@gmail.com');
-			$this->email->subject('Nova Registration');
-			$this->email->message($message);
+			$this->mail->from(Util::email_sender());
+			$this->mail->to('anodyne.nova@gmail.com');
+			$this->mail->subject('Nova Registration');
+			$this->mail->message($message);
 			
-			$email = $this->email->send();
+			$email = $this->mail->send();
 		}
 		
 		$items = array(
@@ -1973,11 +1973,11 @@ abstract class Nova_install extends CI_Controller {
 			$this->db->escape(now())
 		);
 		
-		$this->email->from(Util::email_sender());
-		$this->email->to('anodyne.nova@gmail.com');
-		$this->email->subject('Nova 2 Survey');
-		$this->email->message($message);
+		$this->mail->from(Util::email_sender());
+		$this->mail->to('anodyne.nova@gmail.com');
+		$this->mail->subject('Nova 2 Survey');
+		$this->mail->message($message);
 		
-		$email = $this->email->send();
+		$email = $this->mail->send();
 	}
 }

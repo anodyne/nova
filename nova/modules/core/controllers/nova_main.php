@@ -1020,7 +1020,7 @@ abstract class Nova_main extends Nova_controller_main {
 				);
 
 				// where should the email be coming from
-				$loc = Location::email('main_contact', $this->mail->getConfig('mailtype'));
+				$loc = Location::email('main_contact', $this->mail->mailtype);
 
 				// parse the message
 				$parsedMessage = $this->parser->parse_string($loc, $emailData, true);
@@ -1034,7 +1034,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $data['name']);
 				$this->mail->to($to);
-				$this->mail->replyTo($data['email']);
+				$this->mail->reply_to($data['email']);
 				$this->mail->subject($this->options['email_subject'] .' '. $data['subject']);
 				$this->mail->message($parsedMessage, $message);
 			break;
@@ -1064,7 +1064,7 @@ abstract class Nova_main extends Nova_controller_main {
 				);
 
 				// where should the email be coming from
-				$loc = Location::email('main_news_comment', $this->mail->getConfig('mailtype'));
+				$loc = Location::email('main_news_comment', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($loc, $emailData, true);
@@ -1072,7 +1072,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
-				$this->mail->replyTo($from);
+				$this->mail->reply_to($from);
 				$this->mail->subject($this->options['email_subject'].' '.$emailData['email_subject']);
 				$this->mail->message($message, $content);
 			break;
@@ -1104,7 +1104,7 @@ abstract class Nova_main extends Nova_controller_main {
 				);
 
 				// where should the email be coming from
-				$loc = Location::email('comment_pending', $this->mail->getConfig('mailtype'));
+				$loc = Location::email('comment_pending', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($loc, $emailData, true);
@@ -1112,7 +1112,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
-				$this->mail->replyTo($from);
+				$this->mail->reply_to($from);
 				$this->mail->subject($this->options['email_subject'] .' '. $emailData['email_subject']);
 				$this->mail->message($message, $content);
 			break;
@@ -1134,7 +1134,7 @@ abstract class Nova_main extends Nova_controller_main {
 				);
 
 				// where should the email be coming from
-				$loc = Location::email('main_join_user', $this->mail->getConfig('mailtype'));
+				$loc = Location::email('main_join_user', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($loc, $emailData, true);
@@ -1219,10 +1219,10 @@ abstract class Nova_main extends Nova_controller_main {
 				}
 
 				$emailData['sample_post_label'] = ucwords(lang('labels_sample_post'));
-				$emailData['sample_post'] = ($this->mail->getConfig('mailtype') == 'html') ? nl2br($data['sample_post']) : $data['sample_post'];
+				$emailData['sample_post'] = ($this->mail->mailtype == 'html') ? nl2br($data['sample_post']) : $data['sample_post'];
 
 				// where should the email be coming from
-				$loc = Location::email('main_join_gm', $this->mail->getConfig('mailtype'));
+				$loc = Location::email('main_join_gm', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($loc, $emailData, true);
@@ -1233,7 +1233,7 @@ abstract class Nova_main extends Nova_controller_main {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $data['name']);
 				$this->mail->to($to);
-				$this->mail->replyTo($data['email']);
+				$this->mail->reply_to($data['email']);
 				$this->mail->subject($this->options['email_subject'] .' '. $emailData['email_subject']);
 				$this->mail->message($message);
 			break;

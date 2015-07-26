@@ -787,7 +787,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 	protected function _email($data)
 	{
 		// load the resources
-		$this->load->library('email');
+		$this->load->library('mail');
 		$this->load->library('parser');
 		
 		// define the variables
@@ -845,7 +845,7 @@ abstract class Nova_messages extends Nova_controller_admin {
 		);
 		
 		// where should the email be coming from
-		$em_loc = Location::email('messages_new', $this->email->mailtype);
+		$em_loc = Location::email('messages_new', $this->mail->mailtype);
 		
 		// parse the message
 		$message = $this->parser->parse_string($em_loc, $email_data, true);
@@ -854,14 +854,14 @@ abstract class Nova_messages extends Nova_controller_admin {
 		$to = implode(',', $emails);
 		
 		// set the parameters for sending the email
-		$this->email->from(Util::email_sender(), $from_name);
-		$this->email->to($to);
-		$this->email->reply_to($from_email);
-		$this->email->subject($subject);
-		$this->email->message($message);
+		$this->mail->from(Util::email_sender(), $from_name);
+		$this->mail->to($to);
+		$this->mail->reply_to($from_email);
+		$this->mail->subject($subject);
+		$this->mail->message($message);
 		
 		// send the email
-		$email = $this->email->send();
+		$email = $this->mail->send();
 		
 		return $email;
 	}

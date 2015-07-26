@@ -2307,7 +2307,7 @@ abstract class Nova_sim extends Nova_controller_main {
 	protected function _email($type = '', $data = '')
 	{
 		// load the libraries
-		$this->load->library('email');
+		$this->load->library('mail');
 		$this->load->library('parser');
 
 		// define the variables
@@ -2336,21 +2336,21 @@ abstract class Nova_sim extends Nova_controller_main {
 				$email_data = array(
 					'email_subject' => lang('email_subject_log_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
 
 				// where should the email be coming from
-				$em_loc = Location::email('sim_log_comment', $this->email->mailtype);
+				$em_loc = Location::email('sim_log_comment', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $name);
-				$this->email->to($to);
-				$this->email->reply_to($from);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $name);
+				$this->mail->to($to);
+				$this->mail->reply_to($from);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 
 			case 'log_comment_pending':
@@ -2376,21 +2376,21 @@ abstract class Nova_sim extends Nova_controller_main {
 				$email_data = array(
 					'email_subject' => lang('email_subject_comment_pending'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
 
 				// where should the email be coming from
-				$em_loc = Location::email('comment_pending', $this->email->mailtype);
+				$em_loc = Location::email('comment_pending', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $name);
-				$this->email->to($to);
-				$this->email->reply_to($from);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $name);
+				$this->mail->to($to);
+				$this->mail->reply_to($from);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 
 			case 'post_comment':
@@ -2435,21 +2435,21 @@ abstract class Nova_sim extends Nova_controller_main {
 				$email_data = array(
 					'email_subject' => lang('email_subject_post_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
 
 				// where should the email be coming from
-				$em_loc = Location::email('sim_post_comment', $this->email->mailtype);
+				$em_loc = Location::email('sim_post_comment', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $name);
-				$this->email->to($to);
-				$this->email->reply_to($from);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $name);
+				$this->mail->to($to);
+				$this->mail->reply_to($from);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 
 			case 'post_comment_pending':
@@ -2475,21 +2475,21 @@ abstract class Nova_sim extends Nova_controller_main {
 				$email_data = array(
 					'email_subject' => lang('email_subject_comment_pending'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
 
 				// where should the email be coming from
-				$em_loc = Location::email('comment_pending', $this->email->mailtype);
+				$em_loc = Location::email('comment_pending', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $name);
-				$this->email->to($to);
-				$this->email->reply_to($from);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $name);
+				$this->mail->to($to);
+				$this->mail->reply_to($from);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 
 			case 'docking_user':
@@ -2503,20 +2503,20 @@ abstract class Nova_sim extends Nova_controller_main {
 				$email_data = array(
 					'email_subject' => lang('email_subject_docking_user'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['default_email_name'] .' - '. $this->options['default_email_address'],
-					'email_content' => ($this->email->mailtype == 'html') ? nl2br($content) : $content
+					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
 
 				// where should the email be coming from
-				$em_loc = Location::email('sim_docking_user', $this->email->mailtype);
+				$em_loc = Location::email('sim_docking_user', $this->mail->mailtype);
 
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
 
 				// set the parameters for sending the email
-				$this->email->from(Util::email_sender(), $this->options['default_email_name']);
-				$this->email->to($data['email']);
-				$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-				$this->email->message($message);
+				$this->mail->from(Util::email_sender(), $this->options['default_email_name']);
+				$this->mail->to($data['email']);
+				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+				$this->mail->message($message);
 			break;
 
 			case 'docking_gm':
@@ -2587,7 +2587,7 @@ abstract class Nova_sim extends Nova_controller_main {
 						}
 
 						// where should the email be coming from
-						$em_loc = Location::email('sim_docking_gm', $this->email->mailtype);
+						$em_loc = Location::email('sim_docking_gm', $this->mail->mailtype);
 
 						// parse the message
 						$message = $this->parser->parse_string($em_loc, $email_data, true);
@@ -2599,18 +2599,18 @@ abstract class Nova_sim extends Nova_controller_main {
 						$to = implode(',', $gm);
 
 						// set the parameters for sending the email
-						$this->email->from(Util::email_sender(), $row->docking_gm_name);
-						$this->email->to($to);
-						$this->email->reply_to($row->docking_gm_email);
-						$this->email->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
-						$this->email->message($message);
+						$this->mail->from(Util::email_sender(), $row->docking_gm_name);
+						$this->mail->to($to);
+						$this->mail->reply_to($row->docking_gm_email);
+						$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
+						$this->mail->message($message);
 					}
 				}
 			break;
 		}
 
 		// send the email
-		$email = $this->email->send();
+		$email = $this->mail->send();
 
 		// return the email variable
 		return $email;
