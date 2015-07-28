@@ -1,8 +1,8 @@
-version: 2.3.3
+version: 2.4.0
 version_major: 2
-version_minor: 3
-version_update: 3
+version_minor: 4
+version_update: 0
 severity: minor
-notes: Nova 2.3.3 addresses several minor issues with the system.
+notes: Nova 2.4.0 adds a new class for email handling that should offer more robust options and the ability to use third-party SMTP services like MailGun and Mandrill for delivering emails.
 date: 10 May 2014
 link: http://www.anodyne-productions.com/nova/index.php

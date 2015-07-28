@@ -7,11 +7,7 @@
 ### Nova Core
 
 * Updated the controllers with the new Mail class calls.
-
-## 2.3.3
-
-### Nova Core
-
+* Updated the manifest Javascript to remove hard-coded calls to a table structure. This has become problematic as people have begun to modify the manifest to have less traditional layouts.
 * Updated the install, update, and upgrade processes to reflect upcoming changes to the Anodyne servers.
 * Updated the error language file with a new error message.
 
