@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4.0
+## 2.4.0 (7 August 2015)
 
 * Created a new `Mail` wrapper class around SwiftMailer for better email handling than CodeIgniter's built-in email class.
 
