@@ -5,8 +5,9 @@
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @author		EllisLab Dev Team
+ * @copyright		Copyright (c) 2008 - 2014, EllisLab, Inc.
+ * @copyright		Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -22,7 +23,7 @@
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
- * @author		ExpressionEngine Dev Team
+ * @author		EllisLab Dev Team
  * @category	Loader
  * @link		http://codeigniter.com/user_guide/libraries/loader.html
  */
@@ -56,7 +57,7 @@ class CI_Loader {
 	 * @var array
 	 * @access protected
 	 */
-	public $_ci_model_paths		= array();
+	protected $_ci_model_paths		= array();
 	/**
 	 * List of paths to load helpers from
 	 *
@@ -738,7 +739,7 @@ class CI_Loader {
 	 * @param	array
 	 * @return	void
 	 */
-	public function _ci_load($_ci_data)
+	protected function _ci_load($_ci_data)
 	{
 		// Set the default data variables
 		foreach (array('_ci_view', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val)
@@ -1196,7 +1197,7 @@ class CI_Loader {
 	 * @param	object
 	 * @return	array
 	 */
-	public function _ci_object_to_array($object)
+	protected function _ci_object_to_array($object)
 	{
 		return (is_object($object)) ? get_object_vars($object) : $object;
 	}
