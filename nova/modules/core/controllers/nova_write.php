@@ -2272,7 +2272,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				//$this->mail->from($from_email, $from_name);
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
@@ -2316,7 +2316,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. lang('email_subject_news_pending'));
 				$this->mail->message($message);
 			break;
@@ -2355,7 +2355,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
@@ -2397,7 +2397,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. lang('email_subject_log_pending'));
 				$this->mail->message($message);
 			break;
@@ -2453,7 +2453,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
@@ -2516,7 +2516,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
@@ -2567,7 +2567,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. lang('email_subject_post_pending'));
 				$this->mail->message($message);
 			break;
@@ -2639,7 +2639,7 @@ abstract class Nova_write extends Nova_controller_admin {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
-				$this->mail->reply_to($from_email);
+				//$this->mail->reply_to($from_email);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
