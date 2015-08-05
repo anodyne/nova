@@ -1617,7 +1617,6 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
-				//$this->mail->reply_to($from);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
@@ -1651,7 +1650,6 @@ abstract class Nova_wiki extends Nova_controller_wiki {
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
-				//$this->mail->reply_to($from);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
