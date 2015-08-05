@@ -12,5 +12,7 @@
 		<h3>{email_from}</h3>
 			
 		<p>{email_content}</p>
+
+		<p><em>This is an automated email, please don't reply to this message.</em></p>
 	</body>
 </html>

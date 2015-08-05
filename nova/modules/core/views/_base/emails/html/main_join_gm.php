@@ -38,5 +38,7 @@
 		
 		<h3>{sample_post_label}</h3>
 		{sample_post}
+
+		<p><em>This is an automated email, please don't reply to this message.</em></p>
 	</body>
 </html>

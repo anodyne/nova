@@ -23,3 +23,5 @@
 
 {sample_post_label}
 {sample_post}
+
+This is an automated email, please don't reply to this message.
