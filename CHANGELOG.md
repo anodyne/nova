@@ -2,13 +2,14 @@
 
 ## 2.4.0 (7 August 2015)
 
-* Created a new `Mail` wrapper class around SwiftMailer for better email handling than CodeIgniter's built-in email class.
+* Created a new `Mail` wrapper class around SwiftMailer for better email handling than CodeIgniter's built-in email class. Thanks to forum user TheDrew for helping us sort through some of these issues.
 
 ### Nova Core
 
 * Updated the controllers with the new Mail class calls.
+* We've removed all the reply-to calls with emails since more and more spam filters are checking the reply-to headers as well as the from header.
+* Added a notice to the bottom of all emails that it's an automated email and they shouldn't reply to the message.
 * Updated the manifest Javascript to remove hard-coded calls to a table structure. This has become problematic as people have begun to modify the manifest to have less traditional layouts.
-* Updated the install, update, and upgrade processes to reflect upcoming changes to the Anodyne servers.
 * Updated the error language file with a new error message.
 
 ### Bug Fixes
