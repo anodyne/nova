@@ -60,7 +60,7 @@ abstract class Nova_Security extends CI_Security {
 		$str = remove_invisible_characters($str);
 
 		// Validate Entities in URLs
-		$str = $this->_validate_entities($str);
+		//$str = $this->_validate_entities($str);
 
 		/*
 		 * URL Decode
