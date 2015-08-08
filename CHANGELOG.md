@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.1 (7 August 2015)
+
+### Bug Fixes
+
+* Fixed error thrown with missing method that was removed in the latest version of CodeIgniter 2.
+
 ## 2.4.0 (7 August 2015)
 
 * Created a new `Mail` wrapper class around SwiftMailer for better email handling than CodeIgniter's built-in email class. Thanks to forum user TheDrew for helping us sort through some of these issues.
