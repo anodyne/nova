@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.2 (8 August 2015)
+
+### Bug Fixes
+
+* Fixed errors when sending emails to multiple recipients.
+
 ## 2.4.1 (7 August 2015)
 
 ### Bug Fixes

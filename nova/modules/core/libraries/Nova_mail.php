@@ -82,6 +82,8 @@ abstract class Nova_mail {
 
 	public function bcc($address, $name = null)
 	{
+		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
+
 		$this->message->setBcc($address, $name);
 
 		return $this;
@@ -94,6 +96,8 @@ abstract class Nova_mail {
 
 	public function cc($address, $name = null)
 	{
+		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
+
 		$this->message->setCc($address, $name);
 
 		return $this;
@@ -101,6 +105,8 @@ abstract class Nova_mail {
 
 	public function from($address, $name = null)
 	{
+		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
+		
 		$this->message->setFrom($address, $name);
 
 		return $this;
@@ -119,6 +125,8 @@ abstract class Nova_mail {
 
 	public function reply_to($address, $name = null)
 	{
+		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
+
 		$this->message->setReplyTo($address, $name);
 
 		return $this;
@@ -157,6 +165,8 @@ abstract class Nova_mail {
 
 	public function to($address, $name = null)
 	{
+		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
+
 		$this->message->setTo($address, $name);
 
 		return $this;
