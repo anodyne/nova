@@ -8,7 +8,7 @@
 </div>
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<p class="fontMedium bold"><a href="<?php echo site_url('messages/sent');?>"><?php echo $label['inbox'];?></a></p>
+<p class="fontMedium bold"><a href="<?php echo site_url('messages/index');?>"><?php echo $label['inbox'];?></a></p>
 
 <div id="loading" class="loader">
 	<?php echo img($loader).text_output($label['loading'], 'h3', 'gray');?>
