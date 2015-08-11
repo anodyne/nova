@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.4
+
+### Bug Fixes
+
+* Fixed wrong link to the Inbox from Sent Messages.
+
 ## 2.4.3 (11 August 2015)
 
 ### Nova Core
