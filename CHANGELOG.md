@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4.3 (9 August 2015)
+## 2.4.3 (11 August 2015)
 
 ### Nova Core
 
