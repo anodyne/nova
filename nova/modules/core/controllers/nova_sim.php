@@ -1911,7 +1911,36 @@ abstract class Nova_sim extends Nova_controller_main {
 
 		if ($logs !== false)
 		{
-			if ($logs->log_status != 'activated')
+			$canView = false;
+
+			if ( ! Auth::is_logged_in())
+			{
+				if ($logs->log_status == 'activated')
+				{
+					$canView = true;
+				}
+			}
+			else
+			{
+				if ($logs->log_status == 'activated')
+				{
+					$canView = true;
+				}
+				else
+				{
+					if (Auth::get_access_level('manage/logs') == 1 and (int) $this->session->userdata('userid') == $logs->log_author_user)
+					{
+						$canView = true;
+					}
+
+					if (Auth::get_access_level('manage/logs') == 2)
+					{
+						$canView = true;
+					}
+				}
+			}
+
+			if ( ! $canView)
 			{
 				$data['header'] = sprintf(
 					lang('error_title_invalid_char'),
@@ -1931,7 +1960,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			}
 			else
 			{
-				$view_loc = 'error';
+				$view_loc = 'sim_viewlog';
 
 				// grab the next and previous IDs
 				$next = $this->logs->get_link_id($id);
@@ -1955,6 +1984,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$data['date'] = mdate($datestring, $date);
 				$data['author'] = $this->char->get_character_name($logs->log_author_character, true, false, true);
 				$data['tags'] = ( ! empty($logs->log_tags)) ? $logs->log_tags : NULL;
+				$data['status'] = $status = $logs->log_status;
 
 				// determine if they can edit the log
 				if (Auth::is_logged_in() === true and ( (Auth::get_access_level('manage/logs') == 2) or
@@ -2020,6 +2050,7 @@ abstract class Nova_sim extends Nova_controller_main {
 					'comments' => ucfirst(lang('labels_comments')),
 					'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
 					'edited' => ucfirst(lang('actions_edited') .' '. lang('labels_on')),
+					'nonactivelog' => ucwords(lang("status_{$status}")." ".lang('global_personallog')),
 					'on' => lang('labels_on'),
 					'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
 					'tags' => ucfirst(lang('labels_tags')) .':',
@@ -2135,7 +2166,39 @@ abstract class Nova_sim extends Nova_controller_main {
 
 		if ($row !== false)
 		{
-			if ($row->post_status != 'activated')
+			$canView = false;
+
+			if ( ! Auth::is_logged_in())
+			{
+				if ($row->post_status == 'activated')
+				{
+					$canView = true;
+				}
+			}
+			else
+			{
+				if ($row->post_status == 'activated')
+				{
+					$canView = true;
+				}
+				else
+				{
+					// Get an array of user IDs
+					$postAuthors = explode(',', $row->post_authors_users);
+
+					if (Auth::get_access_level('manage/posts') == 1 and in_array($this->session->userdata('userid'), $postAuthors))
+					{
+						$canView = true;
+					}
+
+					if (Auth::get_access_level('manage/posts') == 2)
+					{
+						$canView = true;
+					}
+				}
+			}
+
+			if ( ! $canView)
 			{
 				$data['header'] = sprintf(
 					lang('error_title_invalid_char'),
@@ -2178,6 +2241,7 @@ abstract class Nova_sim extends Nova_controller_main {
 				$data['location'] = $row->post_location;
 				$data['timeline'] = $row->post_timeline;
 				$data['post_id'] = $id;
+				$data['status'] = $status = $row->post_status;
 
 				if ($next !== false)
 				{
@@ -2288,6 +2352,7 @@ abstract class Nova_sim extends Nova_controller_main {
 			'edited' => ucfirst(lang('actions_edited') .' '. lang('labels_on')),
 			'location' => ucfirst(lang('labels_location')) .':',
 			'mission' => ucfirst(lang('global_mission')) .':',
+			'nonactivepost' => ucwords(lang("status_{$status}")." ".lang('global_missionpost')),
 			'on' => lang('labels_on'),
 			'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
 			'tags' => ucfirst(lang('labels_tags')) .':',

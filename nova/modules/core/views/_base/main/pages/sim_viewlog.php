@@ -14,6 +14,10 @@
 
 <?php echo text_output($title, 'h1', 'page-head');?>
 
+<?php if ($status != "activated"): ?>
+	<p class="bold orange"><?php echo $label['nonactivelog'];?></p>
+<?php endif;?>
+
 <p><?php echo link_to_if($edit_valid, 'manage/logs/edit/'. $id, $label['edit'], array('class' => 'edit fontSmall bold'));?></p>
 
 <p class="fontSmall bold gray">

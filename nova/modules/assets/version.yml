@@ -1,8 +1,8 @@
-version: 2.4.2
+version: 2.4.3
 version_major: 2
 version_minor: 4
-version_update: 2
+version_update: 3
 severity: minor
 notes: Nova 2.4 adds a new class for email handling that should offer more robust options and the ability to use third-party SMTP services like MailGun and Mandrill for delivering emails.
-date: 8 August 2015
+date: 11 August 2015
 link: http://www.anodyne-productions.com/nova/index.php

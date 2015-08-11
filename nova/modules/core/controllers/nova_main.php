@@ -818,7 +818,36 @@ abstract class Nova_main extends Nova_controller_main {
 
 		if ($row !== false)
 		{
-			if ($row->news_status != 'activated')
+			$canView = false;
+
+			if ( ! Auth::is_logged_in())
+			{
+				if ($row->news_status == 'activated')
+				{
+					$canView = true;
+				}
+			}
+			else
+			{
+				if ($row->news_status == 'activated')
+				{
+					$canView = true;
+				}
+				else
+				{
+					if (Auth::get_access_level('manage/news') == 1 and $this->session->userdata('userid') == $row->news_author_user)
+					{
+						$canView = true;
+					}
+
+					if (Auth::get_access_level('manage/news') == 2)
+					{
+						$canView = true;
+					}
+				}
+			}
+
+			if ( ! $canView)
 			{
 				$data['header'] = sprintf(
 					lang('error_title_invalid_char'),
@@ -861,6 +890,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$data['tags'] = $row->news_tags;
 				$data['news_id'] = $id;
 				$data['private'] = $row->news_private;
+				$data['status'] = $status = $row->news_status;
 
 				// determine if they can edit the log
 				if (Auth::is_logged_in() === true and ( (Auth::get_access_level('manage/news') == 2) or
@@ -958,6 +988,7 @@ abstract class Nova_main extends Nova_controller_main {
 					'error_pagetitle' => lang('error_pagetitle'),
 					'error_private_news' => lang('error_private_news'),
 					'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
+					'nonactivenews' => ucwords(lang("status_{$status}")." ".lang('global_newsitem')),
 				);
 
 				$this->_regions['title'].= ucwords(lang('actions_view').' '.lang('global_news'));

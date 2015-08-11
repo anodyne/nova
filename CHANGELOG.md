@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.4.3 (11 August 2015)
+
+### Nova Core
+
+* Added indicator when viewing a post, log, or news items if it's a saved or pending item.
+
+### Bug Fixes
+
+* Fixed issues with viewing non-activated posts, logs, and news items.
+
 ## 2.4.2 (8 August 2015)
 
 ### Bug Fixes

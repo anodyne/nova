@@ -24,6 +24,20 @@ abstract class Nova_auth {
 	{
 		log_message('debug', 'Auth Library Initialized');
 	}
+
+	public static function can($uri = null, $redirect = true, $partial = false)
+	{
+		if ( ! static::is_logged_in()) return false;
+
+		return static::check_access($uri, $redirect, $partial);
+	}
+
+	public static function cannot($uri = null, $redirect = true, $partial = false)
+	{
+		if ( ! static::is_logged_in()) return true;
+
+		return ! static::check_access($uri, $redirect, $partial);
+	}
 	
 	public static function check_access($uri = null, $redirect = true, $partial = false)
 	{

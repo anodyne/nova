@@ -14,6 +14,10 @@
 
 <?php echo text_output($title, 'h1', 'page-head');?>
 
+<?php if ($status != "activated"): ?>
+	<p class="bold orange"><?php echo $label['nonactivepost'];?></p>
+<?php endif;?>
+
 <p>
 	<?php echo link_to_if(in_array(TRUE, $valid), 'manage/posts/edit/'. $post_id, $label['edit'], array('class' => 'edit fontSmall bold'));?>
 </p>
