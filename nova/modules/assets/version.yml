@@ -5,4 +5,4 @@ version_update: 4
 severity: minor
 notes: Nova 2.4.4 fixes several outstanding issues with Nova 2.4 including a wrong link in the sent messages view...
 date: 11 August 2015
-link: http://www.anodyne-productions.com/nova/index.php
+link: http://anodyne-productions.com/nova
