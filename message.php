@@ -9,7 +9,7 @@ switch ($type)
 		$title = 'Nova Notice';
 		$header = 'Uh oh!';
 		$headerClass = 'error';
-		$message = 'Unforunately, your server isn\'t running a compatible version of PHP. In order to run Nova 2, your server needs to have at least PHP 5.1 (you only have PHP '.PHP_VERSION.'. Please contact your host to resolve this issue. Additional support is available from <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a>.';
+		$message = 'Unforunately, your server isn\'t running a compatible version of PHP. In order to run Nova 2, your server needs to have at least PHP 5.3 (you only have PHP '.PHP_VERSION.'. Please contact your host to resolve this issue. Additional support is available from <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a>.';
 	break;
 	
 	case 'maintenance':

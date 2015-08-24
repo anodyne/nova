@@ -151,7 +151,7 @@ $modules_folder = INSTALL_ROOT.$mods_folder;
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
 
-if (phpversion() < '5.1')
+if (phpversion() < '5.3')
 {
 	header('Location: message.php?type=php');
 	exit();
