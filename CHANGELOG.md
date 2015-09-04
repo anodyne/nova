@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.4.4 (4 September 2015)
+
+### Nova Core
+
+* Updated Nova to indicate when anything less than PHP 5.3 is on the server. Due to changes in Nova 2.4, there is now a requirement of PHP 5.3.
+
+### Bug Fixes
+
+* Fixed wrong link to the Inbox from Sent Messages.
+
 ## 2.4.3 (11 August 2015)
 
 ### Nova Core
