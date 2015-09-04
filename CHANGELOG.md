@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4.4
+## 2.4.4 (4 September 2015)
 
 ### Nova Core
 
