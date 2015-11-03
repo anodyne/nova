@@ -1179,7 +1179,14 @@ abstract class Nova_install extends CI_Controller {
 			case 2:
 				// pull in the install data asset file
 				include_once MODPATH.'assets/install/data.php';
-				
+                
+				$originalModeQuery = $this->db->query('SELECT @@SESSION.sql_mode;');
+				if ($originalModeQuery->num_rows() > 0)
+				{
+					$originalMode = $originalModeQuery->first_row('array')['@@SESSION.sql_mode'];
+					$this->db->query('SET SESSION sql_mode = "";');
+				}
+                
 				$insert = array();
 				
 				foreach ($data as $value)
@@ -1202,6 +1209,11 @@ abstract class Nova_install extends CI_Controller {
 							$insert[] = $this->db->insert($value, $v);
 						}
 					}
+				}
+                
+				if (isset($originalMode))
+				{
+					$this->db->query('SET SESSION sql_mode = "'.$originalMode.'";');
 				}
 				
 				foreach ($insert as $key => $i)
