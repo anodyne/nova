@@ -622,3 +622,4 @@ $lang['flash_fields_role_groups'] = 'the name field';
 $lang['flash_fields_menus'] = 'the name, link, type and category fields';
 $lang['flash_fields_menucats'] = 'the name and category fields';
 $lang['flash_fields_join'] = 'the character name, position, password and email fields';
+$lang['flash_fields_charactername'] = 'either the first or last name of the character';
