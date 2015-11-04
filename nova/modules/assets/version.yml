@@ -1,7 +1,7 @@
-version: 2.4.4
+version: 2.4.5
 version_major: 2
 version_minor: 4
-version_update: 4
+version_update: 5
 severity: minor
 notes: Nova 2.4.4 fixes several outstanding issues with Nova 2.4 including a wrong link in the sent messages view...
 date: 11 August 2015
