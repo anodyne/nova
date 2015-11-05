@@ -232,8 +232,9 @@ abstract class Nova_mail {
 			break;
 
 			case 'smtp':
-				$transport = Swift_SmtpTransport::newInstance($this->config->item('smtp_host'), $this->config->item('smtp_port'))
-					->setUsername($this->config->item('smtp_user'))
+				$transport = Swift_SmtpTransport::newInstance(
+					$this->config->item('smtp_host'), $this->config->item('smtp_port')
+				)->setUsername($this->config->item('smtp_user'))
 					->setPassword($this->config->item('smtp_pass'));
 			break;
 		}
@@ -243,7 +244,7 @@ abstract class Nova_mail {
 
 	protected function validateEmailAddress($address)
 	{
-		return Swift_Validate::email($address);
+		return ( ! empty($address) and Swift_Validate::email($address));
 	}
 
 }
