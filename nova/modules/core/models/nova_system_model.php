@@ -712,6 +712,7 @@ abstract class Nova_system_model extends CI_Model {
 		if ($this->db->dbdriver == 'mysql')
 		{
 			$modeQuery = $this->db->query('SELECT @@SESSION.sql_mode;');
+			
 			if ($modeQuery->num_rows() > 0)
 			{
 				$modeSegs = explode(',', $modeQuery->first_row('array')['@@SESSION.sql_mode']);
