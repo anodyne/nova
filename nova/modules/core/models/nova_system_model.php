@@ -715,7 +715,9 @@ abstract class Nova_system_model extends CI_Model {
 			
 			if ($modeQuery->num_rows() > 0)
 			{
-				$modeSegs = explode(',', $modeQuery->first_row('array')['@@SESSION.sql_mode']);
+				$modeArr = $modeQuery->first_row('array');
+
+				$modeSegs = explode(',', $modeArr['@@SESSION.sql_mode']);
                 
 				if (($idx = array_search('STRICT_TRANS_TABLES', $modeSegs)) !== false)
 				{
