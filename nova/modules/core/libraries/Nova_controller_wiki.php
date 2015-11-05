@@ -49,6 +49,8 @@ class Nova_controller_wiki extends CI_Controller {
 		
 		$this->load->database();
 		$this->load->model('system_model', 'sys');
+        
+		$this->sys->prepare_database_session();
 		
 		// check to see if the system is installed
 		$installed = $this->sys->check_install_status();
