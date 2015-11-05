@@ -4,7 +4,7 @@
 
 ### Nova Core
 
-* Addressed potential issue for users who are running MySQL 5.7 with strict SQL mode. This would oftentimes result in a cryptic "1364 error" during installation, but it could also occur in other areas of the system. Thanks to Jon Matterson for his work on this issue.
+* Addressed potential issue for users who are running MySQL with strict SQL mode. This would oftentimes result in a cryptic "1364 error" during installation, but it could also occur in other areas of the system. Thanks to Jon Matterson for his work on this issue.
 
 ### Bug Fixes
 
