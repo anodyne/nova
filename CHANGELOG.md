@@ -1,14 +1,14 @@
 # Changelog
 
-## 2.4.5
+## 2.4.5 (11 November 2015)
 
 ### Nova Core
 
-* Addressed potential issue for users who are running MySQL with strict SQL mode. This would oftentimes result in a cryptic "1364 error" during installation, but it could also occur in other areas of the system. Thanks to Jon Matterson for his work on this issue.
+* Addressed potential issue for users who are running MySQL with strict SQL mode. This would oftentimes result in a cryptic "1364 error" during installation or update, but it could also occur in other areas of the system. Thanks to Jon Matterson for his work on this issue!
 
 ### Bug Fixes
 
-* Fixed bug where a user could update their character without a name. Either the first or last name is now required to update the character.
+* Fixed an issue where a user could update their character without a name. Either the first or last name is now required to update the character.
 
 ## 2.4.4 (4 September 2015)
 
