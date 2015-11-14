@@ -3,6 +3,6 @@ version_major: 2
 version_minor: 4
 version_update: 5
 severity: minor
-notes: Nova 2.4.4 fixes several outstanding issues with Nova 2.4 including a wrong link in the sent messages view...
-date: 11 August 2015
+notes: Nova 2.4.5 fixes a long-standing issue with Nova where some users would see a cryptic 1364 error (especially when installing and updating). Thanks to Jon Matterson for solving this issue and sending a pull request. We have also patched issues with character bio editing and continued to work on improving the new Email class.
+date: 14 November 2015
 link: http://anodyne-productions.com/nova
