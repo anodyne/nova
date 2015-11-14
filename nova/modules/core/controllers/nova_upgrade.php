@@ -37,6 +37,8 @@ abstract class Nova_upgrade extends CI_Controller {
 		$this->load->model('system_model', 'sys');
 		$this->nova->lang('install');
 		$this->lang->load('app');
+
+		$this->sys->prepare_database_session();
 		
 		$this->installed = $this->sys->check_install_status();
 		

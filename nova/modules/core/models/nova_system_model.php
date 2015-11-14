@@ -706,4 +706,32 @@ abstract class Nova_system_model extends CI_Model {
 			return false;
 		}
 	}
+    
+	public function prepare_database_session()
+	{
+		if ($this->db->dbdriver == 'mysql')
+		{
+			$modeQuery = $this->db->query('SELECT @@SESSION.sql_mode;');
+			
+			if ($modeQuery->num_rows() > 0)
+			{
+				$modeArr = $modeQuery->first_row('array');
+
+				$modeSegs = explode(',', $modeArr['@@SESSION.sql_mode']);
+                
+				if (($idx = array_search('STRICT_TRANS_TABLES', $modeSegs)) !== false)
+				{
+					array_splice($modeSegs, $idx, 1);
+				}
+                
+				if (($idx = array_search('STRICT_ALL_TABLES', $modeSegs)) !== false)
+				{
+					array_splice($modeSegs, $idx, 1);
+				}
+                
+				$newMode = implode(',', $modeSegs);
+				$this->db->query('SET SESSION sql_mode = "'.$newMode.'";');
+			}
+		}
+	}
 }

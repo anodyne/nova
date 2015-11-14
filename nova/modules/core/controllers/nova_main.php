@@ -222,7 +222,7 @@ abstract class Nova_main extends Nova_controller_main {
 		{
 			// user POST variables
 			$email = $this->input->post('email', true);
-			$real_name = $this->input->post('name',true);
+			$real_name = $this->input->post('name', true);
 			$im = $this->input->post('instant_message', true);
 			$dob = $this->input->post('date_of_birth', true);
 			$password = $this->input->post('password', true);

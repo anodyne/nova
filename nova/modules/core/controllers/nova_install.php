@@ -36,6 +36,8 @@ abstract class Nova_install extends CI_Controller {
 		{
 			$this->load->database();
 			$this->load->model('system_model', 'sys');
+
+			$this->sys->prepare_database_session();
 			
 			$this->installed = $this->sys->check_install_status();
 		}

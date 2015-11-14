@@ -48,6 +48,8 @@ abstract class Nova_update extends CI_Controller {
 		$this->load->model('system_model', 'sys');
 		$this->nova->lang('install');
 		$this->lang->load('app', $this->session->userdata('language'));
+
+		$this->sys->prepare_database_session();
 		
 		// set the version
 		$this->version = APP_VERSION_MAJOR.'.'.APP_VERSION_MINOR.'.'.APP_VERSION_UPDATE;

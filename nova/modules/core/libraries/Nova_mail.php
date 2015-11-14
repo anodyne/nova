@@ -84,6 +84,8 @@ abstract class Nova_mail {
 	{
 		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
 
+		$address = $this->cleanEmailAddresses($address);
+
 		$this->message->setBcc($address, $name);
 
 		return $this;
@@ -98,6 +100,8 @@ abstract class Nova_mail {
 	{
 		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
 
+		$address = $this->cleanEmailAddresses($address);
+
 		$this->message->setCc($address, $name);
 
 		return $this;
@@ -106,8 +110,13 @@ abstract class Nova_mail {
 	public function from($address, $name = null)
 	{
 		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
-		
-		$this->message->setFrom($address, $name);
+
+		$address = $this->cleanEmailAddresses($address);
+
+		if ($address)
+		{
+			$this->message->setFrom($address, $name);
+		}
 
 		return $this;
 	}
@@ -167,9 +176,46 @@ abstract class Nova_mail {
 	{
 		$address = (is_string($address) and $name === null) ? explode(',', $address) : $address;
 
-		$this->message->setTo($address, $name);
+		$address = $this->cleanEmailAddresses($address);
+
+		if ($address)
+		{
+			$this->message->setTo($address, $name);
+		}
 
 		return $this;
+	}
+
+	protected function cleanEmailAddresses($recipients)
+	{
+		if (is_array($recipients))
+		{
+			foreach ($recipients as $key => $email)
+			{
+				$clean = trim($email);
+
+				if ($this->validateEmailAddress($clean))
+				{
+					$recipients[$key] = $clean;
+				}
+			}
+
+			if (count($recipients) > 0)
+			{
+				return $recipients;
+			}
+		}
+		else
+		{
+			$clean = trim($recipients);
+
+			if ($this->validateEmailAddress($clean))
+			{
+				return $clean;
+			}
+		}
+
+		return false;
 	}
 
 	protected function createTransport()
@@ -186,13 +232,19 @@ abstract class Nova_mail {
 			break;
 
 			case 'smtp':
-				$transport = Swift_SmtpTransport::newInstance($this->config->item('smtp_host'), $this->config->item('smtp_port'))
-					->setUsername($this->config->item('smtp_user'))
+				$transport = Swift_SmtpTransport::newInstance(
+					$this->config->item('smtp_host'), $this->config->item('smtp_port')
+				)->setUsername($this->config->item('smtp_user'))
 					->setPassword($this->config->item('smtp_pass'));
 			break;
 		}
 
 		return $transport;
+	}
+
+	protected function validateEmailAddress($address)
+	{
+		return ( ! empty($address) and Swift_Validate::email($address));
 	}
 
 }
