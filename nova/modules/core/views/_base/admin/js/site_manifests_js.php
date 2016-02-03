@@ -24,7 +24,7 @@
 				var send = {
 					manifest: $(this).attr('mid'),
 					dept: ui.draggable.attr('did'),
-					'nova_csrf_token': $('input[name=nova_csrf_token]').val()
+					'nova_csrf_token': "<?php echo $this->security->get_csrf_hash();?>"
 				}
 				
 				$.ajax({
