@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.6
+
+### Nova Core
+
+- We've updated the gender identification selections on new installations to be more in line with social conventions. Hermaphrodite has been replaced with Transgendered/Intersex and Neuter has been replaced with Agendered/Non-Binary.
+
 ## 2.4.5 (14 November 2015)
 
 ### Nova Core
