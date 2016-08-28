@@ -154,8 +154,13 @@ abstract class Nova_mail {
 
 	public function send()
 	{
-		// Send the message
-		$this->mailer->send($this->message);
+		if ($this->message->getTo() !== null or 
+				$this->message->getCc() !== null or 
+				$this->message->getBcc() !== null)
+		{
+			// Send the message
+			$this->mailer->send($this->message);
+		}
 
 		return $this->reset();
 	}
@@ -194,6 +199,11 @@ abstract class Nova_mail {
 			{
 				$clean = trim($email);
 
+				if (empty($clean))
+				{
+					unset($recipients[$key]);
+				}
+
 				if ($this->validateEmailAddress($clean))
 				{
 					$recipients[$key] = $clean;
@@ -209,7 +219,7 @@ abstract class Nova_mail {
 		{
 			$clean = trim($recipients);
 
-			if ($this->validateEmailAddress($clean))
+			if ( ! empty($clean) and $this->validateEmailAddress($clean))
 			{
 				return $clean;
 			}
