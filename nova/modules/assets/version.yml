@@ -1,8 +1,8 @@
-version: 2.4.5
+version: 2.4.6
 version_major: 2
 version_minor: 4
-version_update: 5
+version_update: 6
 severity: minor
-notes: Nova 2.4.5 fixes a long-standing issue with Nova where some users would see a cryptic 1364 error (especially when installing and updating). Thanks to Jon Matterson for solving this issue and sending a pull request. We have also patched issues with character bio editing and continued to work on improving the new Email class.
-date: 14 November 2015
+notes: Nova 2.4.6 attempts to address strange issues some people are having with errors being thrown when certain emails are being sent. Additionally, for new installations, we've updated the gender identifications to be more accurate and in line with social conventions.
+date: 28 August 2016
 link: http://anodyne-productions.com/nova

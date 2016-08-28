@@ -719,13 +719,13 @@ $characters_values = array(
 		'value_order' => 2),
 	array(
 		'value_field' => 1,
-		'value_field_value' => 'Hermaphrodite',
-		'value_content' => 'Hermaphrodite',
+		'value_field_value' => 'Transgendered/Intersex',
+		'value_content' => 'Transgendered/Intersex',
 		'value_order' => 3),
 	array(
 		'value_field' => 1,
-		'value_field_value' => 'Neuter',
-		'value_content' => 'Neuter',
+		'value_field_value' => 'Agendered/Non-Binary',
+		'value_content' => 'Agendered/Non-Binary',
 		'value_order' => 4)
 );
 
@@ -2244,7 +2244,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 2,
 		'sys_version_minor' => 4,
-		'sys_version_update' => 5)
+		'sys_version_update' => 6)
 );
 
 $tour_fields = array(
