@@ -9,6 +9,7 @@
 ### Bug Fixes
 
 - We've made some changes to the email class in the hopes of reducing the number of errors people are starting to see.
+- Addressed an error with assigning departments to a manifest.
 
 ## 2.4.5 (14 November 2015)
 
