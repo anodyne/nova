@@ -1,8 +1,8 @@
-version: 2.4.6
+version: 2.4.7
 version_major: 2
 version_minor: 4
-version_update: 6
+version_update: 7
 severity: minor
-notes: Nova 2.4.6 attempts to address strange issues some people are having with errors being thrown when certain emails are being sent. Additionally, for new installations, we've updated the gender identifications to be more accurate and in line with social conventions.
+notes: Nova 2.4.7 updates the Writing Control Panel saved post links to avoid unnecessarily locking posts when people are trying to read saved joint posts. Additionally, we've created new back buttons on the post, log, and news posting pages to make it easier to navigate back to the Writing Control Panel.
 date: 28 August 2016
 link: http://anodyne-productions.com/nova
