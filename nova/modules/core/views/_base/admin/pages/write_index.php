@@ -44,7 +44,7 @@
 									<?php echo img(array('src' => $images['lock']['src'], 'class' => $images['lock']['class'], 'alt' => $images['lock']['alt'], 'rel' => 'tooltip', 'title' => $p['lock_owner']));?>
 								<?php endif;?>
 								
-								<?php echo anchor('write/missionpost/'. $p['post_id'], $p['title'], array('class' => 'bold'));?>
+								<?php echo anchor('write/missionpost/'.$p['post_id'].'/view', $p['title'], array('class' => 'bold'));?>
 								
 								<span class="fontSmall gray">
 									<a href="#" rel="popover" class="image" title="<?php echo $label['authors'];?>" data-content="<?php echo $p['authors'];?>"><?php echo img($images['authors']);?></a><br />
