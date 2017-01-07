@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.4.7 (07 January 2017)
+
+### Nova Core
+
+- The saved post links in the Writing Control Panel have been updated to favor the "view" mode instead of "edit" mode. This should prevent posts from being unnecessarily locked when users are just trying to read saved posts.
+- The post, log, and news posting pages have been updated with back buttons to make navigation easier.
+
 ## 2.4.6 (28 August 2016)
 
 ### Nova Core
@@ -9,6 +16,7 @@
 ### Bug Fixes
 
 - We've made some changes to the email class in the hopes of reducing the number of errors people are starting to see.
+- Addressed an error with assigning departments to a manifest.
 
 ## 2.4.5 (14 November 2015)
 

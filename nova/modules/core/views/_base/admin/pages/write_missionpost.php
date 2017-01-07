@@ -83,6 +83,9 @@
 					&nbsp;
 					<?php echo form_button($inputs['delete']);?>
 				<?php endif; ?>
+
+				&nbsp;
+				<?php echo anchor('write/index', $label['back_wcp']);?>
 			</p>
 		<?php echo form_close();?>
 	</div>
