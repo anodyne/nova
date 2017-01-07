@@ -4,5 +4,5 @@ version_minor: 4
 version_update: 7
 severity: minor
 notes: Nova 2.4.7 updates the Writing Control Panel saved post links to avoid unnecessarily locking posts when people are trying to read saved joint posts. Additionally, we've created new back buttons on the post, log, and news posting pages to make it easier to navigate back to the Writing Control Panel.
-date: 28 August 2016
+date: 07 January 2017
 link: http://anodyne-productions.com/nova
