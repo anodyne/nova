@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.8
+
+### Nova Core
+
+- Updated the Nova database to allow for mission posts, personal logs, and news items of more than 65,000 characters.
+
 ## 2.4.7 (07 January 2017)
 
 ### Nova Core
