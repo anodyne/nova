@@ -351,7 +351,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 			// go check the version
 			$check = $this->_check_version();
 
-			if (isset($check['update']['version']) && $check['update']['version'] != $ignore)
+			if (isset($check['update']['version']) && trim($check['update']['version']) != trim($ignore))
 			{
 				$data['update']['version'] = $check['flash']['header'];
 				$data['update']['version_only'] = $check['update']['version'];
@@ -497,6 +497,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 
 			// get the contents of the file
 			$contents = file_get_contents(VERSION_FEED);
+			//$contents = file_get_contents('nova/modules/assets/version.yml');
 
 			// parse the contents of the yaml file
 			$array = yayparser($contents);
@@ -522,6 +523,7 @@ abstract class Nova_admin extends Nova_controller_admin {
 
 			// grab the updates setting
 			$type = $this->options['updates'];
+			//$type = 'all';
 
 			$update = FALSE;
 
