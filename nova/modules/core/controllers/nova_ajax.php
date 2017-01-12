@@ -8786,14 +8786,7 @@ abstract class Nova_ajax extends CI_Controller {
 		
 		if ($allowed)
 		{
-			// grab the version from the POST
-			$version = $this->input->post('version', true);
-			
-			// build the array used by AR
-			$update = array('sys_version_ignore' => $version);
-			
-			// do the update
-			$this->sys->update_system_info($update);
+			$this->sys->update_ignore_version($this->input->post('version', true));
 		}
 	}
 	

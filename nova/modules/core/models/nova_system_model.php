@@ -640,6 +640,17 @@ abstract class Nova_system_model extends CI_Model {
 		
 		return $query;
 	}
+
+	public function update_ignore_version($version)
+	{
+		$this->db->set('sys_version_ignore', $version);
+		$this->db->where('sys_id', 1);
+		$query = $this->db->update('system_info');
+		
+		$this->dbutil->optimize_table('system_info');
+		
+		return $query;
+	}
 	
 	public function delete_ban($id = '')
 	{
