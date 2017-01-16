@@ -664,6 +664,9 @@ abstract class Nova_messages extends Nova_controller_admin {
 				// set the user
 				$selected = $row->privmsgs_author_user;
 				
+            	// check if you're replying to yourself
+            	$selected = ($selected == $this->session->userdata('userid')) ? $recipient_list[0] : $selected;
+				
 				// grab the key for the array
 				$key = (array_key_exists($selected, $data['characters'])) ? $selected : 0;
 				
