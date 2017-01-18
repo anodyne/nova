@@ -1743,6 +1743,7 @@ abstract class Nova_write extends Nova_controller_admin {
 		
 		$data['label'] = array(
 			'author' => ucfirst(lang('labels_author')),
+			'back_wcp' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_writing').' '.lang('labels_controlpanel')),
 			'category' => ucfirst(lang('labels_category')),
 			'content' => ucfirst(lang('labels_content')),
 			'tags' => ucfirst(lang('labels_tags')),
@@ -2210,6 +2211,7 @@ abstract class Nova_write extends Nova_controller_admin {
 		
 		$data['label'] = array(
 			'author' => ucwords(lang('labels_author')),
+			'back_wcp' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucwords(lang('labels_writing').' '.lang('labels_controlpanel')),
 			'content' => ucwords(lang('labels_content')),
 			'tags' => ucwords(lang('labels_tags')),
 			'tags_sep' => lang('tags_separated'),

@@ -1,8 +1,8 @@
-version: 2.4.6
+version: 2.4.8
 version_major: 2
 version_minor: 4
-version_update: 6
+version_update: 8
 severity: minor
-notes: Nova 2.4.6 attempts to address strange issues some people are having with errors being thrown when certain emails are being sent. Additionally, for new installations, we've updated the gender identifications to be more accurate and in line with social conventions.
-date: 28 August 2016
+notes: Nova 2.4.8 updates the Nova database to allow for mission posts, personal logs, and news items of more than 65,000 characters. This should eliminate issues with truncated content for large entries.
+date: 07 January 2017
 link: http://anodyne-productions.com/nova

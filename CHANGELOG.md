@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.4.8
+
+### Nova Core
+
+- Updated the Nova database to allow for mission posts, personal logs, and news items of more than 65,000 characters.
+
+## 2.4.7 (07 January 2017)
+
+### Nova Core
+
+- The saved post links in the Writing Control Panel have been updated to favor the "view" mode instead of "edit" mode. This should prevent posts from being unnecessarily locked when users are just trying to read saved posts.
+- The post, log, and news posting pages have been updated with back buttons to make navigation easier.
+
 ## 2.4.6 (28 August 2016)
 
 ### Nova Core
