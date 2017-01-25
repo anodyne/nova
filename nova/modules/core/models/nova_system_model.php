@@ -614,9 +614,10 @@ abstract class Nova_system_model extends CI_Model {
 	 * Update the system info.
 	 *
 	 * @param	array	Array of data to use in the update
+	 * @param	array	Array of table keys that should be updated
 	 * @return	int
 	 */
-	public function update_system_info($data = false)
+	public function update_system_info($data = false, $updateKeys = false)
 	{
 		if ( ! is_array($data))
 		{
@@ -627,10 +628,24 @@ abstract class Nova_system_model extends CI_Model {
 		}
 		else
 		{
-			$this->db->set('sys_last_update', $data['sys_last_update']);
-			$this->db->set('sys_version_major', $data['sys_version_major']);
-			$this->db->set('sys_version_minor', $data['sys_version_minor']);
-			$this->db->set('sys_version_update', $data['sys_version_update']);
+			// Set the item keys we want to update
+			$itemsToUpdate = (is_array($updateKeys)) 
+				? $updateKeys 
+				: array(
+					'sys_last_update',
+					'sys_version_major',
+					'sys_version_minor',
+					'sys_version_update'
+				);
+
+			// Loop through the key list, make sure the value exists, then update
+			foreach ($itemsToUpdate as $i)
+			{
+				if (array_key_exists($i, $data))
+				{
+					$this->db->set($i, $data[$i]);
+				}
+			}
 		}
 
 		$this->db->where('sys_id', 1);
@@ -639,6 +654,14 @@ abstract class Nova_system_model extends CI_Model {
 		$this->dbutil->optimize_table('system_info');
 		
 		return $query;
+	}
+
+	public function update_ignore_version($version)
+	{
+		return $this->update_system_info(
+			array('sys_version_ignore' => $version),
+			array('sys_version_ignore')
+		);
 	}
 	
 	public function delete_ban($id = '')

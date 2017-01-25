@@ -2,10 +2,10 @@
 
 define('APP_NAME',				'Nova');
 
-define('APP_VERSION',			'2.4.7');
+define('APP_VERSION',			'2.4.8');
 define('APP_VERSION_MAJOR',		2);
 define('APP_VERSION_MINOR',		4);
-define('APP_VERSION_UPDATE',	7);
+define('APP_VERSION_UPDATE',	8);
 
 define('WIKI_NAME',				'Thresher');
 define('WIKI_VERSION',			'Release 2');
