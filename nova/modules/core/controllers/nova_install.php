@@ -1132,13 +1132,13 @@ abstract class Nova_install extends CI_Controller {
 				
 				// pull in the install fields asset file
 				include_once MODPATH.'assets/install/fields.php';
-				
+
 				// create an array for storing the results of the creation process
 				$table = array();
 				
 				foreach ($data as $key => $value)
 				{
-					$this->dbforge->add_field($$value['fields']);
+					$this->dbforge->add_field(${$value['fields']});
 					$this->dbforge->add_key($value['id'], true);
 					$table[] = $this->dbforge->create_table($key, true);
 				}
