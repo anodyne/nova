@@ -1,16 +1,18 @@
 # Changelog
 
-## 2.4.9
+## 2.4.9 (08 March 2017)
 
 ### Nova Core
 
 - Fixed an issue where the installer would throw an error on certain server setups.
 
-## 2.4.8
+## 2.4.8 (25 January 2017)
 
 ### Nova Core
 
 - Updated the Nova database to allow for mission posts, personal logs, and news items of more than 65,000 characters.
+- Updated the behavior of replying to a private message from your own sent messages. Previously, it would reply to yourself, but now will reply to the original recipient. (Thanks to Williams for this update!)
+- Updated how Nova handles incrementing the version number in hopes of mitigating the "0.0.0" database version issue.
 
 ## 2.4.7 (07 January 2017)
 
