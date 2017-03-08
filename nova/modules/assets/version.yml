@@ -1,8 +1,8 @@
-version: 2.4.8
+version: 2.4.9
 version_major: 2
 version_minor: 4
-version_update: 8
+version_update: 9
 severity: minor
-notes: Nova 2.4.8 updates the Nova database to allow for mission posts, personal logs, and news items of more than 65,000 characters. This should eliminate issues with truncated content for large entries. Additionally, we've made tweaks to (hopefully) mitigate the 0.0.0 database issue.
-date: 25 January 2017
+notes: Nova 2.4.9 addresses an issue where the installer would not work on certain server setups.
+date: 08 March 2017
 link: http://anodyne-productions.com/nova

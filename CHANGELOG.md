@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.9 (08 March 2017)
+
+### Nova Core
+
+- Fixed an issue where the installer would throw an error on certain server setups.
+
 ## 2.4.8 (25 January 2017)
 
 ### Nova Core
