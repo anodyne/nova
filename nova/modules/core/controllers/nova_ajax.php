@@ -2658,6 +2658,8 @@ abstract class Nova_ajax extends CI_Controller {
 					
 					if ($roles->num_rows() > 0)
 					{
+						$data['roles'][''] = ucfirst(lang('labels_please').' '.lang('actions_choose').' '.lang('labels_an').' '.lang('labels_access').' '.lang('labels_role'));
+
 						foreach ($roles->result() as $r)
 						{
 							$data['roles'][$r->role_id] = $r->role_name;

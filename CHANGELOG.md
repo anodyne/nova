@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.10
+
+### Nova Core
+
+- Update character approval pop-up to prevent accidentally setting new users as system administrators.
+
 ## 2.4.9 (08 March 2017)
 
 ### Nova Core

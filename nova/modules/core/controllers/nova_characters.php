@@ -26,6 +26,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 		$this->load->model('depts_model', 'dept');
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('ranks_model', 'ranks');
+		$this->load->model('access_model', 'access');
 		$this->load->helper('utility');
 		
 		if (isset($_POST['submit']))
@@ -199,10 +200,14 @@ abstract class Nova_characters extends Nova_controller_admin {
 						
 						if ($user->status != 'active')
 						{
+							$role = ($this->input->post('role') != false)
+								? $this->input->post('role', true)
+								: Access_Model::STANDARD;
+
 							$p_update = array(
 								'status' => 'active',
 								'leave_date' => null,
-								'access_role' => $this->input->post('role', true)
+								'access_role' => $role
 							);
 							
 							$update += $this->user->update_user($user->userid, $p_update);
