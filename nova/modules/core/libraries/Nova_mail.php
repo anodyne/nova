@@ -242,10 +242,15 @@ abstract class Nova_mail {
 			break;
 
 			case 'smtp':
+				$smtpCrypto = $this->config->item('smtp_crypto');
+				$encryptionType = ($smtpCrypto) ? $smtpCrypto : null;
+
 				$transport = Swift_SmtpTransport::newInstance(
-					$this->config->item('smtp_host'), $this->config->item('smtp_port')
+					$this->config->item('smtp_host'),
+					$this->config->item('smtp_port'),
+					$encryptionType
 				)->setUsername($this->config->item('smtp_user'))
-					->setPassword($this->config->item('smtp_pass'));
+				->setPassword($this->config->item('smtp_pass'));
 			break;
 		}
 

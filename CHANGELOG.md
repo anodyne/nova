@@ -5,6 +5,7 @@
 ### Nova Core
 
 - Update character approval pop-up to prevent accidentally setting new users as system administrators.
+- Update Mail class to allow for SSL or TLS over SMTP.
 
 ## 2.4.9 (08 March 2017)
 

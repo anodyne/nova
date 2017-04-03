@@ -21,6 +21,7 @@ $config['smtp_user']		= '';
 $config['smtp_pass']		= '';
 $config['smtp_port']		= '25';
 $config['smtp_timeout']		= 5;
+$config['smtp_crypto']		= FALSE;
 $config['wordwrap']			= FALSE;
 $config['wrapchars']		= '76';
 $config['mailtype']			= 'html';
