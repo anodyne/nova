@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4.10
+## 2.4.10 (23 June 2017)
 
 ### Nova Core
 
