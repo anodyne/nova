@@ -755,7 +755,7 @@ abstract class Nova_write extends Nova_controller_admin {
 								}
 								
 								// add a quick redirect
-								$this->_regions['_redirect'] = Template::add_redirect('write/missionpost/'.$insert_id);
+								$this->_regions['_redirect'] = Template::add_redirect('write/missionpost/'.$insert_id.'/view');
 							}
 							
 							if (count($authors) > 1)
