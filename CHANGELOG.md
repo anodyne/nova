@@ -6,6 +6,7 @@
 
 - Update character approval pop-up to prevent accidentally setting new users as system administrators.
 - Update Mail class to allow for SSL or TLS over SMTP.
+- Update posting flow to prevent unnecessary locking when saving a mission post
 
 ## 2.4.9 (08 March 2017)
 
