@@ -6,6 +6,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		$('#tabs').tabs();
+		
 		$('table.zebra tbody > tr:nth-child(odd)').addClass('alt');
 		
 		$('[rel=popover]').popover({
