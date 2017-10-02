@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.11
+
+### Nova Core
+
+- Update Site Bans to default to a level 1 ban if no level is selected.
+- Update Site Bans to use the current timestamp when a ban is created.
+- Update the database driver to MySQLi by default. (This will only apply to new installations.)
+
 ## 2.4.10 (23 June 2017)
 
 ### Nova Core
