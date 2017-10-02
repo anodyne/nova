@@ -31,6 +31,9 @@ abstract class Nova_site extends Nova_controller_admin {
 						$insert_array[$key] = $this->security->xss_clean($value);
 					}
 					
+					// pin to level 1 if no radio option was selected
+					($insert_array['ban_level'] < 1)? $insert_array['ban_level'] = 1 : '';
+					
 					// pop unnecessary items off the array
 					unset($insert_array['submit']);
 					
@@ -116,7 +119,12 @@ abstract class Nova_site extends Nova_controller_admin {
 				'id' => 'ban_email'),
 			'ip' => array(
 				'name' => 'ban_ip',
-				'id' => 'ban_ip')
+				'id' => 'ban_ip'),
+			'date' => array(
+				'name' => 'ban_date',
+				'id' => 'ban_date',
+				'type' => 'hidden',
+				'value' => now())
 		);
 		
 		// get the list of bans

@@ -36,6 +36,7 @@
 			<kbd><?php echo $label['reason'];?></kbd>
 			<?php echo form_textarea($inputs['reason']);?>
 		</p>
+		<?php echo form_input($inputs['date']);?>
 		<p><?php echo form_button($buttons['add']);?></p>
 	<?php echo form_close();?>
 </div><br />
