@@ -1703,7 +1703,7 @@ abstract class Nova_install extends CI_Controller {
 		
 		$ranks = $this->ranks->get_all_rank_sets('');
 		
-		if ($ranks->num_rows() > 0 && is_array($dir))
+		if ($ranks->num_rows() > 0)
 		{
 			foreach ($ranks->result() as $rank)
 			{
