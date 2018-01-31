@@ -4,7 +4,7 @@ Anodyne Production's next-generation RPG management system combines popular feat
 
 ## Current Version
 
-2.4.10
+2.4.11
 
 ## Bug Tracker
 

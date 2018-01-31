@@ -119,7 +119,7 @@ $access_pages = array(
 		'page_url' => 'upload/manage',
 		'page_group' => 1,
 		'page_desc' => "Can delete upload records"),
-		
+
 	array(
 		'page_name' => "Private Messages",
 		'page_url' => 'messages/index',
@@ -145,7 +145,7 @@ $access_pages = array(
 		'page_url' => 'write/newsitem',
 		'page_group' => 2,
 		'page_desc' => "Can post a news items to the system"),
-		
+
 	array(
 		'page_name' => "Site Settings",
 		'page_url' => 'site/settings',
@@ -201,7 +201,7 @@ $access_pages = array(
 		'page_url' => 'site/simtypes',
 		'page_group' => 3,
 		'page_desc' => "Can add, delete and edit the different sim types"),
-		
+
 	array(
 		'page_name' => "Specs",
 		'page_url' => 'manage/specs',
@@ -293,7 +293,7 @@ $access_pages = array(
 		'page_url' => 'manage/newscats',
 		'page_group' => 4,
 		'page_desc' => "Can manage all news categories available for news items"),
-		
+
 	array(
 		'page_name' => "LOA Report",
 		'page_url' => 'report/loa',
@@ -339,7 +339,7 @@ $access_pages = array(
 		'page_url' => 'report/stats',
 		'page_group' => 5,
 		'page_desc' => "Can view a report on sim statistics for the current and previous months"),
-		
+
 	array(
 		'page_name' => "Character Management",
 		'page_url' => 'characters/index',
@@ -403,7 +403,7 @@ $access_pages = array(
 		'page_url' => 'characters/awards',
 		'page_group' => 6,
 		'page_desc' => "Can give/remove awards to/from any character in the system"),
-	
+
 	array(
 		'page_name' => "User Account (Level 1)",
 		'page_url' => 'user/account',
@@ -428,7 +428,7 @@ $access_pages = array(
 		'page_group' => 7,
 		'page_level' => 2,
 		'page_desc' => "Can nominate playing and non-playing characters for awards as well as approving/rejecting pending award nominations"),
-		
+
 	array(
 		'page_name' => "Wiki Pages (Level 1)",
 		'page_url' => 'wiki/page',
@@ -452,7 +452,7 @@ $access_pages = array(
 		'page_url' => 'wiki/categories',
 		'page_group' => 8,
 		'page_desc' => "Can create, delete and edit wiki categories"),
-		
+
 	array(
 		'page_name' => "Ban Controls",
 		'page_url' => 'site/bans',
@@ -516,7 +516,7 @@ $characters_fields = array(
 		'field_class' => 'small',
 		'field_label_page' => 'Age',
 		'field_order' => 3),
-		
+
 	array(
 		'field_type' => 'text',
 		'field_name' => 'height',
@@ -557,7 +557,7 @@ $characters_fields = array(
 		'field_label_page' => 'Physical Description',
 		'field_order' => 5,
 		'field_section' => 2),
-		
+
 	array(
 		'field_type' => 'textarea',
 		'field_name' => 'personality',
@@ -590,7 +590,7 @@ $characters_fields = array(
 		'field_label_page' => 'Hobbies &amp; Interests',
 		'field_order' => 3,
 		'field_section' => 4),
-		
+
 	array(
 		'field_type' => 'text',
 		'field_name' => 'spouse',
@@ -647,7 +647,7 @@ $characters_fields = array(
 		'field_label_page' => 'Other Family',
 		'field_order' => 6,
 		'field_section' => 3),
-		
+
 	array(
 		'field_type' => 'textarea',
 		'field_name' => 'history',
@@ -864,7 +864,7 @@ $menu_items = array(
 		'menu_sim_type' => 1,
 		'menu_cat' => 'main',
 		'menu_need_login' => 'y'),
-		
+
 	array(
 		'menu_name' => 'Main',
 		'menu_group' => 0,
@@ -921,7 +921,7 @@ $menu_items = array(
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
 		'menu_cat' => 'main'),
-		
+
 	array(
 		'menu_name' => 'Manifest',
 		'menu_group' => 0,
@@ -954,7 +954,7 @@ $menu_items = array(
 		'menu_sim_type' => 1,
 		'menu_type' => 'sub',
 		'menu_cat' => 'personnel'),
-	
+
 	array(
 		'menu_name' => 'The Sim',
 		'menu_group' => 0,
@@ -1053,7 +1053,7 @@ $menu_items = array(
 		'menu_display' => 'n',
 		'menu_type' => 'sub',
 		'menu_cat' => 'sim'),
-		
+
 	array(
 		'menu_name' => 'Main Page',
 		'menu_group' => 0,
@@ -1117,7 +1117,7 @@ $menu_items = array(
 		'menu_access' => 'wiki/page',
 		'menu_need_login' => 'y',
 		'menu_cat' => 'wiki'),
-		
+
 	array(
 		'menu_name' => 'Control Panel',
 		'menu_group' => 0,
@@ -1128,7 +1128,7 @@ $menu_items = array(
 		'menu_cat' => 'admin',
 		'menu_use_access' => 'y',
 		'menu_access' => 'admin/index'),
-		
+
 	array(
 		'menu_name' => 'Writing Control Panel',
 		'menu_group' => 0,
@@ -1169,7 +1169,7 @@ $menu_items = array(
 		'menu_cat' => 'write',
 		'menu_use_access' => 'y',
 		'menu_access' => 'write/newsitem'),
-		
+
 	array(
 		'menu_name' => 'Inbox',
 		'menu_group' => 0,
@@ -1200,7 +1200,7 @@ $menu_items = array(
 		'menu_cat' => 'messages',
 		'menu_use_access' => 'y',
 		'menu_access' => 'messages/index'),
-		
+
 	array(
 		'menu_name' => 'Settings',
 		'menu_group' => 0,
@@ -1331,7 +1331,7 @@ $menu_items = array(
 		'menu_cat' => 'site',
 		'menu_use_access' => 'y',
 		'menu_access' => 'site/catalogueskins'),
-		
+
 	array(
 		'menu_name' => 'Awards',
 		'menu_group' => 0,
@@ -1482,7 +1482,7 @@ $menu_items = array(
 		'menu_cat' => 'manage',
 		'menu_use_access' => 'y',
 		'menu_access' => 'manage/docked'),
-		
+
 	array(
 		'menu_name' => 'Upload Images',
 		'menu_group' => 3,
@@ -1503,7 +1503,7 @@ $menu_items = array(
 		'menu_cat' => 'manage',
 		'menu_use_access' => 'y',
 		'menu_access' => 'upload/manage'),
-		
+
 	array(
 		'menu_name' => 'All Characters',
 		'menu_group' => 0,
@@ -1554,7 +1554,7 @@ $menu_items = array(
 		'menu_cat' => 'characters',
 		'menu_use_access' => 'y',
 		'menu_access' => 'characters/awards'),
-		
+
 	array(
 		'menu_name' => 'My Account',
 		'menu_group' => 0,
@@ -1627,7 +1627,7 @@ $menu_items = array(
 		'menu_use_access' => 'y',
 		'menu_access' => 'user/account',
 		'menu_access_level' => 2),
-		
+
 	array(
 		'menu_name' => 'Crew Activity',
 		'menu_group' => 0,
@@ -1792,7 +1792,7 @@ $messages = array(
 		'message_label' => 'Contact Instructions',
 		'message_content' => '',
 		'message_type' => 'message'),
-	
+
 	array(
 		'message_key' => 'welcome_head',
 		'message_label' => 'Welcome Header',
@@ -2052,7 +2052,7 @@ $specs_fields = array(
 		'field_label_page' => 'Time Between Resupply',
 		'field_order' => 4,
 		'field_section' => 1),
-		
+
 	array(
 		'field_type' => 'text',
 		'field_name' => 'length',
@@ -2085,7 +2085,7 @@ $specs_fields = array(
 		'field_label_page' => 'Decks',
 		'field_order' => 3,
 		'field_section' => 2),
-		
+
 	array(
 		'field_type' => 'text',
 		'field_name' => 'compliment_officers',
@@ -2126,7 +2126,7 @@ $specs_fields = array(
 		'field_label_page' => 'Emergency Capacity',
 		'field_order' => 4,
 		'field_section' => 3),
-		
+
 	array(
 		'field_type' => 'text',
 		'field_name' => 'speed_normal',
@@ -2151,7 +2151,7 @@ $specs_fields = array(
 		'field_label_page' => 'Emergency Speed',
 		'field_order' => 2,
 		'field_section' => 4),
-		
+
 	array(
 		'field_type' => 'textarea',
 		'field_name' => 'defensive',
@@ -2179,7 +2179,7 @@ $specs_fields = array(
 		'field_order' => 2,
 		'field_section' => 5,
 		'field_rows' => 5),
-		
+
 	array(
 		'field_type' => 'text',
 		'field_name' => 'shuttlebays',
@@ -2244,7 +2244,7 @@ $system_info = array(
 		'sys_install_date' => now(),
 		'sys_version_major' => 2,
 		'sys_version_minor' => 4,
-		'sys_version_update' => 10)
+		'sys_version_update' => 11)
 );
 
 $tour_fields = array(
