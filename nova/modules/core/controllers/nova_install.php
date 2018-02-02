@@ -706,11 +706,11 @@ abstract class Nova_install extends CI_Controller {
 		// pass the step over to the view file
 		$data['step'] = $step;
 		
-		if ( ! file_exists(MODPATH.'assets/database/db.mysql.php'))
+		if ( ! file_exists(MODPATH.'assets/database/db.mysqli.php'))
 		{
 			$data['message'] = sprintf(
 				lang('setup.text.no_config'),
-				MODFOLDER.'/assets/database/db.mysql.php'
+				MODFOLDER.'/assets/database/db.mysqli.php'
 			);
 		}
 		else
@@ -738,7 +738,7 @@ abstract class Nova_install extends CI_Controller {
 						case 0:
 							$data['message'] = sprintf(
 								lang('setup.text.step0'),
-								MODFOLDER.'/assets/database/db.mysql.php',
+								MODFOLDER.'/assets/database/db.mysqli.php',
 								APPFOLDER.'/config'
 							);
 							
@@ -750,7 +750,7 @@ abstract class Nova_install extends CI_Controller {
 								'content' => lang('button_next'),
 							);
 							
-							if (extension_loaded('mysql'))
+							if (extension_loaded('mysql') || extension_loaded('mysqli'))
 							{
 								$this->_regions['controls'] = form_open('install/setupconfig/1').form_button($next).form_close();
 							}
@@ -784,12 +784,19 @@ abstract class Nova_install extends CI_Controller {
 							$dbPass		= trim($this->security->xss_clean($_POST['dbPass']));
 							$dbHost		= trim($this->security->xss_clean($_POST['dbHost']));
 							$prefix		= trim($this->security->xss_clean($_POST['prefix']));
+
+							if (!extension_loaded('mysqli')) {
+								$dbDriver = 'mysql';
+							} else {
+								$dbDriver = 'mysqli';
+							}
 							
 							// set the session variables
 							$this->session->set_userdata('dbName', $dbName);
 							$this->session->set_userdata('dbUser', $dbUser);
 							$this->session->set_userdata('dbPass', $dbPass);
 							$this->session->set_userdata('dbHost', $dbHost);
+							$this->session->set_userdata('dbDriver', $dbDriver);
 							$this->session->set_userdata('prefix', $prefix);
 							
 							// set the temporary db config
@@ -798,7 +805,7 @@ abstract class Nova_install extends CI_Controller {
 								'username' => $this->session->userdata('dbUser'),
 								'password' => $this->session->userdata('dbPass'),
 								'database' => $this->session->userdata('dbName'),
-								'dbdriver' => 'mysql',
+								'dbdriver' => $this->session->userdata('dbDriver'),
 								'dbprefix' => $this->session->userdata('prefix'),
 								'pconnect' => false,
 								'db_debug' => true,
@@ -881,7 +888,7 @@ abstract class Nova_install extends CI_Controller {
 							$check = array_intersect($disabled, $need);
 							
 							// pull in the mysql file
-							$file = file(MODPATH.'assets/database/db.mysql.php');
+							$file = file(MODPATH.'assets/database/db.mysqli.php');
 							
 							if (is_array($file))
 							{
@@ -903,6 +910,10 @@ abstract class Nova_install extends CI_Controller {
 										
 										case "database":
 											$file[$line_num] = str_replace("novadb", $this->session->userdata('dbName'), $line);
+										break;
+										
+										case "dbdriver":
+											$file[$line_num] = str_replace("mysqli", $this->session->userdata('dbDriver'), $line);
 										break;
 										
 										case "dbprefix":
@@ -929,7 +940,7 @@ abstract class Nova_install extends CI_Controller {
 \$db['default']['username'] = '".$this->session->userdata('dbUser')."';
 \$db['default']['password'] = '".$this->session->userdata('dbPass')."';
 \$db['default']['database'] = '".$this->session->userdata('dbName')."';
-\$db['default']['dbdriver'] = 'mysql';
+\$db['default']['dbdriver'] = '".$this->session->userdata('dbDriver')."';
 \$db['default']['dbprefix'] = '".$this->session->userdata('prefix')."';
 \$db['default']['pconnect'] = true;
 \$db['default']['db_debug'] = NOVA_DB_DEBUG;
@@ -1030,7 +1041,7 @@ abstract class Nova_install extends CI_Controller {
 								'username' => $this->session->userdata('dbUser'),
 								'password' => $this->session->userdata('dbPass'),
 								'database' => $this->session->userdata('dbName'),
-								'dbdriver' => 'mysql',
+								'dbdriver' => $this->session->userdata('dbDriver'),
 								'dbprefix' => $this->session->userdata('prefix'),
 								'pconnect' => false,
 								'db_debug' => true,

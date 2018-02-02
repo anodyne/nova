@@ -13,7 +13,7 @@ class Thresher {
 	
 	var $parsetype = 'html';
 	
-	function Thresher($params = array())
+	function __constructor($params = array())
 	{
 		if (is_array($params))
 		{

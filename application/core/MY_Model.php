@@ -20,7 +20,7 @@ if ( ! class_exists('CI_Model') )
 {
 	class CI_Model extends Model
 	{
-		function CI_Model()
+		function __construct()
 		{
 			parent::__construct();
 		}
