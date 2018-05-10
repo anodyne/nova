@@ -617,6 +617,10 @@ abstract class Nova_user extends Nova_controller_admin {
 				'src' => Location::img('display.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image inline_img_left'),
+		  'delete' => array(
+		    'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
+		    'alt' => '',
+		    'class' => 'image inline_img_left'),
 		);
 		
 		$data['label'] = array(
@@ -627,6 +631,8 @@ abstract class Nova_user extends Nova_controller_admin {
 				.' '. lang('global_characters') .' '. RARROW),
 			'display' => ucwords(lang('actions_change') .' '. lang('labels_display')
 				.' '. lang('labels_preferences') .' '. RARROW),
+		  'delete' => ucwords(lang('actions_delete') .' '. lang('labels_your')
+				.' '. lang('labels_account') .' '. RARROW),
 			'dob' => lang('labels_dob'),
 			'dst' => ucwords(lang('labels_dst')),
 			'email' => ucwords(lang('labels_email_address')),
@@ -677,6 +683,79 @@ abstract class Nova_user extends Nova_controller_admin {
 		Template::render();
 	}
 	
+	public function delete()
+	{
+		Auth::check_access('user/account');
+
+		$id = $this->session->userdata('userid');
+
+		$data = array(
+			'header' => ucwords(lang('actions_delete') .' '. lang('labels_your') .' '. lang('labels_account'))
+		);
+
+		if (isset($_POST['submit']))
+		{
+			// delete user preferences
+			$this->user->delete_user_pref_values($id);
+
+			$chars = $this->char->get_user_characters($id, '', 'array');
+
+			// orphan user characters
+			if (count($chars) > 0)
+			{
+				$update_array = array('user' => null);
+
+				foreach ($chars as $c)
+				{
+					$update = $this->char->update_character($c, $update_array);
+				}
+			}
+
+			// delete user account
+			$this->user->delete_user($id);
+
+			// destroy the session data
+			Auth::logout();
+
+			$data['header'] = lang('head_login_logout');
+			$data['message'] = sprintf(
+				lang('logout_account_delete_message')
+			);
+
+			$this->_regions['content'] = Location::view('login_logout', $this->skin, 'login', $data);
+			$this->_regions['title'].= ucfirst(lang('head_login_logout'));
+			$this->_regions['_redirect'] = Template::add_redirect('main/index');
+
+			Template::assign($this->_regions);
+
+			Template::render();
+		}
+		else
+		{
+			$data['labels'] = array(
+				'confirm' => lang('text_user_del_confirm')
+			);
+
+			$data['buttons'] = array(
+					'confirm' => array(
+						'type' => 'submit',
+						'class' => 'button-main',
+						'name' => 'submit',
+						'value' => 'update',
+						'content' => ucwords(lang('actions_delete') .' '. lang('labels_my') .' '. lang('labels_account')),
+				)
+			);
+
+			$this->_regions['content'] = Location::view('user_delete', $this->skin, 'admin', $data);
+			$this->_regions['javascript'] = ''; // Location::js('user_all_js', $this->skin, 'admin');
+			$this->_regions['title'].= $data['header'];
+
+			Template::assign($this->_regions);
+
+			Template::render();
+		}
+	}
+
 	public function all()
 	{
 		Auth::check_access('user/account');

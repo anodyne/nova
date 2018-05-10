@@ -139,6 +139,8 @@ $lang['text_skins_global'] = "These options control the skins for the site when 
 
 $lang['text_skins_user'] = "These options control the skins for the site when you are logged in. If you want to change the skin that visitors who are not logged in see, you will need to use the <a href='%s'>Site Settings</a> page.";
 
+$lang['text_user_del_confirm'] = "Are you sure you wish to delete your user account and all personal information associated with it? This action is permanent and cannot be undone!";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES
