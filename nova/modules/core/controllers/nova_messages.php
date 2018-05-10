@@ -282,18 +282,73 @@ abstract class Nova_messages extends Nova_controller_admin {
 	
 	public function search()
 	{
-		if (isset($_POST['submit']))
+		// load the resources
+		$this->load->helper('text');
+
+		if (isset($_POST['submit']) && isset($_POST['search_terms']))
 		{
 			// get the POST values
-			$term = $this->input->post('search_term', true);
-			
+			$term = $this->input->post('search_terms', true);
 			// run the search
-			$data['results'] = $this->pm->search_private_messages($this->session->userdata('userid'), $term);
+			$results = $this->pm->search_private_messages($this->session->userdata('userid'), $term);
+			$data['results']['received_count'] = $results['received_count'];
+			$data['results']['sent_count'] = $results['sent_count'];
+
+			$datestring = $this->options['date_format'];
+
+			if ($results['received_count'] > 0)
+			{
+				$i = 0;
+				foreach ($results['received'] as $item)
+				{
+					$date = gmt_to_local($item->privmsgs_date, $this->timezone, $this->dst);
+					
+					$data['results']['received'][$i]['id'] = $item->privmsgs_id;
+					$data['results']['received'][$i]['author'] = $this->char->get_character_name($item->privmsgs_author_character, true, false, true);
+					$data['results']['received'][$i]['subject'] = $item->privmsgs_subject;
+					$data['results']['received'][$i]['date'] = mdate($datestring, $date);
+					$data['results']['received'][$i]['preview'] = nl2br(htmlspecialchars(strip_tags(word_limiter($item->privmsgs_content, 100))));
+
+					$i++;
+				}
+			}
+			
+			if ($results['sent_count'] > 0)
+			{
+				$i = 0;
+				foreach ($results['sent'] as $item)
+				{
+					$date = gmt_to_local($item->privmsgs_date, $this->timezone, $this->dst);
+					
+					$data['results']['sent'][$i]['id'] = $item->privmsgs_id;
+					$data['results']['sent'][$i]['author'] = $this->char->get_character_name($item->privmsgs_author_character, true, false, true);
+					$data['results']['sent'][$i]['subject'] = $item->privmsgs_subject;
+					$data['results']['sent'][$i]['date'] = mdate($datestring, $date);
+					$data['results']['sent'][$i]['preview'] = nl2br(htmlspecialchars(strip_tags(word_limiter($item->privmsgs_content, 100))));
+
+					$i++;
+				}
+			}
 		}
 		else
 		{
 			# code...
 		}
+		
+		$data['images'] = array(
+			'clock' => array(
+				'src' => Location::img('clock.png', $this->skin, 'admin'),
+				'alt' => '*',
+				'class' => 'image inline_img_left'),
+			'user' => array(
+				'src' => Location::img('user.png', $this->skin, 'admin'),
+				'alt' => '*',
+				'class' => 'image inline_img_left'),
+			'preview' => array(
+				'src' => Location::img('magnifier-medium.png', $this->skin, 'admin'),
+				'alt' => '[?]',
+				'class' => 'image'),
+		);
 		
 		$data['inputs'] = array(
 			'submit' => array(
@@ -309,15 +364,25 @@ abstract class Nova_messages extends Nova_controller_admin {
 				'placeholder' => ucfirst(lang('actions_search').'...')),
 		);
 		
+		$data['loader'] = array(
+			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
+			'alt' => lang('actions_loading'),
+		);
+		
 		$data['label'] = array(
 			'back' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.ucfirst(lang('labels_inbox')),
+			'loading' => ucfirst(lang('actions_loading')) .'...',
+			'message_preview' => ucwords(lang('labels_message').' '.lang('labels_preview')),
 			'no_results' => sprintf(lang('error_not_found'), lang('actions_search').' '.lang('labels_results')),
+			'received' => ucfirst(lang('actions_received')),
+			'sent' => ucfirst(lang('actions_sent')),
 		);
 		
 		// set the header
 		$data['header'] = ucwords(lang('actions_search').' '.lang('labels_results'));
 		
 		$this->_regions['content'] = Location::view('messages_search_results', $this->skin, 'admin', $data);
+		$this->_regions['javascript'] = Location::js('messages_search_results_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
 		
 		Template::assign($this->_regions);
