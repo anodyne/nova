@@ -7,6 +7,7 @@
 - Update Site Bans to default to a level 1 ban if no level is selected.
 - Update Site Bans to use the current timestamp when a ban is created.
 - Update the database driver to MySQLi by default. (This will only apply to new installations.)
+- Update Nova with PHP 7 support. (Thanks to Williams for his work on this.)
 
 ## 2.4.10 (23 June 2017)
 
