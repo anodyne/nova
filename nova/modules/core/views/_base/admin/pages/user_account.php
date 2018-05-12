@@ -10,7 +10,7 @@
 
 <p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'bold image'));?></p>
 
-<?php if ($my_user):?>
+<?php if ($my_user and Auth::check_access('user/account', false) and $level < 2):?>
 	<p><?php echo anchor('user/delete', img($images['delete']) .' '. $label['delete'], array('class' => 'bold image'));?></p>
 <?php endif;?>
 
@@ -33,12 +33,12 @@
 			<li><a href="#one"><span><?php echo $label['basicinfo'];?></span></a></li>
 			<li><a href="#two"><span><?php echo $label['mybio'];?></span></a></li>
 			<li><a href="#three"><span><?php echo $label['myprefs'];?></span></a></li>
-			
+
 			<?php if ($level == 2): ?>
 				<li><a href="#four"><span><?php echo $label['admin'];?></span></a></li>
 			<?php endif;?>
 		</ul>
-		
+
 		<div id="one">
 			<p>
 				<kbd><?php echo $label['name'];?></kbd>
@@ -52,7 +52,7 @@
 				<kbd><?php echo $label['password'];?></kbd>
 				<?php echo form_password($inputs['password']);?>
 			</p><br />
-			
+
 			<p>
 				<kbd><?php echo $label['dob'];?></kbd>
 				<?php echo form_input($inputs['dob']);?>
@@ -61,7 +61,7 @@
 				<kbd><?php echo $label['language'];?></kbd>
 				<?php echo form_dropdown('language', $values['language'], $inputs['language']);?>
 			</p><br />
-			
+
 			<p>
 				<kbd><?php echo $label['secquestion'];?></kbd>
 				<?php echo form_dropdown('security_question', $values['questions'], $inputs['question']);?>
@@ -71,7 +71,7 @@
 				<?php echo text_output($label['sectext'], 'span', 'fontSmall bold gray');?><br />
 				<?php echo form_input($inputs['answer']);?>
 			</p><br />
-			
+
 			<?php echo text_output($label['datetime'], 'h3', 'page-subhead');?>
 			<div class="indent-left">
 				<p>
@@ -85,7 +85,7 @@
 				</p>
 			</div>
 		</div>
-		
+
 		<div id="two">
 			<p>
 				<kbd><?php echo $label['im'];?></kbd>
@@ -105,17 +105,17 @@
 				<?php echo form_textarea($inputs['bio']);?>
 			</p>
 		</div>
-		
+
 		<div id="three">
 			<?php foreach ($prefs as $p): ?>
 				<p><?php echo form_checkbox($p['input']) .' '. form_label($p['label'], $p['input']['id']);?></p>
 			<?php endforeach;?>
 		</div>
-		
+
 		<?php if ($level == 2): ?>
 			<div id="four">
 				<?php echo text_output($label['usersettings'], 'h3', 'page-subhead');?>
-				
+
 				<div class="indent-left">
 					<p>
 						<kbd><?php echo $label['role'];?></kbd>
@@ -146,9 +146,9 @@
 						<?php echo form_radio($inputs['webmaster_n']) .' '. form_label($label['no'], 'webmaster_n');?>
 					</p>
 				</div>
-				
+
 				<?php echo text_output($label['moderate'], 'h3', 'page-subhead');?>
-				
+
 				<div class="indent-left">
 					<p>
 						<kbd><?php echo $label['mod_posts'];?></kbd>
@@ -160,7 +160,7 @@
 						<?php echo form_radio($inputs['mod_pcomment_y']) .' '. form_label($label['yes'], 'mod_pcomment_y');?>
 						<?php echo form_radio($inputs['mod_pcomment_n']) .' '. form_label($label['no'], 'mod_pcomment_n');?>
 					</p>
-					
+
 					<p>
 						<kbd><?php echo $label['mod_logs'];?></kbd>
 						<?php echo form_radio($inputs['mod_logs_y']) .' '. form_label($label['yes'], 'mod_logs_y');?>
@@ -171,7 +171,7 @@
 						<?php echo form_radio($inputs['mod_lcomment_y']) .' '. form_label($label['yes'], 'mod_lcomment_y');?>
 						<?php echo form_radio($inputs['mod_lcomment_n']) .' '. form_label($label['no'], 'mod_lcomment_n');?>
 					</p>
-					
+
 					<p>
 						<kbd><?php echo $label['mod_news'];?></kbd>
 						<?php echo form_radio($inputs['mod_news_y']) .' '. form_label($label['yes'], 'mod_news_y');?>
@@ -182,7 +182,7 @@
 						<?php echo form_radio($inputs['mod_ncomment_y']) .' '. form_label($label['yes'], 'mod_ncomment_y');?>
 						<?php echo form_radio($inputs['mod_ncomment_n']) .' '. form_label($label['no'], 'mod_ncomment_n');?>
 					</p>
-					
+
 					<p>
 						<kbd><?php echo $label['mod_c_wiki'];?></kbd>
 						<?php echo form_radio($inputs['mod_wcomment_y']) .' '. form_label($label['yes'], 'mod_wcomment_y');?>
@@ -191,7 +191,7 @@
 				</div>
 			</div>
 		<?php endif;?>
-		
+
 		<br /><br />
 		<?php echo form_button($buttons['update']);?>
 	</div>
