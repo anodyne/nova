@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4.11
+## 2.5 (25 May 2018)
 
 ### Nova Core
 
@@ -8,6 +8,7 @@
 - Update Site Bans to use the current timestamp when a ban is created.
 - Update the database driver to MySQLi by default. (This will only apply to new installations.)
 - Update Nova with PHP 7 support. (Thanks to Williams for his work on this.)
+- Display private message search results (Thanks to Williams for his work on this.)
 
 ## 2.4.10 (23 June 2017)
 
