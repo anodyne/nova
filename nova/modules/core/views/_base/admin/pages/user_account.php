@@ -10,6 +10,10 @@
 
 <p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'bold image'));?></p>
 
+<?php if ($my_user):?>
+	<p><?php echo anchor('user/delete', img($images['delete']) .' '. $label['delete'], array('class' => 'bold image'));?></p>
+<?php endif;?>
+
 <?php if ($level == 2 and ! $my_user):?>
 	<p>
 		<kbd><?php echo $label['reset_password'];?></kbd>
