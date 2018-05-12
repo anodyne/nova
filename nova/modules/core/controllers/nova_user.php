@@ -11,7 +11,7 @@
 require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_user extends Nova_controller_admin {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -20,50 +20,50 @@ abstract class Nova_user extends Nova_controller_admin {
 	public function account()
 	{
 		Auth::check_access();
-		
+
 		$level = Auth::get_access_level();
 		$id = $this->session->userdata('userid');
 		$id = ($level == 2) ? $this->uri->segment(3, $id, true) : $id;
-		
+
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('access_model', 'access');
-		
+
 		$data['my_user'] = ($id == $this->session->userdata('userid'));
-		
+
 		if (isset($_POST['submit']))
 		{
 			/*
 			 * level 1 can update everything but status and loa
 			 * level 2 can update everything
 			 */
-			 
+
 			if ($_POST['submit'] == 'Update')
 			{
 				$user = $this->uri->segment(3, 0, true);
-				
+
 				if ($level == 1 and $user != $this->session->userdata('userid'))
 				{
 					redirect('admin/error/7');
 				}
-				
+
 				$update = 0;
-				
+
 				$update_all = $this->user->update_all_user_prefs($user);
-				
+
 				foreach ($_POST as $key => $value)
 				{
 					if (substr($key, 0, 2) == 'p_')
 					{
 						$update_array = array('prefvalue_value' => $value);
-						
+
 						$new_key = substr_replace($key, '', 0, 2);
-						
+
 						$update += $this->user->update_user_pref($user, $new_key, $update_array);
 					}
 					else
 					{
 						$array[$key] = $value;
-						
+
 						if ($key == 'password' or $key == 'security_answer')
 						{
 							if ( ! empty($value))
@@ -75,7 +75,7 @@ abstract class Nova_user extends Nova_controller_admin {
 								unset($array[$key]);
 							}
 						}
-						
+
 						if ($key == 'timezones')
 						{
 							$array['timezone'] = $value;
@@ -83,29 +83,29 @@ abstract class Nova_user extends Nova_controller_admin {
 						}
 					}
 				}
-				
+
 				// set the last update
 				$array['last_update'] = now();
-				
+
 				// submit needs to be removed
 				unset($array['submit']);
-				
+
 				if ($level == 2)
 				{
 					$old_loa = $array['loa_old'];
-					
+
 					unset($array['loa_old']);
 				}
-				
+
 				if ($user == $this->session->userdata('userid'))
 				{
 					$this->session->set_userdata('timezone', $array['timezone']);
 					$this->session->set_userdata('dst', $array['daylight_savings']);
 					$this->session->set_userdata('language', $array['language']);
 				}
-				
+
 				$update += $this->user->update_user($user, $array);
-				
+
 				if ($update > 0)
 				{
 					if ($level == 2)
@@ -113,13 +113,13 @@ abstract class Nova_user extends Nova_controller_admin {
 						if ($array['loa'] != $old_loa)
 						{
 							$loa = $this->user->get_last_loa($user, true);
-				
+
 							if ($loa->num_rows() > 0)
 							{
 								$row = $loa->row();
-							
+
 								$loa_array = array('loa_end_date' => now());
-							
+
 								$this->user->update_loa_record($row->loa_id, $loa_array);
 							}
 							else
@@ -133,13 +133,13 @@ abstract class Nova_user extends Nova_controller_admin {
 										'loa_duration' => '',
 										'loa_reason' => ''
 									);
-								
+
 									$this->user->create_loa_record($loa_array);
 								}
 							}
 						}
 					}
-					
+
 					$message = sprintf(
 						lang('flash_success'),
 						ucfirst(lang('labels_account')),
@@ -149,19 +149,19 @@ abstract class Nova_user extends Nova_controller_admin {
 
 					$flash['status'] = 'success';
 					$flash['message'] = text_output($message);
-					
+
 					// if a user is updating their own password, update the cookie if it exists
 					if ($user == $this->session->userdata('userid') and isset($array['password']))
 					{
 						// load the cookie helper
 						$this->load->helper('cookie');
-						
+
 						// grab nova's unique identifier
 						$uid = $this->sys->get_nova_uid();
-						
+
 						// grab the cookie
 						$cookie = get_cookie('nova_'. $uid);
-						
+
 						if ($cookie !== false)
 						{
 							// set the cookie data
@@ -172,7 +172,7 @@ abstract class Nova_user extends Nova_controller_admin {
 									'expire' => '1209600',
 									'prefix' => 'nova_')
 							);
-							
+
 							// set the cookie
 							set_cookie($c_data['password']);
 						}
@@ -190,32 +190,32 @@ abstract class Nova_user extends Nova_controller_admin {
 					$flash['status'] = 'error';
 					$flash['message'] = text_output($message);
 				}
-				
+
 				// set the flash message
 				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
-			
+
 			if ($this->uri->segment(4) == 'deactivate' and $level == 2)
 			{
 				// grab the user out of the POST array
 				$user = $this->input->post('id', true);
-				
+
 				// get all the user's active characters
 				$characters = $this->char->get_user_characters($user, 'active');
-				
+
 				if ($characters->num_rows() > 0)
 				{
 					foreach ($characters->result() as $c)
 					{
 						// update the character record
 						$this->char->update_character($c->charid, array('crew_type' => 'inactive', 'date_deactivate' => now()));
-						
+
 						// update the positions table
 						$this->pos->update_open_slots($c->position_1, 'remove_crew');
 						$this->pos->update_open_slots($c->position_2, 'remove_crew');
 					}
 				}
-				
+
 				// update the user record
 				$useraction = $this->user->update_user($user, array(
 					'status' => 'inactive',
@@ -227,7 +227,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					'leave_date' => now(),
 					'loa' => 'active',
 					'last_update' => now()));
-				
+
 				$message = sprintf(
 					($useraction > 0) ? lang('flash_success') : lang('flash_failure'),
 					ucfirst(lang('global_user')),
@@ -237,38 +237,38 @@ abstract class Nova_user extends Nova_controller_admin {
 
 				$flash['status'] = ($useraction > 0) ? 'success' : 'error';
 				$flash['message'] = text_output($message);
-				
+
 				// set the flash message
 				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
-			
+
 			if ($this->uri->segment(4) == 'activate' and $level == 2)
 			{
 				// grab the user out of the POST array
 				$user = $this->input->post('id', true);
 				$characters = $this->input->post('characters', true);
-				
+
 				if ($characters !== false and count($characters) > 0)
 				{
 					foreach ($characters as $c)
 					{
 						// get the character
 						$character = $this->char->get_character($c);
-						
+
 						$update_array = array(
 							'crew_type' => 'active',
 							'date_deactivate' => null,
 						);
-						
+
 						// update the positions table
 						$this->pos->update_open_slots($character->position_1, 'add_crew');
 						$this->pos->update_open_slots($character->position_2, 'add_crew');
-						
+
 						// update the character record
 						$this->char->update_character($c, $update_array);
 					}
 				}
-				
+
 				// update the user record
 				$useraction = $this->user->update_user($user, array(
 					'status' => 'active',
@@ -281,7 +281,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					'loa' => 'active',
 					'password_reset' => 1,
 					'last_update' => now()));
-				
+
 				$message = sprintf(
 					($useraction > 0) ? lang('flash_success') : lang('flash_failure'),
 					ucfirst(lang('global_user')),
@@ -291,43 +291,43 @@ abstract class Nova_user extends Nova_controller_admin {
 
 				$flash['status'] = ($useraction > 0) ? 'success' : 'error';
 				$flash['message'] = text_output($message);
-				
+
 				// set the flash message
 				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
-			
+
 			if ($this->uri->segment(4) == 'resetpassword' and $level == 2)
 			{
 				// grab the user out of the POST array
 				$user = $this->input->post('id', true);
-				
+
 				// get the user details
 				$item = $this->user->get_user($user);
-				
+
 				if ($item !== false)
 				{
 					// generate a password
 					$new_password = random_string('alnum', 8);
-					
+
 					$array = array(
 						'password_reset' => 1,
 						'password' => Auth::hash($new_password)
 					);
-					
+
 					// update the user record
 					$update = $this->user->update_user($user, $array);
-					
+
 					$emdata = array(
 						'email' => $item->email,
 						'id' => $user,
 						'password' => $new_password,
 						'name' => $item->name
 					);
-					
+
 					// send the email
 					$email = ($this->options['system_email'] == 'on') ? $this->_email('reset', $emdata) : false;
 				}
-				
+
 				$message = sprintf(
 					($update > 0) ? lang('flash_success') : lang('flash_failure'),
 					ucfirst(lang('global_user').' '.lang('labels_password')),
@@ -337,19 +337,19 @@ abstract class Nova_user extends Nova_controller_admin {
 
 				$flash['status'] = ($update > 0) ? 'success' : 'error';
 				$flash['message'] = text_output($message);
-				
+
 				// set the flash message
 				$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 			}
 		}
-		
+
 		// load the resources
 		$this->load->helper('directory');
 		$this->load->model('access_model', 'access');
-		
+
 		// grab the user details
 		$details = $this->user->get_user($id);
-		
+
 		if ($details !== false)
 		{
 			$data['inputs'] = array(
@@ -508,7 +508,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					'value' => 'n',
 					'checked' => ($details->moderate_wiki_comments == 'n') ? true : false),
 			);
-			
+
 			$data['button'] = array(
 				'user_status' => array(
 					'type' => 'submit',
@@ -517,7 +517,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					'value' => 'submit',
 					'id' => ($details->status == 'active') ? 'user-deactivate' : 'user-activate',
 					'myid' => $id,
-					'content' => ($details->status == 'active') 
+					'content' => ($details->status == 'active')
 						? ucwords(lang('actions_deactivate').' '.lang('global_user'))
 						: ucwords(lang('actions_activate').' '.lang('global_user'))
 					),
@@ -531,9 +531,9 @@ abstract class Nova_user extends Nova_controller_admin {
 					'content' => ucwords(lang('actions_reset').' '.lang('time_now'))),
 			);
 		}
-		
+
 		$prefs = $this->sys->get_preferences();
-		
+
 		if ($prefs->num_rows() > 0)
 		{
 			foreach ($prefs->result() as $p)
@@ -548,10 +548,10 @@ abstract class Nova_user extends Nova_controller_admin {
 				);
 			}
 		}
-		
+
 		// grab the directory map of the language folder
 		$dir = directory_map(APPFOLDER .'/language', true);
-		
+
 		// loop through the directory map and create the dropdown array
 		foreach ($dir as $key => $value)
 		{
@@ -560,9 +560,9 @@ abstract class Nova_user extends Nova_controller_admin {
 				$data['values']['language'][$value] = ucwords($value);
 			}
 		}
-		
+
 		$roles = $this->access->get_roles();
-		
+
 		if ($roles->num_rows() > 0)
 		{
 			foreach ($roles->result() as $r)
@@ -570,22 +570,22 @@ abstract class Nova_user extends Nova_controller_admin {
 				$data['values']['roles'][$r->role_id] = $r->role_name;
 			}
 		}
-		
+
 		$data['values']['loa'] = array(
 			'active' => ucfirst(lang('status_active')),
 			'loa' => ucwords(lang('status_loa')),
 			'eloa' => ucwords(lang('status_eloa')),
 		);
-		
+
 		$data['values']['status'] = array(
 			'active' => ucfirst(lang('status_active')),
 			'inactive' => ucwords(lang('status_inactive')),
 			'pending' => ucwords(lang('status_pending')),
 		);
-		
+
 		// get the questions from the database
 		$questions = $this->sys->get_security_questions();
-		
+
 		// build the array with the questions
 		if ($questions->num_rows() > 0)
 		{
@@ -594,11 +594,11 @@ abstract class Nova_user extends Nova_controller_admin {
 				$data['values']['questions'][$q->question_id] = $q->question_value;
 			}
 		}
-		
+
 		$data['header'] = ucwords(lang('labels_user') .' '. lang('labels_account'));
-		
+
 		$data['level'] = $level;
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -607,7 +607,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_update'))),
 		);
-		
+
 		$data['images'] = array(
 			'user' => array(
 				'src' => Location::img('user.png', $this->skin, 'admin'),
@@ -622,17 +622,18 @@ abstract class Nova_user extends Nova_controller_admin {
 		    'alt' => '',
 		    'class' => 'image inline_img_left'),
 		);
-		
+
 		$data['label'] = array(
 			'admin' => ucfirst(lang('labels_admin')),
 			'basicinfo' => ucwords(lang('labels_basic') .' '. lang('labels_info')),
 			'bio' => ucfirst(lang('labels_biography')),
-			'characters' => ucwords(lang('actions_manage') .' '. lang('labels_account') 
+			'characters' => ucwords(lang('actions_manage') .' '. lang('labels_account')
 				.' '. lang('global_characters') .' '. RARROW),
 			'display' => ucwords(lang('actions_change') .' '. lang('labels_display')
 				.' '. lang('labels_preferences') .' '. RARROW),
-		  'delete' => ucwords(lang('actions_delete') .' '. lang('labels_your')
+		  	'delete' => ucwords(lang('actions_delete') .' '. lang('labels_your')
 				.' '. lang('labels_account') .' '. RARROW),
+			'admin_delete' => lang('text_admin_del'),
 			'dob' => lang('labels_dob'),
 			'dst' => ucwords(lang('labels_dst')),
 			'email' => ucwords(lang('labels_email_address')),
@@ -673,16 +674,18 @@ abstract class Nova_user extends Nova_controller_admin {
 			'your_user' => sprintf(lang('account_your_user'), lang('global_user')),
 			'back' => LARROW.' '.ucwords(lang('labels_all').' '.lang('global_users')),
 		);
-		
+
+		$data['userid'] = $this->session->userdata('userid');
+
 		$this->_regions['content'] = Location::view('user_account', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('user_account_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function delete()
 	{
 		Auth::check_access('user/account');
@@ -759,51 +762,51 @@ abstract class Nova_user extends Nova_controller_admin {
 	public function all()
 	{
 		Auth::check_access('user/account');
-		
+
 		$level = Auth::get_access_level('user/account');
-		
+
 		if ($level < 2)
 		{
 			redirect('admin/error/1');
 		}
-		
+
 		if (isset($_POST['submit']))
 		{
 			$action = $this->uri->segment(3);
-			
+
 			switch ($action)
 			{
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					// remove the user's prefs
 					$delete = $this->user->delete_user_pref_values($id);
-					
+
 					// delete the user
 					$delete += $this->user->delete_user($id);
-					
+
 					if ($delete > 0)
 					{
 						$chars = $this->char->get_user_characters($id, '', 'array');
-						
+
 						if (count($chars) > 0)
 						{
 							$update_array = array('user' => null);
-							
+
 							foreach ($chars as $c)
 							{
 								$update = $this->char->update_character($c, $update_array);
 							}
 						}
-						
+
 						$message = sprintf(
 							lang('flash_success'),
 							ucfirst(lang('global_user')),
 							lang('actions_deleted'),
 							''
 						);
-	
+
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 					}
@@ -815,19 +818,19 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_deleted'),
 							''
 						);
-	
+
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		$users = $this->user->get_users('');
-		
+
 		if ($users->num_rows() > 0)
 		{
 			foreach ($users->result() as $p)
@@ -841,9 +844,9 @@ abstract class Nova_user extends Nova_controller_admin {
 				);
 			}
 		}
-		
+
 		$data['header'] = ucwords(lang('labels_all') .' '. lang('labels_users'));
-		
+
 		$data['images'] = array(
 			'loading' => array(
 				'src' => Location::img('loading-circle-large.gif', $this->skin, 'admin'),
@@ -865,7 +868,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				'title' => ucfirst(lang('actions_edit')),
 				'class' => 'image'),
 		);
-		
+
 		$data['label'] = array(
 			'active' => ucwords(lang('status_active') .' '. lang('global_users')),
 			'ago' => lang('time_ago'),
@@ -876,41 +879,41 @@ abstract class Nova_user extends Nova_controller_admin {
 			'pending' => ucwords(lang('status_pending') .' '. lang('global_users')),
 			'loading' => ucfirst(lang('actions_loading')).'...',
 		);
-		
+
 		$this->_regions['content'] = Location::view('user_all', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('user_all_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function characterlink($user = 0)
 	{
 		Auth::check_access('user/account');
-		
+
 		$level = Auth::get_access_level('user/account');
-		
+
 		if ($level == 2)
 		{
 			// sanity check
 			$data['user'] = (is_numeric($user)) ? $user : 0;
-			
+
 			switch ($this->uri->segment(4))
 			{
 				case 'add':
 					$id = $this->uri->segment(5, 0, true);
-					
+
 					// get all the characters and make sure it isn't blank
 					$chars_raw = $this->char->get_user_characters($user, '', 'array');
 					$chars = ($chars_raw !== false) ? $chars_raw : array();
-					
+
 					$type = array(
 						'active' => 0,
 						'npc' => 0
 					);
-					
+
 					foreach ($chars as $c)
 					{
 						if ($this->char->get_character($c, 'crew_type') == 'npc')
@@ -922,19 +925,19 @@ abstract class Nova_user extends Nova_controller_admin {
 							++$type['active'];
 						}
 					}
-					
+
 					$key = array_search($id, $chars);
-					
+
 					if ( ! $key)
 					{
 						// set up the data array with the user info
 						$data_array = array('data_user' => $data['user']);
-						
+
 						// update all the character data to point to the user
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
-					
+
 						$c_type = $this->char->get_character($id, 'crew_type');
-						
+
 						if (($c_type == 'npc' and $type['npc'] >= $this->options['allowed_chars_npc']) or
 							($c_type == 'active' and $type['active'] >= $this->options['allowed_chars_playing']))
 						{
@@ -943,13 +946,13 @@ abstract class Nova_user extends Nova_controller_admin {
 								($c_type == 'npc') ? strtoupper($c_type) : $c_type,
 								lang('global_characters')
 							);
-							
+
 							$message = sprintf(
 								lang('flash_additional_char_quota'),
 								($c_type == 'npc') ? strtoupper($c_type) : $c_type,
 								lang('global_characters')
 							);
-							
+
 							$user_update = 0;
 						}
 						else
@@ -960,37 +963,37 @@ abstract class Nova_user extends Nova_controller_admin {
 								lang('actions_updated'),
 								''
 							);
-							
+
 							// set the deactivate date and user ID
 							$char_activate = array(
 								'date_activate' => now(),
 								'user' => $user,
 							);
-							
+
 							// run the update
 							$char_update = $this->char->update_character($id, $char_activate);
-							
+
 							// push the item we're adding onto the array
 							$chars[] = $id;
-							
+
 							// put the characters into a string
 							$chars_string = implode(',', $chars);
-							
+
 							// create an array for updating the user record
 							$update_array = array('last_update' => now());
-							
+
 							// get the user's main character
 							$main = $this->user->get_user($user, 'main_char');
-							
+
 							if ($chars_raw === false or empty($main))
 							{
 								$update_array['main_char'] = $id;
 							}
-							
+
 							// run the update
 							$user_update = $this->user->update_user($user, $update_array);
 						}
-						
+
 						if ($user_update > 0)
 						{
 							$message = sprintf(
@@ -999,7 +1002,7 @@ abstract class Nova_user extends Nova_controller_admin {
 								lang('actions_updated'),
 								' '. lang('text_logout_alt')
 							);
-		
+
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
 						}
@@ -1010,16 +1013,16 @@ abstract class Nova_user extends Nova_controller_admin {
 						}
 					}
 				break;
-					
+
 				case 'remove':
 					$id = $this->uri->segment(5, 0, true);
-					
+
 					// get an array of the user's characters
 					$chars = $this->char->get_user_characters($user, 'active_npc', 'array');
-					
+
 					// new main is null until something overwrites it in the event the main char is removed
 					$newmain = null;
-					
+
 					if (count($chars) > 0)
 					{
 						foreach ($chars as $c)
@@ -1027,7 +1030,7 @@ abstract class Nova_user extends Nova_controller_admin {
 							if ($c != $id)
 							{
 								$ctemp = $this->char->get_character($c, 'crew_type');
-								
+
 								if ($ctemp == 'active' and is_null($newmain))
 								{
 									$newmain = $c;
@@ -1035,44 +1038,44 @@ abstract class Nova_user extends Nova_controller_admin {
 							}
 						}
 					}
-					
+
 					// search the array
 					$key = array_search($id, $chars);
-					
+
 					if ($key !== false)
 					{
 						// set up the data array with the user info
 						$data_array = array('data_user' => null);
-						
+
 						// update all the character data to point to the user
 						$update_data = $this->char->update_character_data_all($id, 'data_char', $data_array);
-					
+
 						$main = $this->user->get_user($data['user'], 'main_char');
-						
+
 						// set the deactivate date and user ID
 						$char_deactivate = array(
 							'date_deactivate' => now(),
 							'user' => null,
 						);
-						
+
 						// run the update
 						$char_update = $this->char->update_character($id, $char_deactivate);
-						
+
 						// unset the item we're removing
 						unset($chars[$key]);
-						
+
 						// put the characters into a string
 						$chars_string = implode(',', $chars);
-						
+
 						// create an array for updating the user record
 						$update_array = array(
 							'last_update' => now(),
 							'main_char' => ($main == $id) ? $newmain : $main
 						);
-						
+
 						// run the update
 						$user_update = $this->user->update_user($user, $update_array);
-						
+
 						if ($user_update > 0)
 						{
 							$message = sprintf(
@@ -1081,7 +1084,7 @@ abstract class Nova_user extends Nova_controller_admin {
 								lang('actions_updated'),
 								' '. lang('text_logout_alt')
 							);
-		
+
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
 						}
@@ -1093,19 +1096,19 @@ abstract class Nova_user extends Nova_controller_admin {
 								lang('actions_updated'),
 								''
 							);
-		
+
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
 					}
 				break;
-					
+
 				case 'set':
 					$id = $this->uri->segment(5, 0, true);
-					
+
 					// grab the current main character
 					$char = $this->user->get_user($user, 'main_char');
-					
+
 					if ($char != $id)
 					{
 						// create an array for updating the user record
@@ -1113,10 +1116,10 @@ abstract class Nova_user extends Nova_controller_admin {
 							'main_char' => $id,
 							'last_update' => now()
 						);
-						
+
 						// run the update
 						$user_update = $this->user->update_user($user, $update_array);
-						
+
 						if ($user_update > 0)
 						{
 							$message = sprintf(
@@ -1125,7 +1128,7 @@ abstract class Nova_user extends Nova_controller_admin {
 								lang('actions_updated'),
 								' '. lang('text_logout_alt')
 							);
-		
+
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
 						}
@@ -1137,21 +1140,21 @@ abstract class Nova_user extends Nova_controller_admin {
 								lang('actions_updated'),
 								''
 							);
-		
+
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
-						
+
 						// set the flash message
 						$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 					}
 				break;
 			}
-			
+
 			if ($user == 0)
 			{
 				$all = $this->user->get_users();
-				
+
 				if ($all->num_rows() > 0)
 				{
 					foreach ($all->result() as $a)
@@ -1164,36 +1167,36 @@ abstract class Nova_user extends Nova_controller_admin {
 			{
 				// load the resources
 				$this->load->model('positions_model', 'pos');
-				
+
 				$all = $this->char->get_user_characters($user, '', 'array');
-				
+
 				// get the user's current characters
 				$chars = ($all !== false) ? $all : array();
-				
+
 				// get all characters that don't have a user assigned to them
 				$unassigned = $this->char->get_all_characters('no_user');
-				
+
 				$userinfo = $this->user->get_user($user);
-				
+
 				$data['p_name'] = $userinfo->name;
 				$data['p_email'] = $userinfo->email;
-				
+
 				$data['count_active'] = 0;
 				$data['count_npc'] = 0;
-				
+
 				if (count($chars) > 0)
 				{
 					foreach ($chars as $c)
 					{
 						$d = $this->char->get_character($c, array('crew_type', 'position_1'));
-						
+
 						$data['chars'][$c] = array(
 							'name' => $this->char->get_character_name($c, true),
 							'position' => $this->pos->get_position($d['position_1'], 'pos_name'),
 							'type' => ($d['crew_type'] == 'npc') ? strtoupper($d['crew_type']) : ucfirst($d['crew_type']),
 							'main' => ($this->user->get_main_character($user) != $c) ? false : true,
 						);
-						
+
 						if ($d['crew_type'] == 'npc')
 						{
 							++$data['count_npc'];
@@ -1208,7 +1211,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				{
 					$data['chars'] = array();
 				}
-				
+
 				if ($unassigned->num_rows() > 0)
 				{
 					foreach ($unassigned->result() as $u)
@@ -1220,10 +1223,10 @@ abstract class Nova_user extends Nova_controller_admin {
 					}
 				}
 			}
-			
-			$data['header'] = ucwords(lang('labels_link') .' '. lang('global_characters')) .' '. 
+
+			$data['header'] = ucwords(lang('labels_link') .' '. lang('global_characters')) .' '.
 				lang('labels_to') .' '. ucfirst(lang('labels_account'));
-			
+
 			$data['text'] = sprintf(
 				lang('text_link_characters'),
 				lang('global_user'),
@@ -1236,7 +1239,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				lang('global_character'),
 				lang('global_user')
 			);
-			
+
 			$data['buttons'] = array(
 				'update' => array(
 					'type' => 'submit',
@@ -1245,7 +1248,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					'value' => 'submit',
 					'content' => ucwords(lang('actions_update'))),
 			);
-			
+
 			$data['images'] = array(
 				'remove' => array(
 					'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
@@ -1276,7 +1279,7 @@ abstract class Nova_user extends Nova_controller_admin {
 					'alt' => '',
 					'class' => 'image'),
 			);
-			
+
 			$data['label'] = array(
 				'add' => ucwords(lang('actions_add') .' '. lang('global_character')),
 				'allchars' => LARROW .' '. ucwords(lang('labels_all') .' '. lang('global_users')),
@@ -1287,17 +1290,17 @@ abstract class Nova_user extends Nova_controller_admin {
 				'name' => ucfirst(lang('labels_name')),
 				'nocharacters' => ucfirst(lang('labels_no') .' '. lang('global_characters') .' '. lang('actions_found')),
 				'user' => ucwords(lang('global_user') .' '. lang('labels_info')),
-				'select' => ucfirst(lang('labels_please') .' '. lang('actions_select') .' '. 
+				'select' => ucfirst(lang('labels_please') .' '. lang('actions_select') .' '.
 					lang('labels_a') .' '. lang('global_user')),
 				'remove' => ucfirst(lang('actions_remove')),
 			);
-			
+
 			$this->_regions['content'] = Location::view('user_characterlink', $this->skin, 'admin', $data);
 			$this->_regions['javascript'] = Location::js('user_characterlink_js', $this->skin, 'admin');
 			$this->_regions['title'].= $data['header'];
-			
+
 			Template::assign($this->_regions);
-			
+
 			Template::render();
 		}
 		else
@@ -1305,22 +1308,22 @@ abstract class Nova_user extends Nova_controller_admin {
 			redirect('admin/error/1');
 		}
 	}
-	
+
 	public function nominate()
 	{
 		Auth::check_access();
-		
+
 		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
-			
+
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		// load the resources
 		$this->load->model('awards_model', 'awards');
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -1329,19 +1332,19 @@ abstract class Nova_user extends Nova_controller_admin {
 					if (Auth::get_access_level() > 1)
 					{
 						$action = $this->input->post('action', true);
-						
+
 						$id = $this->input->post('id', true);
 						$id = (is_numeric($id)) ? $id : false;
-						
+
 						switch ($action)
 						{
 							case 'approve':
 								$award_update = array('queue_status' => 'accepted');
-								
+
 								$update = $this->awards->update_queue_record($id, $award_update);
-								
+
 								$nom = $this->sys->get_item('awards_queue', 'queue_id', $id);
-								
+
 								$received = array(
 									'awardrec_user' => $nom->queue_receive_user,
 									'awardrec_character' => $nom->queue_receive_character,
@@ -1350,9 +1353,9 @@ abstract class Nova_user extends Nova_controller_admin {
 									'awardrec_reason' => $nom->queue_reason,
 									'awardrec_nominated_by' => $nom->queue_nominate
 								);
-								
+
 								$insert = $this->awards->add_nominated_award($received);
-								
+
 								if ($update > 0 and $insert > 0)
 								{
 									$message = sprintf(
@@ -1361,7 +1364,7 @@ abstract class Nova_user extends Nova_controller_admin {
 										lang('actions_approved'),
 										''
 									);
-				
+
 									$flash['status'] = 'success';
 									$flash['message'] = text_output($message);
 								}
@@ -1373,17 +1376,17 @@ abstract class Nova_user extends Nova_controller_admin {
 										lang('actions_approved'),
 										''
 									);
-				
+
 									$flash['status'] = 'error';
 									$flash['message'] = text_output($message);
 								}
 							break;
-								
+
 							case 'reject':
 								$award_update = array('queue_status' => 'rejected');
-								
+
 								$update = $this->awards->update_queue_record($id, $award_update);
-								
+
 								if ($update > 0)
 								{
 									$message = sprintf(
@@ -1392,7 +1395,7 @@ abstract class Nova_user extends Nova_controller_admin {
 										lang('actions_rejected'),
 										''
 									);
-				
+
 									$flash['status'] = 'success';
 									$flash['message'] = text_output($message);
 								}
@@ -1404,7 +1407,7 @@ abstract class Nova_user extends Nova_controller_admin {
 										lang('actions_rejected'),
 										''
 									);
-				
+
 									$flash['status'] = 'error';
 									$flash['message'] = text_output($message);
 								}
@@ -1412,13 +1415,13 @@ abstract class Nova_user extends Nova_controller_admin {
 						}
 					}
 				break;
-					
+
 				default:
 					$character = $this->input->post('character', true);
 					$awardid = $this->input->post('award', true);
-					
+
 					$award = $this->awards->get_award($awardid);
-					
+
 					$insert_array = array(
 						'queue_receive_character' => ($award->award_cat == 'ooc') ? 0 : $character,
 						'queue_receive_user' => $this->char->get_character($character, 'user'),
@@ -1428,9 +1431,9 @@ abstract class Nova_user extends Nova_controller_admin {
 						'queue_status' => 'pending',
 						'queue_date' => now()
 					);
-					
+
 					$insert = $this->awards->add_award_nomination($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -1439,10 +1442,10 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_submitted'),
 							''
 						);
-		
+
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						$email_data = array(
 							'receive' => ($award->award_cat == 'ooc') ? $insert_array['queue_receive_user'] : $character,
 							'cat' => $award->award_cat,
@@ -1450,7 +1453,7 @@ abstract class Nova_user extends Nova_controller_admin {
 							'award' => $insert_array['queue_award'],
 							'nominate' => $insert_array['queue_nominate']
 						);
-						
+
 						$email = ($this->options['system_email'] == 'on') ? $this->_email('nominate', $email_data) : false;
 					}
 					else
@@ -1461,44 +1464,44 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_submitted'),
 							''
 						);
-		
+
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		// grab all the awards
 		$awards = $this->awards->get_all_awards();
-		
+
 		if ($awards->num_rows() > 0)
 		{
-			$data['awards'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose') 
+			$data['awards'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')
 				.' '. lang('order_one'));
-				
+
 			foreach ($awards->result() as $a)
 			{
 				$data['awards'][$a->award_id] = $a->award_name;
 			}
 		}
-		
+
 		if (Auth::get_access_level() > 1)
 		{
 			$noms = $this->awards->get_award_noms();
-			
+
 			if ($noms->num_rows() > 0)
 			{
 				$datestring = $this->options['date_format'];
-				
+
 				foreach ($noms->result() as $n)
 				{
 					$nid = $n->queue_id;
 					$date = gmt_to_local($n->queue_date, $this->timezone, $this->dst);
-					
+
 					$data['nominations'][$nid] = array(
 						'awardee' => $this->char->get_character_name($n->queue_receive_character, true),
 						'nominator' => $this->char->get_character_name($n->queue_nominate, true),
@@ -1510,22 +1513,22 @@ abstract class Nova_user extends Nova_controller_admin {
 				}
 			}
 		}
-		
+
 		$data['header'] = ucwords(lang('labels_crew') .' '. lang('global_award') .' '. lang('labels_nominations'));
-		
+
 		$data['text'] = sprintf(
 			lang('text_award_nomination'),
 			lang('global_award'),
 			lang('global_character')
 		);
-		
+
 		$data['inputs'] = array(
 			'reason' => array(
 				'name' => 'reason',
 				'id' => 'reason',
 				'rows' => 6),
 		);
-		
+
 		$data['buttons'] = array(
 			'submit' => array(
 				'type' => 'submit',
@@ -1534,7 +1537,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_submit'))),
 		);
-		
+
 		$data['images'] = array(
 			'loading' => array(
 				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
@@ -1550,7 +1553,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				'title' => ucfirst(lang('actions_approve')),
 				'class' => 'image'),
 		);
-		
+
 		$data['label'] = array(
 			'award' => ucfirst(lang('global_award')),
 			'awardee' => ucfirst(lang('global_character')),
@@ -1565,28 +1568,28 @@ abstract class Nova_user extends Nova_controller_admin {
 			'on' => lang('labels_on'),
 			'reason' => ucfirst(lang('labels_reason')),
 		);
-		
+
 		$js_data['tab'] = ($this->uri->segment(3) == 'queue') ? 1 : 0;
-		
+
 		$this->_regions['content'] = Location::view('user_nominate', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('user_nominate_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function options()
 	{
 		Auth::check_access('user/account');
-		
+
 		// set the user id
 		$id = $this->session->userdata('userid');
-		
+
 		// set the tab
 		$js_data['tab'] = 0;
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -1598,25 +1601,25 @@ abstract class Nova_user extends Nova_controller_admin {
 						{
 							$newkey = substr_replace($key, '', 0, 5);
 							$link[$newkey] = $value;
-							
+
 							$menus = $this->menu_model->get_menu_item($value);
-			
+
 							if ($menus->num_rows() > 0)
 							{
 								$item = $menus->row();
-								
+
 								$session_array[] = anchor($item->menu_link, $item->menu_name);
 							}
 						}
 					}
-					
+
 					$update_array = array(
 						'my_links' => implode(',', $link),
 						'last_update' => now()
 					);
-					
+
 					$update = $this->user->update_user($id, $update_array);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -1626,10 +1629,10 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_updated'),
 							lang('flash_additional_refresh')
 						);
-	
+
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						// change the user's session with the new rank info
 						$this->session->set_userdata('my_links', $session_array);
 					}
@@ -1642,24 +1645,24 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_updated'),
 							''
 						);
-	
+
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
+
 					$js_data['tab'] = 2;
 				break;
-					
+
 				case 'ranks':
 					$rank = $this->input->post('rank', true);
-					
+
 					$update_array = array(
 						'display_rank' => $rank,
 						'last_update' => now()
 					);
-					
+
 					$update = $this->user->update_user($id, $update_array);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -1669,10 +1672,10 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_updated'),
 							lang('flash_additional_refresh')
 						);
-	
+
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						// change the user's session with the new rank info
 						$this->session->set_userdata('display_rank', $rank);
 					}
@@ -1685,28 +1688,28 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_updated'),
 							''
 						);
-	
+
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
+
 					$js_data['tab'] = 1;
 				break;
-					
+
 				case 'skins':
 					$skin_admin = $this->input->post('skin_admin', true);
 					$skin_main = $this->input->post('skin_main', true);
 					$skin_wiki = $this->input->post('skin_wiki', true);
-					
+
 					$update_array = array(
 						'skin_admin' => $skin_admin,
 						'skin_main' => $skin_main,
 						'skin_wiki' => $skin_wiki,
 						'last_update' => now()
 					);
-					
+
 					$update = $this->user->update_user($id, $update_array);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -1716,21 +1719,21 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_updated'),
 							lang('flash_additional_refresh')
 						);
-	
+
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						// change the user's session with the new info
 						if ($skin_admin != $this->session->userdata('skin_admin'))
 						{
 							$this->session->set_userdata('skin_admin', $skin_admin);
 						}
-						
+
 						if ($skin_main != $this->session->userdata('skin_main'))
 						{
 							$this->session->set_userdata('skin_main', $skin_main);
 						}
-						
+
 						if ($skin_wiki != $this->session->userdata('skin_wiki'))
 						{
 							$this->session->set_userdata('skin_wiki', $skin_wiki);
@@ -1745,55 +1748,55 @@ abstract class Nova_user extends Nova_controller_admin {
 							lang('actions_updated'),
 							''
 						);
-	
+
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
-					
+
 					$js_data['tab'] = 0;
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		// load the resources
 		$this->load->model('ranks_model', 'ranks');
-		
+
 		// grab the user details
 		$user = $this->user->get_user($id);
-		
+
 		/*
 		|---------------------------------------------------------------
 		| LINKS
 		|---------------------------------------------------------------
 		*/
 		$menusecs = $this->menu_model->get_menu_categories();
-		
+
 		if ($menusecs->num_rows() > 0)
 		{
 			foreach ($menusecs->result() as $sec)
 			{
 				$menuitems = $this->menu_model->get_menu_items('', $sec->menucat_menu_cat);
-				
+
 				if ($menuitems->num_rows() > 0)
 				{
 					$data['links'][0] = ucfirst(lang('labels_please') .' '. lang('actions_choose')
 						.' '. lang('order_one'));
-						
+
 					foreach ($menuitems->result() as $item)
 					{
 						$menucat = $sec->menucat_menu_cat;
 						$cat = ($menucat == 'acp') ? strtoupper($menucat) : ucfirst($menucat);
-						
+
 						if ($item->menu_type != 'main')
 						{
 							if (
 								(
-									$item->menu_use_access == 'y' and 
+									$item->menu_use_access == 'y' and
 									array_key_exists($item->menu_access, $this->session->userdata('access'))
-								) or 
+								) or
 									$item->menu_use_access == 'n'
 								)
 							{
@@ -1804,9 +1807,9 @@ abstract class Nova_user extends Nova_controller_admin {
 				}
 			}
 		}
-		
+
 		$links = explode(',', $user->my_links);
-		
+
 		$data['defaults']['links'] = array(
 			1 => (isset($links[0])) ? $links[0] : 0,
 			2 => (isset($links[1])) ? $links[1] : 0,
@@ -1814,15 +1817,15 @@ abstract class Nova_user extends Nova_controller_admin {
 			4 => (isset($links[3])) ? $links[3] : 0,
 			5 => (isset($links[4])) ? $links[4] : 0,
 		);
-		
+
 		/*
 		|---------------------------------------------------------------
 		| SKINS
 		|---------------------------------------------------------------
 		*/
-		
+
 		$skins = $this->sys->get_all_skins();
-	
+
 		if ($skins->num_rows() > 0)
 		{
 			foreach ($skins->result() as $skin)
@@ -1830,9 +1833,9 @@ abstract class Nova_user extends Nova_controller_admin {
 				$skinaccess = (Auth::check_access('site/catalogueskins', false))
 					? array('active', 'development')
 					: 'active';
-				
+
 				$sections = $this->sys->get_skin_sections($skin->skin_location, $skinaccess);
-			
+
 				if ($sections->num_rows() > 0)
 				{
 					foreach ($sections->result() as $section)
@@ -1842,22 +1845,22 @@ abstract class Nova_user extends Nova_controller_admin {
 				}
 			}
 		}
-	
+
 		$data['default']['skin_main'] = $this->session->userdata('skin_main');
 		$data['default']['skin_admin'] = $this->session->userdata('skin_admin');
 		$data['default']['skin_wiki'] = $this->session->userdata('skin_wiki');
-		
+
 		/*
 		|---------------------------------------------------------------
 		| RANKS
 		|---------------------------------------------------------------
 		*/
-		
+
 		$r_access = Auth::check_access('site/catalogueranks', false);
 		$rank_access = ($r_access === true) ? array('active', 'development') : 'active';
-		
+
 		$ranks = $this->ranks->get_all_rank_sets($rank_access);
-		
+
 		if ($ranks->num_rows() > 0)
 		{
 			foreach ($ranks->result() as $r)
@@ -1876,9 +1879,9 @@ abstract class Nova_user extends Nova_controller_admin {
 				);
 			}
 		}
-		
+
 		$data['header'] = ucwords(lang('labels_site') .' '. lang('labels_options'));
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -1887,7 +1890,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_update'))),
 		);
-		
+
 		$data['images'] = array(
 			'loading' => array(
 				'src' => Location::img('loading-circle.gif', $this->skin, 'admin'),
@@ -1897,7 +1900,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				'alt' => '',
 				'class' => 'image'),
 		);
-		
+
 		$data['label'] = array(
 			'mylink_1' => ucwords(lang('labels_my') .' '. lang('labels_link') .' #1'),
 			'mylink_2' => ucwords(lang('labels_my') .' '. lang('labels_link') .' #2'),
@@ -1912,46 +1915,46 @@ abstract class Nova_user extends Nova_controller_admin {
 			'skin_wiki' => ucfirst(lang('global_wiki')),
 			'skins_text' => sprintf(lang('text_skins_user'), site_url('site/settings')),
 		);
-		
+
 		$this->_regions['content'] = Location::view('user_options', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('user_options_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function status()
 	{
 		Auth::check_access('user/account');
-		
+
 		if ($this->options['system_email'] == 'off')
 		{
 			$flash['status'] = 'info';
 			$flash['message'] = lang_output('flash_system_email_off');
-			
+
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if (isset($_POST['submit']))
 		{
 			$status = strtolower($this->input->post('status', true));
-			
+
 			$update_data = array('loa' => $status);
-			
+
 			$update = $this->user->update_user($this->session->userdata('userid'), $update_data);
-			
+
 			if ($update > 0)
 			{
 				$loa = $this->user->get_last_loa($this->session->userdata('userid'), true);
-				
+
 				if ($loa->num_rows() > 0)
 				{
 					$row = $loa->row();
-					
+
 					$loa_array = array('loa_end_date' => now());
-					
+
 					$this->user->update_loa_record($row->loa_id, $loa_array);
 				}
 				else
@@ -1965,11 +1968,11 @@ abstract class Nova_user extends Nova_controller_admin {
 							'loa_duration' => $this->input->post('duration', true),
 							'loa_reason' => $this->input->post('reason', true)
 						);
-						
+
 						$this->user->create_loa_record($loa_array);
 					}
 				}
-				
+
 				$message = sprintf(
 					lang('flash_success'),
 					ucfirst(lang('labels_notification')),
@@ -1979,14 +1982,14 @@ abstract class Nova_user extends Nova_controller_admin {
 
 				$flash['status'] = 'success';
 				$flash['message'] = text_output($message);
-					
+
 				$email_data = array(
 					'requestor' => $this->session->userdata('main_char'),
 					'reason' => $this->input->post('reason', true),
 					'duration' => $this->input->post('duration', true),
 					'status' => $this->input->post('status', true)
 				);
-				
+
 				$email = ($this->options['system_email'] == 'on') ? $this->_email('status', $email_data) : false;
 			}
 			else
@@ -2001,13 +2004,13 @@ abstract class Nova_user extends Nova_controller_admin {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		$data['header'] = ucwords(lang('actions_request') .' '. lang('abbr_loa'));
-		
+
 		$data['buttons'] = array(
 			'submit' => array(
 				'type' => 'submit',
@@ -2016,10 +2019,10 @@ abstract class Nova_user extends Nova_controller_admin {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_submit'))),
 		);
-		
+
 		// grab the loa status of the user
 		$loa = $this->user->get_loa($this->session->userdata('userid'));
-		
+
 		$data['inputs'] = array(
 			'reason' => array(
 				'name' => 'reason',
@@ -2031,52 +2034,52 @@ abstract class Nova_user extends Nova_controller_admin {
 				'rows' => 2),
 			'loa' => ($loa != 'active') ? strtoupper($loa) : $loa
 		);
-		
+
 		$data['values']['loa'] = array(
 			'active' => ucfirst(lang('status_active')),
 			'LOA' => ucfirst(lang('status_loa')),
 			'ELOA' => ucfirst(lang('status_eloa')),
 		);
-		
+
 		$data['label'] = array(
 			'duration' => ucfirst(lang('labels_duration')),
 			'reason' => ucfirst(lang('labels_reason')),
 			'status' => ucfirst(lang('labels_status')),
 			'text' => lang('text_loa_request'),
 		);
-		
+
 		$this->_regions['content'] = Location::view('user_status', $this->skin, 'admin', $data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	protected function _email($type, $data)
 	{
 		// load the libraries
 		$this->load->library('mail');
 		$this->load->library('parser');
-		
+
 		// define the variables
 		$email = false;
-		
+
 		switch ($type)
 		{
 			case 'nominate':
 				// load the resources
 				$this->load->model('awards_model', 'awards');
-				
+
 				$award = $this->awards->get_award($data['award'], 'award_name');
-				
+
 				// set some variables
 				$subject = lang('email_subject_award_nomination');
-				
+
 				// set who the email is coming from
 				$from_name = $this->char->get_character_name($data['nominate'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['nominate']);
-				
+
 				if ($data['cat'] == 'ooc')
 				{
 					$user = $this->user->get_user($data['receive']);
@@ -2086,7 +2089,7 @@ abstract class Nova_user extends Nova_controller_admin {
 				{
 					$to_name = $this->char->get_character_name($data['receive'], true, true);
 				}
-				
+
 				// set the content
 				$content = sprintf(
 					lang('email_content_award_nomination'),
@@ -2097,64 +2100,64 @@ abstract class Nova_user extends Nova_controller_admin {
 					$from_name,
 					$data['reason']
 				);
-				
+
 				// set the email data
 				$email_data = array(
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content,
 					'email_from' => '',
 					'email_subject' => ''
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('user_nominate', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// make a string of email addresses
 				$to = implode(',', $this->user->get_emails_with_access('user/nominate', 2));
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
-			
+
 			case 'reset':
 				$content = sprintf(
 					lang('email_content_password_reset'),
 					$data['password'],
 					site_url('login/index')
 				);
-				
+
 				$email_data = array(
 					'email_subject' => lang('email_subject_password_reset'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
 					'email_content' => nl2br($content)
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('reset_password', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $data['name']);
 				$this->mail->to($data['email']);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'status':
 				// set some variables
 				$subject = lang('email_subject_user_status_change');
-				
+
 				// set who the email is coming from
 				$from_name = $this->char->get_character_name($data['requestor'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['requestor']);
-				
+
 				// set the content
 				$content = sprintf(
 					lang('email_content_user_status_change'),
@@ -2164,23 +2167,23 @@ abstract class Nova_user extends Nova_controller_admin {
 					$data['duration'],
 					$data['reason']
 				);
-				
+
 				// set the email data
 				$email_data = array(
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content,
 					'email_subject' => $subject,
 					'email_from' => $from_name,
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('user_status_change', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, false);
-				
+
 				// make a string of email addresses
 				$to = implode(',', $this->user->get_gm_emails());
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
@@ -2188,10 +2191,10 @@ abstract class Nova_user extends Nova_controller_admin {
 				$this->mail->message($message);
 			break;
 		}
-		
+
 		// send the email
 		$email = $this->mail->send();
-		
+
 		return $email;
 	}
 }

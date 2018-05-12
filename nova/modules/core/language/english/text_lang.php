@@ -141,6 +141,8 @@ $lang['text_skins_user'] = "These options control the skins for the site when yo
 
 $lang['text_user_del_confirm'] = "Are you sure you wish to delete your user account and all personal information associated with it? This action is permanent and cannot be undone!";
 
+$lang['text_admin_del'] = "Users with system administrator privileges cannot delete their accounts. Please give another user system administrator privileges and have them delete your account.";
+
 /*
 |---------------------------------------------------------------
 | INFORMATIONAL MESSAGES

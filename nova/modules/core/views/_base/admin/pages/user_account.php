@@ -10,8 +10,10 @@
 
 <p><?php echo link_to_if($level == 2, 'user/characterlink/'. $inputs['id'], img($images['user']) .' '. $label['characters'], array('class' => 'bold image'));?></p>
 
-<?php if ($my_user and Auth::check_access('user/account', false) and $level < 2):?>
+<?php if ($my_user and !Auth::is_sysadmin($userid)):?>
 	<p><?php echo anchor('user/delete', img($images['delete']) .' '. $label['delete'], array('class' => 'bold image'));?></p>
+<?php else: ?>
+	<?php echo text_output($label['admin_delete'], 'h4', 'red'); ?>
 <?php endif;?>
 
 <?php if ($level == 2 and ! $my_user):?>
