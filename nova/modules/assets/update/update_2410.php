@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Update Nova from 2.4.10 to 2.4.11
+ * Update Nova from 2.4.10 to 2.5.0
  */
 $system_info	= null;
 $add_tables		= null;
@@ -16,9 +16,34 @@ $drop_column	= null;
 $system_info = array(
 	'sys_last_update'		=> now(),
 	'sys_version_major'		=> 2,
-	'sys_version_minor'		=> 4,
-	'sys_version_update'	=> 11,
+	'sys_version_minor'		=> 5,
+	'sys_version_update'	=> 0,
 );
+
+// array(
+// 	'message_key' => 'policy-privacy',
+// 	'message_label' => 'Privacy Policy',
+// 	'message_content' => "Define your sim's privacy policy through the Site Messages page.",
+// 	'message_type' => 'message'
+// ),
+// 	array(
+// 	'message_key' => 'policy-cookie',
+// 	'message_label' => 'Cookie Policy',
+// 	'message_content' => "Define your sim's cookie policy through the Site Messages page.",
+// 	'message_type' => 'message'
+// ),
+// 	array(
+// 	'message_key' => 'policy-do-not-track',
+// 	'message_label' => 'Do Not Track Policy',
+// 	'message_content' => "Define your sim's Do Not Track policy through the Site Messages page.",
+// 	'message_type' => 'message'
+// ),
+// 	array(
+// 	'message_key' => 'policy-california',
+// 	'message_label' => 'California Privacy Rights Policy',
+// 	'message_content' => "Define your sim's California Privacy Rights policy through the Site Messages page.",
+// 	'message_type' => 'message'
+// ),
 
 /*
 |---------------------------------------------------------------
