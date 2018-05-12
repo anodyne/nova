@@ -1808,6 +1808,27 @@ $messages = array(
 		'message_label' => 'Join Page Header',
 		'message_content' => 'Join',
 		'message_type' => 'title'),
+
+	array(
+		'message_key' => 'policy-privacy',
+		'message_label' => 'Privacy Policy',
+		'message_content' => "Define your sim's privacy policy through the Site Messages page.",
+		'message_type' => 'message'),
+	array(
+		'message_key' => 'policy-cookie',
+		'message_label' => 'Cookie Policy',
+		'message_content' => "Define your sim's cookie policy through the Site Messages page.",
+		'message_type' => 'message'),
+	array(
+		'message_key' => 'policy-do-not-track',
+		'message_label' => 'Do Not Track Policy',
+		'message_content' => "Define your sim's Do Not Track policy through the Site Messages page.",
+		'message_type' => 'message'),
+	array(
+		'message_key' => 'policy-california',
+		'message_label' => 'California Privacy Rights Policy',
+		'message_content' => "Define your sim's California Privacy Rights policy through the Site Messages page.",
+		'message_type' => 'message'),
 );
 
 $news_categories = array(

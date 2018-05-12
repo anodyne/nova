@@ -702,6 +702,31 @@ abstract class Nova_main extends Nova_controller_main {
 		Template::render();
 	}
 
+	public function policies($policy = 'privacy')
+	{
+		$headers = array(
+			'privacy' => "Privacy Policy",
+			'cookie' => "Cookies Policy",
+			'do-not-track' => "Do Not Track Policy",
+			'california' => "California Privacy Rights Policy",
+		);
+
+		$data['header'] = (in_array($policy, $headers)) ? $headers[$policy] : "Policies";
+
+		$message = $this->msgs->get_message("policy-{$policy}");
+		$message = ($message) ?: $this->msgs->get_message('policy-privacy');
+		$data['message'] = $message;
+
+		$data['policies'] = $headers;
+
+		$this->_regions['content'] = Location::view('main_policies', $this->skin, 'main', $data);
+		$this->_regions['title'] .= $data['header'];
+
+		Template::assign($this->_regions);
+
+		Template::render();
+	}
+
 	public function rules()
 	{
 		// header and message
