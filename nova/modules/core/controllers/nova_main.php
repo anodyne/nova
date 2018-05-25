@@ -704,6 +704,9 @@ abstract class Nova_main extends Nova_controller_main {
 
 	public function policies($policy = 'privacy')
 	{
+		$this->load->helper('utility');
+		$this->load->model('users_model', 'users');
+
 		$headers = array(
 			'privacy' => "Privacy Policy",
 			'cookie' => "Cookies Policy",
@@ -715,7 +718,13 @@ abstract class Nova_main extends Nova_controller_main {
 
 		$message = $this->msgs->get_message("policy-{$policy}");
 		$message = ($message) ?: $this->msgs->get_message('policy-privacy');
-		$data['message'] = $message;
+
+		$data['message'] = parse_dynamic_message($message, [
+			'sim_name' => $this->options['sim_name'],
+			'access_log_purge' => $this->options['access_log_purge'],
+			'hosting_company' => $this->options['hosting_company'],
+			'admin_email' => implode(' or ', $this->users->get_gm_emails()),
+		]);
 
 		$data['policies'] = $headers;
 
