@@ -2,6 +2,11 @@
 
 ## 2.5 (25 May 2018)
 
+- Nova is now GDPR compliant.
+- Added the ability for a user to remove their own account. (Thanks to Jon Matterson for his work on this.)
+- Added a privacy policy page.
+- 4 privacy policies as site messages for users to use and modify easily. (Thanks to Bravo Fleet and Jon Matterson for their work on these policies.)
+
 ### Nova Core
 
 - Update Site Bans to default to a level 1 ban if no level is selected.
