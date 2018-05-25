@@ -48,25 +48,25 @@ $button_login = array(
 	<head>
 		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
-		
+
 		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>" />
 		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>" />
 		<meta name="author" content="<?php echo $this->config->item('meta_author');?>" />
-		
+
 		<?php echo $_redirect;?>
-		
+
 		<?php echo link_tag($link);?>
-		
+
 		<!--[if lt IE 9]>
 		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		
+
 		<?php include_once($this->config->item('include_head_main'));?>
-		
+
 		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/jquery.blockUI.js"></script>
-		
+
 		<?php echo $javascript;?>
-		
+
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('body').click(function(event){
@@ -75,12 +75,12 @@ $button_login = array(
 						$.unblockUI();
 					}
 				});
-				
+
 				$('a#userpanel').unbind('click').click(function(){
 					$.blockUI({
 						message: $('#panel'),
-						css: { 
-							border: '0', 
+						css: {
+							border: '0',
 							cursor: 'cursor',
 							background: 'transparent',
 							width: '800px',
@@ -89,11 +89,11 @@ $button_login = array(
 							margin: '0 0 0 -400px'
 						}
 					});
-					
+
 					return false;
 				});
 			});
-			
+
 			// if the escape key is pressed, close the menu
 			$(document).keyup(function(event){
 				if (event.keyCode == 27) {
@@ -106,7 +106,7 @@ $button_login = array(
 		<noscript>
 			<div class="system_warning"><?php echo lang_output('text_javascript_off', '');?></div>
 		</noscript>
-		
+
 		<?php if (Auth::is_logged_in()): ?>
 			<div id="panel" class="hidden">
 				<div class="panel-body">
@@ -124,7 +124,7 @@ $button_login = array(
 				</div>
 			</div>
 		<?php endif;?>
-		
+
 		<header>
 			<div class="wrapper">
 				<div class="signin-container">
@@ -158,7 +158,7 @@ $button_login = array(
 						</div>
 					<?php else: ?>
 						<a href="<?php echo site_url('login/logout');?>" class="signin corner-upper-left corner-upper-right corner-lower-left corner-lower-right"><?php echo ucfirst(lang('actions_logout'));?></a>
-						
+
 						<div class="logged-in-controls">
 							<?php if (Auth::is_logged_in()): ?>
 								<?php echo panel_inbox(true, true, false, '(x)', img($panel['inbox']));?> &nbsp;
@@ -168,9 +168,9 @@ $button_login = array(
 						</div>
 					<?php endif;?>
 				</div>
-			
+
 				<div style="clear:both;"></div>
-				
+
 				<div id="menu">
 					<div class="nav-main">
 						<?php echo $nav_main;?>
@@ -178,24 +178,25 @@ $button_login = array(
 				</div>
 			</div>
 		</header>
-		
+
 		<div class="wrapper">
 			<div id="body">
 				<div class="nav-sub">
 					<?php echo $nav_sub;?>
 				</div>
-			
+
 				<div class="content">
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
 					<?php echo $ajax;?>
-				
+
 					<div style="clear:both;"></div>
 				</div>
-				
+
 				<footer>
-					Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-					<?php echo anchor('main/credits', 'Site Credits');?>
+					Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> |
+					<?php echo anchor('main/credits', 'Site Credits');?>  |
+					<?php echo anchor('main/policies', 'Privacy Policy'); ?>
 				</footer>
 			</div>
 		</div>

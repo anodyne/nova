@@ -44,23 +44,23 @@ $panel = array(
 	<head>
 		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
-		
+
 		<meta name="description" content="<?php echo $this->config->item('meta_desc');?>">
 		<meta name="keywords" content="<?php echo $this->config->item('meta_keywords');?>">
 		<meta name="author" content="<?php echo $this->config->item('meta_author');?>">
-		
+
 		<?php echo $_redirect;?>
-		
+
 		<!-- STYLESHEETS -->
 		<?php echo link_tag($link);?>
-		
+
 		<!--[if lt IE 9]>
 		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		
+
 		<!-- JAVASCRIPT FILES -->
 		<?php include_once($this->config->item('include_head_main'));?>
-		
+
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#userpanel').click(function(){
@@ -69,7 +69,7 @@ $panel = array(
 				});
 			});
 		</script>
-		
+
 		<?php echo $javascript;?>
 	</head>
 	<body>
@@ -81,7 +81,7 @@ $panel = array(
 		<div id="container-top">
 			<div id="menu">
 				<div class="nav-main"><?php echo $nav_main;?></div>
-				
+
 				<div class="panel-controls">
 					<?php if (Auth::is_logged_in()): ?>
 						<?php echo panel_inbox(TRUE, TRUE, FALSE, '(x)', img($panel['inbox']));?> &nbsp;&nbsp;
@@ -92,7 +92,7 @@ $panel = array(
 					<?php endif;?>
 				</div>
 			</div>
-			
+
 			<header>
 				<?php if (Auth::is_logged_in()): ?>
 					<!-- USER PANEL -->
@@ -114,30 +114,31 @@ $panel = array(
 				<?php endif; ?>
 			</header>
 		</div>
-		
+
 		<div id="container-bottom">
 			<div id="body">
 				<!-- SUB NAVIGATION -->
 				<div class="nav-sub">
 					<?php echo $nav_sub;?>
 				</div>
-				
+
 				<!-- PAGE CONTENT -->
 				<div class="content">
 					<?php echo $flash_message;?>
 					<?php echo $content;?>
 					<?php echo $ajax;?>
-					
+
 					<div style="clear:both;">&nbsp;</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- FOOTER -->
 		<div class="wrapper">
 			<footer>
-				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> | 
-				<?php echo anchor('main/credits', 'Site Credits');?>
+				Powered by <strong><?php echo APP_NAME;?></strong> from <a href="http://www.anodyne-productions.com" target="_blank">Anodyne Productions</a> |
+				<?php echo anchor('main/credits', 'Site Credits');?>  |
+				<?php echo anchor('main/policies', 'Privacy Policy'); ?>
 			</footer>
 		</div>
 	</body>
