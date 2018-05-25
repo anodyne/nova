@@ -9,16 +9,16 @@
 		<li><a href="#one"><span><?php echo $label['general'];?></span></a></li>
 		<li><a href="#two"><span><?php echo $label['system'];?></span></a></li>
 		<li><a href="#three"><span><?php echo $label['appearance'];?></span></a></li>
-		
+
 		<?php if (isset($user)): ?>
 			<li><a href="#four"><span><?php echo $label['user'];?></span></a></li>
 		<?php endif; ?>
 	</ul>
-	
+
 	<div id="one">
 		<?php echo form_open('site/settings');?>
 			<?php echo text_output($label['header_gen'], 'h2', 'page-subhead');?>
-			
+
 			<div class="indent-left">
 				<p>
 					<kbd><?php echo $label['name'];?></kbd>
@@ -38,16 +38,36 @@
 					<?php echo form_hidden('old_sim_type', $default['sim_type']);?>
 				</p>
 			</div>
-			
+
+			<br>
+			<?php echo text_output($label['header_hosting'], 'h2', 'page-subhead'); ?>
+
+			<div class="indent-left">
+				<p>
+					<kbd>
+						<?php echo $label['hosting_company']; ?>
+						<a href="#" rel="tooltip" class="fontTiny image" title="<?php echo $label['tt_hosting_company']; ?>"><?php echo img($images['help']); ?></a>
+					</kbd>
+					<?php echo form_input($inputs['hosting_company']); ?>
+				</p>
+				<p>
+					<kbd>
+						<?php echo $label['access_log_purge']; ?>
+						<a href="#" rel="tooltip" class="fontTiny image" title="<?php echo $label['tt_access_log_purge']; ?>"><?php echo img($images['help']); ?></a>
+					</kbd>
+					<?php echo form_input($inputs['access_log_purge']); ?>
+				</p>
+			</div>
+
 			<br />
 			<p><?php echo form_button($button_submit);?></p>
 		<?php echo form_close();?>
 	</div>
-	
+
 	<div id="two">
 		<?php echo form_open('site/settings/1');?>
 			<?php echo text_output($label['header_system'], 'h2', 'page-subhead');?>
-			
+
 			<div class="indent-left">
 				<p>
 					<kbd><?php echo $label['maint'];?></kbd>
@@ -58,7 +78,7 @@
 					<kbd><?php echo $label['updates'];?></kbd>
 					<?php echo form_dropdown('updates', $values['updates'], $default['updates']);?>
 				</p><br />
-				
+
 				<p>
 					<kbd><?php echo $label['date'];?></kbd>
 					<p><?php echo $label['date_format'];?></p>
@@ -79,7 +99,7 @@
 					<?php echo form_radio($inputs['dst_y']) .' '. form_label($label['yes'], 'dst_y');?>
 					<?php echo form_radio($inputs['dst_n']) .' '. form_label($label['no'], 'dst_n');?>
 				</p><br />
-				
+
 				<p>
 					<kbd><?php echo $label['allowed_chars'];?></kbd>
 					<?php echo form_input($inputs['allowed_playing_chars']);?>
@@ -88,7 +108,7 @@
 					<kbd><?php echo $label['allowed_npcs'];?></kbd>
 					<?php echo form_input($inputs['allowed_npcs']);?>
 				</p><br />
-				
+
 				<p>
 					<kbd>
 						<?php echo $label['online'];?>&nbsp;
@@ -114,9 +134,9 @@
 					<?php echo form_radio($inputs['participants_n']) .' '. form_label($label['no'], 'participants_n');?>
 				</p>
 			</div><br />
-			
+
 			<?php echo text_output($label['header_email'], 'h2', 'page-subhead');?>
-			
+
 			<div class="indent-left">
 				<p>
 					<kbd><?php echo $label['sysemail'];?></kbd>
@@ -136,18 +156,18 @@
 					<?php echo form_input($inputs['email_address']);?>
 				</p>
 			</div>
-			
+
 			<br />
 			<p><?php echo form_button($button_submit);?></p>
 		<?php echo form_close();?>
 	</div>
-	
+
 	<div id="three">
 		<?php echo form_open('site/settings/2');?>
 			<?php echo text_output($label['header_skins'], 'h2', 'page-subhead');?>
-			
+
 			<?php echo text_output($label['skins_text']);?>
-			
+
 			<div class="indent-left">
 				<p>
 					<kbd><?php echo $label['skin_main'];?></kbd>
@@ -165,9 +185,9 @@
 					&nbsp;<a href="#" class="image preview-wiki" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 				</p>
 			</div><br />
-			
+
 			<?php echo text_output($label['header_options'], 'h2', 'page-subhead');?>
-			
+
 			<div class="indent-left">
 				<p>
 					<kbd><?php echo $label['rank'];?></kbd>
@@ -175,7 +195,7 @@
 					&nbsp; <span id="loading_rank" class="hidden fontSmall gray"><?php echo img($images['loading']);?></span>
 					<p id="rank_img" class="fontSmall gray"><?php echo img($inputs['rank']);?></p>
 				</p><br />
-				
+
 				<p>
 					<kbd><?php echo $label['posts_num'];?></kbd>
 					<?php echo form_input($inputs['list_posts_num']);?>
@@ -188,7 +208,7 @@
 					<kbd><?php echo $label['news_show'];?></kbd>
 					<?php echo form_radio($inputs['show_news_y']);?>
 					<?php echo form_label($label['yes'], 'show_news_y');?>
-					
+
 					<?php echo form_radio($inputs['show_news_n']);?>
 					<?php echo form_label($label['no'], 'show_news_n');?>
 				</p>
@@ -196,7 +216,7 @@
 					<kbd><?php echo $label['logs_show'];?></kbd>
 					<?php echo form_radio($inputs['show_logs_y']);?>
 					<?php echo form_label($label['yes'], 'show_logs_y');?>
-					
+
 					<?php echo form_radio($inputs['show_logs_n']);?>
 					<?php echo form_label($label['no'], 'show_logs_n');?>
 				</p>
@@ -204,7 +224,7 @@
 					<kbd><?php echo $label['posts_show'];?></kbd>
 					<?php echo form_radio($inputs['show_posts_y']);?>
 					<?php echo form_label($label['yes'], 'show_posts_y');?>
-					
+
 					<?php echo form_radio($inputs['show_posts_n']);?>
 					<?php echo form_label($label['no'], 'show_posts_n');?>
 				</p>
@@ -212,7 +232,7 @@
 					<kbd><?php echo $label['use_notes'];?></kbd>
 					<?php echo form_radio($inputs['use_mission_notes_y']);?>
 					<?php echo form_label($label['yes'], 'use_mission_notes_y');?>
-					
+
 					<?php echo form_radio($inputs['use_mission_notes_n']);?>
 					<?php echo form_label($label['no'], 'use_mission_notes_n');?>
 				</p>
@@ -220,7 +240,7 @@
 					<kbd><?php echo $label['sample_post'];?></kbd>
 					<?php echo form_radio($inputs['use_sample_post_y']);?>
 					<?php echo form_label($label['yes'], 'use_sample_post_y');?>
-					
+
 					<?php echo form_radio($inputs['use_sample_post_n']);?>
 					<?php echo form_label($label['no'], 'use_sample_post_n');?>
 				</p>
@@ -231,29 +251,29 @@
 					</kbd>
 					<?php echo form_radio($inputs['post_count_multi']);?>
 					<?php echo form_label($label['count_multiple'], 'post_count_multi');?>
-					
+
 					<?php echo form_radio($inputs['post_count_single']);?>
 					<?php echo form_label($label['count_single'], 'post_count_single');?>
 				</p>
 			</div>
-			
+
 			<br />
 			<p><?php echo form_button($button_submit);?></p>
 		<?php echo form_close();?>
 	</div>
-	
+
 	<?php if (isset($user)): ?>
 		<div id="four">
 			<?php echo form_open('site/settings/3');?>
 				<?php echo text_output($label['header_user'], 'h2', 'page-subhead');?>
-				
+
 				<?php foreach ($user as $u): ?>
 					<p>
 						<kbd><?php echo $u['label'];?></kbd>
 						<?php echo form_input($u['key'], $u['value']);?>
 					</p>
 				<?php endforeach; ?>
-				
+
 				<br />
 				<p><?php echo form_button($button_submit);?></p>
 			<?php echo form_close();?>

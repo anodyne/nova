@@ -157,6 +157,10 @@ $lang['info_posting_participants'] = "Smart post participants is a way to ensure
 
 $lang['info_post_count_format'] = 'Nova allows GMs to count posts in one of two ways. The first way (and default) is <strong>multiple</strong>. This format counts a post as many times as there are authors on the post. If a post has 3 authors, it will count as 3 posts. The second way is <strong>single</strong>. The single format counts a post once regardless of how many authors were part it.';
 
+$lang['info_hosting_company'] = 'To comply with the European Union General Data Protection Regulation (GDPR), we need to provide the name of the hosting company that could potentially have user data shared with them. Please enter the full name of your hosting company which will be inserted into the privacy policy.';
+
+$lang['info_access_log_purge'] = 'How often are access logs (which generally include IP addresses) purged? If you do not know the answer to this question, please check with your hosting company.';
+
 /*
 |---------------------------------------------------------------
 | SHORT MESSAGES
