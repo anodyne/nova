@@ -9,72 +9,72 @@
  */
 
 class Nova_controller_main extends CI_Controller {
-	
+
 	/**
 	 * @var	array 	The options array that stores all the settings from the database
 	 */
 	public $options;
-	
+
 	/**
 	 * @var	string	The current skin
 	 */
 	public $skin;
-	
+
 	/**
 	 * @var string	The current rank set
 	 */
 	public $rank;
-	
+
 	/**
 	 * @var	string	The current timezone
 	 */
 	public $timezone;
-	
+
 	/**
 	 * @var	bool	The current daylight savings time setting
 	 */
 	public $dst;
-	
+
 	/**
 	 * @var	array 	Variable to store all the information about template regions
 	 */
 	protected $_regions = array();
-	
+
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		// load the nova core module
 		$this->load->module('core', 'nova', MODPATH);
-		
+
 		if ( ! file_exists(APPPATH.'config/database.php'))
 		{
 			redirect('install/setupconfig');
 		}
-		
+
 		$this->load->database();
 		$this->load->model('system_model', 'sys');
-        
+
 		$this->sys->prepare_database_session();
-		
+
 		// check to see if the system is installed
 		$installed = $this->sys->check_install_status();
-		
+
 		if ( ! $installed)
 		{
 			redirect('install/index', 'refresh');
 		}
-		
+
 		// these need to be loaded after the install check to prevent errors
 		$this->load->library('session');
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('messages_model', 'msgs');
 		$this->load->model('characters_model', 'char');
 		$this->load->model('users_model', 'user');
-		
+
 		// are we logged in?
 		Auth::is_logged_in();
-		
+
 		// these are the options we want to pull for all main pagesg
 		$settings_array = array(
 			'skin_main',
@@ -94,17 +94,19 @@ class Nova_controller_main extends CI_Controller {
 			'list_logs_num',
 			'list_posts_num',
 			'post_count_format',
+			'access_log_purge',
+			'hosting_company',
 		);
-		
+
 		// set the options
 		$this->options = $this->settings->get_settings($settings_array);
-		
+
 		// set the initial values
 		$this->skin = $this->options['skin_main'];
 		$this->rank = $this->options['display_rank'];
 		$this->timezone = $this->options['timezone'];
 		$this->dst = (bool) $this->options['daylight_savings'];
-		
+
 		// if the user is logged in, reset the values
 		if (Auth::is_logged_in())
 		{
@@ -115,13 +117,13 @@ class Nova_controller_main extends CI_Controller {
 			$this->timezone = $this->session->userdata('timezone');
 			$this->dst = (bool) $this->session->userdata('dst');
 		}
-		
+
 		// load the language file
 		$this->lang->load('app', $this->session->userdata('language'));
-		
+
 		// set the template file
 		Template::$file = $this->skin.'/template_main';
-		
+
 		// assign all of the items to the template with false values to prevent errors
 		$this->_regions += array(
 			'nav_main'		=> Menu::build('main', 'main'),
@@ -133,7 +135,7 @@ class Nova_controller_main extends CI_Controller {
 			'_redirect'		=> false,
 			'title'			=> $this->options['sim_name'].' :: ',
 		);
-		
+
 		// set up the user panel if the user is logged in
 		if (Auth::is_logged_in())
 		{
@@ -144,5 +146,20 @@ class Nova_controller_main extends CI_Controller {
 				'panel_workflow'	=> $this->user_panel->panel_workflow(),
 			);
 		}
+	}
+
+	protected function renderController($data, $view, $jsView = false)
+	{
+		$this->_regions['content'] = Location::view($view, $this->skin, 'main', $data);
+
+		if ($jsView) {
+			$this->_regions['javascript'] = Location::js("$view_js", $this->skin, 'main');
+		}
+
+		$this->_regions['title'] .= (array_key_exists('title', $data)) ? $data['title'] : $data['header'];
+
+		Template::assign($this->_regions);
+
+		Template::render();
 	}
 }
