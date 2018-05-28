@@ -628,6 +628,16 @@ $modify_column = array(
 		'loa_reason' => array(
 			'type' => 'TEXT',
 			'null' => TRUE
+		),
+		'loa_start_date' => array(
+			'type' => $date_type,
+			'constraint' => $date_constraint,
+			'null' => TRUE
+		),
+		'loa_end_date' => array(
+			'type' => $date_type,
+			'constraint' => $date_constraint,
+			'null' => TRUE
 		)
 	),
 	'user_prefs' => array(
