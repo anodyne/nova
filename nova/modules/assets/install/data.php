@@ -2079,6 +2079,14 @@ $settings = array(
 		'setting_key' => 'use_post_participants',
 		'setting_value' => 'y',
 		'setting_user_created' => 'n'),
+	array(
+		'setting_key' => 'hosting_company',
+		'setting_value' => '',
+		'setting_user_created' => 'n'),
+	array(
+		'setting_key' => 'access_log_purge',
+		'setting_value' => '24 hours',
+		'setting_user_created' => 'n'),
 );
 
 $sim_type = array(
