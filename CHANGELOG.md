@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1 (5 June 2018)
+
+- Fixed an issue where the new settings added for privacy policies didn't work on fresh installs.
+
 ## 2.5 (25 May 2018)
 
 - Nova is now GDPR compliant.

@@ -1,8 +1,8 @@
-version: 2.4.11
+version: 2.5.1
 version_major: 2
-version_minor: 4
-version_update: 11
+version_minor: 5
+version_update: 1
 severity: minor
-notes: Nova 2.4.11 addresses issues with how site bans are created. Additionally, we've updated the default database driver for new installs from MySQL to MySQLi.
-date: 23 June 2017
+notes: Nova 2.5.1 addresses an issue where fresh installs wouldn't be able to use the new settings added for the privacy policies.
+date: 5 June 2018
 link: http://anodyne-productions.com/nova
