@@ -6,16 +6,10 @@
 
 <?php if ($this->uri->segment(3) == 'full'): ?>
 	<br />
-	
+
 	<?php echo text_output($label['firststeps'], 'h2', 'page-subhead');?>
-	
+
 	<ul id="options" class="fontLarge none">
-		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova1/tour/index" target="_blank">
-				<span class="icon ui-icon ui-icon-search"></span>
-				<?php echo $label['options_tour'];?>
-			</a>
-		</li>
 		<li>
 			<a href="<?php echo site_url('install/readme');?>">
 				<span class="icon ui-icon ui-icon-lightbulb"></span>
@@ -29,12 +23,12 @@
 			</a>
 		</li>
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova2/start/install" target="_blank">
+			<a href="https://help.anodyne-productions.com/article/nova-2/install" target="_blank">
 				<span class="icon ui-icon ui-icon-bookmark"></span>
 				<?php echo $label['options_guide'];?>
 			</a>
 		</li>
-		
+
 		<?php if ($installed === TRUE): ?>
 			<li>
 				<a href="<?php echo site_url('install/remove');?>">
@@ -44,9 +38,9 @@
 			</li>
 		<?php endif;?>
 	</ul>
-	
+
 	<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
-	
+
 	<ul class="fontLarge none">
 		<?php if ($installed === FALSE): ?>
 			<li>
@@ -62,7 +56,7 @@
 				</a>
 			</li>
 		<?php endif;?>
-		
+
 		<?php if ($installed === TRUE): ?>
 			<li>
 				<a href="<?php echo site_url('update/index');?>">

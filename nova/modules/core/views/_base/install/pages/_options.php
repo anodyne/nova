@@ -4,11 +4,6 @@
 
 <ul>
 	<li>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/tour" target="_blank">
-			<?php echo lang('install_index_options_tour');?>
-		</a>
-	</li>
-	<li>
 		<a href="<?php echo site_url('install/readme');?>">
 			<?php echo lang('install_index_options_readme');?>
 		</a>
@@ -19,11 +14,11 @@
 		</a>
 	</li>
 	<li>
-		<a href="http://docs.anodyne-productions.com/index.php/nova/overview/install" target="_blank">
+		<a href="https://help.anodyne-productions.com/article/nova-2/install" target="_blank">
 			<?php echo lang('install_index_options_guide');?>
 		</a>
 	</li>
-	
+
 	<?php if ($installed === TRUE): ?>
 		<li>
 			<a href="<?php echo site_url('install/remove');?>">
@@ -48,7 +43,7 @@
 			</a>
 		</li>
 	<?php endif;?>
-	
+
 	<?php if ($installed === TRUE): ?>
 		<li>
 			<a href="<?php echo site_url('update/index');?>">

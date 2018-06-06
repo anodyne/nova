@@ -14,7 +14,7 @@
 
 <h2>Clean Install Guide</h2>
 
-<p>If you want to do a fresh install of Nova, you should read the <a href="http://docs.anodyne-productions.com/index.php/nova2/start/install" target="_blank">install guide</a> before you begin. If you don't understand something in the install guide, you should ask any questions you have on the <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne support forums</a> before you attempt to install Nova. If you've read the install guide and are ready to proceed, you'll need the following items:</p>
+<p>If you want to do a fresh install of Nova, you should read the <a href="https://help.anodyne-productions.com/article/nova-2/install" target="_blank">install guide</a> before you begin. If you don't understand something in the install guide, you should ask any questions you have on the <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne support forums</a> before you attempt to install Nova. If you've read the install guide and are ready to proceed, you'll need the following items:</p>
 
 <ul class="square">
 	<li>A webserver with at least 10MB of disk space</li>
@@ -27,7 +27,7 @@
 
 <h2>Upgrade Guide</h2>
 
-<p>If you want to upgrade from SMS 2 to Nova, you should read the <a href="http://docs.anodyne-productions.com/index.php/nova2/start/sms" target="_blank">upgrade guide</a> before you begin. If you don't understand something in the upgrade guide, you should ask any questions you have on the <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne support forums</a> before you attempt to upgrade SMS to Nova. If you've read the upgrade guide and are ready to proceed, you'll need the following items:</p>
+<p>If you want to upgrade from SMS 2 to Nova, you should read the <a href="https://help.anodyne-productions.com/article/nova-1/upgrade" target="_blank">upgrade guide</a> before you begin. If you don't understand something in the upgrade guide, you should ask any questions you have on the <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne support forums</a> before you attempt to upgrade SMS to Nova. If you've read the upgrade guide and are ready to proceed, you'll need the following items:</p>
 
 <ul class="square">
 	<li>A webserver with at least 10MB of disk space</li>

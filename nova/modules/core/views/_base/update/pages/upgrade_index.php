@@ -7,11 +7,6 @@
 
 	<ul id="options" class="fontLarge none">
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova1/tour/index" target="_blank">
-				<?php echo $label['options_tour'];?>
-			</a>
-		</li>
-		<li>
 			<a href="<?php echo site_url('upgrade/readme');?>">
 				<?php echo $label['options_readme'];?>
 			</a>
@@ -22,7 +17,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="http://docs.anodyne-productions.com/index.php/nova2/start/sms" target="_blank">
+			<a href="https://help.anodyne-productions.com/article/nova-1/upgrade" target="_blank">
 				<?php echo $label['options_guide'];?>
 			</a>
 		</li>
@@ -30,9 +25,9 @@
 
 	<?php if ($installed === FALSE): ?>
 		<?php echo text_output($label['whatsnext'], 'h2', 'page-subhead');?>
-	
+
 		<?php echo $label['text'];?>
-	
+
 		<br />
 		<?php echo form_open('upgrade/step/1');?>
 			<?php echo form_button($next);?>
