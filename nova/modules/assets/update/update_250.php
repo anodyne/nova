@@ -151,3 +151,20 @@ if ($drop_column !== null)
 		$this->dbforge->drop_column($key, $value[0]);
 	}
 }
+
+$query = $this->db->get_where('settings', array('setting_key' => 'hosting_company'));
+
+if ($query->num_rows() == 0)
+{
+	$this->db->insert('settings', array(
+		'setting_key' => 'hosting_company',
+		'setting_value' => '',
+		'setting_user_created' => 'n'
+	));
+
+	$this->db->insert('settings', array(
+		'setting_key' => 'access_log_purge',
+		'setting_value' => '24 hours',
+		'setting_user_created' => 'n'
+	));
+}
