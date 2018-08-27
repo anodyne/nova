@@ -6,6 +6,7 @@ $autoload['libraries'] = array(
 	'template',
 	'menu',
 	'auth',
+	'event',
 	'user_panel',
 	'location',
 	'util'
