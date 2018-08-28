@@ -1387,6 +1387,7 @@ abstract class Nova_characters extends Nova_controller_admin {
 		
 		$data['label'] = array(
 			'character' => ucfirst(lang('global_character')),
+			'assignment' => ucfirst(lang('assignment')),
 			'fname' => ucwords(lang('order_first') .' '. lang('labels_name')),
 			'images' => ucfirst(lang('labels_images')),
 			'info' => ucfirst(lang('labels_info')),
