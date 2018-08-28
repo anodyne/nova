@@ -255,7 +255,7 @@ abstract class Nova_location {
 			$location = $obj->skin.'/'.$obj->sec.'/pages/'.$obj->view;
 		}
 		
-		$ci->event->trigger(['location', 'view', 'data', $obj->sec, $obj->view], [
+		$ci->event->fire(['location', 'view', 'data', $obj->sec, $obj->view], [
 			'data' => &$data
 		]);
 		
@@ -264,7 +264,7 @@ abstract class Nova_location {
 			if ($obj->skin == '_base')
 			{
 				$output = $ci->nova->view($location, $data, true);
-				$ci->event->trigger(['location', 'view', 'output', $obj->sec, $obj->view], [
+				$ci->event->fire(['location', 'view', 'output', $obj->sec, $obj->view], [
 					'data' => &$data,
 					'output' => &$output
 				]);
@@ -273,7 +273,7 @@ abstract class Nova_location {
 			else
 			{
 				$output = $ci->load->view($location, $data, true);
-				$ci->event->trigger(['location', 'view', $obj->sec, $obj->view, 'output'], [
+				$ci->event->fire(['location', 'view', $obj->sec, $obj->view, 'output'], [
 					'data' => &$data,
 					'output' => &$output
 				]);

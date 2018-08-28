@@ -1164,9 +1164,10 @@ class CI_DB_active_record extends CI_DB_driver {
 	function insert($table = '', $set = NULL)
 	{
 		$ci =& get_instance();
+		
 		if($table && ($routerClass = $ci->router->fetch_class()) && ($routerMethod = $ci->router->fetch_method()))
 		{
-			$ci->event->trigger([
+			$ci->event->fire([
 				'db',
 				'insert',
 				'prepare',
@@ -1278,9 +1279,10 @@ class CI_DB_active_record extends CI_DB_driver {
 		$this->_merge_cache();
 		
 		$ci =& get_instance();
+		
 		if($table && ($routerClass = $ci->router->fetch_class()) && ($routerMethod = $ci->router->fetch_method()))
 		{
-			$ci->event->trigger([ 
+			$ci->event->fire([ 
 				'db',
 				'update',
 				'prepare',
@@ -1560,9 +1562,10 @@ class CI_DB_active_record extends CI_DB_driver {
 		$abort = false;
 		
 		$ci =& get_instance();
+		
 		if($table && ($routerClass = $ci->router->fetch_class()) && ($routerMethod = $ci->router->fetch_method()))
 		{
-			$ci->event->trigger([ 
+			$ci->event->fire([ 
 				'db',
 				'delete',
 				'prepare',

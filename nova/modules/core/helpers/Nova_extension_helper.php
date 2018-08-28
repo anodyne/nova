@@ -80,7 +80,7 @@ class Nova_extension_container implements ArrayAccess {
 			$location = $obj->skin.'/'.$obj->sec.'/pages/'.$obj->view;
 		}
 		
-		$ci->event->trigger(['location', 'view', 'data', $obj->sec, $obj->view], [
+		$ci->event->fire(['location', 'view', 'data', $obj->sec, $obj->view], [
 			'data' => &$data
 		]);
 		
@@ -97,7 +97,7 @@ class Nova_extension_container implements ArrayAccess {
               '_ci_path' => $path,
               '_ci_return' => true
             ));
-						$ci->event->trigger(['location', 'view', 'output', $obj->sec, $obj->view], [
+						$ci->event->fire(['location', 'view', 'output', $obj->sec, $obj->view], [
 							'data' => &$data,
 							'output' => &$output
 						]);
@@ -106,7 +106,7 @@ class Nova_extension_container implements ArrayAccess {
 				}
 				
 				$output = $ci->nova->view($location, $data, true);
-				$ci->event->trigger(['location', 'view', 'output', $obj->sec, $obj->view], [
+				$ci->event->fire(['location', 'view', 'output', $obj->sec, $obj->view], [
 					'data' => &$data,
 					'output' => &$output
 				]);
@@ -115,7 +115,7 @@ class Nova_extension_container implements ArrayAccess {
 			else
 			{
 				$output = $ci->load->view($location, $data, true);
-				$ci->event->trigger(['location', 'view', $obj->sec, $obj->view, 'output'], [
+				$ci->event->fire(['location', 'view', $obj->sec, $obj->view, 'output'], [
 					'data' => &$data,
 					'output' => &$output
 				]);

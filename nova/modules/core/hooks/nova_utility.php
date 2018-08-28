@@ -120,9 +120,7 @@ abstract class Nova_utility {
 		$ci =& get_instance();
 		
 		$ci->config->load('extensions');
-
 		$ci->load->library('extension');
-
 		$ci->load->helper('extension');
 		
 		$extensions = $ci->config->item('extensions');
@@ -131,7 +129,6 @@ abstract class Nova_utility {
 		
 		foreach($extensions['enabled'] as $extensionName)
 		{
-			
 			if(!is_dir(APPPATH.'extensions/'.$extensionName.'/'))
 			{
 				show_error('Extension missing: '.$extensionName);

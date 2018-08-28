@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
  * Container for accessing the {@see Nova_extension_container} objects
  * instantiated for each loaded extension. These can be accessed such as:
@@ -21,12 +22,12 @@
  * @package		Nova
  * @category	Library
  * @author		Anodyne Productions
- * @copyright	2015 Anodyne Productions
+ * @copyright	2018 Anodyne Productions
  */
 
 abstract class Nova_extension implements ArrayAccess {
   
-  public $facades = array();
+  public $facades = [];
 
   public function offsetSet($offset, $value)
   {
