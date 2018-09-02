@@ -53,6 +53,23 @@ class Nova_extension_container implements ArrayAccess {
 		}
 	}
 	
+	public function inline_css($name, $section, $data = null)
+	{
+		$ci =& get_instance();
+		$path = APPPATH.'extensions/'.$this->name.'/views/'.$section.'/css/'.$name.'.css';
+		$output = $ci->load->_ci_load(array(
+			'_ci_vars' => $ci->load->_ci_object_to_array($data), 
+			'_ci_path' => $path,
+			'_ci_return' => true
+		));
+		return '<style>'.$output.'</style>';
+	}
+	
+	public function url($path)
+	{
+		return site_url('extensions/'.$this->name.'/'.$path);
+	}
+	
 	public function view($view, $skin, $section, $data = null)
 	{
 		$ci =& get_instance();

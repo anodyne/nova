@@ -172,6 +172,22 @@ abstract class Nova_template
 		// get an instance of CI
 		$ci =& get_instance();
 		
+		$routerClass = $ci->router->fetch_class();
+		$routerMethod = $ci->router->fetch_method();
+		
+		if($routerClass && $routerMethod)
+		{
+			$ci->event->fire([
+				'template',
+				'render',
+				'data',
+				$routerClass, 
+				$routerMethod
+			], [
+				'data' => &self::$data
+			]);
+		}
+		
 		$out = '';
 		ob_start();
 
@@ -202,6 +218,20 @@ abstract class Nova_template
 		
 		$buffer = str_replace('{elapsed_time}', $elapsed, $buffer);
 		$buffer = str_replace('{memory_usage}', $memory, $buffer);
+		
+		if($routerClass && $routerMethod)
+		{
+			$ci->event->fire([
+				'template',
+				'render',
+				'output',
+				$routerClass, 
+				$routerMethod
+			], [
+				'data' => &self::$data,
+				'output' => $buffer
+			]);
+		}
 		
 		if ($return)
 		{
