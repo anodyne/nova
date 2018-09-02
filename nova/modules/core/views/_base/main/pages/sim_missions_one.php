@@ -45,7 +45,7 @@
 				<tr>
 					<td class="cell-label"><?php echo $label['desc'];?></td>
 					<td class="cell-spacer"></td>
-					<td><?php echo $basic['desc'];?></td>
+					<td><?php echo text_output($basic['desc']);?></td>
 				</tr>
 				<?php if (is_array($basic['group'])): ?>
 					<?php echo table_row_spacer(3, 10);?>
