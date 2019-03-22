@@ -29,6 +29,11 @@ abstract class Nova_event {
    */
   public function fire($event, $payload)
   {
+    if(is_string($event))
+    {
+      $event = explode('.', $event);
+    }
+
     $callbacks = $this->fetch_callbacks_for_event($event);
     
     // Send the name of the event with the special key _ci_event in case a 
@@ -81,6 +86,10 @@ abstract class Nova_event {
   public function listen($event, $callback)
   {  
     $callback_subarray_pointer =& $this->callbacks;
+    
+    if(is_string($event)){
+        $event = explode('.', $event);
+    }
     
     while($event_segment = array_shift($event))
     {

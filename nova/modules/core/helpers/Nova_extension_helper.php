@@ -108,18 +108,18 @@ class Nova_extension_container implements ArrayAccess {
 				if(!file_exists($ci->nova->_path.'views/'.$location.'.php')){
 					$path = APPPATH.'extensions/'.$this->name.'/views/'.$section.'/pages/'.$view.'.php';
 					if(file_exists($path)){
-            $output = $ci->load->_ci_load(array(
-              '_ci_view' => $location, 
-              '_ci_vars' => $ci->load->_ci_object_to_array($data), 
-              '_ci_path' => $path,
-              '_ci_return' => true
-            ));
+			            $output = $ci->load->_ci_load(array(
+			              '_ci_view' => $location, 
+			              '_ci_vars' => $ci->load->_ci_object_to_array($data), 
+			              '_ci_path' => $path,
+			              '_ci_return' => true
+			            ));
 						$ci->event->fire(['location', 'view', 'output', $obj->sec, $obj->view], [
 							'data' => &$data,
 							'output' => &$output
 						]);
-            return $output;
-          }
+            			return $output;
+          			}
 				}
 				
 				$output = $ci->nova->view($location, $data, true);
@@ -143,32 +143,32 @@ class Nova_extension_container implements ArrayAccess {
 		return $location;
 	}
 
-  public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value)
 	{
-    if(is_null($offset))
+    	if(is_null($offset))
 		{
-      show_error('Extension append by integer not allowed');
-    }
+      		show_error('Extension append by integer not allowed');
+    	}
 		else
 		{
-      $this->facades[$offset] = $value;
-    }
-  }
+      		$this->facades[$offset] = $value;
+    	}
+	}
 
-  public function offsetExists($offset)
+	public function offsetExists($offset)
 	{
-    return isset($this->facades[$offset]);
-  }
+    	return isset($this->facades[$offset]);
+ 	}
 
-  public function offsetUnset($offset)
+	public function offsetUnset($offset)
 	{
-    unset($this->facades[$offset]);
-  }
+    	unset($this->facades[$offset]);
+	}
 
-  public function offsetGet($offset)
+	public function offsetGet($offset)
 	{
-    return isset($this->facades[$offset]) ? $this->facades[$offset] : null;
-  }
+    	return isset($this->facades[$offset]) ? $this->facades[$offset] : null;
+	}
 }
 
 /**
