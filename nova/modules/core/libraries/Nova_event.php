@@ -87,7 +87,8 @@ abstract class Nova_event {
   {  
     $callback_subarray_pointer =& $this->callbacks;
     
-    if(is_string($event)){
+    if(is_string($event))
+    {
         $event = explode('.', $event);
     }
     
