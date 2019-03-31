@@ -65,6 +65,18 @@ class Nova_extension_container implements ArrayAccess {
 		return '<style>'.$output.'</style>';
 	}
 	
+	public function inline_js($name, $section, $data = null)
+	{
+		$ci =& get_instance();
+		$path = APPPATH.'extensions/'.$this->name.'/views/'.$section.'/js/'.$name.'.js';
+		$output = $ci->load->_ci_load(array(
+			'_ci_vars' => $ci->load->_ci_object_to_array($data), 
+			'_ci_path' => $path,
+			'_ci_return' => true
+		));
+		return '<script type="text/javascript">'.$output.'</script>';
+	}
+	
 	public function url($path)
 	{
 		return site_url('extensions/'.$this->name.'/'.$path);
@@ -85,11 +97,11 @@ class Nova_extension_container implements ArrayAccess {
 		}
 		else
 		{
-			if (is_file(APPPATH.'views/'.$skin.'/'.$section.'/pages/'.$view.'.php'))
+			if (is_file(APPPATH.'views/'.$skin.'/'.$obj->sec.'/pages/'.$view.'.php'))
 			{
 				$obj->skin = $skin;
 			}
-			elseif (is_file(APPPATH.'views/_base_override/'.$section.'/pages/'.$view.'.php'))
+			elseif (is_file(APPPATH.'views/_base_override/'.$obj->sec.'/pages/'.$view.'.php'))
 			{
 				$obj->skin = '_base_override';
 			}
