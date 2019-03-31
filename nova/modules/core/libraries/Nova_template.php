@@ -229,7 +229,7 @@ abstract class Nova_template
 				$routerMethod
 			], [
 				'data' => &self::$data,
-				'output' => $buffer
+				'output' => &$buffer
 			]);
 		}
 		
