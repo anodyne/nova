@@ -255,15 +255,29 @@ abstract class Nova_location {
 			$location = $obj->skin.'/'.$obj->sec.'/pages/'.$obj->view;
 		}
 		
+		$ci->event->fire(['location', 'view', 'data', $obj->sec, $obj->view], [
+			'data' => &$data
+		]);
+		
 		if ($data !== null)
 		{
 			if ($obj->skin == '_base')
 			{
-				return $ci->nova->view($location, $data, true);
+				$output = $ci->nova->view($location, $data, true);
+				$ci->event->fire(['location', 'view', 'output', $obj->sec, $obj->view], [
+					'data' => &$data,
+					'output' => &$output
+				]);
+				return $output;
 			}
 			else
 			{
-				return $ci->load->view($location, $data, true);
+				$output = $ci->load->view($location, $data, true);
+				$ci->event->fire(['location', 'view', $obj->sec, $obj->view, 'output'], [
+					'data' => &$data,
+					'output' => &$output
+				]);
+				return $output;
 			}
 		}
 		

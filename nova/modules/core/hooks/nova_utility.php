@@ -108,4 +108,61 @@ abstract class Nova_utility {
 			}
 		}
 	}
+	
+	/**
+	 * Loads any enabled extensions
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	public function extensions()
+	{
+		$ci =& get_instance();
+		
+		$ci->config->load('extensions');
+		$ci->load->library('extension');
+		$ci->load->helper('extension');
+		
+		$extensions = $ci->config->item('extensions');
+		
+		$requiredExtensions = [];
+		
+		foreach($extensions['enabled'] as $extensionName)
+		{
+			if(!is_dir(APPPATH.'extensions/'.$extensionName.'/'))
+			{
+				show_error('Extension missing: '.$extensionName);
+			}
+			
+			$ci->extension[$extensionName] = new Extension_container($extensionName);
+			$ci->extension[$extensionName]->initialize();
+			
+			foreach($ci->extension[$extensionName]->required_extensions as $requiredExtension)
+			{
+				if(!isset($requiredExtensions[$requiredExtension]))
+				{
+					$requiredExtensions[$requiredExtension] = [];
+				}
+				
+				$requiredExtensions[$requiredExtension][] = $extensionName;
+			}
+			
+		}
+		
+		$missingRequiredExtensions = [];
+		
+		foreach($requiredExtensions as $requiredExtensionName => $requiringExtensions)
+		{
+			if(!isset($ci->extension[$requiredExtensionName]))
+			{
+				$missingRequiredExtensions[] = $requiredExtensionName.' (required by: '.implode(', ', array_unique($requiringExtensions)).')';
+			}
+		}
+		
+		if(count($missingRequiredExtensions))
+		{
+			show_error('Required extension(s) not included: '.implode(', ', $missingRequiredExtensions));
+		}
+		
+	}
 }

@@ -243,12 +243,34 @@
 	// Load the local application controller
 	// Note: The Router class automatically validates the controller path using the router->_validate_request().
 	// If this include fails it means that the default controller in the Routes.php file is not resolving to something valid.
-	if ( ! file_exists(APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().'.php'))
+	if (file_exists(APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().'.php'))
+	{
+		include(APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().'.php');
+	}
+	// Load extension controllers that have been overridden are are stored within
+	// subdirs inside application/controllers instead of the root controllers dir
+	elseif (preg_match('/^extensions__/', $RTR->fetch_class()) && file_exists(APPPATH.'controllers/'.$RTR->fetch_directory().str_replace('__', '/', $RTR->fetch_class()).'.php'))
+	{
+		include(APPPATH.'controllers/'.$RTR->fetch_directory().str_replace('__', '/', $RTR->fetch_class()).'.php');
+	}
+	// Load extension controllers from the extension's directory
+	elseif (preg_match('/^__extensions__(.*)/', $RTR->fetch_class(), $extension_match))
+	{
+		$extension_match = explode('__', $extension_match[1], 2);
+		if(count($extension_match) == 2 && file_exists(APPPATH.'extensions/'.$extension_match[0].'/controllers/'.$extension_match[1].'.php'))
+		{
+			include(APPPATH.'extensions/'.$extension_match[0].'/controllers/'.$extension_match[1].'.php');
+		}
+		else
+		{
+			show_error('Unable to load extension controller.');
+		}
+	}
+	else
 	{
 		show_error('Unable to load your default controller. Please make sure the controller specified in your Routes.php file is valid.');
 	}
 
-	include(APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().'.php');
 
 	// Set a mark point for benchmarking
 	$BM->mark('loading_time:_base_classes_end');

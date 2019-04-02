@@ -12,6 +12,14 @@
 
 $hook['post_controller_constructor'][] = array(
 	'class'		=> 'Utility',
+	'function'	=> 'extensions',
+	'filename'	=> 'Utility.php',
+	'filepath'	=> 'hooks',
+	'params'	=> ''
+);
+
+$hook['post_controller_constructor'][] = array(
+	'class'		=> 'Utility',
 	'function'	=> 'browser',
 	'filename'	=> 'Utility.php',
 	'filepath'	=> 'hooks',
