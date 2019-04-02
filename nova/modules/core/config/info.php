@@ -1,16 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-define('APP_NAME',				'Nova');
+if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
-define('APP_VERSION',			'2.5.1');
-define('APP_VERSION_MAJOR',		2);
-define('APP_VERSION_MINOR',		5);
-define('APP_VERSION_UPDATE',	1);
+define('APP_NAME', 'Nova');
 
-define('WIKI_NAME',				'Thresher');
-define('WIKI_VERSION',			'Release 2');
+define('APP_VERSION', '2.6.0');
+define('APP_VERSION_MAJOR', 2);
+define('APP_VERSION_MINOR', 6);
+define('APP_VERSION_UPDATE', 0);
 
-define('SMS_UPGRADE_VERSION',	'2.6.9');
+define('WIKI_NAME', 'Thresher');
+define('WIKI_VERSION', 'Release 2');
+
+define('SMS_UPGRADE_VERSION', '2.6.9');
 
 //define('VERSION_FEED', MODPATH.'assets/version.yml');
 define('VERSION_FEED', 'http://www.anodyne-productions.com/feeds/version_nova.yml');

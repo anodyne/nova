@@ -1,8 +1,8 @@
-version: 2.5.1
+version: 2.6.0
 version_major: 2
-version_minor: 5
-version_update: 1
+version_minor: 6
+version_update: 0
 severity: minor
-notes: Nova 2.5.1 addresses an issue where fresh installs wouldn't be able to use the new settings added for the privacy policies.
-date: 5 June 2018
+notes: Nova 2.6.0 adds two experimental features that we're putting into beta for the remainder of Nova 2's lifecycle. The first is an event system that allows mod developers to write more robust mods that listen for specific events during Nova's lifecycle. The second is an extension system that gives mod developers more powerful tools to extend and change Nova.
+date: 3 April 2019
 link: http://anodyne-productions.com/nova

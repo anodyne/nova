@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6 (3 April 2019)
+
+- Added an events system. This system is experimental and offered as a purely beta feature for developers to use for the remainder of Nova 2's life.
+- Added an extensions system. This system is experimental and offered as a purely beta feature for developers to use for the remainder of Nova 2's life.
+- Updated the character bio form with a heading above the position and rank fields.
+- Updated the mission management pages to provide proper spacing for mission descriptions longer than 1 paragraph.
+- Updated the positioning of the submit button on the character bio form for better semantics.
+- Updated the margins for lists in the wiki section to be more consistent with the rest of the application.
+
 ## 2.5.1 (5 June 2018)
 
 - Fixed an issue where the new settings added for privacy policies didn't work on fresh installs.
@@ -312,13 +321,13 @@
 - When composing a mission post, personal log or private message, users only have to start typing a name and the options will be narrowed down for them. ([#23](https://github.com/anodyne/nova/issues/23))
 - The skin catalogue now allows removing an entire skin (with sections) and letting admins choose which skin users will beupdated to for each section.
 - The user account page now has options to make activating and deactivating users a lot easier.
-    - When deactivating a user, all active characters associated with that account with also be deactivated.
-    - When activating a user, admins will be prompted about which of the user's inactive characters should be reactivated.
+  - When deactivating a user, all active characters associated with that account with also be deactivated.
+  - When activating a user, admins will be prompted about which of the user's inactive characters should be reactivated.
 - The character bio page now has options to make activating and deactivating characters a lot easier.
-    - Activating an inactive character (and all related actions) can now be done with the push of a button.
-    - Deactivating an active character (and all related actions) can now be done with the push of a button.
-    - Making an NPC an active character (and all related actions) can now be done with the push of a button.
-    - Making a character an NPC (and all related actions) can now be done with the push of a button.
+  - Activating an inactive character (and all related actions) can now be done with the push of a button.
+  - Deactivating an active character (and all related actions) can now be done with the push of a button.
+  - Making an NPC an active character (and all related actions) can now be done with the push of a button.
+  - Making a character an NPC (and all related actions) can now be done with the push of a button.
 - When viewing a character's posts, the entries will be paginated to help with load times and usability.
 - When viewing a character's logs, the entries will be paginated to help with load times and usability.
 - Site manifests can now store default view information so that different manifests can have different view settings. (This is now handled through Site Manifest management instead of Site Settings.) ([#157](https://github.com/anodyne/nova/issues/157))
@@ -340,7 +349,7 @@
 
 - Moved to CodeIgniter 2.1 (was previously 1.7.3).
 - Moved to a brand new file structure that further removes the Nova Core from any changes an admin might be making.
-- Added __experimental__ module support.
+- Added **experimental** module support.
 - Updated to jQuery 1.7.1.
 - Updated to jQuery UI 1.8.17.
 - Updated to jQuery Uniform 1.7.5.
