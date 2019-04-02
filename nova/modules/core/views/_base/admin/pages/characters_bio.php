@@ -64,7 +64,12 @@
 				<p>
 					<kbd><?php echo $label['suffix'];?></kbd>
 					<?php echo form_input($inputs['suffix']);?>
-				</p><br />
+				</p>
+			</div>
+			
+			<?php echo text_output($label['assignment'], 'h3', 'page-subhead');?>
+		
+			<div class="indent-left">
 				
 				<?php if ($level >= 2): ?>
 					<?php if (($level == 2 and $inputs['crew_type'] == 'npc') or $level == 3): ?>
@@ -109,9 +114,8 @@
 						<?php echo text_output($inputs['rank_name'], 'span', 'fontSmall gray');?>
 					</p>
 				<?php endif;?>
-				
-				<br /><?php echo form_button($button['submit']);?>
 			</div>
+			<?php echo form_button($button['submit']);?>
 		</div>
 		
 		<div id="two">
