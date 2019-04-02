@@ -27,7 +27,7 @@
 							<strong class="fontMedium"><?php echo $i['title'];?></strong><br />
 							<span class="fontSmall gray">
 								<?php echo text_output($label['posts'], 'strong') . $i['posts'];?><br />
-								<?php echo $i['desc'];?>
+								<?php echo text_output($i['desc']);?>
 							</span>
 						</td>
 						<td class="col_100 align_right">
