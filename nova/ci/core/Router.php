@@ -274,6 +274,35 @@ class CI_Router {
 		{
 			return $segments;
 		}
+		
+		// Support for controllers defined by extensions
+		if($segments[0] == 'extensions')
+		{
+			$extension_name = $segments[1];
+			$controller = $segments[2];
+			$controller_class = 'extensions__'.$extension_name.'__'.$controller;
+			$application_extension_override_path = 'controllers/'.str_replace('__', '/', $controller_class).'.php';
+			
+			if(file_exists(APPPATH.$application_extension_override_path)){
+				$segments = array_merge(
+					[$controller_class],
+					array_splice($segments, 3)
+				);
+				return $segments;
+			}
+			
+			$extension_controller_class = '__'.$controller_class;
+			$extension_app_path = 'extensions/'.$extension_name.'/controllers/'.$controller.'.php';
+			if(file_exists(APPPATH.$extension_app_path)){
+				$segments = array_merge(
+					[$extension_controller_class],
+					array_splice($segments, 3)
+				);
+				$this->set_class($segments[0]);
+				$this->set_method($segments[1]);
+				return $segments;
+			}
+		}
 
 		// Is the controller in a sub-folder?
 		if (is_dir(APPPATH.'controllers/'.$segments[0]))
