@@ -31,7 +31,7 @@ $uiTheme = ( ! is_file(APPPATH .'views/'.$current_skin.'/wiki/css/jquery.ui.them
 			@import url("<?php echo $modFolder.'assets/js/markitup/skins/simple/style.css';?>");
 			@import url("<?php echo $modFolder.'assets/js/markitup/sets/'. $parse .'/style.css';?>");
 			
-			ul, ol { margin: 1em; padding: .5em; }
+			ul, ol { margin: 0 10px 10px 10px; padding: 0 0 0 10px; }
 			ul li, ol li { margin: 2px; }
 			ul { list-style: disc; }
 			ol { list-style: decimal; }
