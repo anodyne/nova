@@ -144,7 +144,7 @@ class Nova_extension_container implements ArrayAccess {
 			else
 			{
 				$output = $ci->load->view($location, $data, true);
-				$ci->event->fire(['location', 'view', $obj->sec, $obj->view, 'output'], [
+				$ci->event->fire(['location', 'view', 'output', $obj->sec, $obj->view], [
 					'data' => &$data,
 					'output' => &$output
 				]);
