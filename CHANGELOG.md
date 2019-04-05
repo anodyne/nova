@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.6.1 (4 April 2019)
+## 2.6.1 (5 April 2019)
 
 - Fixed issues with `location.view.output` event listener.
 

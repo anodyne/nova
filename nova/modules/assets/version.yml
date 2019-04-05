@@ -4,5 +4,5 @@ version_minor: 6
 version_update: 1
 severity: update
 notes: Nova 2.6.1 addresses issues found with the location view event listener.
-date: 4 April 2019
+date: 5 April 2019
 link: http://anodyne-productions.com/nova
