@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.1 (5 April 2019)
+
+- Fixed issues with `location.view.output` event listener.
+
 ## 2.6 (3 April 2019)
 
 - Added an events system. This system is experimental and offered as a purely beta feature for developers to use for the remainder of Nova 2's life.

@@ -6,10 +6,10 @@ if (! defined('BASEPATH')) {
 
 define('APP_NAME', 'Nova');
 
-define('APP_VERSION', '2.6.0');
+define('APP_VERSION', '2.6.1');
 define('APP_VERSION_MAJOR', 2);
 define('APP_VERSION_MINOR', 6);
-define('APP_VERSION_UPDATE', 0);
+define('APP_VERSION_UPDATE', 1);
 
 define('WIKI_NAME', 'Thresher');
 define('WIKI_VERSION', 'Release 2');
