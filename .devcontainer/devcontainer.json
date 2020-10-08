@@ -14,9 +14,9 @@
 			"server": "localhost",
 			"previewLimit": 50,
 			"port": 3306,
-			"database": "mariadb",
+			"database": "nova",
 			"username": "root",
-			"password": "mariadb"
+			"password": "nova"
 		}]
 	},
 
@@ -26,7 +26,8 @@
 		"felixfbecker.php-intellisense",
 		"mrmlnc.vscode-apache",
 		"mtxr.sqltools",
-		"mtxr.sqltools-driver-mysql"
+		"mtxr.sqltools-driver-mysql",
+		"ms-azuretools.vscode-docker"
 	],
 
 	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
