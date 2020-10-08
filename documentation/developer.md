@@ -11,3 +11,9 @@ Username: nova
 Password: nova
 Database Host: db
 Table Prefix: nova_
+
+## URL's
+
+Website: http://localhost:8282/
+Adminer: http://localhost:8080/
+MariaDB: localhost:3306

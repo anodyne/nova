@@ -44,6 +44,18 @@ services:
 
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    network_mode: service:db
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: nova
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
   
 volumes:
   mariadb-data:
