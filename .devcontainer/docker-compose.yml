@@ -1,0 +1,61 @@
+
+version: '3'
+
+services: 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # [Choice] PHP version: 7, 7.4, 7.3
+        VARIANT: "7.4"
+        # [Option] Install Node.js
+        INSTALL_NODE: "true"
+        NODE_VERSION: "lts/*"
+        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+        USER_UID: 1000
+        USER_GID: 1000
+
+    volumes:
+      - ..:/workspace:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    image: mariadb:10.4
+    restart: unless-stopped
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: nova
+      MYSQL_DATABASE: nova
+      MYSQL_USER: nova
+      MYSQL_PASSWORD: nova
+
+    # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    network_mode: service:db
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: nova
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
+  
+volumes:
+  mariadb-data:
