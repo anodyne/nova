@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Updated CodeIgniter from version 2.2.3 to version 3.1.11 (huge thanks to Vass for his work on this gargantuan task)
 
+### Fixed
+- Fixed the wrong character name being displayed in email clients when sending the email to players after a pending post is approved ([#295](https://github.com/anodyne/nova/issues/295))
+
 ## [2.6.1] - 2019-04-05
 ### Fixed
 - Fixed issues with `location.view.output` event listener.
