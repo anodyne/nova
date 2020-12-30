@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS `nova2`;
+
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'local';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
