@@ -1,203 +1,177 @@
 # Changelog
+All notable changes to this project will be documented in this file.
 
-## 2.6.1 (5 April 2019)
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+## [2.6.1] - 2019-04-05
+### Fixed
 - Fixed issues with `location.view.output` event listener.
 
-## 2.6 (3 April 2019)
-
+## [2.6.0] - 2019-04-03
+### Added
 - Added an events system. This system is experimental and offered as a purely beta feature for developers to use for the remainder of Nova 2's life.
 - Added an extensions system. This system is experimental and offered as a purely beta feature for developers to use for the remainder of Nova 2's life.
+
+### Changed
 - Updated the character bio form with a heading above the position and rank fields.
 - Updated the mission management pages to provide proper spacing for mission descriptions longer than 1 paragraph.
 - Updated the positioning of the submit button on the character bio form for better semantics.
 - Updated the margins for lists in the wiki section to be more consistent with the rest of the application.
 
-## 2.5.1 (5 June 2018)
-
+## [2.5.1] - 2018-06-05
+### Fixed
 - Fixed an issue where the new settings added for privacy policies didn't work on fresh installs.
 
-## 2.5 (25 May 2018)
-
+## [2.5.0] - 2018-05-25
+### Added
 - Nova is now GDPR compliant.
 - Added the ability for a user to remove their own account. (Thanks to Jon Matterson for his work on this.)
 - Added a privacy policy page.
 - 4 privacy policies as site messages for users to use and modify easily. (Thanks to Bravo Fleet and Jon Matterson for their work on these policies.)
 
-### Nova Core
-
+### Changed
 - Update Site Bans to default to a level 1 ban if no level is selected.
 - Update Site Bans to use the current timestamp when a ban is created.
 - Update the database driver to MySQLi by default. (This will only apply to new installations.)
 - Update Nova with PHP 7 support. (Thanks to Williams for his work on this.)
 - Display private message search results (Thanks to Williams for his work on this.)
 
-## 2.4.10 (23 June 2017)
-
-### Nova Core
-
+## [2.4.10] - 2017-06-23
+### Changed
 - Update character approval pop-up to prevent accidentally setting new users as system administrators.
 - Update Mail class to allow for SSL or TLS over SMTP.
 - Update posting flow to prevent unnecessary locking when saving a mission post
 
-## 2.4.9 (08 March 2017)
-
-### Nova Core
-
+## [2.4.9] - 2017-03-08
+### Fixed
 - Fixed an issue where the installer would throw an error on certain server setups.
 
-## 2.4.8 (25 January 2017)
-
-### Nova Core
-
+## [2.4.8] - 2017-01-25
+### Changed
 - Updated the Nova database to allow for mission posts, personal logs, and news items of more than 65,000 characters.
 - Updated the behavior of replying to a private message from your own sent messages. Previously, it would reply to yourself, but now will reply to the original recipient. (Thanks to Williams for this update!)
 - Updated how Nova handles incrementing the version number in hopes of mitigating the "0.0.0" database version issue.
 
-## 2.4.7 (07 January 2017)
-
-### Nova Core
-
+## [2.4.7] - 2017-01-07
+### Changed
 - The saved post links in the Writing Control Panel have been updated to favor the "view" mode instead of "edit" mode. This should prevent posts from being unnecessarily locked when users are just trying to read saved posts.
 - The post, log, and news posting pages have been updated with back buttons to make navigation easier.
 
-## 2.4.6 (28 August 2016)
-
-### Nova Core
-
+## [2.4.6] - 2016-08-28
+### Changed
 - We've updated the gender identification selections on new installations to be more in line with social conventions. Hermaphrodite has been replaced with Transgendered/Intersex and Neuter has been replaced with Agendered/Non-Binary.
 
-### Bug Fixes
-
+### Fixed
 - We've made some changes to the email class in the hopes of reducing the number of errors people are starting to see.
 - Addressed an error with assigning departments to a manifest.
 
-## 2.4.5 (14 November 2015)
-
-### Nova Core
-
+## [2.4.5] - 2015-11-14
+### Changed
 - Addressed potential issue for users who are running MySQL with strict SQL mode. This would oftentimes result in a cryptic "1364 error" during installation or update, but it could also occur in other areas of the system. Thanks to Jon Matterson for his work on this issue!
 - Update the new Mail class with attempts to validate the email addresses. If they're empty or not valid email address, they'll be stripped out of the recipient list.
 
-### Bug Fixes
-
+### Fixed
 - Fixed an issue where a user could update their character without a name. Either the first or last name is now required to update the character.
 
-## 2.4.4 (4 September 2015)
-
-### Nova Core
-
+## [2.4.4] - 2015-09-04
+### Changed
 - Updated Nova to indicate when anything less than PHP 5.3 is on the server. Due to changes in Nova 2.4, there is now a requirement of PHP 5.3.
 
-### Bug Fixes
-
+### Fixed
 - Fixed wrong link to the Inbox from Sent Messages.
 
-## 2.4.3 (11 August 2015)
-
-### Nova Core
-
+## [2.4.3] - 2015-08-11
+### Added
 - Added indicator when viewing a post, log, or news items if it's a saved or pending item.
 
-### Bug Fixes
-
+### Fixed
 - Fixed issues with viewing non-activated posts, logs, and news items.
 
-## 2.4.2 (8 August 2015)
-
-### Bug Fixes
-
+## [2.4.2] - 2015-08-08
+### Fixed
 - Fixed errors when sending emails to multiple recipients.
 
-## 2.4.1 (7 August 2015)
-
-### Bug Fixes
-
+## [2.4.1] - 2015-08-07
+### Fixed
 - Fixed error thrown with missing method that was removed in the latest version of CodeIgniter 2.
 
-## 2.4.0 (7 August 2015)
-
+## [2.4.0] - 2015-08-07
+### Added
 - Created a new `Mail` wrapper class around SwiftMailer for better email handling than CodeIgniter's built-in email class. Thanks to forum user TheDrew for helping us sort through some of these issues.
-
-### Nova Core
-
-- Updated the controllers with the new Mail class calls.
-- We've removed all the reply-to calls with emails since more and more spam filters are checking the reply-to headers as well as the from header.
 - Added a notice to the bottom of all emails that it's an automated email and they shouldn't reply to the message.
+
+### Changed
+- Updated the controllers with the new Mail class calls.
 - Updated the manifest Javascript to remove hard-coded calls to a table structure. This has become problematic as people have begun to modify the manifest to have less traditional layouts.
 - Updated the error language file with a new error message.
 
-### Bug Fixes
+### Removed
+- We've removed all the reply-to calls with emails since more and more spam filters are checking the reply-to headers as well as the from header.
 
+### Fixed
 - When there is no manifest metadata, an extra space is displayed.
 - Fixed issue where users could view pending and saved mission posts, personal logs, and news items from their respective view pages.
 
-## 2.3.2 (10 May 2014)
-
-### Nova Core
-
+## [2.3.2] - 2014-05-10
+### Changed
 - Updated the email from the contact form and the email to the GM from the docking form to include recipient information. Despite the name and email address are in the headers, we're including those as well as the sender's IP address.
 - Updated the included head files to allow for using Nova on a secure domain.
+
+### Fixed
 - Fixed wrong language key being used for the word "sim" in a couple of places.
 
-## 2.3.1 (02 February 2014)
-
-### Bug Fixes
-
+## [2.3.1] - 2014-02-02
+### Fixed
 - When toggling open positions, any open positions in sub-departments would throw off the display of the entire manifest.
 
-## 2.3.0 (14 September 2013)
-
-- When displaying the output of a dynamic form, if there's nothing in the field, we no longer show it.
+## [2.3.0] - 2013-09-14
+### Added
 - Admins can now add inline help for any dynamic form field to help users filling the forms out. The content will be shown below the label and above the field.
 - Nova now shows a link back to All Characters when editing a character (if the user has permission).
 - Nova now shows a link back to All Users when editing a user (if the user has permission).
 - Admins can now specify additional metadata from the bio form to be dispalyed under the character name on the manifest (such as species, gender or any other field).
 - Sim stats now shows some statistics for the total life of the sim.
 
-### Bug Fixes
+### Changed
+- When displaying the output of a dynamic form, if there's nothing in the field, we no longer show it.
 
+### Fixed
 - If a character didn't have any posts, their bio would display the start of UNIX time instead of nothing.
 
-## 2.2.3 (7 April 2013)
-
-### Bug Fixes
-
+## [2.2.3] - 2013-04-07
+### Fixed
 - Some users have reported errors being thrown during the update process that prevent them from moving up to newer versions of Nova. We've attempted to create a fix for this, but since we haven't been able to recreate the issue, this may or may not work.
 
-## 2.2.2 (27 March 2013)
-
-### Bug Fixes
-
+## [2.2.2] - 2013-03-27
+### Fixed
 - Fixed error thrown when managing NPCs. (Thanks to evshell18 for the fix and pull request.)
 - Fixed issue where users without `wiki/categories` permissions couldn't create or edit wiki pages. ([#239](https://github.com/anodyne/nova/issues/239))
 
-## 2.2.1 (09 March 2013)
-
-### Nova Core
-
+## [2.2.1] - 2013-03-09
+### Changed
 - Updated the jQuery prettyPhoto plugin to version 3.1.5.
 
-### Bug Fixes
-
+### Fixed
 - Fixed update message always displaying because of a wrong version number in the core.
 
-## 2.2.0 (15 February 2013)
-
+## [2.2.0] - 2013-02-15
+### Added
 - Added reply to header to most of the emails that are sent from Nova. ([#217](https://github.com/anodyne/nova/issues/217))
+
+### Changed
 - Update author listings to provide links to each character's bio page. Thanks to Jordan Jay for his MOD to do this. We've expanded on his idea to provide this functionality for mission posts, personal logs, news items, wiki pages and comments. ([#223](https://github.com/anodyne/nova/issues/223))
-- Removed the SMS Archive feature since it's no longer needed.
-
-### Nova Core
-
 - Updated the characters model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 - Updated the docking model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 - Updated the specs model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 - Updated the tour model to allow retrieving specific field information by ID or field_name. ([#216](https://github.com/anodyne/nova/issues/216))
 - Updated copyright dates in source code. ([#224](https://github.com/anodyne/nova/issues/224))
 
-### Bug Fixes
+### Removed
+- Removed the SMS Archive feature since it's no longer needed.
 
+### Fixed
 - When viewing a mission post that doesn't exist, Nova throws a fatal error. ([#233](https://github.com/anodyne/nova/issues/233))
 - When using the tour form, Nova throws an error.
 - Sub-department names and descriptions weren't displayed properly when managing positions. ([#232](https://github.com/anodyne/nova/issues/232))
@@ -205,40 +179,32 @@
 - When upgrading from SMS, system administrators didn't have the proper flags set.
 - When using the personal logs RSS feed, the link to the entry went to the view post page, not the view log page. ([#234](https://github.com/anodyne/nova/issues/234))
 
-## 2.1.3 (05 November 2012)
-
-### Bug Fixes
-
+## [2.1.3] - 2012-11-05
+### Fixed
 - Restoring lost functionality on some pages due to the security vulnerability update. ([#215](https://github.com/anodyne/nova/issues/215))
 
-## 2.1.2 (04 November 2012)
-
-### Nova Core
-
+## [2.1.2] - 2012-11-04
+### Changed
 - Update to jQuery 1.8.2.
 - Update to jQuery UI 1.8.24.
 - Update to markItUp! 1.1.13.
 - Update to CodeIgniter 2.1.3.
 - Update Nova to address a security issue.
 
-### Bug Fixes
-
+### Fixed
 - Once a bio field is turned off, the only way to turn it back on is by going in to the database and changing the display value. ([#214](https://github.com/anodyne/nova/issues/214))
 - Once a docking field is turned off, the only way to turn it back on is by going in to the database and changing the display value. ([#214](https://github.com/anodyne/nova/issues/214))
 - Any spec form field that is turned off has no indication that it's disabled.
 - Any tour form field that is turned off has no indication that it's disabled.
 
-## 2.1.1 (12 September 2012)
-
-### Nova Core
-
+## [2.1.1] 2012-09-12
+### Changed
 - Update to CodeIgniter 2.1.2.
 - Update to jQuery 1.8.1.
 - Update to jQuery UI 1.8.23.
 - Update the IP Address fields in the database to be compatible with IPv6 addresses.
 
-### Bug Fixes
-
+### Fixed
 - During the update process, Nova never updated the system information table with the correct version number.
 - Despite the system version and components database tables being pulled out, the What's New menu item was never removed, throwing a 404 error if someone tried to go to the page.
 - The Admin Control Panel's update notification panel doesn't properly display all the language strings because the proper language file wasn't loaded.
@@ -246,25 +212,25 @@
 - Under some circumstances, unlinked NPCs had a link to a user bio that threw an error.
 - The User Not Found error was missing a parameter (would show %s instead of the word 'user').
 
-## 2.1.0 (26 June 2012)
-
+## [2.1.0] - 2012-06-26
+### Added
 - Users are now notified when mission notes have been updated in the last 72 hours by the notes box auto-expanding when they arrive at the posting page.
 - Users are now shown when the last update to the mission notes was all the time.
 
-### Nova Core
-
-- Remove the `count_unread_pms` method from the private messages model. (This method was deprecated in Nova 2.0.)
-- Remove the `system_components` and `system_versions` tables from the database. There's really no reason to be maintaining these lists in Nova. Instead, users who are interested in Nova's components and version history should visit AnodyneDocs.
-- Remove the What's New page for the reasons specified above.
+### Changed
 - Update the Version Information page to reflect the database changes.
 - Update the post, log, and news creation pages to give a description of what tags are meant to be used for.
-- Remove jQuery library from the file system. We now pull jQuery from a CDN instead of storing it locally.
 - Update to jQuery UI 1.8.20 (we now include the entire jQuery UI library for anyone who wants to use components we don't use).
 - Update to prettyPhoto 3.1.4.
 - Update to jQuery Reflection 1.1.
 
-### Bug Fixes
+### Removed
+- Remove the `count_unread_pms` method from the private messages model. (This method was deprecated in Nova 2.0.)
+- Remove the `system_components` and `system_versions` tables from the database. There's really no reason to be maintaining these lists in Nova. Instead, users who are interested in Nova's components and version history should visit AnodyneDocs.
+- Remove the What's New page for the reasons specified above.
+- Remove jQuery library from the file system. We now pull jQuery from a CDN instead of storing it locally.
 
+### Fixed
 - The update page would always throw an error that it couldn't find Nova installed in the current database.
 - When a mission was updated, it was assumed mission notes updated as well. Now, there's greater precision in determining if the notes were actually updated.
 - Accepting or rejecting docking applications would throw a fatal error because the Messages model wasn't loaded before it was used.
@@ -272,26 +238,22 @@
 - Nova's `timespan_short` helper was missing the word "ago" when the time was less than an hour.
 - The Site Messages page didn't strip HTML tags from the content potentially allowing unclosed HTML tags to wreak havoc on the page.
 
-## 2.0.3 (01 March 2012)
-
-### Nova Core
-
+## [2.0.3] - 2012-03-01
+### Changed
 - Updated jQuery UI to version 1.8.18.
 
-### Bug Fixes
-
+### Fixed
 - Benchmarking psuedo-variables are not handled properly because of the fact the Template library doesn't not use the Output library for sending content to the browser.
 - When saving posts with the Post Participants feature turned off, Nova would throw errors about a database field not accepting NULL values.
 
-## 2.0.2 (09 February 2012)
-
-### Nova Core
-
-- Removed the social interaction tools from prettyPhoto image modals. ([#169](https://github.com/anodyne/nova/issues/169))
+## [2.0.2] - 2012-02-09
+### Added
 - Added some code to try and make the mission post locking auto-release a little smarter.
 
-### Bug Fixes
+### Removed
+- Removed the social interaction tools from prettyPhoto image modals. ([#169](https://github.com/anodyne/nova/issues/169))
 
+### Fixed
 - Under some (strange) circumstances, Nova could throw errors from the Ajax controller.
 - A typo in the language string on the reset password page when the security question you select doesn't match what's in the database.
 - If a user has multiple playing characters assigned to them, the milestones listing would display their main character name for every playing character they had assigned to them instead of just displaying it once.
@@ -301,15 +263,13 @@
 - The Who's Online listing displayed random spaces and commas.
 - Character image galleries duplicated the primary image.
 
-## 2.0.1 (04 February 2012)
-
-### Bug Fixes
-
+## [2.0.1] - 2012-02-04
+### Fixed
 - If the user's screen isn't wide enough, the tooltip on the Writing Control Panel that displays the post lock information can slide partially out of view.
 - Nova tried to load a language file through an object that couldn't see it, resulting in an error thrown about the file not being found.
 
-## 2.0 (04 February 2012)
-
+## [2.0.0] 2012-02-04
+### Changed
 - Site Messages can now contain previously disallowed HTML tags (like `embed`, `iframe`, etc) for adding media from YouTube and Vimeo to site messages (like the welcome message) without needing to use seamless substitution.
 - Mission groups can now be added inside other mission groups (nesting only allowed one level deep).
 - Users with Level 2 user admin access rights can now reset someone's password for them. The new password will be generated and emailed to the user and they'll be prompted to reset the password the next time they log in. At no time does the user with Level 2 user admin access rights see what the newly generated password is. ([#16](https://github.com/anodyne/nova/issues/16))
@@ -348,9 +308,6 @@
 - The Reply, Reply to All and Forward options when reading a private message are now displayed above and below the private message.
 - Users can now mark all unread private messages as read with a single click.
 - An all-new redesigned character bio page provides a better, cleaner user experience.
-
-### The Nova Core
-
 - Moved to CodeIgniter 2.1 (was previously 1.7.3).
 - Moved to a brand new file structure that further removes the Nova Core from any changes an admin might be making.
 - Added **experimental** module support.
@@ -378,9 +335,6 @@
 - Completely re-wrote the upgrade process to not use config files (admins select the components they want upgraded through a user interface), to show more useful validation messages and be a shorter, more pleasant process (reduced the number of steps from 14 to 4).
 - View files now check for the existence of the BASEPATH constant before rendering. On some servers, random `error_log` files are generated all over the place. A big part of this is view files that are accessed apart from the framework and generate PHP fatal errors. This fix should help eliminate those error log files.
 - In preparation for future deprecation, we've removed all references to jQuery's `.live()` method. Third party developers should ensure their own code is updated as soon as possible to avoid any issues once the method is removed from the jQuery core.
-
-### Thresher
-
 - Changed the way users manage categories when creating and editing a wiki page. ([#137](https://github.com/anodyne/nova/issues/137))
 - Users with the proper permissions can now create categories when creating and editing a wiki page. ([#64](https://github.com/anodyne/nova/issues/64))
 - If there are no categories set in Thresher and the user has the proper permissions, they will be prompted to create some new categories when creating and editing a wiki page.
@@ -395,8 +349,7 @@
 - Users can now subscribe to an RSS feed for created wiki pages as well as updated wiki pages.
 - Admins can now restrict access to a wiki page based on access role. ([#11](https://github.com/anodyne/nova/issues/11), [#12](https://github.com/anodyne/nova/issues/12))
 
-### Bug Fixes
-
+### Fixed
 - Seamless substitution of images wouldn't work when the images were in the `_base_override` directory.
 - The `RE:` and `FWD:` tags would be added to private message subjects when replying and forwarding indefinitely until there was no space left for the actual subject line. Now, Nova will make sure it's only added once. ([#158](https://github.com/anodyne/nova/issues/158))
 - When replying to a private message, the author of the message would be added to the recipient list, so any message they send would also show up in their inbox as well. (This behavior can be duplicated by manually adding themselves to the recipients list.)
@@ -417,58 +370,52 @@
 - During fresh installs, the user ID constraint wasn't consistent with the rest of the user ID fields throughout the system.
 - Under some circumstances, users could edit posts they weren't even a part of. (Thanks to evshell18 on the Anodyne forums for pointing this out and getting the ball rolling on a fix.)
 
-## 1.2.6 (15 July 2011)
-
-### Bug Fixes
-
-- Addressed some major security issues.
+## [1.2.6] - 2011-07-15
+### Fixed
 - The Writing Control Panel included several wrong links.
 - Character mission posts weren't accurately pulled from the database.
 
-## 1.2.5 (16 June 2011)
+### Security
+- Addressed some major security issues.
 
-### Bug Fixes
-
+## [1.2.5] - 2011-06-16
+### Fixed
 - Specification data wouldn't get added to the database table for old items if a new field was added.
 - Deactivated users would retain their account flags (system administrator, game master, webmaster) and wouldn't have their access role changed.
 - Reactivated users wouldn't be given a reasonable access role.
 
-## 1.2.4 (25 January 2011)
-
-### Nova Core
-
+## [1.2.4] - 2011-01-25
+### Changed
 - Updated to jQuery UI 1.8.9.
 
-### Bug Fixes
-
+### Fixed
 - Mission posts weren't accurately counted.
 - The user acceptance email CCed in more people that needed to be.
 - The manifest wouldn't load in Internet Explorer 7.
 
-## 1.2.3 (04 January 2011)
-
-### Bug Fixes
-
+## [1.2.3] - 2011-01-04
+### Fixed
 - Addressed issues handling deck listings and multiple specification items.
 
-## 1.2.2 (30 December 2010)
-
-### Bug Fixes
-
+## [1.2.2] - 2010-12-30
+### Fixed
 - Sub departments couldn't be managed from the Department management page.
 - Mission post emails didn't display the authors properly.
 - Addressed access issues created by the update from 1.1.2.
 
-## 1.2.1 (23 December 2010)
-
-### Bug Fixes
-
+## [1.2.1] - 2010-12-23
+### Fixed
 - Positions would disappeaer when being updated.
 - Errors thrown when trying to update character images when there aren't any images present.
 - Error thrown from the RSS feed.
 
-## 1.2 (20 December 2010)
+## [1.2.0] - 2010-12-20
+### Added
+- Added a new validation error image.
+- Added a new assignment image.
+- Added the jQuery prettyPhoto plugin to replace jQuery Fancybox.
 
+### Changed
 - Admins can now ban users from applying to the game (level 1) or even getting in to the site (level 2)
 - If the system detects a Level 2 ban, the user will be redirected to a new page with information about why they aren't allowed to get to the site.
 - The application report now shows the email address and IP address of the applicant.
@@ -478,13 +425,6 @@
 - Department Management now has a new user interface to make working with departments easier.
 - Position Management now splits departments out by manifest.
 - Users can no longer get to any of the writing features if they don't have a character associated with their account.
-
-### Nova Core
-
-- Added a new validation error image.
-- Added a new assignment image.
-- Added the jQuery prettyPhoto plugin to replace jQuery Fancybox.
-- Removed the jQuery Fancybox plugin.
 - Updated to CodeIgniter 1.7.3.
 - Updated to jQuery 1.4.4.
 - Updated to jQuery UI 1.8.7.
@@ -493,8 +433,10 @@
 - The User model now has a method to pull user information based on characters in the database.
 - Some of the models needed to be updated to correct for situations where the user or character ID isn't present.
 
-### Bug Fixes
+### Removed
+- Removed the jQuery Fancybox plugin.
 
+### Fixed
 - The autoload config item tried to autoload the Input library. This isn't necessary since CodeIgniter loads it by default.
 - Fixed some typos in the install data.
 - Users without an active character would be shown in the activity warning panel on the Admin Control Panel.
@@ -513,50 +455,44 @@
 - Pending users would appear in the recipients dropdown for private messages.
 - Changing a dynamic form field from text/textarea to dropdown wouldn't trigger the dropdown values section to open. This essentially rendered the field useless and would cause admins to have to delete the field and start over.
 
-## 1.1.2 (14 October 2010)
-
-### Nova Core
-
+## [1.1.2] - 2010-10-14
+### Changed
 - Instead of duplicating code, Nova's form helper now extends the dropdown functions.
 - When writing or editing a mission post, we now take the author list in to account in the author selection dropdown. (Thanks to Patric for helping with this.)
 
-### Bug Fixes
-
+### Fixed
 - Addressed an issue when adding an author when creating or editing a mission post. (Thanks to Patric for this fix.)
 - Nova would try to update a user's profile with a field that doesn't exist.
 - Under very strange circumstances, Quick Install wouldn't work the way it's supposed to.
 
-## 1.1.1 (27 September 2010)
-
-### Nova Core
-
+## [1.1.1] - 2010-09-27
+### Changed
 - Updated to jQuery UI 1.8.5.
 - Updated to jQuery markItUp! 1.1.8.
 
-### Bug Fixes
-
+### Fixed
 - The system wouldn't display if the template file couldn't be found (blank white screen).
 - The general tour items category would be shown even if there weren't any general tour items.
 - Skins with dashboard handles were showing bullets and having weird spacing issues.
 
-## 1.1 (4 September 2010)
-
-- Admins can now create multiple specification items.
-- Admins can now associate tour items with a single specification item.
+## [1.1.0] - 2010-09-04
+### Added
+- Admins can create multiple specification items.
+- Admins can associate tour items with a single specification item.
 - Users (with proper permissions) can upload specification items through the upload interface.
 
-### Nova Core
-
+### Changed
 - Added the jQuery Fancybox plugin.
 - Added the jQuery Reflection plugin and updated the system to use this plugin instead of reflection.js.
-- Removed the jQuery Colorbox plugin.
-- Removed the reflection.js plugin.
 - Updated the jQuery UI to version 1.8.4.
 - The specifications model now has new methods for handling specification items.
 - Applied some minors updates to the mission groups listing user interface.
 
-### Bug Fixes
+### Removed
+- Removed the jQuery Colorbox plugin.
+- Removed the reflection.js plugin.
 
+### Fixed
 - Ordered and unordered lists weren't properly styled in Thresher.
 - Missions inside mission groups don't respect the mission order set for them.
 - The author dropdown when replying to a private message wasn't populating with data in some cases.
@@ -566,10 +502,8 @@
 - The model methods that pulled command staff, game master and webmaster emails returned all users, not just active users.
 - Error was thrown about an undefined class method when deleting uploaded items.
 
-## 1.0.6 (14 July 2010)
-
-### Nova Core
-
+## [1.0.6] - 2010-07-14
+### Fixed
 - The Character Bio management page shows a loader until everything has finished loading.
 - Turned down the debug level (fatal errors and database errors are still shown).
 - The recipients menu when writing a private message now separates active and inactive characters.
@@ -579,9 +513,6 @@
 - Added a method to the Characters model for inserting promotion records.
 - Added a method to the Users model for removing user preference values.
 - Addressed a security issue in CodeIgniter's Upload class.
-
-### Bug Fixes
-
 - Error thrown when posting a comment on a mission post.
 - Error thrown when attempting to delete a character.
 - Error thrown during step 2 of the update process for some admins.
@@ -596,10 +527,8 @@
 - A user's email preferences remained active even after the user was deactivated.
 - A user's email preferences weren't removed when the user was removed.
 
-## 1.0.5 (06 June 2010)
-
-### Bug Fixes
-
+## [1.0.5] - 2010-06-06
+### Fixed
 - Errors thrown after the SMS Upgrade process on Characters management.
 - Error thrown after the SMS Upgrade process on NPC management.
 - Errors thrown when editing a wiki page.
@@ -614,18 +543,13 @@
 - Site Options didn't allow admins with access to the Skin Catalogue to select skins in development.
 - Join form instructions weren't displayed.
 
-## 1.0.4 (12 May 2010)
-
-### Nova Core
-
+## [1.0.4] - 2010-05-12
+### Fixed
 - The `MY_Input` library tries to filter for Microsoft Word special character a little better.
 - The Archives feature now requires PHP 5.0 or higher.
 - Thresher now requires PHP 5.0 or higher.
 - Updated to jQuery UI 1.8.1.
-- UPdated to jQuery markItUp! 1.1.7.
-
-### Bug Fixes
-
+- Updated to jQuery markItUp! 1.1.7.
 - Error thrown when a user with Level 1 user account access updated their account.
 - Saved personal logs could be shown along with activated personal logs for users with multiple characters associated with their account.
 - Internet Explorer threw an exception on the Mission Post, Personal Log, News Item and Docked Item management pages.
@@ -637,10 +561,8 @@
 - Addressed an issue with emails on some servers.
 - Attempted to fix some errors thrown in some circumstances during updates.
 
-## 1.0.3 (26 April 2010)
-
-### Nova Core
-
+## [1.0.3] - 2010-04-26
+### Fixed
 - Removed the dependency on the versions array file. Instead, we try to pull a listing of the update directory dynamically (though we still use the array file in the the event the directory listing fails).
 - Separated some code for character deletion between playing characters and NPCs.
 - Added notices to the dynamic form management pages if there's no content available.
@@ -649,9 +571,6 @@
 - Added a parameter to a Post model method to help with issues in with unattented posts.
 - When deactivating a user, we deactivate the user's characters at the same time.
 - The Update Center to show the links to start the update regardless of whether there's information about the update or not.
-
-### Bug Fixes
-
 - The Create Wiki page link didn't show up in the sub navigation menu.
 - Posts weren't accurately counting unattented posts when a character ID was passed in as an integer instead of an array.
 - Errors were thrown when deleting characters and NPCs.
@@ -665,10 +584,8 @@
 - Error thrown when accepting or rejecting a docked ship application.
 - Thresher wasn't using the right regions in the Template config file.
 
-## 1.0.2 (20 April 2010)
-
-### Nova Core
-
+## [1.0.2] - 2010-04-20
+### Fixed
 - The Ranks model uses the genre when looking for the default rank catalogue item.
 - The Ranks model only pulls ranks sets from the current genre when getting all ranks.
 - The Ranks model only pulls rank catalogue items for the current genre.
@@ -679,9 +596,6 @@
 - The Upload Management page now shows a message if uploaded images weren't found in specific categories.
 - Turned up the debug level so users could see any errors for debugging purposes.
 - When a user updates their password and they're set to have Nova remember them, their cookie will be reset with the new password.
-
-### Bug Fixes
-
 - The Menu library wouldn't respect any access control put on main navigation menu items or sub navigation menu items.
 - Undefined variable error was thrown in the Rank Catalogue.
 - The Rank Catalogue wouldn't work well when multiple genres were installed.
@@ -702,12 +616,11 @@
 - There were some minor schema differences between SMS and Nova created by the SMS Upgrade process.
 - Addressed some of the Remember Me lockout issues.
 
-## 1.0.1 (16 April 2010)
-
+## [1.0.1] 2010-04-16
+### Fixed
 - A database field wasn't properly added during the SMS Upgrade process.
 - Models couldn't be autoloaded because `Base4.php` didn't extend `My_Loader`.
 - An error was thrown because the `date_default_timezone_set` function doesn't exist in PHP before version 5.1.
 
-## 1.0 (15 April 2010)
-
+## [1.0.0] - 2010-04-15
 - Initial release
