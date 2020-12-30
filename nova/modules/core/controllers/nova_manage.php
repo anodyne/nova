@@ -11,11 +11,11 @@
 require_once MODPATH.'core/libraries/Nova_controller_admin.php';
 
 abstract class Nova_manage extends Nova_controller_admin {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		// load the user agent library
 		$this->load->library('user_agent');
 	}
@@ -24,13 +24,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 	{
 		// check access
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('awards_model', 'awards');
-		
+
 		// sanity check
 		$award = (is_numeric($award)) ? $award : false;
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($action)
@@ -44,10 +44,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'award_desc' => $this->input->post('award_desc', true),
 						'award_image' => $this->input->post('award_image', true),
 					);
-					
+
 					// insert the record
 					$insert = $this->awards->add_award($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -73,13 +73,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$delete = $this->awards->delete_award($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -105,11 +105,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						if (substr($key, 0, 6) == 'award_')
@@ -117,9 +117,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 							$award_data[$key] = $value;
 						}
 					}
-					
+
 					$update = $this->awards->update_award($id, $award_data);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -146,18 +146,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($action == 'add' or $action == 'edit')
 		{
 			$item = ($action == 'edit') ? $this->sys->get_item('awards', 'award_id', $award) : false;
-			
+
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_award'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->award_name : '';
-			
+
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'award_name',
@@ -192,27 +192,27 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => 'submit',
 					'content' => ucwords(lang('actions_submit'))),
 			);
-			
+
 			if ( ! $item)
 			{
 				$data['inputs']['display_y']['checked'] = true;
 			}
-			
+
 			$data['values']['cat'] = array(
 				'ic' => ucwords(lang('labels_ic')),
 				'ooc' => ucwords(lang('labels_ooc')),
 				'both' => ucfirst(lang('labels_both'))
 			);
-			
+
 			$data['values']['display'] = array(
 				'y' => ucwords(lang('labels_yes')),
 				'n' => ucwords(lang('labels_no')),
 			);
-			
+
 			$data['directory'] = array();
-		
+
 			$dir = $this->sys->get_uploaded_images('award');
-			
+
 			if ($dir->num_rows() > 0)
 			{
 				foreach ($dir->result() as $d)
@@ -227,17 +227,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['form'] = ($action == 'edit') ? 'edit/'. $award : 'add';
 			$data['id'] = $award;
-			
+
 			$view_loc = 'manage_awards_action';
 		}
 		else
 		{
 			// grab all the awards from the database
 			$awards = $this->awards->get_all_awards('asc', '');
-			
+
 			if ($awards->num_rows() > 0)
 			{
 				foreach ($awards->result() as $a)
@@ -257,12 +257,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['header'] = ucfirst(lang('global_awards'));
-			
+
 			$view_loc = 'manage_awards';
 		}
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
@@ -281,12 +281,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'alt' => lang('actions_upload'),
 				'class' => 'image'),
 		);
-		
+
 		$data['image_instructions'] = sprintf(
 			lang('text_image_select'),
 			lang('global_award')
 		);
-		
+
 		$data['label'] = array(
 			'addaward' => ucwords(lang('actions_add') .' '. lang('global_award') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
@@ -306,35 +306,35 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'upload' => ucwords(lang('actions_upload') .' '. lang('labels_images') .' '. RARROW),
 			'noawards' => sprintf(lang('error_not_found'), lang('global_awards')),
 		);
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_awards_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function comments($type = 'posts', $section = 'activated', $offset = 0)
 	{
 		Auth::check_access();
-		
+
 		// arrays to check against
 		$types = array('posts', 'logs', 'news', 'wiki');
 		$values = array('activated', 'pending', 'edit');
-		
+
 		// sanity checks
 		$type = (in_array($type, $types)) ? $type : 'posts';
 		$section = (in_array($section, $values)) ? $section : 'activated';
 		$offset = (is_numeric($offset)) ? $offset : 0;
-		
+
 		// load the resources
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('personallogs_model', 'logs');
 		$this->load->model('news_model', 'news');
 		$this->load->model('wiki_model', 'wiki');
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(6))
@@ -342,70 +342,70 @@ abstract class Nova_manage extends Nova_controller_admin {
 				case 'approve':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					switch ($type)
 					{
 						case 'posts':
 							$approve_array = array('pcomment_status' => 'activated');
-							
+
 							$approve = $this->posts->update_post_comment($id, $approve_array);
 							$item = ucfirst(lang('global_missionpost'));
-							
+
 							$row = $this->posts->get_post_comment($id);
-							
+
 							$email_type = 'post_comment';
-							
+
 							$email_data = array(
 								'author' => $row->pcomment_author_character,
 								'post' => $row->pcomment_post,
 								'comment' => $row->pcomment_content
 							);
 						break;
-							
+
 						case 'logs':
 							$approve_array = array('lcomment_status' => 'activated');
-							
+
 							$approve = $this->logs->update_log_comment($id, $approve_array);
 							$item = ucfirst(lang('global_personallog'));
-							
+
 							$row = $this->logs->get_log_comment($id);
-							
+
 							$email_type = 'log_comment';
-							
+
 							$email_data = array(
 								'author' => $row->lcomment_author_character,
 								'log' => $row->lcomment_log,
 								'comment' => $row->lcomment_content
 							);
 						break;
-							
+
 						case 'news':
 							$approve_array = array('ncomment_status' => 'activated');
-							
+
 							$approve = $this->news->update_news_comment($id, $approve_array);
 							$item = ucfirst(lang('global_newsitem'));
-							
+
 							$row = $this->news->get_news_comment($id);
-							
+
 							$email_type = 'news_comment';
-							
+
 							$email_data = array(
 								'author' => $row->ncomment_author_character,
 								'news_item' => $row->ncomment_news,
 								'comment' => $row->ncomment_content
 							);
 						break;
-							
+
 						case 'wiki':
 							$approve_array = array('wcomment_status' => 'activated');
-							
+
 							$approve = $this->wiki->update_comment($id, $approve_array);
 							$item = ucfirst(lang('global_wiki'));
-							
+
 							$row = $this->wiki->get_comment($id);
-							
+
 							$email_type = 'wiki_comment';
-							
+
 							$email_data = array(
 								'author' => $row->wcomment_author_character,
 								'page' => $row->wcomment_page,
@@ -413,7 +413,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							);
 						break;
 					}
-					
+
 					if ($approve > 0)
 					{
 						$message = sprintf(
@@ -425,7 +425,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						// send the email
 						$email = ($this->options['system_email'] == 'on') ? $this->_email($email_type, $email_data) : false;
 					}
@@ -442,37 +442,37 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
 					$delete = 0;
-					
+
 					switch ($type)
 					{
 						case 'posts':
 							$delete = $this->posts->delete_post_comment($id);
 							$item = ucfirst(lang('global_missionpost'));
 						break;
-							
+
 						case 'logs':
 							$delete = $this->logs->delete_log_comment($id);
 							$item = ucfirst(lang('global_personllog'));
 						break;
-							
+
 						case 'news':
 							$delete = $this->news->delete_news_comment($id);
 							$item = ucfirst(lang('global_newsitem'));
 						break;
-							
+
 						case 'wiki':
 							$delete = $this->wiki->delete_comment($id);
 							$item = ucfirst(lang('global_wiki'));
 						break;
 					}
-					
+
 					$id = false;
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -498,12 +498,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
 					$delete = 0;
-					
+
 					switch ($type)
 					{
 						case 'posts':
@@ -511,28 +511,28 @@ abstract class Nova_manage extends Nova_controller_admin {
 							$update = $this->posts->update_post_comment($id, $update_array);
 							$item = ucfirst(lang('global_missionpost'));
 						break;
-							
+
 						case 'logs':
 							$update_array = array('lcomment_content' => $this->input->post('lcomment_content', true));
 							$update = $this->logs->update_log_comment($id, $update_array);
 							$item = ucfirst(lang('global_personllog'));
 						break;
-							
+
 						case 'news':
 							$update_array = array('ncomment_content' => $this->input->post('ncomment_content', true));
 							$update = $this->news->update_news_comment($id, $update_array);
 							$item = ucfirst(lang('global_newsitem'));
 						break;
-							
+
 						case 'wiki':
 							$update_array = array('wcomment_content' => $this->input->post('wcomment_content', true));
 							$update = $this->wiki->update_comment($id, $update_array);
 							$item = ucfirst(lang('global_wiki'));
 						break;
 					}
-					
+
 					$id = false;
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -559,23 +559,23 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		$p_activated = ($section == 'activated' and $type == 'posts') ? $offset : 0;
 		$p_pending = ($section == 'pending' and $type == 'posts') ? $offset : 0;
-		
+
 		$l_activated = ($section == 'activated' and $type == 'logs') ? $offset : 0;
 		$l_pending = ($section == 'pending' and $type == 'logs') ? $offset : 0;
-		
+
 		$n_activated = ($section == 'activated' and $type == 'news') ? $offset : 0;
 		$n_pending = ($section == 'pending' and $type == 'news') ? $offset : 0;
-		
+
 		$w_activated = ($section == 'activated' and $type == 'wiki') ? $offset : 0;
 		$w_pending = ($section == 'pending' and $type == 'wiki') ? $offset : 0;
-		
+
 		$data['posts'] = array(
 			'activated' => $this->_comments_ajax($p_activated, 'posts'),
 			'pending' => $this->_comments_ajax($p_pending, 'posts', 'pending'),
@@ -592,16 +592,16 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'activated' => $this->_comments_ajax($w_activated, 'wiki'),
 			'pending' => $this->_comments_ajax($w_pending, 'wiki', 'pending'),
 		);
-		
+
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('labels_comments'));
-		
+
 		$data['images'] = array(
 			'loading' => array(
 				'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'image'),
 		);
-		
+
 		$data['label'] = array(
 			'loading' => ucfirst(lang('actions_loading')) .'...',
 			'activated' => ucfirst(lang('status_activated')),
@@ -611,64 +611,64 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'news' => ucwords(lang('global_news') .' '. lang('labels_comments')),
 			'wiki' => ucwords(lang('global_wiki') .' '. lang('labels_comments')),
 		);
-		
+
 		switch ($type)
 		{
 			case 'posts':
 			default:
 				$js_data['type'] = 0;
 			break;
-				
+
 			case 'logs':
 				$js_data['type'] = 1;
 			break;
-				
+
 			case 'news':
 				$js_data['type'] = 2;
 			break;
-				
+
 			case 'wiki':
 				$js_data['type'] = 3;
 			break;
 		}
-		
+
 		$js_data['section'] = ($section == 'pending') ? 1 : 0;
-		
+
 		$this->_regions['content'] = Location::view('manage_comments', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_comments_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function decks($deck = false)
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('tour_model', 'tour');
 		$this->load->model('specs_model', 'specs');
-		
+
 		// sanity check
 		$deck = (is_numeric($deck)) ? $deck : false;
-		
+
 		if (isset($_POST['submit']))
 		{
 			$name = $this->input->post('deck_name', true);
 			$content = $this->input->post('deck_content', true);
 			$item = $this->input->post('deck_item', true);
 			$id = $this->input->post('id', true);
-			
+
 			$update_array = array(
 				'deck_name' => $name,
 				'deck_content' => $content,
 				'deck_item' => $item,
 			);
-			
+
 			$update = $this->tour->update_deck($id, $update_array);
-			
+
 			if ($update > 0)
 			{
 				$message = sprintf(
@@ -693,16 +693,16 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$flash['status'] = 'error';
 				$flash['message'] = text_output($message);
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($deck == 0)
 		{
 			// get the specification items
 			$specs = $this->specs->get_spec_items(null);
-			
+
 			if ($specs->num_rows() > 0)
 			{
 				foreach ($specs->result() as $s)
@@ -714,7 +714,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 		else
 		{
 			$decks = $this->tour->get_decks($deck);
-			
+
 			if ($decks->num_rows() > 0)
 			{
 				foreach ($decks->result() as $deck)
@@ -723,26 +723,26 @@ abstract class Nova_manage extends Nova_controller_admin {
 				}
 			}
 		}
-		
+
 		$data['header'] = ucwords(lang('global_deck') .' '. lang('labels_listings'));
-		
+
 		$data['text'] = sprintf(
 			lang('text_manage_decks'),
 			lang('global_deck'),
 			lang('global_deck'),
 			lang('global_deck')
 		);
-		
+
 		$data['inputs']['deck'] = array(
 			'name' => 'deck',
 			'id' => 'deck'
 		);
-		
+
 		// get the specification items
 		$specs = $this->specs->get_spec_items(null);
-		
+
 		$data['values']['specs'][0] = ucwords(lang('actions_choose').' '.lang('labels_a').' '.lang('global_specification').' '.lang('labels_item'));
-		
+
 		if ($specs->num_rows() > 0)
 		{
 			foreach ($specs->result() as $s)
@@ -750,7 +750,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$data['values']['specs'][$s->specs_id] = $s->specs_name;
 			}
 		}
-		
+
 		$data['buttons'] = array(
 			'submit' => array(
 				'type' => 'submit',
@@ -767,38 +767,38 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'id' => 'add',
 				'content' => ucwords(lang('actions_add'))),
 		);
-		
+
 		$data['loading'] = array(
 			'src' => Location::img('loading-bar.gif', $this->skin, 'admin'),
 			'alt' => '',
 			'class' => 'image'
 		);
-		
+
 		$data['label'] = array(
 			'processing' => ucfirst(lang('actions_processing')) .'...',
 			'back' => LARROW.' '.ucfirst(lang('actions_back')).' '.lang('labels_to').' '.
 				ucwords(lang('labels_all').' '.lang('global_deck').' '.lang('labels_listings')),
 		);
-		
+
 		$this->_regions['content'] = Location::view('manage_decks', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_decks_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function depts()
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('depts_model', 'dept');
-		
+
 		// set the variables
 		$section = $this->uri->segment(4, 'assigned');
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -813,13 +813,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'dept_parent' => $this->input->post('dept_parent', true),
 						'dept_manifest' => $this->input->post('dept_manifest', true),
 					);
-					
+
 					// insert the record
 					$insert = $this->dept->add_dept($insert_array);
-					
+
 					// optimize the table
 					$this->sys->optimize_table('departments_'.GENRE);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -845,12 +845,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					// grab the ID
 					$id = $this->input->post('id', true);
 					$id = ( ! is_numeric($id)) ? false : $id;
-					
+
 					// build the array to update the record with
 					$update_array = array(
 						'dept_name' => $this->input->post('dept_name', true),
@@ -861,13 +861,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'dept_parent' => $this->input->post('dept_parent', true),
 						'dept_manifest' => $this->input->post('dept_manifest', true),
 					);
-					
+
 					// update the record
 					$update = $this->dept->update_dept($id, $update_array);
-					
+
 					// optimize the table
 					$this->sys->optimize_table('departments_'.GENRE);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -893,19 +893,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'delete':
 					$all = $this->input->post('delete', true);
 					$deptid = $this->input->post('dept', true);
 					$id = $this->input->post('id', true);
 					$subdept = (isset($_POST['subdept'])) ? $this->input->post('subdept', true) : false;
-					
+
 					// load the positions model
 					$this->load->model('positions_model', 'pos');
-					
+
 					// grab the positions for the department
 					$positions = $this->pos->get_dept_positions($id, '');
-					
+
 					if ($all == 'y')
 					{
 						if ($positions->num_rows() > 0)
@@ -923,30 +923,30 @@ abstract class Nova_manage extends Nova_controller_admin {
 							foreach ($positions->result() as $p)
 							{
 								$update = array('pos_dept' => $deptid);
-								
+
 								$this->pos->update_position($p->pos_id, $update);
 							}
 						}
 					}
-					
+
 					if ($subdept !== false)
 					{
 						$subs = $this->dept->get_sub_depts($id, 'asc', '');
-						
+
 						if ($subs->num_rows() > 0)
 						{
 							$where = array('dept_parent' => $subdept);
-							
+
 							foreach ($subs->result() as $sub)
 							{
 								$this->dept->update_dept($sub->dept_id, $where);
 							}
 						}
 					}
-					
+
 					// delete the department
 					$delete = $this->dept->delete_dept($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -972,33 +972,33 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'duplicate':
 					$id = $this->input->post('id', true);
-					
+
 					// load the positions model
 					$this->load->model('positions_model', 'pos');
-					
+
 					// get the department information
 					$dpt = $this->dept->get_dept($id);
-					
+
 					// clear out the department id
 					unset($dpt->dept_id);
-					
+
 					// make sure the manifest and parent values are reset
 					$dpt->dept_manifest = 0;
 					$dpt->dept_parent = 0;
-					
+
 					// create the new department
 					$insert = $this->dept->add_dept($dpt);
 					$deptid = $this->db->insert_id();
-					
+
 					// optimize the table
 					$this->sys->optimize_table('departments_'.GENRE);
-					
+
 					// get all positions for the original department
 					$positions = $this->pos->get_dept_positions($id, null);
-					
+
 					if ($positions->num_rows() > 0)
 					{
 						foreach ($positions->result() as $p)
@@ -1013,15 +1013,15 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'pos_display' => $p->pos_display,
 								'pos_type' => $p->pos_type,
 							);
-							
+
 							// create the position
 							$insert += $this->pos->add_position($insert_array);
 						}
 					}
-					
+
 					// total count
 					$count = 1 + $positions->num_rows();
-					
+
 					if ($insert == $count)
 					{
 						$message = sprintf(
@@ -1048,25 +1048,25 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		$departments = $this->dept->get_all_depts('asc', '');
 		$manifests = $this->dept->get_all_manifests(null);
-		
+
 		if ($departments->num_rows() > 0)
 		{
 			foreach ($departments->result() as $d)
 			{
 				// make sure we have the manifest ID set properly
 				$manifest = ($d->dept_manifest === null) ? 0 : $d->dept_manifest;
-				
+
 				$data['depts'][$manifest][$d->dept_id] = $d;
-				
+
 				$subs = $this->dept->get_sub_depts($d->dept_id);
-				
+
 				if ($subs->num_rows() > 0)
 				{
 					foreach ($subs->result() as $s)
@@ -1076,7 +1076,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				}
 			}
-			
+
 			if ($manifests->num_rows() > 0)
 			{
 				foreach ($manifests->result() as $m)
@@ -1084,13 +1084,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$data['manifests'][$m->manifest_id] = $m->manifest_name;
 				}
 			}
-			
+
 			$data['manifests'][0] = ucwords(lang('labels_unassigned').' '.lang('global_departments'));
 		}
-		
+
 		$data['parent'][0] = ucfirst(lang('labels_none'));
 		$data['manifest'][0] = ucfirst(lang('labels_none'));
-		
+
 		$data['header'] = ucfirst(lang('global_departments'));
 		$data['text'] = sprintf(
 			lang('text_manage_depts'),
@@ -1105,7 +1105,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			lang('global_positions'),
 			lang('global_characters')
 		);
-		
+
 		$data['label'] = array(
 			'add_dept' => ucwords(lang('actions_add') .' '.
 				lang('global_department') .' '. RARROW),
@@ -1122,7 +1122,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'no_unassigned' => sprintf(lang('error_not_found'), lang('labels_unassigned').' '.lang('global_departments')),
 			'sub_of' => ucfirst(lang('global_subdepartment').' '.lang('labels_of').' '),
 		);
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
@@ -1144,7 +1144,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'title' => ucfirst(lang('actions_duplicate')),
 				'class' => 'image'),
 		);
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -1153,26 +1153,26 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'value' => 'update',
 				'content' => ucwords(lang('actions_update'))),
 		);
-		
+
 		$js_data['tab'] = ($section == 'assigned') ? 0 : 1;
-		
+
 		$this->_regions['content'] = Location::view('manage_depts', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_depts_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function docked($section = 'active', $id = false)
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('docking_model', 'docking');
 		$this->load->helper('utility');
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($section)
@@ -1180,9 +1180,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$delete = $this->docking->delete_docked_item($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -1194,7 +1194,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						$this->docking->delete_docking_field_data($id, 'data_docking_item');
 					}
 					else
@@ -1210,7 +1210,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					foreach ($_POST as $key => $value)
 					{
@@ -1219,16 +1219,16 @@ abstract class Nova_manage extends Nova_controller_admin {
 							$update_array[$key] = $value;
 						}
 					}
-					
+
 					// take unnecessary items off the array
 					unset($update_array['submit']);
 					unset($update_array['action_id']);
-					
+
 					$action_id = $this->input->post('action_id', true);
-					
+
 					// put the record into the database
 					$update = $this->docking->update_docking_record($update_array, $action_id);
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						if (is_numeric($key))
@@ -1239,11 +1239,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'data_value' => $value,
 								'data_updated' => now()
 							);
-							
+
 							$this->docking->update_docking_data($array, $action_id, $key);
 						}
 					}
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -1252,7 +1252,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							lang('actions_updated'),
 							''
 						);
-						
+
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
 					}
@@ -1264,39 +1264,39 @@ abstract class Nova_manage extends Nova_controller_admin {
 							lang('actions_updated'),
 							''
 						);
-						
+
 						$flash['status'] = 'error';
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'pending':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$action = $this->input->post('action', true);
-					
+
 					if ($action == 'approve')
 					{
 						$update_array = array('docking_status' => 'active');
-						
+
 						$update = $this->docking->update_docking_record($update_array, $id);
-						
+
 						// grab the message
 						$message = $this->msgs->get_message('docking_accept_message');
-						
+
 						$item = $this->docking->get_docked_item($id);
-						
+
 						// set the arguments for the message
 						$args = array(
 							'gm_name' => ( ! empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
 							'sim_name' => $item->docking_sim_name,
 							'sim' => $this->options['sim_name']
 						);
-						
+
 						// parse the message with the args
 						$content = parse_dynamic_message($message, $args);
-						
+
 						if ($update > 0)
 						{
 							$message = sprintf(
@@ -1305,12 +1305,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 								lang('actions_approved'),
 								''
 							);
-			
+
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
 
 							$currentUser = $this->user->get_user($this->session->userdata('userid'));
-							
+
 							$emailData = array(
 								'message'	=> $content,
 								'email' 	=> $item->docking_gm_email,
@@ -1319,7 +1319,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'fromEmail' => $currentUser->email,
 								'fromName'	=> $this->char->get_character_name($currentUser->main_char, true, true),
 							);
-							
+
 							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_accept', $emailData) : false;
 						}
 						else
@@ -1330,7 +1330,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 								lang('actions_approved'),
 								''
 							);
-			
+
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
@@ -1339,24 +1339,24 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						// grab the message
 						$message = $this->msgs->get_message('docking_reject_message');
-						
+
 						// grab the info for the item being rejected
 						$item = $this->docking->get_docked_item($id);
-						
+
 						// set the arguments for the message
 						$args = array(
 							'gm_name' => ( ! empty($item->docking_gm_name)) ? $item->docking_gm_name : $item->docking_gm_email,
 							'sim_name' => $item->docking_sim_name,
 							'sim' => $this->options['sim_name']
 						);
-						
+
 						// parse the message with the args
 						$content = parse_dynamic_message($message, $args);
-						
+
 						// delete the record and its data
 						$delete = $this->docking->delete_docked_item($id);
 						$delete+= $this->docking->delete_docking_field_data($id, 'data_docking_item');
-						
+
 						if ($delete > 0)
 						{
 							$message = sprintf(
@@ -1365,12 +1365,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 								lang('actions_rejected'),
 								''
 							);
-			
+
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
 
 							$currentUser = $this->user->get_user($this->session->userdata('userid'));
-							
+
 							$emailData = array(
 								'message'	=> $content,
 								'email' 	=> $item->docking_gm_email,
@@ -1379,7 +1379,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'fromEmail' => $currentUser->email,
 								'fromName'	=> $this->char->get_character_name($currentUser->main_char, true, true),
 							);
-							
+
 							$email = ($this->options['system_email'] == 'on') ? $this->_email('docking_reject', $emailData) : false;
 						}
 						else
@@ -1390,26 +1390,26 @@ abstract class Nova_manage extends Nova_controller_admin {
 								lang('actions_rejected'),
 								''
 							);
-			
+
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($section == 'edit')
 		{
 			// sanity check
 			$id = (is_numeric($id)) ? $id : false;
-			
+
 			// grab the post data
 			$row = $this->docking->get_docked_item($id);
-			
+
 			// set the data used by the view
 			$data['inputs'] = array(
 				'sim_name' => array(
@@ -1429,42 +1429,42 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'id' => 'gm_email',
 					'value' => $row->docking_gm_email),
 			);
-			
+
 			$data['values'] = array(
 				'active' => ucfirst(lang('status_active')),
 				'inactive' => ucfirst(lang('status_inactive')),
 				'pending' => ucfirst(lang('status_pending')),
 			);
-			
+
 			// grab the join fields
 			$sections = $this->docking->get_docking_sections();
-			
+
 			if ($sections->num_rows() > 0)
 			{
 				foreach ($sections->result() as $sec)
 				{
 					$sid = $sec->section_id;
-					
+
 					// set the section name
 					$data['docking'][$sid]['name'] = $sec->section_name;
-					
+
 					// grab the fields for the given section
 					$fields = $this->docking->get_docking_fields($sec->section_id);
-					
+
 					if ($fields->num_rows() > 0)
 					{
 						foreach ($fields->result() as $field)
 						{
 							$f_id = $field->field_id;
-							
+
 							// set the page label
 							$data['docking'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
 							$data['docking'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
-							
+
 							$field_data = $this->docking->get_field_data($f_id, $id);
 
 							$frow = ($field_data->num_rows() > 0) ? $field_data->row() : false;
-							
+
 							switch ($field->field_type)
 							{
 								case 'text':
@@ -1474,10 +1474,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 										'class' => $field->field_class,
 										'value' => $frow->data_value
 									);
-									
+
 									$data['docking'][$sid]['fields'][$f_id]['input'] = form_input($input);
 								break;
-									
+
 								case 'textarea':
 									$input = array(
 										'name' => $field->field_id,
@@ -1486,17 +1486,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 										'value' => $frow->data_value,
 										'rows' => $field->field_rows
 									);
-									
+
 									$data['docking'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
 								break;
-									
+
 								case 'select':
 									$value = false;
 									$values = false;
 									$input = false;
-								
+
 									$values = $this->docking->get_docking_values($field->field_id);
-									
+
 									if ($values->num_rows() > 0)
 									{
 										foreach ($values->result() as $value)
@@ -1504,7 +1504,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 											$input[$value->value_field_value] = $value->value_content;
 										}
 									}
-									
+
 									$data['docking'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $frow->data_value);
 								break;
 							}
@@ -1512,20 +1512,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				}
 			}
-			
+
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('actions_docked') .' '. lang('labels_item'));
 			$data['id'] = $id;
 			$data['status'] = $row->docking_status;
-			
+
 			$js_data['tab'] = 0;
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_docked_edit';
 		}
 		else
 		{
 			$items = $this->docking->get_docked_items();
-			
+
 			if ($items->num_rows() > 0)
 			{
 				foreach ($items->result() as $i)
@@ -1538,31 +1538,31 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['header'] = ucwords(lang('actions_docked') .' '. lang('labels_items'));
-			
+
 			$data['count'] = (isset($data['docking']['pending'])) ? count($data['docking']['pending']) : 0;
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_docked';
-			
+
 			switch ($section)
 			{
 				case 'active':
 				default:
 					$js_data['tab'] = 0;
 				break;
-					
+
 				case 'inactive':
 					$js_data['tab'] = 1;
 				break;
-					
+
 				case 'pending':
 					$js_data['tab'] = 2;
 				break;
 			}
 		}
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -1571,7 +1571,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'value' => 'update',
 				'content' => ucfirst(lang('actions_update'))),
 		);
-		
+
 		$data['images'] = array(
 			'accept' => array(
 				'src' => Location::img('icon-check.png', $this->skin, 'admin'),
@@ -1599,7 +1599,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'class' => 'image',
 				'title' => ucfirst(lang('actions_view'))),
 		);
-		
+
 		$data['label'] = array(
 			'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to') .' '. ucwords(lang('actions_docked') .' '. lang('labels_items')),
 			'email' => ucwords(lang('labels_email_address')),
@@ -1614,30 +1614,30 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'status_inactive' => ucwords(lang('status_inactive') .' '. lang('labels_items')),
 			'status_pending' => ucwords(lang('status_pending') .' '. lang('labels_items')),
 		);
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_docked_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function logs($section = 'activated', $offset = 0)
 	{
 		Auth::check_access();
 		$level = Auth::get_access_level();
-		
+
 		$this->load->model('personallogs_model', 'logs');
-		
+
 		// arrays to check uri against
 		$values = array('activated', 'saved', 'pending', 'edit');
-		
+
 		// sanity checks
 		$section = (in_array($section, $values)) ? $section : 'activated';
 		$offset = (is_numeric($offset)) ? $offset : 0;
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
@@ -1647,13 +1647,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$id = $this->input->post('id', true);
 						$id = (is_numeric($id)) ? $id : false;
-						
+
 						// set the array data
 						$approve_array = array('log_status' => 'activated');
-						
+
 						// approve the post
 						$approve = $this->logs->update_log($id, $approve_array);
-						
+
 						$message = sprintf(
 							($approve > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_personallog')),
@@ -1662,37 +1662,37 @@ abstract class Nova_manage extends Nova_controller_admin {
 						);
 						$flash['status'] = ($approve > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
-						
+
 						if ($approve > 0)
 						{
 							// grab the post details
 							$row = $this->logs->get_log($id);
-							
+
 							// set the array of data for the email
 							$email_data = array(
 								'author' => $row->log_author_character,
 								'title' => $row->log_title,
 								'content' => $row->log_content
 							);
-							
+
 							// send the email
 							$email = ($this->options['system_email'] == 'on') ? $this->_email('log', $email_data) : false;
 						}
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					// get the log we're trying to delete
 					$item = $this->logs->get_log($id);
-					
+
 					// make sure the user is allowed to be deleting the log
 					if (($level == 1 and ($item->log_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
 						$delete = $this->logs->delete_log($id);
-						
+
 						$message = sprintf(
 							($delete > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_personallog')),
@@ -1703,13 +1703,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'update':
 					$id = $this->uri->segment(4, 0, true);
-					
+
 					// get the log we're trying to delete
 					$item = $this->logs->get_log($id);
-					
+
 					// make sure the user is allowed to be deleting the log
 					if (($level == 1 and ($item->log_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
@@ -1722,9 +1722,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 							'log_author_character' => $this->input->post('log_author', true),
 							'log_last_update' => now()
 						);
-						
+
 						$update = $this->logs->update_log($id, $update_array);
-						
+
 						$message = sprintf(
 							($update > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_personallog')),
@@ -1736,19 +1736,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($section == 'edit')
 		{
 			// grab the ID from the URL
 			$id = $this->uri->segment(4, 0, true);
-			
+
 			// grab the post data
 			$row = $this->logs->get_log($id);
-			
+
 			if ($level < 2)
 			{
 				if ($this->session->userdata('userid') != $row->log_author_user or $row->log_status == 'pending')
@@ -1756,10 +1756,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					redirect('admin/error/6');
 				}
 			}
-			
+
 			// get all characters
 			$all = $this->char->get_all_characters('user_npc');
-			
+
 			if ($all->num_rows() > 0)
 			{
 				foreach ($all->result() as $a)
@@ -1774,13 +1774,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						{
 							$label = ucwords(lang('abbr_npcs'));
 						}
-						
+
 						// toss them in the array
 						$data['all'][$label][$a->charid] = $this->char->get_character_name($a->charid, true);
 					}
 				}
 			}
-			
+
 			// set the data used by the view
 			$data['inputs'] = array(
 				'title' => array(
@@ -1798,13 +1798,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'character' => $this->char->get_character_name($row->log_author_character, true),
 				'status' => $row->log_status,
 			);
-			
+
 			$data['status'] = array(
 				'activated' => ucfirst(lang('status_activated')),
 				'saved' => ucfirst(lang('status_saved')),
 				'pending' => ucfirst(lang('status_pending')),
 			);
-			
+
 			$data['buttons'] = array(
 				'update' => array(
 					'type' => 'submit',
@@ -1813,10 +1813,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => 'update',
 					'content' => ucfirst(lang('actions_update'))),
 			);
-			
+
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_personallogs'));
 			$data['id'] = $id;
-			
+
 			$data['label'] = array(
 				'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to')
 					.' '. ucwords(lang('global_personallogs')),
@@ -1828,9 +1828,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
 				'author' => ucwords(lang('labels_author'))
 			);
-			
+
 			$js_data['tab'] = 0;
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_logs_edit';
 		}
@@ -1842,52 +1842,52 @@ abstract class Nova_manage extends Nova_controller_admin {
 				default:
 					$js_data['tab'] = 0;
 				break;
-					
+
 				case 'saved':
 					$js_data['tab'] = 1;
 				break;
-					
+
 				case 'pending':
 					$js_data['tab'] = 2;
 				break;
 			}
-			
+
 			$offset_activated = ($section == 'activated') ? $offset : 0;
 			$offset_saved = ($section == 'saved') ? $offset : 0;
 			$offset_pending = ($section == 'pending') ? $offset : 0;
-			
+
 			$data['activated'] = $this->_entries_ajax($offset_activated, 'activated', 'logs');
 			$data['saved'] = $this->_entries_ajax($offset_saved, 'saved', 'logs');
 			$data['pending'] = $this->_entries_ajax($offset_pending, 'pending', 'logs');
-	
+
 		    $data['label'] = array(
 				'activated' => ucfirst(lang('status_activated')),
 				'pending' => ucfirst(lang('status_pending')),
 				'saved' => ucfirst(lang('status_saved')),
 			);
-			
+
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_personallogs'));
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_logs';
 		}
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_logs_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function missiongroups()
 	{
 		Auth::check_access('manage/missions');
-		
+
 		// load the resources
 		$this->load->model('missions_model', 'mis');
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -1897,12 +1897,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$insert_array[$key] = $value;
 					}
-					
+
 					unset($insert_array['submit']);
-					
+
 					// insert the record
 					$insert = $this->mis->add_mission_group($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -1928,13 +1928,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-				
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$delete = $this->mis->delete_mission_group($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -1960,22 +1960,22 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						$update_array[$key] = $value;
 					}
-					
+
 					unset($update_array['submit']);
 					unset($update_array['id']);
-					
+
 					// insert the record
 					$update = $this->mis->update_mission_group($id, $update_array);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -2002,14 +2002,14 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		// grab the mission groups
 		$groups = $this->mis->get_all_mission_groups();
-		
+
 		if ($groups->num_rows() > 0)
 		{
 			foreach ($groups->result() as $g)
@@ -2019,9 +2019,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'name' => $g->misgroup_name,
 					'desc' => $g->misgroup_desc,
 				);
-				
+
 				$subgroups = $this->mis->get_all_mission_groups($g->misgroup_id);
-				
+
 				if ($subgroups->num_rows() > 0)
 				{
 					foreach ($subgroups->result() as $s)
@@ -2035,7 +2035,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				}
 			}
 		}
-		
+
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missiongroups'));
 		$data['text'] = sprintf(
 			lang('text_mission_groups'),
@@ -2045,7 +2045,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			ucfirst(lang('global_mission')),
 			lang('global_missions')
 		);
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -2060,7 +2060,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_add')))
 		);
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
@@ -2079,7 +2079,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'alt' => lang('actions_view'),
 				'title' => ucfirst(lang('actions_view'))),
 		);
-		
+
 		$data['label'] = array(
 			'addgroup' => ucwords(lang('actions_add') .' '. lang('global_missiongroup') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
@@ -2089,50 +2089,50 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'parent' => ucwords(lang('labels_parent').' '.lang('global_missiongroup')),
 			'nogroups' => sprintf(lang('error_not_found'), lang('global_missiongroups')),
 		);
-		
+
 		$this->_regions['content'] = Location::view('manage_missiongroups', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_missiongroups_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function missions($action = false, $id = false)
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('missions_model', 'mis');
 		$this->load->model('posts_model', 'posts');
-		
+
 		// sanity check
 		$id = (is_numeric($id)) ? $id : false;
-		
+
 		$js_data['tab'] = 0;
-		
+
 		if (isset($_POST['submit']))
 		{
 			$status = $this->uri->segment(5);
-			
+
 			// grab the date info
 			$today = getdate();
-			
+
 			// make sure things are formatted properly
 			$hours = ($today['hours'] < 10) ? '0'. $today['hours'] : $today['hours'];
 			$minutes = ($today['minutes'] < 10) ? '0'. $today['minutes'] : $today['minutes'];
 			$seconds = ($today['seconds'] < 10) ? '0'. $today['seconds'] : $today['seconds'];
-			
+
 			// set the current time
 			$time = ' '. $hours .':'. $minutes .':'. $seconds;
-			
+
 			switch ($this->uri->segment(3))
 			{
 				case 'add':
 					$start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', true) . $time);
 					$end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', true) . $time);
-					
+
 					$insert_array = array(
 						'mission_title' => $this->input->post('mission_title', true),
 						'mission_status' => $this->input->post('mission_status', true),
@@ -2145,10 +2145,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'mission_summary' => $this->input->post('mission_summary', true),
 						'mission_group' => $this->input->post('mission_group', true),
 					);
-					
+
 					// insert the record
 					$insert = $this->mis->add_mission($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -2174,13 +2174,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$delete = $this->mis->delete_mission($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -2206,21 +2206,21 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						$loc = strpos($key, '_');
-						
+
 						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
-							
+
 							$new_key = 'mission_'. substr($key, ($loc+1));
-							
+
 							if (substr($key, ($loc+1)) == 'start' or substr($key, ($loc+1)) == 'end')
 							{
 								$mission[$new_key] = human_to_unix($value . $time);
@@ -2231,9 +2231,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 							}
 						}
 					}
-					
+
 					$oldstatus = $mission['mission_oldstatus'];
-					
+
 					if ($oldstatus != $mission['mission_status'])
 					{
 						if ($oldstatus == 'upcoming' and $mission['mission_status'] == 'current')
@@ -2245,7 +2245,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							$mission['mission_end'] = now();
 						}
 					}
-					
+
 					// check to see if we should update when the mission notes were updated
 					if ($mission['mission_oldnotes'] != $mission['mission_notes'])
 					{
@@ -2254,9 +2254,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 
 					unset($mission['mission_oldstatus']); // remove the old status variable
 					unset($mission['mission_oldnotes']); // remove the old notes variable
-					
+
 					$update = $this->mis->update_mission($id, $mission);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -2283,29 +2283,29 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
-			
+
 			switch ($status)
 			{
 				case 'current':
 				default:
 					$js_data['tab'] = 0;
 				break;
-					
+
 				case 'upcoming':
 					$js_data['tab'] = 1;
 				break;
-					
+
 				case 'completed':
 					$js_data['tab'] = 2;
 				break;
 			}
 		}
-		
+
 		$data['label'] = array();
-		
+
 		if ($action == 'add' or $action == 'edit')
 		{
 			// set the date
@@ -2314,22 +2314,22 @@ abstract class Nova_manage extends Nova_controller_admin {
 			$month = (strlen($today['mon']) < 2) ? '0'. $today['mon'] : $today['mon'];
 			$day = (strlen($today['mday']) < 2) ? '0'. $today['mday'] : $today['mday'];
 			$date = $year .'-'. $month .'-'. $day .' 00:00:00';
-			
+
 			$item = $this->mis->get_mission($id);
-			
+
 			$start = ($item === false) ? $date : '';
 			$start = (empty($item->mission_start)) ? '' : unix_to_human($item->mission_start);
 			$start = ( ! empty($start)) ? substr_replace($start, '', strpos($start, ' ')) : '';
-			
+
 			$end = ($item === false or empty($item->mission_end)) ? '' : unix_to_human($item->mission_end);
 			$end = ( ! empty($end)) ? substr_replace($end, '', strpos($end, ' ')) : '';
-			
+
 			$js_data['start'] = $start;
 			$js_data['end'] = $end;
-			
+
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_mission'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->mission_title : '';
-			
+
 			$data['inputs'] = array(
 				'title' => array(
 					'name' => 'mission_title',
@@ -2360,19 +2360,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'group' => ($item === false) ? '' : $item->mission_group,
 				'images' => ( ! empty($item->mission_images)) ? explode(',', $item->mission_images) : '',
 			);
-			
+
 			$groups = $this->mis->get_all_mission_groups();
-			
+
 			if ($groups->num_rows() > 0)
 			{
 				$data['groups'][0] = ucwords(lang('labels_no') .' '. lang('global_missiongroup'));
-				
+
 				foreach ($groups->result() as $g)
 				{
 					$data['groups'][$g->misgroup_id] = $g->misgroup_name;
-					
+
 					$subgroup = $this->mis->get_all_mission_groups($g->misgroup_id);
-					
+
 					if ($subgroup->num_rows() > 0)
 					{
 						foreach ($subgroup->result() as $s)
@@ -2382,11 +2382,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				}
 			}
-			
+
 			$data['directory'] = array();
-		
+
 			$dir = $this->sys->get_uploaded_images('mission');
-			
+
 			if ($dir->num_rows() > 0)
 			{
 				foreach ($dir->result() as $d)
@@ -2401,43 +2401,43 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
-			
+
 			$view_loc = 'manage_missions_action';
 		}
 		else
 		{
 			$missions = $this->mis->get_all_missions();
-			
+
 			$data['label']['s_current'] = ucwords(lang('status_current') .' '. lang('global_missions'));
 			$data['label']['s_completed'] = ucwords(lang('status_completed') .' '. lang('global_missions'));
 			$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. lang('global_missions'));
-			
+
 			if ($missions->num_rows() > 0)
 			{
 				$datestring = $this->options['date_format'];
-				
+
 				foreach ($missions->result() as $mission)
 				{
 					$mid = $mission->mission_id;
 					$status = $mission->mission_status;
-					
+
 					$start = '';
 					$end = '';
 					$timespan = '';
-					
+
 					if ( ! empty($mission->mission_start))
 					{
 						$start = gmt_to_local($mission->mission_start, $this->timezone, $this->dst);
 					}
-					
+
 					if ( ! empty($mission->mission_end))
 					{
 						$end = gmt_to_local($mission->mission_end, $this->timezone, $this->dst);
 					}
-					
+
 					$data['missions'][$status][$mid] = array(
 						'id' => $mid,
 						'title' => $mission->mission_title,
@@ -2448,37 +2448,37 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'posts' => $this->posts->count_mission_posts($mid, $this->options['post_count_format'])
 					);
 				}
-				
+
 				if (isset($data['missions']['current']))
 				{
 					$mis_label_current = (count($data['missions']['current']) > 1) ? lang('global_missions') : lang('global_mission');
-					
+
 					$data['label']['s_current'] = ucwords(lang('status_current') .' '. $mis_label_current);
 				}
-				
+
 				if (isset($data['missions']['completed']))
 				{
 					$mis_label_completed = (count($data['missions']['completed']) > 1) ? lang('global_missions') : lang('global_mission');
-					
+
 					$data['label']['s_completed'] = ucwords(lang('status_completed') .' '. $mis_label_completed);
 				}
-				
+
 				if (isset($data['missions']['upcoming']))
 				{
 					$mis_label_upcoming = (count($data['missions']['upcoming']) > 1) ? lang('global_missions') : lang('global_mission');
-					
+
 					$data['label']['s_upcoming'] = ucwords(lang('status_upcoming') .' '. $mis_label_upcoming);
 				}
 			}
-			
+
 			$js_data['start'] = false;
 			$js_data['end'] = false;
-			
+
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missions'));
-			
+
 			$view_loc = 'manage_missions';
 		}
-		
+
 		$data['label'] += array(
 			'title' => ucfirst(lang('labels_title')),
 			'more' => ucfirst(lang('labels_more')),
@@ -2510,7 +2510,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
 			'mission_images' => ucwords(lang('global_mission').' '.lang('labels_images')),
 		);
-		
+
 		$data['values'] = array(
 			'status' => array(
 				'current' => ucwords(lang('status_current') .' '. lang('global_mission')),
@@ -2518,7 +2518,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'upcoming' => ucwords(lang('status_upcoming') .' '. lang('global_mission')),
 			),
 		);
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
@@ -2545,12 +2545,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 		);
-		
+
 		$data['image_instructions'] = sprintf(
 			lang('text_image_select'),
 			lang('global_mission')
 		);
-				
+
 		$data['text'] = sprintf(
 			lang('text_manage_missions'),
 			lang('global_missions'),
@@ -2560,7 +2560,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			lang('global_mission'),
 			lang('global_missionposts')
 		);
-		
+
 		$data['buttons'] = array(
 			'submit' => array(
 				'type' => 'submit',
@@ -2583,32 +2583,32 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'rel' => $id,
 				'content' => ucwords(lang('actions_update'))),
 		);
-		
+
 		$js_data['id'] = $id;
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_missions_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function news($section = 'activated', $offset = 0)
 	{
 		Auth::check_access();
 		$level = Auth::get_access_level();
-		
+
 		$this->load->model('news_model', 'news');
-		
+
 		// array to check the values in the uri against
 		$values = array('activated', 'saved', 'pending', 'edit');
-		
+
 		// sanity checks
 		$section = (in_array($section, $values)) ? $section : false;
 		$offset = (is_numeric($offset)) ? $offset : 0;
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
@@ -2618,13 +2618,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$id = $this->input->post('id', true);
 						$id = (is_numeric($id)) ? $id : false;
-						
+
 						// set the array data
 						$approve_array = array('news_status' => 'activated');
-						
+
 						// approve the post
 						$approve = $this->news->update_news_item($id, $approve_array);
-						
+
 						$message = sprintf(
 							($approve > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_newsitem')),
@@ -2633,12 +2633,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 						);
 						$flash['status'] = ($approve > 0) ? 'success' : 'error';
 						$flash['message'] = text_output($message);
-						
+
 						if ($approve > 0)
 						{
 							// grab the post details
 							$row = $this->news->get_news_item($id);
-							
+
 							// set the array of data for the email
 							$email_data = array(
 								'author' => $row->news_author_character,
@@ -2646,24 +2646,24 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'category' => $this->news->get_news_category($row->news_cat, 'newscat_name'),
 								'content' => $row->news_content
 							);
-							
+
 							// send the email
 							$email = ($this->options['system_email'] == 'on') ? $this->_email('news', $email_data) : false;
 						}
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					// get the news item
 					$item = $this->news->get_news_item($id);
-					
+
 					if (($level == 1 and ($item->news_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
 						$delete = $this->news->delete_news_item($id);
-						
+
 						$message = sprintf(
 							($delete > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_newsitem')),
@@ -2674,13 +2674,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'update':
 					$id = $this->uri->segment(4, 0, true);
-					
+
 					// get the news item
 					$item = $this->news->get_news_item($id);
-					
+
 					if (($level == 1 and ($item->news_author_user == $this->session->userdata('userid'))) or $level == 2)
 					{
 						$update_array = array(
@@ -2694,9 +2694,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 							'news_private' => $this->input->post('news_private', true),
 							'news_last_update' => now()
 						);
-						
+
 						$update = $this->news->update_news_item($id, $update_array);
-						
+
 						$message = sprintf(
 							($update > 0) ? lang('flash_success') : lang('flash_failure'),
 							ucfirst(lang('global_newsitem')),
@@ -2708,20 +2708,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($section == 'edit')
 		{
 			// grab the ID from the URL
 			$id = $this->uri->segment(4, 0, true);
-			
+
 			// grab the post data
 			$row = $this->news->get_news_item($id);
 			$cats = $this->news->get_news_categories();
-			
+
 			if ($level < 2)
 			{
 				if ($this->session->userdata('userid') != $row->news_author_user or $row->news_status == 'pending')
@@ -2729,7 +2729,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					redirect('admin/error/6');
 				}
 			}
-			
+
 			if ($cats->num_rows() > 0)
 			{
 				foreach ($cats->result() as $c)
@@ -2737,10 +2737,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$data['categories'][$c->newscat_id] = $c->newscat_name;
 				}
 			}
-			
+
 			// get all characters
 			$all = $this->char->get_all_characters('active');
-			
+
 			if ($all->num_rows() > 0)
 			{
 				foreach ($all->result() as $a)
@@ -2748,7 +2748,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$data['all'][$a->charid] = $this->char->get_character_name($a->charid, true);
 				}
 			}
-			
+
 			// set the data used by the view
 			$data['inputs'] = array(
 				'title' => array(
@@ -2770,18 +2770,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'private' => $row->news_private,
 				'private_long' => ($row->news_private == 'y') ? ucfirst(lang('labels_yes')) : ucfirst(lang('labels_no'))
 			);
-			
+
 			$data['status'] = array(
 				'activated' => ucfirst(lang('status_activated')),
 				'saved' => ucfirst(lang('status_saved')),
 				'pending' => ucfirst(lang('status_pending')),
 			);
-			
+
 			$data['private'] = array(
 				'y' => ucfirst(lang('labels_yes')),
 				'n' => ucfirst(lang('labels_no')),
 			);
-			
+
 			$data['buttons'] = array(
 				'update' => array(
 					'type' => 'submit',
@@ -2790,10 +2790,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => 'update',
 					'content' => ucfirst(lang('actions_update'))),
 			);
-			
+
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_newsitem'));
 			$data['id'] = $id;
-			
+
 			$data['label'] = array(
 				'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to')
 					.' '. ucwords(lang('global_newsitems')),
@@ -2806,9 +2806,9 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'category' => ucfirst(lang('labels_category')),
 				'private' => ucfirst(lang('labels_private'))
 			);
-			
+
 			$js_data['tab'] = 0;
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_news_edit';
 		}
@@ -2820,51 +2820,51 @@ abstract class Nova_manage extends Nova_controller_admin {
 				default:
 					$js_data['tab'] = 0;
 				break;
-					
+
 				case 'saved':
 					$js_data['tab'] = 1;
 				break;
-					
+
 				case 'pending':
 					$js_data['tab'] = 2;
 				break;
 			}
-			
+
 			$offset_activated = ($section == 'activated') ? $offset : 0;
 			$offset_saved = ($section == 'saved') ? $offset : 0;
 			$offset_pending = ($section == 'pending') ? $offset : 0;
-			
+
 			$data['activated'] = $this->_entries_ajax($offset_activated, 'activated', 'news');
 			$data['saved'] = $this->_entries_ajax($offset_saved, 'saved', 'news');
 			$data['pending'] = $this->_entries_ajax($offset_pending, 'pending', 'news');
-	
+
 		    $data['label'] = array(
 				'activated' => ucfirst(lang('status_activated')),
 				'pending' => ucfirst(lang('status_pending')),
 				'saved' => ucfirst(lang('status_saved')),
 			);
-			
+
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_newsitems'));
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_news';
 		}
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_news_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function newscats()
 	{
 		Auth::check_access();
-		
+
 		$this->load->model('news_model', 'news');
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -2874,10 +2874,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'newscat_name' => $this->input->post('newscat_name', true),
 						'newscat_display' => 'y',
 					);
-					
+
 					// insert the record
 					$insert = $this->news->add_news_category($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -2903,20 +2903,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$array = array();
 					$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
 					$update = 0;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						$loc = strpos($key, '_');
-						
+
 						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
-							
+
 							if ( ! in_array($loc_pos, $delete))
 							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'newscat_'. substr($key, ($loc+1));
@@ -2924,17 +2924,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 							}
 						}
 					}
-					
+
 					foreach ($array as $a => $b)
 					{
 						$update += $this->news->update_news_category($a, $b);
 					}
-					
+
 					foreach ($delete as $del)
 					{
 						$delete = $this->news->delete_news_category($del);
 					}
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -2961,19 +2961,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		$cats = $this->news->get_news_categories('');
-		
+
 		if ($cats->num_rows() > 0)
 		{
 			foreach ($cats->result() as $c)
 			{
 				$cid = $c->newscat_id;
-				
+
 				$data['categories'][$cid] = array(
 					'id' => $cid,
 					'name' => array(
@@ -2987,12 +2987,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 				);
 			}
 		}
-		
+
 		$data['values']['display'] = array(
 			'y' => ucfirst(lang('labels_yes')),
 			'n' => ucfirst(lang('labels_no')),
 		);
-		
+
 		$data['label'] = array(
 			'name' => ucfirst(lang('labels_name')),
 			'add' => ucwords(lang('actions_add') .' '. lang('global_news') .' '.
@@ -3000,7 +3000,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'display' => ucfirst(lang('labels_display')),
 			'delete' => ucfirst(lang('actions_delete'))
 		);
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -3015,18 +3015,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'value' => 'add',
 				'content' => ucwords(lang('actions_add')))
 		);
-		
+
 		$data['inputs']['name'] = array(
 			'name' => 'newscat_name'
 		);
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left')
 		);
-		
+
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_news') .' '. lang('labels_categories'));
 		$data['text'] = sprintf(
 			lang('text_manage_newscats'),
@@ -3035,28 +3035,28 @@ abstract class Nova_manage extends Nova_controller_admin {
 			lang('global_newsitems'),
 			lang('global_newsitems')
 		);
-		
+
 		$this->_regions['content'] = Location::view('manage_newscats', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_newscats_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function positions()
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('positions_model', 'pos');
 		$this->load->model('depts_model', 'dept');
 		$this->load->library('parser');
-		
+
 		// set the variables
 		$g_dept = $this->uri->segment(3, 1, true);
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(4))
@@ -3072,10 +3072,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'pos_desc' => $this->input->post('pos_desc', true),
 						'pos_top_open' => $this->input->post('pos_top_open', true),
 					);
-					
+
 					// insert the record
 					$insert = $this->pos->add_position($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -3101,20 +3101,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$array = array();
 					$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
 					$update = 0;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						$loc = strpos($key, '_');
-						
+
 						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
-							
+
 							if ( ! in_array($loc_pos, $delete))
 							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'pos_'. substr($key, ($loc+1));
@@ -3122,17 +3122,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 							}
 						}
 					}
-					
+
 					foreach ($array as $a => $b)
 					{
 						$update += $this->pos->update_position($a, $b);
 					}
-					
+
 					foreach ($delete as $del)
 					{
 						$delete = $this->pos->delete_position($del);
 					}
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -3159,17 +3159,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		// get the positions for the current department
 		$positions = $this->pos->get_dept_positions($g_dept, '');
-		
+
 		// get all the departments
 		$departments = $this->dept->get_all_depts('asc', null);
-		
+
 		if ($departments->num_rows() > 0)
 		{
 			foreach ($departments->result() as $d)
@@ -3177,17 +3177,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$name = ($d->dept_manifest > 0 and $d->dept_manifest !== null)
 					? $this->dept->get_manifest($d->dept_manifest, 'manifest_name')
 					: ucwords(lang('labels_unassigned').' '.lang('global_departments'));
-					
+
 				$data['depts'][$d->dept_manifest]['name'] = $name;
 				$data['depts'][$d->dept_manifest]['items'][$d->dept_id] = array(
 					'name' => $d->dept_name,
 					'desc' => $d->dept_desc,
 				);
-				
+
 				$data['deptnames'][$d->dept_id] = $d->dept_name;
-				
+
 				$subd = $this->dept->get_sub_depts($d->dept_id, 'asc', null);
-				
+
 				if ($subd->num_rows() > 0)
 				{
 					foreach ($subd->result() as $s)
@@ -3201,7 +3201,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				}
 			}
 		}
-		
+
 		if ($positions->num_rows() > 0)
 		{
 			foreach ($positions->result() as $p)
@@ -3218,7 +3218,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'value' => $p->pos_id
 					),
 				);
-				
+
 				$additional_data = array(
 					'id' => $p->pos_id,
 					'dept' => $p->pos_dept,
@@ -3262,25 +3262,25 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'type' => ucfirst(lang('labels_type')),
 					),
 				);
-				
+
 				// the additional information view
 				$loc = Location::view('manage_positions_additional', $this->skin, 'admin', $additional_data);
-				
+
 				// parse the content and make sure it uses single quotes
 				$data['additional'][$p->pos_id] = str_replace('"', "'", $this->parser->parse_string($loc, $additional_data, true));
-				
+
 				$data['values']['top_open'] = array(
 					'y' => ucwords(lang('labels_yes')),
 					'n' => ucwords(lang('labels_no')),
 				);
-				
+
 				$data['positions'][$p->pos_id]['id'] = $p->pos_id;
 				$data['positions'][$p->pos_id]['name'] = $p->pos_name;
 				$data['positions'][$p->pos_id]['open'] = $p->pos_open;
 				$data['positions'][$p->pos_id]['top_open'] = $p->pos_top_open;
 			}
 		}
-				
+
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_positions'));
 		$data['text'] = sprintf(
 			lang('text_manage_positions'),
@@ -3291,7 +3291,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			lang('global_positions')
 		);
 		$data['g_dept'] = $g_dept;
-		
+
 		$data['label'] = array(
 			'add_position' => ucwords(lang('actions_add').' '.lang('global_position') .' '. RARROW),
 			'name' => ucfirst(lang('labels_name')),
@@ -3301,14 +3301,14 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'more' => ucfirst(lang('labels_more')),
 			'top_open' => ucwords(lang('labels_top').' '.lang('status_open').' '.lang('global_position')),
 		);
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 		);
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -3317,35 +3317,35 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'value' => 'update',
 				'content' => ucwords(lang('actions_update')))
 		);
-		
+
 		$js_data['position_update_text'] = sprintf(
 			lang('flash_success'),
 			ucfirst(lang('global_position')),
 			lang('actions_updated'),
 			''
 		);
-		
+
 		$this->_regions['content'] = Location::view('manage_positions', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_positions_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function posts()
 	{
 		Auth::check_access();
 		$level = Auth::get_access_level();
-		
+
 		$this->load->model('posts_model', 'posts');
 		$this->load->model('missions_model', 'mis');
-		
+
 		$values = array('activated', 'saved', 'pending', 'edit');
 		$section = $this->uri->segment(3, 'activated', false, $values);
 		$offset = $this->uri->segment(4, 0, true);
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
@@ -3355,13 +3355,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					{
 						$id = $this->input->post('id', true);
 						$id = (is_numeric($id)) ? $id : false;
-						
+
 						// set the array data
 						$approve_array = array('post_status' => 'activated');
-						
+
 						// approve the post
 						$approve = $this->posts->update_post($id, $approve_array);
-						
+
 						if ($approve > 0)
 						{
 							$message = sprintf(
@@ -3370,13 +3370,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 								lang('actions_approved'),
 								''
 							);
-	
+
 							$flash['status'] = 'success';
 							$flash['message'] = text_output($message);
-							
+
 							// grab the post details
 							$row = $this->posts->get_post($id);
-							
+
 							// set the array of data for the email
 							$email_data = array(
 								'authors' => $row->post_authors,
@@ -3386,7 +3386,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'content' => $row->post_content,
 								'mission' => $this->mis->get_mission($row->post_mission, 'mission_title')
 							);
-							
+
 							// send the email
 							$email = ($this->options['system_email'] == 'on') ? $this->_email('post', $email_data) : false;
 						}
@@ -3398,19 +3398,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 								lang('actions_approved'),
 								''
 							);
-	
+
 							$flash['status'] = 'error';
 							$flash['message'] = text_output($message);
 						}
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$delete = $this->posts->delete_post($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -3436,10 +3436,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'update':
 					$id = $this->uri->segment(4, 0, true);
-					
+
 					$update_array = array(
 						'post_title' => $this->input->post('post_title', true),
 						'post_location' => $this->input->post('post_location', true),
@@ -3450,23 +3450,23 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'post_status' => $this->input->post('post_status', true),
 						'post_last_update' => now(),
 					);
-					
+
 					$authors = $this->input->post('authors', true);
-					
+
 					foreach ($authors as $a => $b)
 					{
 						if (empty($b))
 						{
 							unset($authors[$a]);
 						}
-						
+
 						// get the user ID
 						$uid = $this->sys->get_item('characters', 'charid', $b, 'user');
-						
+
 						// put the users into an array
 						$users[] = ($uid !== false) ? $uid : null;
 					}
-					
+
 					foreach ($users as $k => $v)
 					{
 						if ( ! is_numeric($v) or $v < 1)
@@ -3474,15 +3474,15 @@ abstract class Nova_manage extends Nova_controller_admin {
 							unset($users[$k]);
 						}
 					}
-					
+
 					$authors = implode(',', $authors);
 					$authors_users = implode(',', $users);
-					
+
 					$update_array['post_authors'] = $authors;
 					$update_array['post_authors_users'] = $authors_users;
-					
+
 					$update = $this->posts->update_post($id, $update_array);
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -3509,28 +3509,28 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($section == 'edit')
 		{
 			// grab the ID from the URL
 			$id = $this->uri->segment(4, 0, true);
-			
+
 			// grab the post data
 			$row = $this->posts->get_post($id);
-			
+
 			if ((int) Auth::get_access_level() < 2)
 			{
 				$valid = array();
-				
+
 				foreach ($this->session->userdata('characters') as $check)
 				{
 					// make an array of the post authors
 					$authors = explode(',', $row->post_authors);
-					
+
 					if ( ! in_array($check, $authors))
 					{
 						$valid[] = false;
@@ -3540,19 +3540,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$valid[] = true;
 					}
 				}
-				
+
 				if ( ! in_array(true, $valid) or $row->post_status == 'pending')
 				{
 					redirect('admin/error/6');
 				}
 			}
-			
+
 			// get all characters
 			$all = $this->char->get_all_characters('user_npc', array('rank' => 'asc'));
-			
+
 			// get the current missions
 			$missions = $this->mis->get_all_missions();
-			
+
 			if ($all->num_rows() > 0)
 			{
 				foreach ($all->result() as $a)
@@ -3582,36 +3582,36 @@ abstract class Nova_manage extends Nova_controller_admin {
 							}
 						}
 					}
-					
+
 					// if it's a linked NPC, show the main character that owns the NPC
 					$add = ($label == ucwords(lang('labels_linked') .' '. lang('abbr_npcs')))
 						? " (".ucfirst(lang('labels_linked').' '.lang('labels_to').' ').$this->char->get_character_name($this->user->get_main_character($a->user), true).")"
 						: false;
-					
+
 					// toss them in the array
 					$allchars[$label][$a->charid] = $this->char->get_character_name($a->charid, true).$add;
 				}
-				
+
 				$data['all_characters'] = array();
-				
+
 				$key = ucwords(lang('labels_my') .' '. lang('global_characters'));
 				if (isset($allchars[$key]))
 				{
 					$data['all_characters'][$key] = $allchars[$key];
 				}
-				
+
 				$key = ucwords(lang('status_playing') .' '. lang('global_characters'));
 				if (isset($allchars[$key]))
 				{
 					$data['all_characters'][$key] = $allchars[$key];
 				}
-				
+
 				$key = ucwords(lang('labels_linked') .' '. lang('abbr_npcs'));
 				if (isset($allchars[$key]))
 				{
 					$data['all_characters'][$key] = $allchars[$key];
 				}
-				
+
 				$key = ucwords(lang('labels_unlinked') .' '. lang('abbr_npcs'));
 				if (isset($allchars[$key]))
 				{
@@ -3622,18 +3622,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 			{
 				$data['all_characters'] = false;
 			}
-			
+
 			// prep the data for sending to the js view
 			$js_data['tab'] = 0;
-			
+
 			$data['authors_selected'] = array();
-			
+
 			if ($row !== false)
 			{
 				// set the list of selected authors
 				$data['authors_selected'] = explode(',', $row->post_authors);
 			}
-			
+
 			// set the data used by the view
 			$data['inputs'] = array(
 				'title' => array(
@@ -3657,7 +3657,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'mission_name' => $this->mis->get_mission($row->post_mission, 'mission_title'),
 				'status' => $row->post_status,
 			);
-			
+
 			if ($missions->num_rows() > 0)
 			{
 				foreach ($missions->result() as $mission)
@@ -3665,13 +3665,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$data['missions'][$mission->mission_id] = $mission->mission_title;
 				}
 			}
-			
+
 			$data['status'] = array(
 				'activated' => ucfirst(lang('status_activated')),
 				'saved' => ucfirst(lang('status_saved')),
 				'pending' => ucfirst(lang('status_pending')),
 			);
-			
+
 			$data['buttons'] = array(
 				'update' => array(
 					'type' => 'submit',
@@ -3680,10 +3680,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => 'update',
 					'content' => ucfirst(lang('actions_update'))),
 			);
-			
+
 			$data['header'] = ucwords(lang('actions_edit') .' '. lang('global_missionpost'));
 			$data['id'] = $id;
-			
+
 			$data['label'] = array(
 				'back' => LARROW .' '. ucfirst(lang('actions_back')) .' '. lang('labels_to')
 					.' '. ucwords(lang('global_missionposts')),
@@ -3701,7 +3701,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'chosen_incompat' => lang('chosen_incompat'),
 				'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
 			);
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_posts_edit';
 		}
@@ -3713,58 +3713,58 @@ abstract class Nova_manage extends Nova_controller_admin {
 				default:
 					$js_data['tab'] = 0;
 				break;
-					
+
 				case 'saved':
 					$js_data['tab'] = 1;
 				break;
-					
+
 				case 'pending':
 					$js_data['tab'] = 2;
 				break;
 			}
-			
+
 			$offset_activated = ($section == 'activated') ? $offset : 0;
 			$offset_saved = ($section == 'saved') ? $offset : 0;
 			$offset_pending = ($section == 'pending') ? $offset : 0;
-			
+
 			$data['activated'] = $this->_entries_ajax($offset_activated, 'activated', 'posts');
 			$data['saved'] = $this->_entries_ajax($offset_saved, 'saved', 'posts');
 			$data['pending'] = $this->_entries_ajax($offset_pending, 'pending', 'posts');
-	
+
 		    $data['label'] = array(
 				'activated' => ucfirst(lang('status_activated')),
 				'pending' => ucfirst(lang('status_pending')),
 				'saved' => ucfirst(lang('status_saved')),
 			);
-			
+
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_missionposts'));
-			
+
 			$js_data['remove'] = false;
-			
+
 			// figure out where the view should be coming from
 			$view_loc = 'manage_posts';
 		}
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_posts_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function ranks()
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('ranks_model', 'ranks');
-		
+
 		// set the variables
 		$set = $this->uri->segment(3, 'default');
 		$class = $this->uri->segment(4, 1, true);
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(5))
@@ -3778,10 +3778,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 						'rank_short_name' => $this->input->post('rank_short_name', true),
 						'rank_image' => $this->input->post('rank_image', true),
 					);
-					
+
 					// insert the record
 					$insert = $this->ranks->add_rank($insert_array);
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -3807,20 +3807,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$array = array();
 					$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
 					$update = 0;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						$loc = strpos($key, '_');
-						
+
 						if ($loc !== false)
 						{
 							$loc_pos = substr($key, 0, $loc);
-							
+
 							if ( ! in_array($loc_pos, $delete))
 							{ // if the item is being deleted don't add it to the update array
 								$new_key = 'rank_'. substr($key, ($loc+1));
@@ -3828,17 +3828,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 							}
 						}
 					}
-					
+
 					foreach ($array as $a => $b)
 					{
 						$update += $this->ranks->update_rank($a, $b);
 					}
-					
+
 					foreach ($delete as $del)
 					{
 						$delete = $this->ranks->delete_rank($del);
 					}
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -3865,19 +3865,19 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		$info = $this->ranks->get_rankcat($set);
 		$ranks = $this->ranks->get_ranks($class, '');
-		
+
 		// grab all the rank sets
 		$setstatus = (Auth::check_access('site/catalogueranks', false)) ? array('active','development') : 'active';
 		$allranks = $this->ranks->get_all_rank_sets($setstatus);
 		$allclasses = $this->ranks->get_group_ranks(0, 'rank_order');
-		
+
 		if ($allranks->num_rows() > 0)
 		{
 			foreach ($allranks->result() as $allrank)
@@ -3889,7 +3889,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						''),
 					'alt' => $allrank->rankcat_name
 				);
-				
+
 				if ($allclasses->num_rows() > 0)
 				{
 					foreach ($allclasses->result() as $allclass)
@@ -3908,7 +3908,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 				}
 			}
 		}
-		
+
 		if ($ranks->num_rows() > 0)
 		{
 			foreach ($ranks->result() as $rank)
@@ -3945,16 +3945,16 @@ abstract class Nova_manage extends Nova_controller_admin {
 				);
 			}
 		}
-		
+
 		$data['values']['display'] = array(
 			'y' => ucwords(lang('labels_yes')),
 			'n' => ucwords(lang('labels_no')),
 		);
-		
+
 		$data['set'] = $set;
 		$data['class'] = $class;
 		$data['ext'] = $info->rankcat_extension;
-		
+
 		$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_ranks'));
 		$data['text'] = sprintf(
 			lang('text_manage_ranks'),
@@ -3969,7 +3969,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			lang('global_rank') .' '. lang('labels_set'),
 			lang('labels_class')
 		);
-		
+
 		$data['buttons'] = array(
 			'update' => array(
 				'type' => 'submit',
@@ -3978,14 +3978,14 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'value' => 'submit',
 				'content' => ucwords(lang('actions_update')))
 		);
-		
+
 		$data['images'] = array(
 			'add' => array(
 				'src' => Location::img('icon-add.png', $this->skin, 'admin'),
 				'alt' => '',
 				'class' => 'inline_img_left'),
 		);
-		
+
 		$data['label'] = array(
 			'addrank' => ucwords(lang('actions_add') .' '.
 				lang('global_rank') .' '. RARROW),
@@ -4000,28 +4000,28 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'image' => ucfirst(lang('labels_image')),
 			'sets' => ucwords(lang('global_rank') .' '. lang('labels_sets'))
 		);
-		
+
 		$this->_regions['content'] = Location::view('manage_ranks', $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_ranks_js', $this->skin, 'admin');
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function specs()
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('specs_model', 'specs');
 		$this->load->model('tour_model', 'tour');
-		
+
 		// set the variables
 		$action = $this->uri->segment(3);
 		$id = $this->uri->segment(4, false, true);
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -4037,26 +4037,26 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'data_updated' => now()
 							);
 						}
-						
+
 						if (substr($key, 0, 6) == 'specs_')
 						{
 							$specs[$key] = $value;
 						}
 					}
-					
+
 					$insert = $this->specs->add_spec_item($specs);
 					$insert_id = $this->db->insert_id();
-					
+
 					// optimize the table
 					$this->sys->optimize_table('specs');
-					
+
 					foreach ($fields as $k => $v)
 					{
 						$v['data_item'] = $insert_id;
-						
+
 						$insert += $this->specs->add_spec_field_data($v);
 					}
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -4082,17 +4082,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					// delete the spec item
 					$delete = $this->specs->delete_spec_item($id);
-					
+
 					// delete any decks for that item
 					$decks = $this->tour->delete_deck($id, true);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -4104,7 +4104,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						$this->specs->delete_spec_field_data($id, 'data_item');
 					}
 					else
@@ -4120,11 +4120,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						if (is_numeric($key))
@@ -4134,20 +4134,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'data_updated' => now()
 							);
 						}
-						
+
 						if (substr($key, 0, 6) == 'specs_')
 						{
 							$specs[$key] = $value;
 						}
 					}
-					
+
 					$update = $this->specs->update_spec_item($id, $specs);
-					
+
 					foreach ($fields as $k => $v)
 					{
 						$update += $this->specs->update_spec_data($id, $k, $v);
 					}
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -4174,18 +4174,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($action == 'add' or $action == 'edit')
 		{
 			$item = ($action == 'edit') ? $this->specs->get_spec_item($id) : false;
-			
+
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_specification') .' '. lang('labels_item'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->specs_name : '';
-			
+
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'specs_name',
@@ -4210,54 +4210,54 @@ abstract class Nova_manage extends Nova_controller_admin {
 					'value' => ($item === false) ? '' : $item->specs_summary),
 				'images' => ( ! empty($item->specs_images)) ? explode(',', $item->specs_images) : '',
 			);
-			
+
 			if ($item === false)
 			{
 				$data['inputs']['display_y']['checked'] = true;
 			}
-			
+
 			$sections = $this->specs->get_spec_sections();
-			
+
 			if ($sections->num_rows() > 0)
 			{
 				foreach ($sections->result() as $sec)
 				{
 					$sid = $sec->section_id;
-					
+
 					// set the section name
 					$data['specs'][$sid]['name'] = $sec->section_name;
-					
+
 					// grab the fields for the given section
 					$fields = $this->specs->get_spec_fields($sec->section_id);
-					
+
 					if ($fields->num_rows() > 0)
 					{
 						foreach ($fields->result() as $field)
 						{
 							$f_id = $field->field_id;
-							
+
 							// set the page label
 							$data['specs'][$sid]['fields'][$f_id]['field_label'] = $field->field_label_page;
 							$data['specs'][$sid]['fields'][$f_id]['field_help'] = $field->field_help;
-							
+
 							switch ($field->field_type)
 							{
 								case 'text':
 									$row = $this->specs->get_field_data($id, $f_id);
-									
+
 									$input = array(
 										'name' => $field->field_id,
 										'id' => $field->field_fid,
 										'class' => $field->field_class,
 										'value' => ($row !== false) ? $row->data_value : ''
 									);
-									
+
 									$data['specs'][$sid]['fields'][$f_id]['input'] = form_input($input);
 								break;
-									
+
 								case 'textarea':
 									$row = $this->specs->get_field_data($id, $f_id);
-									
+
 									$input = array(
 										'name' => $field->field_id,
 										'id' => $field->field_fid,
@@ -4265,20 +4265,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 										'value' => ($row !== false) ? $row->data_value : '',
 										'rows' => $field->field_rows
 									);
-									
+
 									$data['specs'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
 								break;
-									
+
 								case 'select':
 									$value = false;
 									$values = false;
 									$input = false;
-								
+
 									$values = $this->specs->get_spec_values($field->field_id);
-									
+
 									$row = $this->specs->get_field_data($id, $f_id);
 									$default = ($row !== false) ? $row->data_value : '';
-									
+
 									if ($values->num_rows() > 0)
 									{
 										foreach ($values->result() as $value)
@@ -4286,7 +4286,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 											$input[$value->value_field_value] = $value->value_content;
 										}
 									}
-									
+
 									$data['specs'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $default);
 								break;
 							}
@@ -4294,11 +4294,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				}
 			}
-			
+
 			$data['directory'] = array();
-		
+
 			$dir = $this->sys->get_uploaded_images('specs');
-			
+
 			if ($dir->num_rows() > 0)
 			{
 				foreach ($dir->result() as $d)
@@ -4313,22 +4313,22 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
-			
+
 			$view_loc = 'manage_specs_action';
 		}
 		else
 		{
 			$specs = $this->specs->get_spec_items('');
-			
+
 			if ($specs->num_rows() > 0)
 			{
 				foreach ($specs->result() as $s)
 				{
 					$sid = $s->specs_id;
-					
+
 					$data['specs'][$sid] = array(
 						'id' => $sid,
 						'name' => $s->specs_name,
@@ -4336,13 +4336,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_specification') .' '. lang('labels_items'));
 			$data['text'] = lang('text_manage_specs');
-			
+
 			$view_loc = 'manage_specs';
 		}
-		
+
 		$data['images'] = array(
 			'form' => array(
 				'src' => Location::img('forms-field.png', $this->skin, 'admin'),
@@ -4372,12 +4372,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'alt' => lang('actions_loading'),
 				'class' => 'image'),
 		);
-		
+
 		$data['image_instructions'] = sprintf(
 			lang('text_image_select'),
 			lang('global_specification') .' '. lang('labels_items')
 		);
-		
+
 		$data['label'] = array(
 			'form' => ucwords(lang('actions_manage') .' '. lang('global_specs') .' '. lang('labels_form') .' '. RARROW),
 			'images' => ucfirst(lang('labels_images')),
@@ -4398,7 +4398,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
 			'spec_images' => ucwords(lang('global_specification').' '.lang('labels_item').' '.lang('labels_images')),
 		);
-		
+
 		$data['buttons'] = array(
 			'submit' => array(
 				'type' => 'submit',
@@ -4421,30 +4421,30 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'rel' => $id,
 				'content' => ucwords(lang('actions_update'))),
 		);
-		
+
 		$js_data['id'] = $id;
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_specs_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	public function tour()
 	{
 		Auth::check_access();
-		
+
 		// load the resources
 		$this->load->model('tour_model', 'tour');
 		$this->load->model('specs_model', 'specs');
-		
+
 		// set the variables
 		$action = $this->uri->segment(3);
 		$id = $this->uri->segment(4, false, true);
-		
+
 		if (isset($_POST['submit']))
 		{
 			switch ($this->uri->segment(3))
@@ -4460,26 +4460,26 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'data_updated' => now()
 							);
 						}
-						
+
 						if (substr($key, 0, 5) == 'tour_')
 						{
 							$tour[$key] = $value;
 						}
 					}
-					
+
 					$insert = $this->tour->add_tour_item($tour);
 					$insert_id = $this->db->insert_id();
-					
+
 					// optimize the table
 					$this->sys->optimize_table('tour');
-					
+
 					foreach ($fields as $k => $v)
 					{
 						$v['data_tour_item'] = $insert_id;
-						
+
 						$insert += $this->tour->add_tour_field_data($v);
 					}
-					
+
 					if ($insert > 0)
 					{
 						$message = sprintf(
@@ -4505,13 +4505,13 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'delete':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					$delete = $this->tour->delete_tour_item($id);
-					
+
 					if ($delete > 0)
 					{
 						$message = sprintf(
@@ -4523,7 +4523,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 
 						$flash['status'] = 'success';
 						$flash['message'] = text_output($message);
-						
+
 						$this->tour->delete_tour_field_data($id, 'data_tour_item');
 					}
 					else
@@ -4539,11 +4539,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$flash['message'] = text_output($message);
 					}
 				break;
-					
+
 				case 'edit':
 					$id = $this->input->post('id', true);
 					$id = (is_numeric($id)) ? $id : false;
-					
+
 					foreach ($_POST as $key => $value)
 					{
 						if (is_numeric($key))
@@ -4553,20 +4553,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'data_updated' => now()
 							);
 						}
-						
+
 						if (substr($key, 0, 5) == 'tour_')
 						{
 							$tour[$key] = $value;
 						}
 					}
-					
+
 					$update = $this->tour->update_tour_item($id, $tour);
-					
+
 					foreach ($fields as $k => $v)
 					{
 						$update += $this->tour->update_tour_data($id, $k, $v);
 					}
-					
+
 					if ($update > 0)
 					{
 						$message = sprintf(
@@ -4593,18 +4593,18 @@ abstract class Nova_manage extends Nova_controller_admin {
 					}
 				break;
 			}
-			
+
 			// set the flash message
 			$this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
 		}
-		
+
 		if ($action == 'add' or $action == 'edit')
 		{
 			$item = ($action == 'edit') ? $this->sys->get_item('tour', 'tour_id', $id) : false;
-			
+
 			$data['header'] = ucwords(lang('actions_'. $action) .' '. lang('global_touritem'));
 			$data['header'].= ($action == 'edit') ? ' - '. $item->tour_name : '';
-			
+
 			$data['inputs'] = array(
 				'name' => array(
 					'name' => 'tour_name',
@@ -4630,56 +4630,56 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'images' => ( ! empty($item->tour_images)) ? explode(',', $item->tour_images) : '',
 				'spec_item' => ($item === false) ? false : $item->tour_spec_item,
 			);
-			
+
 			if ($item === false)
 			{
 				$data['inputs']['display_y']['checked'] = true;
 			}
-			
+
 			// get the spec items
 			$specs = $this->specs->get_spec_items();
-			
+
 			// build the array for the dropdown
 			if ($specs->num_rows() > 0)
 			{
 				$data['specs'][0] = ucwords(lang('labels_please') .' '. lang('actions_choose')) .' '. lang('labels_an') .' '. ucfirst(lang('labels_item'));
-				
+
 				foreach ($specs->result() as $s)
 				{
 					$data['specs'][$s->specs_id] = $s->specs_name;
 				}
 			}
-			
+
 			$tour = $this->tour->get_tour_fields();
-		
+
 			if ($tour->num_rows() > 0)
 			{
 				foreach ($tour->result() as $field)
 				{
 					$tid = $field->field_id;
-					
+
 					// set the page label
 					$data['inputs']['fields'][$tid]['field_label'] = $field->field_label_page;
 					$data['inputs']['fields'][$tid]['field_help'] = $field->field_help;
-					
+
 					switch ($field->field_type)
 					{
 						case 'text':
 							$row = $this->tour->get_tour_data($id, $tid);
-							
+
 							$input = array(
 								'name' => $field->field_id,
 								'id' => $field->field_fid,
 								'class' => $field->field_class,
 								'value' => ($row === false) ? '' : $row->data_value
 							);
-							
+
 							$data['inputs']['fields'][$tid]['input'] = form_input($input);
 						break;
-							
+
 						case 'textarea':
 							$row = $this->tour->get_tour_data($id, $tid);
-							
+
 							$input = array(
 								'name' => $field->field_id,
 								'id' => $field->field_fid,
@@ -4687,20 +4687,20 @@ abstract class Nova_manage extends Nova_controller_admin {
 								'value' => ($row === false) ? '' : $row->data_value,
 								'rows' => $field->field_rows
 							);
-							
+
 							$data['inputs']['fields'][$tid]['input'] = form_textarea($input);
 						break;
-							
+
 						case 'select':
 							$value = false;
 							$values = false;
 							$input = false;
-						
+
 							$values = $this->tour->get_tour_values($tid);
-							
+
 							$row = $this->tour->get_tour_data($id, $tid);
 							$default = ($row === false) ? '' : $row->data_value;
-							
+
 							if ($values->num_rows() > 0)
 							{
 								foreach ($values->result() as $value)
@@ -4708,17 +4708,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 									$input[$value->value_field_value] = $value->value_content;
 								}
 							}
-							
+
 							$data['inputs']['fields'][$tid]['input'] = form_dropdown($tid, $input, $default);
 						break;
 					}
 				}
 			}
-			
+
 			$data['directory'] = array();
-		
+
 			$dir = $this->sys->get_uploaded_images('tour');
-			
+
 			if ($dir->num_rows() > 0)
 			{
 				foreach ($dir->result() as $d)
@@ -4733,10 +4733,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 					);
 				}
 			}
-			
+
 			$data['form'] = ($action == 'edit') ? 'edit/'. $id : 'add';
 			$data['id'] = $id;
-			
+
 			$view_loc = 'manage_tour_action';
 		}
 		else
@@ -4744,12 +4744,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 			// run the methods
 			$tour = $this->tour->get_tour_items('');
 			$specs = $this->specs->get_spec_items();
-			
+
 			if ($tour->num_rows() > 0)
 			{
 				$data['items'][0] = ucwords(lang('labels_general') .' '. lang('labels_items'));
 			}
-			
+
 			if ($specs->num_rows() > 0)
 			{
 				foreach ($specs->result() as $s)
@@ -4757,35 +4757,35 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$data['items'][$s->specs_id] = $s->specs_name;
 				}
 			}
-			
+
 			if ($tour->num_rows() > 0)
 			{
 				// set the tour array
 				$data['tour'] = array();
-				
+
 				foreach ($tour->result() as $item)
 				{
 					// make sure we have the right tour spec item for the array
 					$specitem = ( ! empty($item->tour_spec_item)) ? $item->tour_spec_item : 0;
-					
+
 					// set the order
 					$order = $item->tour_order;
-					
+
 					// make sure all of the items will show up
 					$order = (isset($data['tour'][$specitem][$order])) ? null : $order;
-					
+
 					$data['tour'][$specitem][$order]['id'] = $item->tour_id;
 					$data['tour'][$specitem][$order]['name'] = $item->tour_name;
 					$data['tour'][$specitem][$order]['summary'] = $item->tour_summary;
 				}
 			}
-			
+
 			$data['header'] = ucwords(lang('actions_manage') .' '. lang('global_touritems'));
 			$data['text'] = lang('text_manage_specs');
-			
+
 			$view_loc = 'manage_tour';
 		}
-		
+
 		$data['images'] = array(
 			'form' => array(
 				'src' => Location::img('forms-field.png', $this->skin, 'admin'),
@@ -4819,12 +4819,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'alt' => '[?]',
 				'class' => 'image'),
 		);
-		
+
 		$data['image_instructions'] = sprintf(
 			lang('text_image_select'),
 			lang('global_touritem')
 		);
-		
+
 		$data['label'] = array(
 			'form' => ucwords(lang('actions_manage') .' '. lang('global_tour') .' '. lang('labels_form') .' '. RARROW),
 			'images' => ucfirst(lang('labels_images')),
@@ -4846,7 +4846,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 			'available_images' => ucwords(lang('labels_available').' '.lang('labels_images')),
 			'tour_images' => ucwords(lang('global_touritem').' '.lang('labels_images')),
 		);
-		
+
 		$data['buttons'] = array(
 			'submit' => array(
 				'type' => 'submit',
@@ -4869,50 +4869,50 @@ abstract class Nova_manage extends Nova_controller_admin {
 				'rel' => $id,
 				'content' => ucwords(lang('actions_update'))),
 		);
-		
+
 		$js_data['id'] = $id;
-		
+
 		$this->_regions['content'] = Location::view($view_loc, $this->skin, 'admin', $data);
 		$this->_regions['javascript'] = Location::js('manage_tour_js', $this->skin, 'admin', $js_data);
 		$this->_regions['title'].= $data['header'];
-		
+
 		Template::assign($this->_regions);
-		
+
 		Template::render();
 	}
-	
+
 	protected function _comments_ajax($offset = 0, $type = '', $status = 'activated')
 	{
 		// load the resources
 		$this->load->library('pagination');
 		$this->load->helper('text');
-		
+
 		switch ($type)
 		{
 			case 'posts':
 				$this->load->model('posts_model', 'posts');
-				
+
 				$config['base_url'] = site_url('manage/comments/posts/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$posts = $this->posts->get_post_comments('', $status, 'pcomment_date', 'desc');
-				
+
 				$data['entries'] = null;
-				
+
 				if ($posts->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($posts->result() as $p)
 					{
 						$date = gmt_to_local($p->pcomment_date, $this->timezone, $this->dst);
-								
+
 						$data['entries'][$p->pcomment_id]['id'] = $p->pcomment_id;
-						$data['entries'][$p->pcomment_id]['content'] = ($p->pcomment_status == 'pending') 
-							? $p->pcomment_content 
+						$data['entries'][$p->pcomment_id]['content'] = ($p->pcomment_status == 'pending')
+							? $p->pcomment_content
 							: word_limiter($p->pcomment_content, 25);
 						$data['entries'][$p->pcomment_id]['author'] = $this->char->get_authors($p->pcomment_author_character, true);
 						$data['entries'][$p->pcomment_id]['date'] = mdate($datestring, $date);
@@ -4920,41 +4920,41 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$data['entries'][$p->pcomment_id]['status'] = $p->pcomment_status;
 					}
 				}
-		
+
 				$config['total_rows'] = $this->posts->count_all_post_comments($status);
-				
+
 			    $this->pagination->initialize($config);
-			    
+
 			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
-				
+
 				$data['subheader'] = 'header_posts';
 			break;
-				
+
 			case 'logs':
 				$this->load->model('personallogs_model', 'logs');
-				
+
 				$config['base_url'] = site_url('manage/comments/logs/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$logs = $this->logs->get_log_comments('', $status, 'lcomment_date', 'desc');
-				
+
 				$data['entries'] = null;
-				
+
 				if ($logs->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($logs->result() as $l)
 					{
 						$date = gmt_to_local($l->lcomment_date, $this->timezone, $this->dst);
-								
+
 						$data['entries'][$l->lcomment_id]['id'] = $l->lcomment_id;
-						$data['entries'][$l->lcomment_id]['content'] = ($l->lcomment_status == 'pending') 
-							? $l->lcomment_content 
+						$data['entries'][$l->lcomment_id]['content'] = ($l->lcomment_status == 'pending')
+							? $l->lcomment_content
 							: word_limiter($l->lcomment_content, 25);
 						$data['entries'][$l->lcomment_id]['author'] = $this->char->get_authors($l->lcomment_author_character, true);
 						$data['entries'][$l->lcomment_id]['date'] = mdate($datestring, $date);
@@ -4962,41 +4962,41 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$data['entries'][$l->lcomment_id]['status'] = $l->lcomment_status;
 					}
 				}
-		
+
 				$config['total_rows'] = $this->logs->count_all_log_comments($status);
-				
+
 			    $this->pagination->initialize($config);
-			    
+
 			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
-			    
+
 			    $data['subheader'] = 'header_logs';
 			break;
-				
+
 			case 'news':
 				$this->load->model('news_model', 'news');
-				
+
 				$config['base_url'] = site_url('manage/comments/news/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$news = $this->news->get_news_comments('', $status, 'ncomment_date', 'desc');
-				
+
 				$data['entries'] = null;
-				
+
 				if ($news->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($news->result() as $n)
 					{
 						$date = gmt_to_local($n->ncomment_date, $this->timezone, $this->dst);
-								
+
 						$data['entries'][$n->ncomment_id]['id'] = $n->ncomment_id;
-						$data['entries'][$n->ncomment_id]['content'] = ($n->ncomment_status == 'pending') 
-							? $n->ncomment_content 
+						$data['entries'][$n->ncomment_id]['content'] = ($n->ncomment_status == 'pending')
+							? $n->ncomment_content
 							: word_limiter($n->ncomment_content, 25);
 						$data['entries'][$n->ncomment_id]['author'] = $this->char->get_authors($n->ncomment_author_character, true);
 						$data['entries'][$n->ncomment_id]['date'] = mdate($datestring, $date);
@@ -5004,52 +5004,52 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$data['entries'][$n->ncomment_id]['status'] = $n->ncomment_status;
 					}
 				}
-		
+
 				$config['total_rows'] = $this->news->count_news_comments($status);
-				
+
 			    $this->pagination->initialize($config);
-			    
+
 			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
-			    
+
 			    $data['subheader'] = 'header_news';
 			break;
-				
+
 			case 'wiki':
 				$this->load->model('wiki_model', 'wiki');
-				
+
 				$config['base_url'] = site_url('manage/comments/wiki/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 5 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$wiki = $this->wiki->get_comments('', $status);
-				
+
 				$data['entries'] = null;
-				
+
 				if ($wiki->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($wiki->result() as $w)
 					{
 						// set the comment ID
 						$wid = $w->wcomment_id;
-						
+
 						// set the date
 						$date = gmt_to_local($w->wcomment_date, $this->timezone, $this->dst);
-						
+
 						// grab the wiki page info
 						$page = $this->wiki->get_page($w->wcomment_page);
-						
+
 						if ($page->num_rows() > 0)
 						{
 							$row = $page->row();
-								
+
 							$data['entries'][$wid]['id'] = $wid;
-							$data['entries'][$wid]['content'] = ($w->wcomment_status == 'pending') 
-								? $w->wcomment_content 
+							$data['entries'][$wid]['content'] = ($w->wcomment_status == 'pending')
+								? $w->wcomment_content
 								: word_limiter($w->wcomment_content, 25);
 							$data['entries'][$wid]['author'] = $this->char->get_authors($w->wcomment_author_character, true);
 							$data['entries'][$wid]['date'] = mdate($datestring, $date);
@@ -5058,22 +5058,22 @@ abstract class Nova_manage extends Nova_controller_admin {
 						}
 					}
 				}
-		
+
 				$config['total_rows'] = $this->wiki->count_all_comments($status);
-				
+
 			    $this->pagination->initialize($config);
-			    
+
 			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
-			    
+
 			    $data['subheader'] = 'header_wiki';
 			break;
 		}
-		
+
 		$data['status'] = $status;
 		$data['page'] = $offset;
 		$data['type'] = $type;
-		
+
 		$data['images'] = array(
 	    	'edit' => array(
 	    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
@@ -5091,7 +5091,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	    		'title' => ucfirst(lang('actions_approve')),
 	    		'class' => 'image'),
 	    );
-		
+
 		$data['label'] = array(
 	    	'mission' => ucfirst(lang('global_mission')),
 	    	'on' => lang('labels_on'),
@@ -5106,22 +5106,22 @@ abstract class Nova_manage extends Nova_controller_admin {
 	    	'error' => ucfirst(lang('labels_no') .' '. lang('labels_comments') .' '.
 	    		lang('actions_found')),
 	    );
-	    
+
 	    // figure out where the view is coming from
 	    $message = Location::view('manage_comments_ajax', $this->skin, 'admin', $data);
 
 	    return $message;
 	}
-	
+
 	protected function _email($type, $data)
 	{
 		// load the libraries
 		$this->load->library('mail');
 		$this->load->library('parser');
-		
+
 		// define the variables
 		$email = false;
-		
+
 		switch ($type)
 		{
 			case 'news':
@@ -5129,77 +5129,77 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $data['category'] .' - '. $data['title'];
-				
+
 				// set the content
 				$content = sprintf(
 					lang('email_content_news_item'),
 					$from_name,
 					$data['content']
 				);
-				
+
 				// set the email data
 				$email_data = array(
 					'email_subject' => $subject,
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('write_newsitem', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_news_items');
-				
+
 				// make a string of email addresses
 				$to = implode(',', $emails);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'log':
 				// set some variables
 				$from_name = $this->char->get_character_name($data['author'], true, true);
 				$from_email = $this->user->get_email_address('character', $data['author']);
 				$subject = $from_name ."'s ". lang('email_subject_personal_log') ." - ". $data['title'];
-				
+
 				// set the content
 				$content = sprintf(
 					lang('email_content_personal_log'),
 					$from_name,
 					$data['content']
 				);
-				
+
 				// set the email data
 				$email_data = array(
 					'email_subject' => $subject,
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('write_personallog', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_personal_logs');
-				
+
 				// make a string of email addresses
 				$to = implode(',', $emails);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'post':
 				// set some variables
 				$subject = $data['mission'] ." - ". $data['title'];
@@ -5207,10 +5207,10 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$authors = lang('email_content_post_author') . $this->char->get_authors($data['authors'], true);
 				$timeline = lang('email_content_post_timeline') . $data['timeline'];
 				$location = lang('email_content_post_location') . $data['location'];
-				
+
 				// figure out who it needs to come from
 				$my_chars = array();
-				
+
 				// find out how many of the submitter's characters are in the string
 				foreach ($this->session->userdata('characters') as $value)
 				{
@@ -5219,11 +5219,11 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$my_chars[] = $value;
 					}
 				}
-				
+
 				// set who the email is coming from
-				$from_name = $this->char->get_character_name($my_chars[0], true, true);
-				$from_email = $this->user->get_email_address('character', $my_chars[0]);
-				
+				$from_name = $this->char->get_character_name($data['authors'][0], true, true);
+				$from_email = $this->user->get_email_address('character', $data['authors'][0]);
+
 				// set the content
 				$content = sprintf(
 					lang('email_content_mission_post'),
@@ -5233,237 +5233,237 @@ abstract class Nova_manage extends Nova_controller_admin {
 					$timeline,
 					$data['content']
 				);
-				
+
 				// set the email data
 				$email_data = array(
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('write_missionpost', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// get the email addresses
 				$emails = $this->user->get_crew_emails(true, 'email_mission_posts');
-				
+
 				// make a string of email addresses
 				$to = implode(',', $emails);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $from_name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $subject);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'log_comment':
 				// load the models
 				$this->load->model('personallogs_model', 'logs');
-				
+
 				// run the methods
 				$row = $this->logs->get_log($data['log']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->log_author);
-				
-				// set the content	
+
+				// set the content
 				$content = sprintf(
 					lang('email_content_log_comment_added'),
 					"<strong>". $row->log_title ."</strong>",
 					$data['comment']
 				);
-				
+
 				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_log_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('sim_log_comment', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'news_comment':
 				// load the models
 				$this->load->model('news_model', 'news');
-				
+
 				// run the methods
 				$row = $this->news->get_news_item($data['news_item']);
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
 				$to = $this->user->get_email_address('character', $row->news_author_character);
-				
-				// set the content	
+
+				// set the content
 				$content = sprintf(
 					lang('email_content_news_comment_added'),
 					"<strong>". $row->news_title ."</strong>",
 					$data['comment']
 				);
-				
+
 				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_news_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('main_news_comment', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'post_comment':
 				$this->load->model('posts_model', 'posts');
-				
+
 				$row = $this->posts->get_post($data['post']);
-				
+
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
-				
+
 				$authors = $this->posts->get_author_emails($data['post']);
-				
+
 				foreach ($authors as $key => $value)
 				{
 					$user = $this->user->get_user_id_from_email($value);
-					
+
 					$pref = $this->user->get_pref('email_new_post_comments', $user);
-					
+
 					if ($pref == 'n' or $pref == '')
 					{
 						unset($authors[$key]);
 					}
 				}
-				
+
 				$to = implode(',', $authors);
-				
+
 				$content = sprintf(
 					lang('email_content_post_comment_added'),
 					"<strong>". $row->post_title ."</strong>",
 					$data['comment']
 				);
-				
+
 				$email_data = array(
 					'email_subject' => lang('email_subject_post_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				$em_loc = Location::email('sim_post_comment', $this->mail->mailtype);
-				
+
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'wiki_comment':
 				// load the models
 				$this->load->model('wiki_model', 'wiki');
-				
+
 				// run the methods
 				$page = $this->wiki->get_page($data['page']);
 				$row = $page->row();
 				$name = $this->char->get_character_name($data['author']);
 				$from = $this->user->get_email_address('character', $data['author']);
-				
+
 				// get all the contributors of a wiki page
 				$cont = $this->wiki->get_all_contributors($data['page']);
-				
+
 				foreach ($cont as $c)
 				{
 					$pref = $this->user->get_pref('email_new_wiki_comments', $c);
-					
+
 					if ($pref == 'y')
 					{
 						$to_array[] = $this->user->get_email_address('user', $c);
 					}
 				}
-				
+
 				// set the to string
 				$to = implode(',', $to_array);
-				
-				// set the content	
+
+				// set the content
 				$content = sprintf(
 					lang('email_content_wiki_comment_added'),
 					"<strong>". $row->draft_title ."</strong>",
 					$data['comment']
 				);
-				
+
 				// create the array passing the data to the email
 				$email_data = array(
 					'email_subject' => lang('email_subject_wiki_comment_added'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $name .' - '. $from,
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content
 				);
-				
+
 				// where should the email be coming from
 				$em_loc = Location::email('wiki_comment', $this->mail->mailtype);
-				
+
 				// parse the message
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				// set the parameters for sending the email
 				$this->mail->from(Util::email_sender(), $name);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'docking_accept':
 				$cc = implode(',', $this->user->get_emails_with_access('manage/docked'));
-				
+
 				$email_data = array(
 					'email_subject' => lang('email_subject_docking_approved') .' - '. $data['sim'],
 					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
-				
+
 				$em_loc = Location::email('docked_action', $this->mail->mailtype);
-				
+
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				$this->mail->from(Util::email_sender(), $this->options['sim_name']);
 				$this->mail->to($data['email']);
 				$this->mail->cc($cc);
 				$this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
 				$this->mail->message($message);
 			break;
-				
+
 			case 'docking_reject':
 				$cc = implode(',', $this->user->get_emails_with_access('manage/docked'));
-				
+
 				$email_data = array(
 					'email_subject' => lang('email_subject_docking_rejected') .' - '. $data['sim'],
 					'email_from' => ucfirst(lang('time_from')) .': '. $this->options['sim_name'] .' - '. $this->options['default_email_address'],
 					'email_content' => ($this->mail->mailtype == 'html') ? nl2br($data['message']) : $data['message']
 				);
-				
+
 				$em_loc = Location::email('docked_action', $this->mail->mailtype);
-				
+
 				$message = $this->parser->parse_string($em_loc, $email_data, true);
-				
+
 				$this->mail->from(Util::email_sender(), $this->options['sim_name']);
 				$this->mail->to($data['email']);
 				$this->mail->cc($cc);
@@ -5471,44 +5471,44 @@ abstract class Nova_manage extends Nova_controller_admin {
 				$this->mail->message($message);
 			break;
 		}
-		
+
 		// send the email
 		$email = $this->mail->send();
-		
+
 		return $email;
 	}
-	
+
 	protected function _entries_ajax($offset = 0, $status = 'activated', $section = '')
 	{
 		// load the resources
 		$this->load->library('pagination');
-		
+
 		switch ($section)
 		{
 			case 'posts':
 				$this->load->model('missions_model', 'mis');
 				$this->load->model('posts_model', 'posts');
-				
+
 				$config['base_url'] = site_url('manage/posts/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$posts = (int) Auth::get_access_level('manage/posts') == 1
 					? $this->posts->get_character_posts($this->session->userdata('characters'), $config['per_page'], $status, $offset)
 					: $this->posts->get_post_list('', 'desc', $config['per_page'], $offset, $status);
-				
+
 				$data['entries'] = null;
-				
+
 				if ($posts->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($posts->result() as $p)
 					{
 						$date = gmt_to_local($p->post_date, $this->timezone, $this->dst);
-						
+
 						$data['entries'][$p->post_id]['id'] = $p->post_id;
 						$data['entries'][$p->post_id]['title'] = $p->post_title;
 						$data['entries'][$p->post_id]['author'] = $this->char->get_authors($p->post_authors, true, true);
@@ -5517,22 +5517,22 @@ abstract class Nova_manage extends Nova_controller_admin {
 						$data['entries'][$p->post_id]['status'] = $p->post_status;
 					}
 				}
-				
+
 				// make sure we're calculating the number of rows correctly
 				$config['total_rows'] = ((int) Auth::get_access_level('manage/posts') == 1)
 					? $this->posts->count_character_posts($this->session->userdata('characters'), $status)
 					: $this->posts->count_all_posts('', $status);
-				
+
 			    // initialize the pagination library
 				$this->pagination->initialize($config);
-				
+
 				// create the page links
 				$data['pagination'] = $this->pagination->create_links();
-				
+
 				$data['status'] = $status;
 				$data['page'] = $offset;
 				$data['section'] = $section;
-				
+
 				$data['images'] = array(
 			    	'edit' => array(
 			    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
@@ -5551,28 +5551,28 @@ abstract class Nova_manage extends Nova_controller_admin {
 			    		'alt' => ucfirst(lang('actions_view')),
 			    		'class' => 'image'),
 			    );
-				
+
 				// figure out where the view is coming from
 	    		$loc = 'manage_posts_ajax';
 			break;
-				
+
 			case 'logs':
 				$this->load->model('personallogs_model', 'logs');
-				
+
 				$config['base_url'] = site_url('manage/logs/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$logs = $this->logs->get_log_list($config['per_page'], $offset, $status);
-				
+
 				$data['entries'] = null;
-				
+
 				if ($logs->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($logs->result() as $l)
 					{
 						if (Auth::get_access_level('manage/logs') == 1)
@@ -5580,7 +5580,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							if ($this->session->userdata('userid') == $l->log_author_user)
 							{
 								$date = gmt_to_local($l->log_date, $this->timezone, $this->dst);
-								
+
 								$data['entries'][$l->log_id]['id'] = $l->log_id;
 								$data['entries'][$l->log_id]['title'] = $l->log_title;
 								$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true, false, true);
@@ -5591,7 +5591,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						elseif (Auth::get_access_level('manage/logs') == 2)
 						{
 							$date = gmt_to_local($l->log_date, $this->timezone, $this->dst);
-							
+
 							$data['entries'][$l->log_id]['id'] = $l->log_id;
 							$data['entries'][$l->log_id]['title'] = $l->log_title;
 							$data['entries'][$l->log_id]['author'] = $this->char->get_character_name($l->log_author_character, true, false, true);
@@ -5600,17 +5600,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 						}
 					}
 				}
-		
+
 				$config['total_rows'] = $this->logs->count_all_logs($status);
-				
+
 			    $this->pagination->initialize($config);
-			    
+
 			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
-				
+
 				$data['status'] = $status;
 				$data['page'] = $offset;
-				
+
 				$data['images'] = array(
 			    	'edit' => array(
 			    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
@@ -5629,28 +5629,28 @@ abstract class Nova_manage extends Nova_controller_admin {
 			    		'alt' => ucfirst(lang('actions_view')),
 			    		'class' => 'image'),
 			    );
-				
+
 				// figure out where the view is coming from
 	    		$loc = 'manage_logs_ajax';
 	    	break;
-				
+
 			case 'news':
 				$this->load->model('news_model', 'news');
-				
+
 				$config['base_url'] = site_url('manage/news/'. $status .'/');
 				$config['uri_segment'] = ($offset > 0) ? 4 : false;
 				$config['per_page'] = 15;
 				$config['full_tag_open'] = '<p class="fontMedium bold">';
 				$config['full_tag_close'] = '</p>';
-				
+
 				$news = $this->news->get_news_list($config['per_page'], $offset, $status);
-				
+
 				$data['entries'] = null;
-				
+
 				if ($news->num_rows() > 0)
 				{
 					$datestring = $this->options['date_format'];
-					
+
 					foreach ($news->result() as $n)
 					{
 						if (Auth::get_access_level('manage/news') == 1)
@@ -5659,7 +5659,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 							{
 								$date = gmt_to_local($n->news_date, $this->timezone, $this->dst);
 								$nid = $n->news_id;
-								
+
 								$data['entries'][$nid]['id'] = $nid;
 								$data['entries'][$nid]['title'] = $n->news_title;
 								$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true, false, true);
@@ -5672,7 +5672,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 						{
 							$date = gmt_to_local($n->news_date, $this->timezone, $this->dst);
 							$nid = $n->news_id;
-							
+
 							$data['entries'][$nid]['id'] = $nid;
 							$data['entries'][$nid]['title'] = $n->news_title;
 							$data['entries'][$nid]['author'] = $this->char->get_character_name($n->news_author_character, true, false, true);
@@ -5682,17 +5682,17 @@ abstract class Nova_manage extends Nova_controller_admin {
 						}
 					}
 				}
-		
+
 				$config['total_rows'] = $this->news->count_news_items($status);
-				
+
 			    $this->pagination->initialize($config);
-			    
+
 			    // create the page links
 				$data['pagination'] = $this->pagination->create_links();
-				
+
 				$data['status'] = $status;
 				$data['page'] = $offset;
-				
+
 				$data['images'] = array(
 			    	'edit' => array(
 			    		'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
@@ -5711,12 +5711,12 @@ abstract class Nova_manage extends Nova_controller_admin {
 			    		'alt' => ucfirst(lang('actions_view')),
 			    		'class' => 'image'),
 			    );
-				
+
 				// figure out where the view is coming from
 	    		$loc = 'manage_news_ajax';
 			break;
 		}
-		
+
 		$data['label'] = array(
 	    	'mission' => ucfirst(lang('global_mission')),
 	    	'by' => lang('labels_by'),
@@ -5732,7 +5732,7 @@ abstract class Nova_manage extends Nova_controller_admin {
 	    	'error_news' => ucfirst(lang('labels_no') .' '. lang('global_newsitems') .' '.
 	    		lang('actions_found')),
 	    );
-	    
+
 	    // parse the message
 		$message = Location::view($loc, $this->skin, 'admin', $data);
 
