@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.6.2] - 2021-07-08
+### Security
+- Patched an issue where a user's password could be exposed.
+
 ## [2.6.1] - 2019-04-05
 ### Fixed
 - Fixed issues with `location.view.output` event listener.
