@@ -1212,11 +1212,13 @@ abstract class Nova_main extends Nova_controller_main {
 				// load the resources
 				$this->load->model('positions_model', 'pos');
 
+				$content = lang('email_content_join_gm');
+
 				// compile the information for the email
 				$emailData = array(
 					'email_subject' => lang('email_subject_join_gm'),
 					'email_from' => ucfirst(lang('time_from')) .': '. $data['name'] .' - '. $data['email'],
-					'email_content' => nl2br(lang('email_content_join_gm')),
+					'email_content' => nl2br($content),
 					'basic_title' => ucwords(lang('labels_basic').' '.lang('labels_info')),
 				);
 
@@ -1296,7 +1298,7 @@ abstract class Nova_main extends Nova_controller_main {
 				$this->mail->from(Util::email_sender(), $data['name']);
 				$this->mail->to($to);
 				$this->mail->subject($this->options['email_subject'] .' '. $emailData['email_subject']);
-				$this->mail->message($message);
+				$this->mail->message($message, $content);
 			break;
 		}
 

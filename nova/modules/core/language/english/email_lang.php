@@ -63,10 +63,7 @@ $lang['email_content_wiki_comment_added'] = "A new comment has been added to you
 
 %s";
 
-$lang['email_content_join_user'] = "You recently applied to join the %s. Your application is currently under review and the game master will notify you of their decision in the near future. If you have further questions, please contact the game master directly. Your email address and password are provided below for reference.
-
-Email: %s
-Password: %s
+$lang['email_content_join_user'] = "You recently applied to join the %s. Your application is currently under review and the game master will notify you of their decision in the near future. If you have further questions, please contact the game master directly.
 
 This is an automatically generated email, do not reply to this message.";
 
