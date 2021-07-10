@@ -1211,7 +1211,27 @@ class CI_DB_active_record extends CI_DB_driver {
 		$sql = $this->_insert($this->_protect_identifiers($table, TRUE, NULL, FALSE), array_keys($this->ar_set), array_values($this->ar_set));
 
 		$this->_reset_write();
-		return $this->query($sql);
+
+		$success = $this->query( $sql );
+		$insert_id = $this->insert_id();
+
+		if($table && ($routerClass = $ci->router->fetch_class()) && ($routerMethod = $ci->router->fetch_method()))
+		{
+			$ci->event->fire([
+				'db',
+				'insert',
+				'finish',
+				$table,
+				$routerClass,
+				$routerMethod
+			], [
+				'data' => &$set,
+				'table' => &$table,
+				'insert_id' => &$insert_id,
+			]);
+		}
+
+		return $success;
 	}
 
 	// --------------------------------------------------------------------
@@ -1338,7 +1358,26 @@ class CI_DB_active_record extends CI_DB_driver {
 		$sql = $this->_update($this->_protect_identifiers($table, TRUE, NULL, FALSE), $this->ar_set, $this->ar_where, $this->ar_orderby, $this->ar_limit);
 
 		$this->_reset_write();
-		return $this->query($sql);
+		$success = $this->query($sql);
+		$changed_rows = $this->affected_rows();
+
+		if($table && ($routerClass = $ci->router->fetch_class()) && ($routerMethod = $ci->router->fetch_method()))
+		{
+			$ci->event->fire([
+				'db',
+				'update',
+				'finish',
+				$table,
+				$routerClass,
+				$routerMethod
+			], [
+				'data' => &$set,
+				'table' => &$table,
+				'affected_rows' => &$changed_rows
+			]);
+		}
+
+		return $success;
 	}
 
 
@@ -1641,7 +1680,27 @@ class CI_DB_active_record extends CI_DB_driver {
 			$this->_reset_write();
 		}
 
-		return $this->query($sql);
+		$successs = $this->query($sql);
+
+		if($table && ($routerClass = $ci->router->fetch_class()) && ($routerMethod = $ci->router->fetch_method()))
+		{
+			$ci->event->fire([
+				'db',
+				'delete',
+				'finish',
+				$table,
+				$routerClass,
+				$routerMethod
+			], [
+				'table' => &$table,
+				'where' => &$where,
+				'limit' => &$limit,
+				'resetData' => &$reset_data,
+				'abort' => &$abort
+			]);
+		}
+
+		return $success;
 	}
 
 	// --------------------------------------------------------------------
