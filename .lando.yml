@@ -1,0 +1,7 @@
+name: nova2
+recipe: lamp
+config:
+  php: '7.0'
+  webroot: .
+  database: mysql:5.7
+  xdebug: false
