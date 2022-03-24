@@ -3,7 +3,7 @@
 application/assets/images/*/
 application/cache/*/
 application/logs/
-application/modules/
+application/modules/*/
 application/views/
 
 application/config/database.php
