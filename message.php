@@ -3,35 +3,38 @@
 // get the type of message
 $type = (isset($_GET['type'])) ? $_GET['type'] : false;
 
-switch ($type)
-{
-	case 'php':
-		$title = 'Nova Notice';
-		$header = 'Uh oh!';
-		$headerClass = 'error';
-		$message = 'Unforunately, your server isn\'t running a compatible version of PHP. In order to run Nova 2, your server needs to have at least PHP 5.3 (you only have PHP '.PHP_VERSION.'. Please contact your host to resolve this issue. Additional support is available from <a href="http://forums.anodyne-productions.com" target="_blank">Anodyne Productions</a>.';
-	break;
-	
-	case 'maintenance':
-		$title = 'Nova Maintenance';
-		$header = 'Nova Maintenance';
-		$headerClass = 'notice';
-		$message = 'We\'re doing some maintenance on the site right now and it isn\'t available. This shouldn\'t take very long, so please try again in a little while.';
-	break;
-	
-	case 'banned':
-		$title = 'Nova Notice';
-		$header = 'Uh oh!';
-		$headerClass = 'error';
-		$message = 'It looks like you\'ve been naughty and the game master has completely banned you from viewing the site. This ban can be lifted by the game master, but you\'ll need to <a href="index.php/main/contact">contact them</a> to do so.';
-	break;
-	
-	case 'browser':
-		$title = 'Nova Notice';
-		$header = 'Uh oh!';
-		$headerClass = 'notice';
-		$message = 'It looks like you\'re running a version of Internet Explorer that isn\'t supported. In order to use this version of Nova, you need to be running Internet Explorer 7 or higher (we recommend IE 8). You can find updates to Internet Explorer in Windows Update or from <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx" target="_blank">microsoft.com</a>. Or better yet, give <a href="http://www.getfirefox.com" target="_blank">Firefox</a> or <a href="http://www.google.com/chrome" target="_blank">Google Chrome</a> a try.';
-	break;
+switch ($type) {
+    case 'php':
+        $title = 'Incompatible PHP version';
+        $header = 'Incompatible PHP version';
+        $headerClass = 'text-rose-600';
+        $message = 'Your server is using an incompatible version of PHP. In order to run Nova 2.7, your server must be running <span class="font-bold text-slate-800">PHP 7.0</span> or higher, but it looks it\'s only running <span class="font-bold text-rose-600">PHP '.PHP_VERSION.'</span>. Please contact your host to resolve this issue.';
+        $additionalHelp = true;
+    break;
+
+    case 'maintenance':
+        $title = 'Site down for maintenance';
+        $header = 'Site down for maintenance';
+        $headerClass = 'text-sky-500';
+        $message = "We're doing some maintenance on the site right now and it isn't available. This shouldn't take very long, so please try again in a little while.";
+        $additionalHelp = false;
+    break;
+
+    case 'banned':
+        $title = 'Entry disallowed';
+        $header = 'Entry disallowed';
+        $headerClass = 'text-rose-600';
+        $message = "The Game Master has issue a complete ban against your account. <a href=\"index.php/main/contact\" class='pb-px border-b border-slate-300 hover:border-slate-400'>Contact the Game Master</a> to discuss lifting the ban. You will not be able to access the site until the ban has been removed.";
+        $additionalHelp = false;
+    break;
+
+    case 'browser':
+        $title = 'Unsupported browser version';
+        $header = 'Unsupported browser version';
+        $headerClass = 'text-sky-500';
+        $message = "You're running a version of Internet Explorer that isn't supported. In order to use Nova 2.7, you need to be running Internet Explorer 11 or higher (we recommend Microsoft Edge). You can find updates to Internet Explorer in Windows Update or from <a href=\"https://microsoft.com/windows/internet-explorer/default.aspx\" target=\"_blank\" class='pb-px border-b border-slate-300 hover:border-slate-400'>microsoft.com</a>. Or better yet, switch to <a href=\"https://getfirefox.com\" target=\"_blank\" class='pb-px border-b border-slate-300 hover:border-slate-400'>Firefox</a> or <a href=\"https://google.com/chrome\" target=\"_blank\" class='pb-px border-b border-slate-300 hover:border-slate-400'>Google Chrome</a> for a better experience.";
+        $additionalHelp = true;
+    break;
 }
 
 ?><!DOCTYPE html>
@@ -39,44 +42,27 @@ switch ($type)
 	<head>
 		<meta charset="utf-8">
 		<title><?php echo $title;?></title>
-		
-		<style>
-			body {
-				background: #f4f4f4;
-				color: #444;
-				font: 75%/1.5 "lucida grande", verdana, arial, sans-serif;
-			}
-			#container {
-				width: 650px;
-				margin: 5em auto;
-				padding: 0 1em;
-				border: 1px solid #aaa;
-				background: #ddd;
-				background: -moz-linear-gradient(center top, #eee 20%, #ddd 100%);
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #eee), color-stop(1, #ddd));
-				-moz-border-radius: 3px;
-				border-radius: 3px 3px 3px 3px;
-				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
-				-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
-				box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 7px rgba(0, 0, 0, .2);
-			}
-			#container h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, .55); }
-			#container p {
-				color: #555;
-				font-size: 1.2em;
-				text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
-			}
-			#container a { color: #000; }
-			#container a:hover { color: #06c; }
-			.error { color: #c00; }
-			.notice { color: #406ceb; }
-		</style>
+		<script src="https://cdn.tailwindcss.com"></script>
 	</head>
-	<body>
-		<div id="container">
-			<h1 class="<?php echo $headerClass;?>"><?php echo $header;?></h1>
-			
-			<p><?php echo $message;?></p>
+	<body class="font-sans text-slate-500 antialiased bg-slate-100">
+		<div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+			<div class="mx-auto max-w-xl">
+				<div class="bg-white rounded-lg shadow-xl ring-1 ring-slate-900/5 overflow-hidden">
+                    <div class="p-6">
+                        <h1 class="text-4xl font-extrabold tracking-tight <?php echo $headerClass;?>"><?php echo $header;?></h1>
+                        <p class="mt-4 text-lg font-medium leading-relaxed"><?php echo $message;?></p>
+                    </div>
+
+					<?php if ($additionalHelp === true) { ?>
+                        <div class="bg-slate-50 border-t border-slate-900/5 py-4 px-6">
+                            <a href="https://discord.gg/7WmKUks" target="_blank" class="inline-flex items-center group space-x-1 rounded-md py-2 px-4 bg-white text-slate-500 ring-1 ring-gray-900/5 hover:bg-slate-100 hover:ring-gray-900/10 hover:text-slate-600 font-semibold">
+                                <span>Get additional help from Anodyne</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            </a>
+                        </div>
+					<?php } ?>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

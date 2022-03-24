@@ -4,8 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Word counts for mission posts and personal logs.
+- Word count display below mission post and personal log content text areas.
+- Contact page "honeypot" for attempting to limit spam.
+- `actions_cancel` language key.
+
 ### Changed
-- Updated the blank genre to use `blank` for the genre code instead of previous uses of `bln` and `blk`.
+- Upgraded CodeIgniter from version 2.2.3 to version 3.1.13 for better PHP 8 compatibility.
+- Minimum PHP version requirement has been raised from 5.3 to 7.0.
+- Minimum Internet Explorer requirement has been raised from version 7 to version 11.
+- Fixed the blank genre to use `blank` for the genre code instead of previous uses of `bln` and `blk`.
+- The System Information and Version History page now displays the server's version of PHP.
+- Reorganized the Sim Statistics report to include word count stats in most categories.
+- Renamed the departments database table from `departments_{genre}` to `departments`.
+- Renamed the positions database table from `positions_{genre}` to `positions`.
+- Renamed the ranks database table from `ranks_{genre}` to `ranks`.
+- Redesigned the special messages page for maintenance mode, PHP version issues, ban notice, and browser updates.
+- Logging in and logging out will no longer force users to sit on a waiting screen for 5 seconds before redirecting.
+- HTML markup around several field labels in Site Settings have been updated. This mainly involves wrapping several labels in `span` tags and should not impact any existing skins.
+- The `versions_redirect` language item now links to the Nova 2 source code repository changelog instead of Anodyne Help.
+
+### Removed
+- The ability to install a separate genre from the Installation Center.
+- The System Components section of the System Information & Version History page. There was in fact no such information in Anodyne Help.
+
+### Fixed
+- Wrong character name was displayed in email clients when sending the email to players after a pending post is approved ([#295](https://github.com/anodyne/nova/issues/295))
+- Missing email field placeholder on the reset password page.
 
 ## [2.6.2] - 2021-07-08
 ### Security
