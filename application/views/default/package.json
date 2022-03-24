@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "license": "MIT",
+    "scripts": {
+        "build:colors": "cross-env ENV_BUILD=dev postcss resources/css/colors.css --dir dist/css --verbose",
+        "build:login": "cross-env ENV_BUILD=prod postcss resources/css/login.css --dir dist/css --verbose",
+        "build:app": "cross-env ENV_BUILD=prod postcss resources/css/app.css --dir dist/css --verbose",
+        "build:wiki": "cross-env ENV_BUILD=prod postcss resources/css/wiki.css --dir dist/css --verbose",
+        "css": "concurrently \"npm run build:colors\" \"npm run build:app\" \"npm run build:wiki\" \"npm run build:login\""
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.4.0",
+        "autoprefixer": "^10.4.0",
+        "concurrently": "^6.3.0",
+        "cross-env": "^5.1",
+        "cssnano": "^5.0.8",
+        "postcss": "^8.4.4",
+        "postcss-cli": "^9.0.1",
+        "postcss-import": "^13.0.0",
+        "tailwindcss": "^3.0.0"
+    }
+}

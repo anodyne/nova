@@ -1,0 +1,355 @@
+@import 'tailwindcss/base';
+
+@import 'tailwindcss/components';
+
+@import 'structure.css';
+@import 'skin.css';
+@import 'jquery.ui.tabs.css';
+
+@import 'tailwindcss/utilities';
+
+@font-face {
+    font-family: 'Inter var';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../fonts/Inter-roman.woff2?v=3.18') format('woff2');
+    font-named-instance: 'Regular';
+}
+
+@font-face {
+    font-family: 'Inter var';
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../fonts/Inter-italic.woff2?v=3.18') format('woff2');
+    font-named-instance: 'Italic';
+}
+
+html {
+	@apply bg-gray-100;
+}
+
+body {
+	@apply text-gray-500 antialiased text-base leading-6 font-sans;
+
+	font-feature-settings: 'ss01', 'ss03', 'cv11', 'zero';
+}
+
+.wrapper {
+	@apply max-w-7xl mx-auto;
+}
+
+header {
+	@apply m-0 p-0 pb-24 bg-primary-300 border-b border-primary-400 space-y-4;
+}
+header > .wrapper {
+	@apply flex items-center space-x-8 pt-6 pb-12;
+}
+header .logo svg,
+header .logo img {
+	@apply h-8 w-auto;
+}
+header .signin-container {
+	@apply flex items-center shrink relative space-x-6;
+}
+header .signin-container .signin {
+	@apply relative rounded-md bg-primary-500 text-white font-bold text-xs py-1 px-2 hover:bg-primary-600;
+}
+header .signin-container .logged-in-controls {
+	@apply flex items-center space-x-4;
+}
+header .signin-container .logged-in-controls span {
+	@apply flex items-center space-x-1.5;
+}
+header .signin-container .logged-in-controls a {
+	@apply border-none;
+}
+
+.nav-main {
+	@apply flex-1;
+}
+.nav-main ul {
+    @apply m-0 p-0 w-auto list-none flex items-center space-x-6;
+}
+.nav-main ul li a {
+	@apply block no-underline px-1 py-2 text-base border-b-2 border-transparent text-primary-600 font-bold hover:text-primary-700 transition;
+}
+.nav-main ul li a.active {
+    @apply text-primary-700 border-primary-500;
+}
+
+main {
+	@apply relative rounded-md ring-1 ring-gray-900/5 bg-primary-100 -mt-24 overflow-hidden shadow-xl mb-12;
+}
+main .content {
+	@apply rounded-br-md border-b border-r border-primary-300 bg-white px-6 py-6 mr-48;
+}
+
+.nav-sub {
+	@apply float-right w-48 my-4 text-right;
+}
+.nav-sub ul {
+	@apply m-0 p-0 list-none space-y-0.5;
+}
+.nav-sub ul > li {
+	@apply p-0 m-0;
+}
+.nav-sub ul > li > a {
+	@apply block px-4 py-1 no-underline text-primary-600 font-semibold text-sm border-y border-transparent hover:text-primary-700 hover:bg-primary-200 hover:border-y hover:border-primary-400 transition;
+}
+.nav-sub ul > li.spacer {
+	@apply h-6 border-none;
+}
+.nav-sub ul > li.menu_category {
+	@apply px-4 py-1 text-xs uppercase tracking-wide text-primary-700 font-semibold;
+}
+
+footer {
+	@apply flex items-center justify-center space-x-8 clear-both py-3 text-center text-sm text-primary-600 rounded-b-md;
+}
+
+.signin-active, .signin-active:hover {
+	background: #7e867a !important;
+	color: #fff;
+}
+
+.signin-panel {
+    @apply float-right flex items-center text-sm text-primary-700;
+}
+.signin-panel kbd {
+	@apply text-xs font-semibold text-primary-600;
+}
+
+.signin-panel input[type=text],
+.signin-panel input[type=password] {
+    @apply border border-primary-400 rounded-md w-48 bg-primary-200 text-sm text-primary-700 font-medium focus:bg-primary-100 focus:border-primary-500;
+
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+}
+.signin-panel a {
+	border: 0;
+	color: #7e867a !important;
+}
+.signin-panel a:hover {
+	border-bottom: 1px solid;
+}
+
+a {
+	@apply text-primary-600 hover:text-primary-700 no-underline border-b border-primary-500 hover:border-primary-600 focus:outline-none;
+}
+a.delete,
+a.edit {
+	@apply text-gray-500 border-none;
+}
+a.delete:hover {
+	@apply text-danger-500;
+}
+a.edit:hover {
+	@apply text-info-500;
+}
+a.image {
+	@apply border-none hover:border-none no-underline hover:no-underline;
+}
+
+h1, h2, h3, h4, p {
+	@apply mb-4;
+}
+h1 {
+	@apply text-4xl font-extrabold tracking-tight;
+}
+h2 {
+	@apply text-3xl font-bold tracking-tight;
+}
+h3 {
+	@apply text-2xl font-semibold;
+}
+h4 {
+	@apply text-xl font-medium;
+}
+p {
+	@apply text-base leading-6;
+}
+
+.fontLarge	{ @apply text-xl; }
+.fontMedium	{ @apply text-lg; }
+.fontNormal { @apply text-base; }
+.fontSmall	{ @apply text-sm; }
+.fontTiny	{ @apply text-xs; }
+
+.nobold	{ @apply font-normal; }
+.bold { @apply font-semibold; }
+
+.align_right { @apply text-right; }
+
+.page-head { @apply text-primary-700; }
+.page-subhead { @apply text-primary-500; }
+
+.gray { @apply text-gray-500; }
+.red { @apply text-danger-500; }
+.orange	{ @apply text-warning-600; }
+.green { @apply text-success-500; }
+.blue { @apply text-info-500; }
+
+input[type=text],
+input[type=password],
+input[type=email],
+textarea,
+select {
+	@apply rounded-md border border-gray-300 ring-1 ring-transparent shadow-sm focus:border-primary-400 focus:ring-primary-400 focus:text-gray-900 focus:outline-none;
+}
+input[type=text],
+input[type=password],
+input[type=email] {
+	@apply w-72;
+}
+textarea {
+	@apply w-[500px];
+}
+input[type=checkbox] {
+	@apply rounded bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-transparent checked:hover:bg-primary-600 focus:text-primary-600;
+}
+input[type=radio] {
+	@apply rounded-full bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-transparent checked:hover:bg-primary-600 focus:text-primary-600;
+}
+
+input.small {
+    @apply w-12;
+}
+input.medium {
+    @apply w-24;
+}
+input.medium-large {
+    @apply w-36;
+}
+
+kbd {
+	@apply flex items-center mb-1.5 text-sm font-bold font-sans space-x-2;
+}
+
+div.chzn-container ul.chzn-choices {
+	@apply !rounded-md !border-gray-300 shadow !px-3 !py-2;
+}
+div.chzn-container input {
+	@apply !font-sans !text-base;
+}
+div.chzn-container ul.chzn-choices li.search-field input {
+	@apply !p-0 !m-0 !w-full;
+}
+
+.cell-label {
+	@apply w-32 font-bold text-base text-right;
+}
+.cell-spacer {
+    @apply w-5;
+}
+
+.flash_message {
+	@apply -mx-6 -mt-6 mb-6 font-semibold border-b;
+}
+.flash_message p {
+	@apply m-0 px-6 py-3;
+}
+.flash-success {
+	@apply bg-success-100 border-success-200 text-success-600;
+}
+.flash-error {
+	@apply bg-danger-100 border-danger-200 text-danger-600;
+}
+.flash-info {
+	@apply bg-info-100 border-info-200 text-info-600;
+}
+
+table {
+	@apply text-base;
+}
+
+tr.alt td, tr.light_gray {
+	@apply bg-gray-50;
+}
+
+th {
+	@apply text-center text-sm uppercase font-semibold;
+}
+
+#acp-panel {
+	@apply flex rounded-t-md border border-b-0 border-gray-200 bg-gray-100 overflow-hidden;
+}
+
+#acp-panel .panelnav {
+	@apply w-48;
+}
+#panelmenu {
+	@apply list-none space-y-1 my-2;
+}
+#panelmenu li a {
+	@apply flex items-center px-3 py-1.5 no-underline font-bold text-gray-500 border-y border-transparent hover:bg-warning-100 hover:text-warning-700 hover:border-y-warning-300;
+}
+#panelmenu li a span {
+	@apply w-full;
+}
+#panelmenu li a.active {
+	@apply bg-white text-primary-700 border-gray-200 hover:bg-white hover:text-primary-700 hover:border-gray-200;
+}
+
+#acp-panel .panel {
+	@apply border-l border-b border-gray-200 rounded-bl-md flex-1 bg-white;
+}
+
+#online {
+    @apply px-3 py-1.5 mb-8 border border-t-0 border-gray-200 rounded-b-md bg-gray-100;
+}
+
+.count {
+	@apply float-right font-semibold text-xs rounded-full p-1;
+}
+
+#panel .panel-body {
+	@apply rounded-md shadow-xl bg-gradient-to-b from-gray-500 to-gray-600 text-white text-left border border-gray-900/10;
+}
+.panel-body a {
+	@apply inline-block my-px pb-px text-white border-b border-white/25;
+}
+.panel-body a.edit {
+	@apply my-0 border-b-0 font-semibold text-gray-300 hover:text-gray-100;
+}
+
+.button-main {
+    @apply py-1.5 px-6 bg-primary-600 text-white font-semibold border-2 border-transparent rounded-md transition hover:bg-white hover:text-primary-600 hover:border-primary-600 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.button-sec,
+.button-small {
+    @apply py-1.5 px-6 bg-gray-100 text-gray-500 font-semibold border-2 border-transparent rounded-md transition hover:bg-white hover:text-gray-500 hover:border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.button-small {
+	@apply py-0.5 px-2 font-medium;
+}
+
+.clear_both { @apply clear-both; }
+.clear_right { @apply clear-right; }
+.clear_left { @apply clear-left; }
+
+.float_left { @apply float-left; }
+.float_right { @apply float-right; }
+
+#comments p,
+#news_blocks p,
+.post_info,
+.info-full,
+#notes {
+	@apply rounded-md border border-gray-200 bg-gray-100 px-4 py-3;
+}
+
+#notes {
+	@apply mb-8;
+}
+
+#notes p,
+#notes h3 {
+	@apply mb-0 leading-none;
+}
+
+.system_warning {
+	@apply z-50 py-2 w-full text-center font-semibold bg-warning-300 text-warning-900 shadow-lg text-sm;
+}

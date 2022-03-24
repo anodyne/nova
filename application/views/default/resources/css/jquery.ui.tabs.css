@@ -1,0 +1,80 @@
+.ui-tabs {
+    @apply relative;
+
+	zoom: 1;
+}
+
+.ui-tabs .ui-tabs-nav {
+    @apply m-0 p-0 flex space-x-6 border-b border-gray-200;
+}
+.ui-tabs .ui-tabs-nav li {
+    @apply relative list-none p-0 whitespace-nowrap -mb-px;
+}
+.ui-tabs .ui-tabs-nav li a {
+    @apply flex py-3 px-1.5 bg-transparent font-semibold text-gray-400 no-underline text-sm border-b-2 border-transparent hover:border-gray-300 hover:text-gray-600;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+    @apply text-primary-700 border-primary-500;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    @apply cursor-default;
+}
+
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    @apply cursor-pointer;
+}
+
+.ui-tabs .ui-tabs-panel {
+    @apply block p-4 bg-white;
+}
+
+.ui-tabs .ui-tabs-hide {
+    @apply hidden;
+}
+
+/**
+ * Sub-Tabs
+ */
+.subtabs {
+    @apply relative -mx-2;
+
+    zoom: 1;
+}
+
+.subtabs .ui-tabs-nav {
+    @apply m-0 p-0 flex space-x-4 border-none;
+}
+.subtabs .ui-tabs-nav li {
+    @apply relative list-none p-0 whitespace-nowrap;
+}
+.subtabs .ui-tabs-nav li a {
+    @apply text-gray-500 hover:bg-gray-100 hover:text-gray-700 px-3 py-2 font-medium text-sm rounded-md border-none;
+}
+
+.subtabs .ui-tabs-nav li.ui-tabs-selected a {
+    @apply bg-primary-200 text-primary-700;
+}
+
+.subtabs .ui-tabs-nav li.ui-tabs-selected a,
+.subtabs .ui-tabs-nav li.ui-state-disabled a,
+.subtabs .ui-tabs-nav li.ui-state-processing a {
+    @apply cursor-default;
+}
+
+.subtabs .ui-tabs-nav li a,
+.subtabs .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    @apply cursor-pointer;
+}
+
+.subtabs .ui-tabs-panel {
+    @apply block p-4 bg-white;
+}
+
+.subtabs .ui-tabs-hide {
+    @apply hidden;
+}
