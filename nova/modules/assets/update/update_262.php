@@ -141,6 +141,21 @@ if ($add_column !== null) {
 |---------------------------------------------------------------
 */
 
+$modify_column = [
+    'sessions' => [
+        'session_id' => [
+            'name' => 'id',
+        ],
+        'user_data' => [
+            'name' => 'data',
+            'type' => 'BLOB',
+        ],
+        'last_activity' => [
+            'name' => 'timestamp',
+        ],
+    ],
+];
+
 if ($modify_column !== null) {
     foreach ($modify_column as $key => $value) {
         $this->dbforge->modify_column($key, $value);
@@ -156,6 +171,10 @@ if ($modify_column !== null) {
 | );
 |---------------------------------------------------------------
 */
+
+$drop_column = [
+    'sessions' => ['user_agent'],
+];
 
 if ($drop_column !== null) {
     foreach ($drop_column as $key => $value) {
