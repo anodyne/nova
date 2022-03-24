@@ -4,6 +4,7 @@ application/assets/images/*/
 application/cache/*/
 application/logs/
 application/modules/*/
+sessions
 #application/views/
 
 application/config/database.php
