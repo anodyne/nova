@@ -298,20 +298,19 @@ abstract class Nova_users_model extends CI_Model
 
     public function get_online_users($time = 5)
     {
-        return [];
         $final_time = now() - ($time * 60);
 
         $this->db->from('sessions');
-        $this->db->where('last_activity >=', $final_time);
+        $this->db->where('timestamp >=', $final_time);
 
         $query = $this->db->get();
 
-        $array = array();
+        $array = [];
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
-                if (! is_null($row->user_data) and ! empty($row->user_data)) {
-                    $item = unserialize($row->user_data);
+                if (! is_null($row->data) and ! empty($row->data)) {
+                    $item = Util::unserializeSessionData($row->data);
 
                     $array[] = (isset($item['userid'])) ? $item['userid'] : false;
                 }
