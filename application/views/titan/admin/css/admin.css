@@ -1,0 +1,8 @@
+.popover .title {
+	background-color: #34363a !important;
+	color: #fff !important;
+	border-bottom: none !important;
+}
+.popover .content {
+	background: #34363a !important;
+}
