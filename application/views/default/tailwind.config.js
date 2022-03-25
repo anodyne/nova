@@ -10,12 +10,12 @@ const createColorScale = (color) => ({
         ...scale.map((s) => ({
             [s]: ({ opacityVariable, opacityValue }) => {
                 if (opacityValue !== undefined) {
-                    return `hsla(var(--${color}-${s}), ${opacityValue})`;
+                    return `rgba(var(--${color}-${s}), ${opacityValue})`;
                 }
                 if (opacityVariable !== undefined) {
-                    return `hsla(var(--${color}-${s}), var(${opacityVariable}, 1))`;
+                    return `rgba(var(--${color}-${s}), var(${opacityVariable}, 1))`;
                 }
-                return `hsl(var(--${color}-${s}))`;
+                return `rgb(var(--${color}-${s}))`;
             },
         })),
     ),
