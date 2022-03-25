@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Redesigned the special messages page for maintenance mode, PHP version issues, ban notice, and browser updates.
 - Logging in and logging out will no longer force users to sit on a waiting screen for 5 seconds before redirecting.
 - HTML markup around several field labels in Site Settings have been updated. This mainly involves wrapping several labels in `span` tags and should not impact any existing skins.
+- A `span` tag has been added around the label and page name on the Manage Wiki Pages screen.
+- A `span` tag has been added around the text inside the Show Filters link in the wiki screens.
+- The Edit Categories link on the wiki/categories page has been given the `edit` class to be consistent with other similar edit links.
 - The `versions_redirect` language item now links to the Nova 2 source code repository changelog instead of Anodyne Help.
 
 ### Removed

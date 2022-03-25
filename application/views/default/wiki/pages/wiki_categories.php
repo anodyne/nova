@@ -4,8 +4,7 @@
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php echo $syspage;?>
-<br />
+<p><?php echo $syspage;?></p>
 
 <p class="bold fontSmall"><?php echo link_to_if($access, 'wiki/managecategories', $label['edit'], 'class="edit"');?></p>
 

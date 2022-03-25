@@ -1,11 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
 <div class="wiki-subnav">
 	<div class="subnav-options">
-		<a href="#" id="toggle-filters"><?php echo img($images['eye']).' '.$label['show'];?></a>
-		
+		<a href="#" id="toggle-filters">
+			<?php echo img($images['eye']);?>
+			<span><?php echo $label['show'];?></span>
+		</a>
+
 		<div class="subnav-options-list">
 			<ul>
 				<li><a href="#" rel="toggle" id="show_all"><?php echo $label['show_all'].' '.$label['pages'];?></a></li>
@@ -18,12 +23,18 @@
 	<div class="subnav-content">
 		<ul>
 			<li>
-				<a href="<?php echo site_url('wiki/page');?>"><?php echo img($images['add']).' '.$label['add'];?></a>
+				<a href="<?php echo site_url('wiki/page');?>">
+					<?php echo img($images['add']);?>
+					<span><?php echo $label['add'];?></span>
+				</a>
 			</li>
-			
+
 			<?php if (isset($pages)): ?>
 				<li>
-					<a href="#" rel="facebox" myAction="cleanup" myID="0"><?php echo img($images['clean']) .' '. $label['clean'];?></a>
+					<a href="#" rel="facebox" myAction="cleanup" myID="0">
+						<?php echo img($images['clean']);?>
+						<span><?php echo $label['clean'];?></span>
+					</a>
 				</li>
 			<?php endif;?>
 		</ul>
@@ -32,7 +43,7 @@
 
 <?php if (isset($pages)): ?>
 	<br /><div class="search_pages"></div><br />
-	
+
 	<div id="search_pages">
 		<?php foreach ($pages as $p): ?>
 			<div id="page-<?php echo $p['id'];?>" class="<?php echo $p['type'].' '.$p['restrictions'];?>">
@@ -49,7 +60,7 @@
 									<?php echo img($images['history']);?>
 								</a>
 							</li>
-							
+
 							<?php if ($p['type'] == 'standard'): ?>
 								<li>
 									<a href="#" rel="page-control" myID="<?php echo $p['id'];?>" myAction="access" class="image">
@@ -63,17 +74,22 @@
 									</a>
 								</li>
 							<?php endif;?>
-							
+
 							<li><?php echo anchor('wiki/page/'.$p['id'], img($images['edit']), array('class' => 'image'));?></li>
 						</ul>
 					</div>
-					<?php if ($p['type'] == 'system'): ?>
-						<span class="label-system" rel="popover" data-original-title="<?php echo $label['system_label_help_title'];?>" data-content="<?php echo $label['system_label_help'];?>"><?php echo $label['system'];?></span>
-					<?php endif;?>
-					<?php if ($p['restrictions'] !== FALSE): ?>
-						<span class="label-restrict" rel="popover" data-original-title="<?php echo $label['restrict_label_help_title'];?>" data-content="<?php echo $label['restrict_label_help'];?>"><?php echo $label['restrict'];?></span>
-					<?php endif;?>
-					<strong class="fontMedium"><?php echo $p['title'];?></strong>
+
+					<span>
+						<?php if ($p['type'] == 'system'): ?>
+							<span class="label-system" rel="popover" data-original-title="<?php echo $label['system_label_help_title'];?>" data-content="<?php echo $label['system_label_help'];?>"><?php echo $label['system'];?></span>
+						<?php endif;?>
+
+						<?php if ($p['restrictions'] !== false): ?>
+							<span class="label-restrict" rel="popover" data-original-title="<?php echo $label['restrict_label_help_title'];?>" data-content="<?php echo $label['restrict_label_help'];?>"><?php echo $label['restrict'];?></span>
+						<?php endif;?>
+
+						<strong class="fontMedium"><?php echo $p['title'];?></strong>
+					</span>
 				</div>
 				<div class="page-supplemental alt fontSmall">
 					<div class="page-info">
@@ -83,8 +99,8 @@
 						<?php else: ?>
 							<?php echo $p['created'].' '.$label['on'].' '.$p['created_date'];?>
 						<?php endif;?>
-						
-						<?php if ($p['updated'] !== FALSE): ?>
+
+						<?php if ($p['updated'] !== false): ?>
 							<br />
 							<?php echo $label['updated'].' '.$p['updated'].' '.$label['on'].' '.$p['updated_date'];?>
 						<?php endif;?>
