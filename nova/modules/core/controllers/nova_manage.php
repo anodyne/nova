@@ -1980,8 +1980,13 @@ abstract class Nova_manage extends Nova_controller_admin
 
             switch ($this->uri->segment(3)) {
                 case 'add':
-                    $start = (empty($_POST['mission_start'])) ? '' : human_to_unix($this->input->post('mission_start', true) . $time);
-                    $end = (empty($_POST['mission_end'])) ? '' : human_to_unix($this->input->post('mission_end', true) . $time);
+                    $start = (empty($_POST['mission_start']))
+                        ? null
+                        : human_to_unix($this->input->post('mission_start', true) . $time);
+
+                    $end = (empty($_POST['mission_end']))
+                        ? null
+                        : human_to_unix($this->input->post('mission_end', true) . $time);
 
                     $insert_array = array(
                         'mission_title' => $this->input->post('mission_title', true),
