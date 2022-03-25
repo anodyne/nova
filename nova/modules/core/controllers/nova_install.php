@@ -676,7 +676,7 @@ abstract class Nova_install extends CI_Controller
                     APPFOLDER.'/config'
                 );
             } else {
-                if (version_compare(PHP_VERSION, '5.1', '<')) {
+                if (version_compare(PHP_VERSION, '7.0', '<')) {
                     $data['message'] = sprintf(
                         lang('setup.text.php'),
                         PHP_VERSION
