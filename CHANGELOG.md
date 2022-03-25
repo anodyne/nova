@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - Wrong character name was displayed in email clients when sending the email to players after a pending post is approved ([#295](https://github.com/anodyne/nova/issues/295))
+- Creating a mission without a start or end date does not give good error messages ([#296](https://github.com/anodyne/nova/issues/296))
 - Missing email field placeholder on the reset password page.
 
 ## [2.6.2] - 2021-07-08
