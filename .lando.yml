@@ -5,3 +5,6 @@ config:
   webroot: .
   database: mysql:5.7
   xdebug: false
+services:
+  database:
+    portforward: 32792
