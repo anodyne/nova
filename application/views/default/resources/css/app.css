@@ -212,6 +212,9 @@ input[type=checkbox] {
 input[type=radio] {
 	@apply rounded-full bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-white checked:hover:bg-primary-600 focus:text-primary-600;
 }
+input[type=file] {
+	@apply file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-100 file:text-primary-600 hover:file:bg-primary-200 hover:file:text-primary-700;
+}
 
 input.small {
     @apply w-12;
@@ -224,7 +227,7 @@ input.medium-large {
 }
 
 kbd {
-	@apply flex items-center mb-1.5 text-sm font-bold font-sans space-x-2;
+	@apply flex items-center text-sm font-bold font-sans space-x-2 mb-1.5;
 }
 
 div.chzn-container ul.chzn-choices {
@@ -353,4 +356,8 @@ th {
 
 .system_warning {
 	@apply z-50 py-2 w-full text-center font-semibold bg-warning-300 text-warning-900 shadow-lg text-sm;
+}
+
+.upload-close {
+	@apply !text-danger-500 rounded-l-md hover:!bg-danger-500 hover:!text-white;
 }

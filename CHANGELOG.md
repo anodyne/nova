@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - A `span` tag has been added around the text inside the Show Filters link in the wiki screens.
 - The Edit Categories link on the wiki/categories page has been given the `edit` class to be consistent with other similar edit links.
 - The `versions_redirect` language item now links to the Nova 2 source code repository changelog instead of Anodyne Help.
+- Provided a link to manage uploads directly from the upload screen.
 
 ### Removed
 - The ability to install a separate genre from the Installation Center.
