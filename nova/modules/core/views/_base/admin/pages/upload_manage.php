@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -8,28 +8,28 @@
 
 <div id="tabs">
 	<ul>
-		<?php if ($access['bio'] === TRUE): ?>
+		<?php if ($access['bio'] === true): ?>
 			<li><a href="#one"><span><?php echo $label['bioimages'];?></span></a></li>
 		<?php endif;?>
-		
-		<?php if ($access['awards'] === TRUE): ?>
+
+		<?php if ($access['awards'] === true): ?>
 			<li><a href="#two"><span><?php echo $label['awardimages'];?></span></a></li>
 		<?php endif;?>
-		
-		<?php if ($access['missions'] === TRUE): ?>
+
+		<?php if ($access['missions'] === true): ?>
 			<li><a href="#three"><span><?php echo $label['missionimages'];?></span></a></li>
 		<?php endif;?>
-		
-		<?php if ($access['missions'] === TRUE): ?>
+
+		<?php if ($access['missions'] === true): ?>
 			<li><a href="#four"><span><?php echo $label['specsimages'];?></span></a></li>
 		<?php endif;?>
-		
-		<?php if ($access['tour'] === TRUE): ?>
+
+		<?php if ($access['tour'] === true): ?>
 			<li><a href="#five"><span><?php echo $label['tourimages'];?></span></a></li>
 		<?php endif;?>
 	</ul>
-	
-	<?php if ($access['bio'] === TRUE): ?>
+
+	<?php if ($access['bio'] === true): ?>
 		<div id="one">
 			<?php echo form_open('upload/manage/bio');?>
 			<?php if (isset($directory['bio'])): ?>
@@ -55,7 +55,7 @@
 					<?php endforeach;?>
 					</tbody>
 				</table><br />
-				
+
 				<div class="align_right"><?php echo form_button($button['submit']);?></div>
 			<?php else: ?>
 				<?php echo text_output($label['nobio'], 'h3', 'orange');?>
@@ -63,8 +63,8 @@
 			<?php echo form_close();?>
 		</div>
 	<?php endif;?>
-		
-	<?php if ($access['awards'] === TRUE): ?>
+
+	<?php if ($access['awards'] === true): ?>
 		<div id="two">
 			<?php echo form_open('upload/manage/awards');?>
 			<?php if (isset($directory['award'])): ?>
@@ -90,7 +90,7 @@
 					<?php endforeach;?>
 					</tbody>
 				</table><br />
-				
+
 				<div class="align_right"><?php echo form_button($button['submit']);?></div>
 			<?php else: ?>
 				<?php echo text_output($label['noaward'], 'h3', 'orange');?>
@@ -98,8 +98,8 @@
 			<?php echo form_close();?>
 		</div>
 	<?php endif;?>
-	
-	<?php if ($access['missions'] === TRUE): ?>
+
+	<?php if ($access['missions'] === true): ?>
 		<div id="three">
 			<?php echo form_open('upload/manage/missions');?>
 			<?php if (isset($directory['mission'])): ?>
@@ -133,8 +133,8 @@
 			<?php echo form_close();?>
 		</div>
 	<?php endif;?>
-	
-	<?php if ($access['specs'] === TRUE): ?>
+
+	<?php if ($access['specs'] === true): ?>
 		<div id="four">
 			<?php echo form_open('upload/manage/specs');?>
 			<?php if (isset($directory['specs'])): ?>
@@ -168,8 +168,8 @@
 			<?php echo form_close();?>
 		</div>
 	<?php endif;?>
-	
-	<?php if ($access['tour'] === TRUE): ?>
+
+	<?php if ($access['tour'] === true): ?>
 		<div id="five">
 			<?php echo form_open('upload/manage/tour');?>
 			<?php if (isset($directory['tour'])): ?>

@@ -20,7 +20,6 @@ abstract class Nova_upload extends Nova_controller_admin
 
         // load the resources
         $this->load->library('upload');
-        $this->config->load('upload');
     }
 
     public function index()
@@ -109,6 +108,7 @@ abstract class Nova_upload extends Nova_controller_admin
             'img_mission' => ucwords(lang('global_mission') .' '. lang('labels_image')),
             'img_specs' => ucwords(lang('global_specification') .' '. lang('labels_image')),
             'img_tour' => ucwords(lang('global_tour') .' '. lang('labels_image')),
+            'manage_uploads' => ucwords(lang('actions_manage') .' '. lang('labels_uploads') .' '. RARROW),
             'name' => ucwords(lang('labels_file') .' '. lang('labels_name')),
             'type' => ucwords(lang('labels_image') .' '. lang('labels_type')),
         );
