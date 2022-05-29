@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - The Edit Categories link on the wiki/categories page has been given the `edit` class to be consistent with other similar edit links.
 - The `versions_redirect` language item now links to the Nova 2 source code repository changelog instead of Anodyne Help.
 - Provided a link to manage uploads directly from the upload screen.
+- The `ui-datepicker-trigger` styling has been moved out of the Javascript files and into the stylesheets. If you are overriding the `mange_missions_js.php` file, your changes will remain intact. If you're using the Pulsar or Titan skins, you will get the new styling. If you are using a custom skin, you will need to copy the styling from `application/views/default/dist/css/app.css` for `.ui-datepicker-trigger` and move it into your own skin.
 
 ### Removed
 - The ability to install a separate genre from the Installation Center.

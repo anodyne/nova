@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -22,9 +24,9 @@
 		</div>
 		<hr />
 	<?php endif;?>
-	
+
 	<?php echo text_output($manifest_header);?>
-	
+
 	<!-- manifest navigation table -->
 	<div class="fontSmall line_height_18">
 		<strong><?php echo $label['show'];?></strong> &mdash;
@@ -33,20 +35,20 @@
 			<?php echo anchor('#', $label['npcs'], array('id' => 'npc'));?> &middot;
 			<?php echo anchor('#', $label['open'], array('id' => 'open'));?> &middot;
 			<?php echo anchor('#', $label['inactive_chars'], array('id' => 'inactive'));?>
-	
+
 		<br /><strong><?php echo $label['toggle'];?></strong> &mdash;
-			<?php if($display == 'open'): ?>
+			<?php if ($display == 'open'): ?>
 			<?php else: ?>
-				<?php echo anchor('#', $label['open'], array('id' => 'toggle_open'));?> &middot; 
+				<?php echo anchor('#', $label['open'], array('id' => 'toggle_open'));?> &middot;
 			<?php endif; ?>
 			<?php echo anchor('#', $label['npcs'], array('id' => 'toggle_npc'));?>
 	</div>
-	
+
 	<?php if (isset($top)): ?>
 		<div id="top-open" class="hidden">
 			<br />
 			<h2 class="page-subhead"><?php echo $label['top_positions'];?></h2>
-			
+
 			<table class="table100" cellpadding="3" border="0">
 				<tbody>
 					<?php foreach ($top as $t): ?>
@@ -67,16 +69,16 @@
 	<?php endif;?>
 
 	<?php if (isset($depts)): ?>
-		<br /><table class="" cellpadding="3" border="0">
-		
+		<br /><table class="table100" cellpadding="3" border="0">
+
 		<?php foreach ($depts as $dept): ?>
 			<tr>
 				<td colspan="5"><h3><?php echo $dept['name'];?></h3></td>
 			</tr>
-		
+
 			<?php if (isset($dept['pos'])): ?>
 				<?php foreach ($dept['pos'] as $pos): ?>
-				
+
 					<?php if (isset($pos['chars'])): ?>
 						<?php foreach ($pos['chars'] as $char): ?>
 							<?php if ($char['crew_type'] == 'inactive'): ?>
@@ -84,19 +86,19 @@
 							<?php else: ?>
 								<?php $display = ''; ?>
 							<?php endif; ?>
-					
+
 							<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 								<td class="col_15"></td>
 								<td class="col_150"><?php echo img($char['rank_img']);?></td>
 								<td>
 									<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
 
-									<?php if ( ! empty($char['metadata'])): ?>
+									<?php if (! empty($char['metadata'])): ?>
 										<span class="gray"><?php echo $char['metadata'];?></span><br />
 									<?php endif;?>
-									
+
 									<?php echo $pos['name'];?>
-									
+
 									<?php if ($char['crew_type'] == 'npc'): ?>
 										<br /><?php echo text_output($label['npc'], 'span', 'gray');?>
 									<?php elseif ($char['crew_type'] == 'inactive'): ?>
@@ -110,7 +112,7 @@
 							</tr>
 						<?php endforeach; ?>
 					<?php endif; ?>
-				
+
 					<?php if ($pos['open'] > 0 && $dept['type'] == 'playing'): ?>
 						<tr class="open fontSmall hidden">
 							<td class="col_15"></td>
@@ -123,20 +125,20 @@
 							<td class="col_75"></td>
 						</tr>
 					<?php endif; ?>
-				
+
 				<?php endforeach; ?>
 			<?php endif; ?>
-		
+
 			<?php if (isset($dept['sub'])): ?>
 				<?php foreach ($dept['sub'] as $sub): ?>
 					<tr>
 						<td class="col_15"></td>
 						<td colspan="4"><h4><?php echo $sub['name'];?></h4></td>
 					</tr>
-				
+
 					<?php if (isset($sub['pos'])): ?>
 						<?php foreach ($sub['pos'] as $spos): ?>
-						
+
 							<?php if (isset($spos['chars'])): ?>
 								<?php foreach ($spos['chars'] as $char): ?>
 									<?php if ($char['crew_type'] == 'inactive'): ?>
@@ -144,19 +146,19 @@
 									<?php else: ?>
 										<?php $display = ''; ?>
 									<?php endif; ?>
-							
+
 									<tr class="fontSmall hidden <?php echo $char['crew_type'] . $display;?>">
 										<td class="col_15"></td>
 										<td class="col_150"><?php echo img($char['rank_img']);?></td>
 										<td>
 											<strong class="fontMedium"><?php echo $char['name'];?></strong><br />
 
-											<?php if ( ! empty($char['metadata'])): ?>
+											<?php if (! empty($char['metadata'])): ?>
 												<span class="gray"><?php echo $char['metadata'];?></span><br />
 											<?php endif;?>
 
 											<?php echo $spos['name'];?>
-											
+
 											<?php if ($char['crew_type'] == 'npc'): ?>
 												<br /><?php echo text_output($label['npc'], 'span', 'gray');?>
 											<?php elseif ($char['crew_type'] == 'inactive'): ?>
@@ -170,7 +172,7 @@
 									</tr>
 								<?php endforeach; ?>
 							<?php endif; ?>
-						
+
 							<?php if ($spos['open'] > 0 && $sub['type'] == 'playing'): ?>
 								<tr class="open fontSmall hidden">
 									<td class="col_15"></td>
@@ -183,15 +185,15 @@
 									<td class="col_75"></td>
 								</tr>
 							<?php endif; ?>
-					
+
 						<?php endforeach; ?>
 					<?php endif; ?>
-				
+
 				<?php endforeach; ?>
 			<?php endif; ?>
-		
+
 		<?php endforeach; ?>
-	
+
 		</table>
 	<?php endif; ?>
 </div>
