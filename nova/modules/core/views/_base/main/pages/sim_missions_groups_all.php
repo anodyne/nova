@@ -1,9 +1,10 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <style>
-	.post_info { width: auto; margin: 0 0 2em 0; border-top: none; }
+	.post_info { width: auto; margin: 0 0 2em 0; border-top: none; border-top-left-radius: 0; border-top-right-radius: 0; }
 	.group-info { margin: 8px 0 0 0; }
-	h2 { margin: 0; padding: 3px 5px; }
 </style>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
@@ -24,13 +25,13 @@
 						<?php echo $label['count_missions'].' '.$g['count']['missions'];?>
 					</strong>
 				</div><br />
-				
+
 				<?php echo text_output($g['desc']);?>
-				
+
 				<?php if (isset($g['missions']) or isset($g['subgroups'])): ?>
 					<hr />
 				<?php endif;?>
-				
+
 				<?php if (isset($g['missions'])): ?>
 					<h3 class="page-subhead"><?php echo $label['included'];?></h3>
 					<div class="indent-left">
@@ -50,7 +51,7 @@
 						</ul><br />
 					</div>
 				<?php endif;?>
-				
+
 				<?php if (isset($g['subgroups'])): ?>
 					<h3 class="page-subhead"><?php echo $label['included_groups'];?></h3>
 					<div class="indent-left">

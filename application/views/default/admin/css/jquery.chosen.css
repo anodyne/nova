@@ -1,16 +1,20 @@
+div.chzn-container {
+	width: 18rem !important;
+}
+
 div.chzn-container input {
 	background: #fff;
 	background: -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
 	background: -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
 	border: 1px solid #aaa;
 	font-family: sans-serif;
-	font-size: 1em;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-o-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	border-radius: 3px;
+	font-size: 1rem;
+	-moz-border-radius: 0.375rem;
+	-webkit-border-radius: 0.375rem;
+	-o-border-radius: 0.375rem;
+	-ms-border-radius: 0.375rem;
+	-khtml-border-radius: 0.375rem;
+	border-radius: 0.375rem;
 }
 div.chzn-container textarea:focus {
 	border-color: #058cf5;
@@ -20,6 +24,7 @@ div.chzn-container textarea:focus {
 }
 
 div.chzn-container div.chzn-drop {
+	width: 18rem !important;
 	background: #FFF;
 	border: 1px solid #aaa;
 	border-width: 0 1px 1px;
@@ -31,12 +36,12 @@ div.chzn-container div.chzn-drop {
 	-moz-border-radius: 0 0 2px 2px;
 }
 div.chzn-container-single div.chzn-drop {
-	-moz-border-radius: 0 0 4px 4px;
-	-webkit-border-radius: 0 0 4px 4px;
-	-o-border-radius: 0 0 4px 4px;
-	-ms-border-radius: 0 0 4px 4px;
-	-khtml-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 0.375rem 0.375rem;
+	-webkit-border-radius: 0 0 0.375rem 0.375rem;
+	-o-border-radius: 0 0 0.375rem 0.375rem;
+	-ms-border-radius: 0 0 0.375rem 0.375rem;
+	-khtml-border-radius: 0 0 0.375rem 0.375rem;
+	border-radius: 0 0 0.375rem 0.375rem;
 }
 
 /* SINGLE */
@@ -45,28 +50,23 @@ div.chzn-container a.chzn-single {
 	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.5, white));
 	background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 50%);
 	border: 1px solid #aaa;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-o-border-radius: 4px;
-	-ms-border-radius: 4px;
-	-khtml-border-radius: 4px;
-	border-radius: 4px;
+	border-radius: 0.375rem;
 	color: #444;
 	text-decoration: none;
 }
 div.chzn-container a.chzn-single div {
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-right-radius: 4px;
-	-o-border-top-right-radius: 4px;
-	-ms-border-top-right-radius: 4px;
-	-khtml-border-top-right-radius: 4px;
-	border-top-right-radius: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-right-radius: 4px;
-	-o-border-bottom-right-radius: 4px;
-	-ms-border-bottom-right-radius: 4px;
-	-khtml-border-bottom-right-radius: 4px;
-	border-bottom-right-radius: 4px;
+	-moz-border-radius-topright: 0.375rem;
+	-webkit-border-top-right-radius: 0.375rem;
+	-o-border-top-right-radius: 0.375rem;
+	-ms-border-top-right-radius: 0.375rem;
+	-khtml-border-top-right-radius: 0.375rem;
+	border-top-right-radius: 0.375rem;
+	-moz-border-radius-bottomright: 0.375rem;
+	-webkit-border-bottom-right-radius: 0.375rem;
+	-o-border-bottom-right-radius: 0.375rem;
+	-ms-border-bottom-right-radius: 0.375rem;
+	-khtml-border-bottom-right-radius: 0.375rem;
+	border-bottom-right-radius: 0.375rem;
 	background: #ccc;
 	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
 	background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
@@ -85,6 +85,7 @@ div.chzn-container div.chzn-search input {
 	-ms-border-radius: 0px;
 	-khtml-border-radius: 0px;
 	border-radius: 0px;
+	width: 100% !important;
 }
 
 /* Multi */
@@ -94,8 +95,8 @@ div.chzn-container ul.chzn-choices {
 	color: #777;
 	font-family: "lucida grande", verdana, arial, sans-serif;
 	font-size: 1.2em;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
+	border-radius: 0.375rem;
+	-moz-border-radius: 0.375rem;
 }
 div.chzn-container ul.chzn-choices:focus {
 	border-color: #058cf5;

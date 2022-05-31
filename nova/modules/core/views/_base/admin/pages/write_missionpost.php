@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -26,7 +28,7 @@
 			</div>
 		</div>
 	<?php endif; ?>
-	
+
 	<div id="editable">
 		<?php echo form_open($form_action, array('id' => 'writepost'));?>
 			<?php if (isset($all_characters) and is_array($all_characters)): ?>
@@ -36,7 +38,7 @@
 					<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
 				</p>
 			<?php endif;?>
-			
+
 			<p>
 				<kbd><?php echo $label['mission'];?></kbd>
 				<?php if (isset($missions)): ?>
@@ -46,39 +48,42 @@
 					<?php echo form_hidden('mission', $mission['id']);?>
 				<?php endif; ?>
 			</p>
-			
+
 			<p>
 				<kbd><?php echo $label['title'];?></kbd>
 				<?php echo form_input($inputs['title']);?>
 			</p>
-			
+
 			<p>
 				<kbd><?php echo $label['location'];?></kbd>
 				<?php echo form_input($inputs['location']);?>
 			</p>
-			
+
 			<p>
 				<kbd><?php echo $label['timeline'];?></kbd>
 				<?php echo form_input($inputs['timeline']);?>
 			</p>
-			
+
 			<p>
 				<kbd><?php echo $label['content'];?></kbd>
 				<?php echo form_textarea($inputs['content']);?>
+				<div class="counter fontSmall">
+					<?php echo $label['total_words'];?>: <span id="counter">0</span>
+				</div>
 			</p>
-			
+
 			<p>
 				<kbd><?php echo $label['tags'];?></kbd>
 				<?php echo text_output($label['tags_sep'], 'span', 'fontSmall gray bold');?><br />
 				<?php echo form_input($inputs['tags']);?>
 				<?php echo img($images['help']);?>
 			</p><br />
-			
+
 			<p>
 				<?php echo form_button($inputs['post']);?>
 				&nbsp;
 				<?php echo form_button($inputs['save']);?>
-			
+
 				<?php if ($this->uri->segment(3) !== false): ?>
 					&nbsp;
 					<?php echo form_button($inputs['delete']);?>
@@ -89,26 +94,26 @@
 			</p>
 		<?php echo form_close();?>
 	</div>
-	
+
 	<div id="readonly" class="hidden">
 		<p class="fontMedium">
 			<?php echo anchor('write/index', $label['back_wcp']);?>
 			&middot;
 			<?php echo anchor('write/missionpost/'.$this->uri->segment(3), $label['more_edits']);?>
 		</p><br />
-		
+
 		<?php if ($inputs['locked']): ?>
 			<div id="notes">
 				<p class="float_left"><?php echo img($images['excl']);?>&nbsp;&nbsp;</p>
 				<?php echo text_output($label['locked'], 'h4');?>
 			</div>
 		<?php endif;?>
-		
+
 		<p>
 			<kbd><?php echo $label['authors'];?></kbd>
 			<?php echo $this->char->get_authors(implode(',', $authors_selected));?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['mission'];?></kbd>
 			<?php if (isset($missions)): ?>
@@ -117,27 +122,27 @@
 				<?php echo anchor('sim/missions/id/'. $mission['id'], $mission['title']); ?>
 			<?php endif; ?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['title'];?></kbd>
 			<?php echo $inputs['title']['value'];?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['location'];?></kbd>
 			<?php echo $inputs['location']['value'];?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['timeline'];?></kbd>
 			<?php echo $inputs['timeline']['value'];?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['content'];?></kbd>
 			<?php echo nl2br($inputs['content']['value']);?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['tags'];?></kbd>
 			<?php echo $inputs['tags']['value'];?>

@@ -1191,6 +1191,7 @@ abstract class Nova_write extends Nova_controller_admin
             'tags_sep' => lang('tags_separated'),
             'timeline' => ucfirst(lang('labels_timeline')),
             'title' => ucfirst(lang('labels_title')),
+            'total_words' => ucwords(lang('global_wordcount')),
             'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
             'chosen_incompat' => lang('chosen_incompat'),
             'locked' => sprintf(lang('post_locked'), lang('global_missionpost'), lang('global_user')),
@@ -2015,6 +2016,7 @@ abstract class Nova_write extends Nova_controller_admin
             'tags' => ucwords(lang('labels_tags')),
             'tags_sep' => lang('tags_separated'),
             'title' => ucwords(lang('labels_title')),
+            'total_words' => ucwords(lang('global_wordcount')),
             'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_an').' '.ucfirst(lang('labels_author')),
         );
 

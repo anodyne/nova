@@ -1597,11 +1597,12 @@ abstract class Nova_manage extends Nova_controller_admin
                         $update_array = array(
                             'log_title' => $this->input->post('log_title', true),
                             'log_tags' => $this->input->post('log_tags', true),
-                            'log_content' => $this->input->post('log_content', true),
+                            'log_content' => $content = $this->input->post('log_content', true),
                             'log_status' => $this->input->post('log_status', true),
                             'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
                             'log_author_character' => $this->input->post('log_author', true),
-                            'log_last_update' => now()
+                            'log_last_update' => now(),
+                            'log_words' => str_word_count($content),
                         );
 
                         $update = $this->logs->update_log($id, $update_array);
@@ -1921,14 +1922,17 @@ abstract class Nova_manage extends Nova_controller_admin
             'delete' => array(
                 'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
                 'alt' => lang('actions_delete'),
+                'class' => 'image',
                 'title' => ucfirst(lang('actions_delete'))),
             'edit' => array(
                 'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
                 'alt' => lang('actions_edit'),
+                'class' => 'image',
                 'title' => ucfirst(lang('actions_edit'))),
             'view' => array(
                 'src' => Location::img('icon-view.png', $this->skin, 'admin'),
                 'alt' => lang('actions_view'),
+                'class' => 'image',
                 'title' => ucfirst(lang('actions_view'))),
         );
 
@@ -2347,14 +2351,17 @@ abstract class Nova_manage extends Nova_controller_admin
             'delete' => array(
                 'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
                 'alt' => lang('actions_delete'),
+                'class' => 'image',
                 'title' => ucfirst(lang('actions_delete'))),
             'edit' => array(
                 'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
                 'alt' => lang('actions_edit'),
+                'class' => 'image',
                 'title' => ucfirst(lang('actions_edit'))),
             'view' => array(
                 'src' => Location::img('icon-view.png', $this->skin, 'admin'),
                 'alt' => lang('actions_view'),
+                'class' => 'image',
                 'title' => ucfirst(lang('actions_view'))),
             'upload' => array(
                 'src' => Location::img('image-upload.png', $this->skin, 'admin'),
@@ -3206,10 +3213,11 @@ abstract class Nova_manage extends Nova_controller_admin
                         'post_location' => $this->input->post('post_location', true),
                         'post_timeline' => $this->input->post('post_timeline', true),
                         'post_tags' => $this->input->post('post_tags', true),
-                        'post_content' => $this->input->post('post_content', true),
+                        'post_content' => $content = $this->input->post('post_content', true),
                         'post_mission' => $this->input->post('post_mission', true),
                         'post_status' => $this->input->post('post_status', true),
                         'post_last_update' => now(),
+                        'post_words' => str_word_count($content),
                     );
 
                     $authors = $this->input->post('authors', true);

@@ -1369,15 +1369,15 @@ abstract class Nova_sim extends Nova_controller_main
         // grab the title
         $title = ucfirst(lang('labels_stats'));
 
-        // load the models
+        // load the resources
         $this->load->model('posts_model', 'posts');
         $this->load->model('personallogs_model', 'logs');
 
-        // set the date format
-        $datestring = $this->options['date_format'];
-
         // set the times
         $today = getdate();
+
+        // set the date format
+        $datestring = $this->options['date_format'];
 
         // this month
         $this_month_mysql = $today['year'] .'-'. $today['mon'] .'-01 00:00:00';
@@ -1417,56 +1417,71 @@ abstract class Nova_sim extends Nova_controller_main
             'all' => $this->char->count_characters('npc', false),
         );
 
-        $data['posts'] = array(
-            'current' => $this->posts->count_posts($this_month, $next_month, $this->options['post_count_format']),
-            'previous' => $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format']),
-            'all' => $this->posts->count_all_posts()
-        );
+        $data['posts'] = [
+            'total' => [
+                'current' => $totalCurrentPosts = $this->posts->count_posts($this_month, $next_month, $this->options['post_count_format']),
+                'previous' => $totalPreviousPosts = $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format']),
+                'all' => $totalPosts = $this->posts->count_all_posts(),
+            ],
+            'words' => [
+                'current' => $totalCurrentPostWords = $this->posts->count_post_words($this_month, $next_month),
+                'previous' => $totalPreviousPostWords = $this->posts->count_post_words($last_month, $this_month),
+            ],
+            'average' => [
+                'current' => ($totalCurrentPosts > 0) ? round($totalCurrentPosts / $data['users']['current'], 2) : 0,
+                'previous' => ($totalPreviousPosts > 0) ? round($totalPreviousPosts / $data['users']['previous'], 2) : 0
+            ],
+            'wordsAverage' => [
+                'current' => ($totalCurrentPostWords > 0) ? round($totalCurrentPostWords / $data['users']['current'], 2) : 0,
+                'previous' => ($totalPreviousPostWords > 0) ? round($totalPreviousPostWords / $data['users']['previous'], 2) : 0
+            ],
+            'pace' => round((($totalCurrentPosts) / ($today['mday'])) * $days, 2),
+            'wordsPace' => round((($totalCurrentPostWords) / ($today['mday'])) * $days, 2),
+        ];
 
-        $data['logs'] = array(
-            'current' => $this->logs->count_logs($this_month, $next_month),
-            'previous' => $this->logs->count_logs($last_month, $this_month),
-            'all' => $this->logs->count_all_logs(),
-        );
+        $data['logs'] = [
+            'total' => [
+                'current' => $totalCurrentLogs = $this->logs->count_logs($this_month, $next_month),
+                'previous' => $totalPreviousLogs = $this->logs->count_logs($last_month, $this_month),
+                'all' => $totalLogs = $this->logs->count_all_logs(),
+            ],
+            'words' => [
+                'current' => $totalCurrentLogWords = $this->logs->count_log_words($this_month, $next_month),
+                'previous' => $totalPreviousLogWords = $this->logs->count_log_words($last_month, $this_month),
+            ],
+            'average' => [
+                'current' => ($totalCurrentLogs > 0) ? round($totalCurrentLogs / $data['users']['current'], 2) : 0,
+                'previous' => ($totalPreviousLogs > 0) ? round($totalPreviousLogs / $data['users']['previous'], 2) : 0
+            ],
+            'wordsAverage' => [
+                'current' => ($totalCurrentLogWords > 0) ? round($totalCurrentLogWords / $data['users']['current'], 2) : 0,
+                'previous' => ($totalPreviousLogWords > 0) ? round($totalPreviousLogWords / $data['users']['previous'], 2) : 0
+            ],
+            'pace' => round((($totalCurrentLogs) / ($today['mday'])) * $days, 2),
+            'wordsPace' => round((($totalCurrentLogWords) / ($today['mday'])) * $days, 2),
+        ];
 
-        $data['words'] = array(
-            'current' => $this->posts->count_posts($this_month, $next_month, $this->options['post_count_format']),
-            'previous' => $this->posts->count_posts($last_month, $this_month, $this->options['post_count_format']),
-            'all' => $this->posts->count_all_posts()
-        );
-
-        $data['post_totals'] = array(
-            'current' => $data['posts']['current'] + $data['logs']['current'],
-            'previous' => $data['posts']['previous'] + $data['logs']['previous'],
-            'all' => $data['posts']['all'] + $data['logs']['all'],
-        );
-
-        $data['avg_posts'] = array(
-            'current' => ($data['posts']['current'] > 0) ? round($data['posts']['current'] / $data['users']['current'], 2) : 0,
-            'previous' => ($data['posts']['previous'] > 0) ? round($data['posts']['previous'] / $data['users']['previous'], 2) : 0
-        );
-
-        $data['avg_logs'] = array(
-            'current' => ($data['logs']['current'] > 0) ? round($data['logs']['current'] / $data['users']['current'], 2) : 0,
-            'previous' => ($data['logs']['previous'] > 0) ? round($data['logs']['previous'] / $data['users']['previous'], 2) : 0
-        );
-
-        $data['avg_totals'] = array(
-            'current' => ($data['post_totals']['current'] > 0) ? round($data['post_totals']['current'] / $data['users']['current'], 2) : 0,
-            'previous' => ($data['post_totals']['previous'] > 0) ? round($data['post_totals']['previous'] / $data['users']['previous'], 2) : 0
-        );
-
-        $data['avg_words'] = array(
-            'current' => ($data['words']['current'] > 0) ? round($data['words']['current'] / $data['users']['current'], 2) : 0,
-            'previous' => ($data['words']['previous'] > 0) ? round($data['words']['previous'] / $data['users']['previous'], 2) : 0
-        );
-
-        $data['pace'] = array(
-            'posts' => round((($data['posts']['current']) / ($today['mday'])) * $days, 2),
-            'logs' => round((($data['logs']['current']) / ($today['mday'])) * $days, 2),
-            'words' => round((($data['words']['current']) / ($today['mday'])) * $days, 2),
-            'total' => round((($data['post_totals']['current']) / ($today['mday'])) * $days, 2)
-        );
+        $data['entries'] = [
+            'total' => [
+                'current' => $totalCurrentEntries = $totalCurrentPosts + $totalCurrentLogs,
+                'previous' => $totalPreviousEntries = $totalPreviousPosts + $totalPreviousLogs,
+                'all' => $totalPosts + $totalLogs,
+            ],
+            'words' => [
+                'current' => $totalCurrentEntryWords = $totalCurrentPostWords + $totalCurrentLogWords,
+                'previous' => $totalPreviousEntryWords = $totalPreviousPostWords + $totalPreviousLogWords,
+            ],
+            'average' => [
+                'current' => ($totalCurrentEntries > 0) ? round($totalCurrentEntries / $data['users']['current'], 2) : 0,
+                'previous' => ($totalPreviousEntries > 0) ? round($totalPreviousEntries / $data['users']['previous'], 2) : 0
+            ],
+            'wordsAverage' => [
+                'current' => ($totalCurrentEntryWords > 0) ? round($totalCurrentEntryWords / $data['users']['current'], 2) : 0,
+                'previous' => ($totalPreviousEntryWords > 0) ? round($totalPreviousEntryWords / $data['users']['previous'], 2) : 0
+            ],
+            'pace' => round((($totalCurrentEntries) / ($today['mday'])) * $days, 2),
+            'wordsPace' => round((($totalCurrentEntryWords) / ($today['mday'])) * $days, 2),
+        ];
 
         $data['start'] = mdate(
             $datestring,
@@ -1482,20 +1497,89 @@ abstract class Nova_sim extends Nova_controller_main
 
         $data['label'] = array(
             'avgentries' => lang('abbr_avg') .' '. ucwords(lang('labels_entries') .' / '. lang('global_user')),
-            'avglogs' => lang('abbr_avg') .' '. ucwords(lang('global_personallogs') .' / '. lang('global_user')),
-            'avgposts' => lang('abbr_avg') .' '. ucwords(lang('global_missionposts') .' / '. lang('global_user')),
             'avgwords' => lang('abbr_avg') .' '. ucwords(lang('global_words') .' / '. lang('global_user')),
             'lastmonth' => ucwords(lang('order_last') .' '. lang('time_month')),
-            'logs' => ucwords(lang('global_personallogs')),
             'words' => ucwords(lang('global_wordcount')),
             'npcs' => lang('abbr_npcs'),
-            'pacelogs' => ucwords(lang('global_personallogs') .' '. lang('labels_pace')),
-            'paceposts' => ucwords(lang('global_missionposts') .' '. lang('labels_pace')),
             'pacewords' => ucwords(lang('global_wordcount') .' '. lang('labels_pace')),
             'pacetotal' => ucwords(lang('labels_totals') .' '. lang('labels_pace')),
             'users' => ucfirst(lang('global_users')),
             'playing_chars' => ucwords(lang('status_playing') .' '. lang('global_characters')),
+
             'posts' => ucwords(lang('global_missionposts')),
+            'postsAverage' => lang('abbr_avg') .' '. ucwords(lang('global_missionposts') .' / '. lang('global_user')),
+            'postsPace' => ucwords(lang('global_missionposts') .' '. lang('labels_pace')),
+            'postsWordsPace' => ucwords(join(' ', [
+                lang('global_missionpost'),
+                lang('global_words'),
+                lang('labels_pace')
+            ])),
+            'postsWords' => ucwords(join(' ', [
+                lang('global_missionpost'),
+                lang('global_words'),
+            ])),
+            'postsWordsAverage' => ucwords(join(' ', [
+                lang('abbr_avg'),
+                lang('global_missionpost'),
+                lang('global_words'),
+                '/',
+                lang('global_user')
+            ])),
+
+            'logs' => ucwords(lang('global_personallogs')),
+            'logsAverage' => lang('abbr_avg') .' '. ucwords(lang('global_personallogs') .' / '. lang('global_user')),
+            'logsPace' => ucwords(lang('global_personallogs') .' '. lang('labels_pace')),
+            'logsWordsPace' => ucwords(join(' ', [
+                lang('global_personallog'),
+                lang('global_words'),
+                lang('labels_pace')
+            ])),
+            'logsWords' => ucwords(join(' ', [
+                lang('global_personallog'),
+                lang('global_words'),
+            ])),
+            'logsWordsAverage' => ucwords(join(' ', [
+                lang('abbr_avg'),
+                lang('global_personallog'),
+                lang('global_words'),
+                '/',
+                lang('global_user')
+            ])),
+
+            'entries' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('labels_entries')
+            ])),
+            'entriesAverage' => ucwords(join(' ', [
+                lang('abbr_avg'),
+                lang('labels_entries'),
+                '/',
+                lang('global_user')
+            ])),
+            'entriesPace' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('labels_entries'),
+                lang('labels_pace')
+            ])),
+            'entriesWordsPace' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('labels_entries'),
+                lang('global_words'),
+                lang('labels_pace')
+            ])),
+            'entriesWords' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('labels_entries'),
+                lang('global_words'),
+            ])),
+            'entriesWordsAverage' => ucwords(join(' ', [
+                lang('abbr_avg'),
+                lang('labels_entry'),
+                lang('global_words'),
+                '/',
+                lang('global_user')
+            ])),
+
             'statsavg' => lang('text_stats_avg'),
             'statspace' => lang('text_stats_pace'),
             'thismonth' => ucwords(lang('labels_this') .' '. lang('time_month')),

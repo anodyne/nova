@@ -149,7 +149,7 @@ a.edit:hover {
 	@apply text-info-500;
 }
 a.image {
-	@apply border-none hover:border-none no-underline hover:no-underline;
+	@apply inline border-none hover:border-none no-underline hover:no-underline;
 }
 img.image {
 	@apply inline;
@@ -505,6 +505,10 @@ ul.padding1 { @apply py-2 px-4; }
 .award-small { @apply w-16; }
 
 .indent-left { @apply pl-6; }
+
+.counter {
+	@apply -mt-4;
+}
 
 .ui-datepicker-trigger {
 	@apply block float-left py-3 px-2;

@@ -1,12 +1,14 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+
 		// using the CI user agent library instead of jquery's $.browser since the latter is deprecated
 		var browser = "<?php echo $this->agent->browser();?>";
 		var version = parseFloat("<?php echo $this->agent->version();?>");
-		
+
 		// check to see if we should be using the Chosen plugin
 		if (browser == 'Internet Explorer' && version < 8)
 		{
@@ -22,13 +24,24 @@
 			offset: 5,
 			placement: 'right'
 		});
-			
+
 		$('#submitDelete').click(function(){
 			return confirm('<?php echo lang('confirm_delete_personallog');?>');
 		});
-		
+
 		$('#submitPost').click(function(){
 			return confirm('<?php echo lang('confirm_post_personallog');?>');
 		});
+
+		const textArea = document.getElementById('content-textarea');
+		textArea.addEventListener('input', function () {
+			let textLn = textArea.value;
+
+			document.getElementById('counter').innerHTML = getWordCount(textLn);
+		});
+
+		function getWordCount(str) {
+			return str.trim().split(/\s+/).length;
+		}
 	});
 </script>

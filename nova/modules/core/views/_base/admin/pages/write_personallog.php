@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -12,30 +14,33 @@
 			<?php echo form_hidden('author', $character['id']);?>
 		<?php endif; ?>
 	</p>
-	
+
 	<p>
 		<kbd><?php echo $label['title'];?></kbd>
 		<?php echo form_input($inputs['title']);?>
 	</p>
-	
+
 	<p>
 		<kbd><?php echo $label['content'];?></kbd>
 		<?php echo form_textarea($inputs['content']);?>
+		<div class="counter fontSmall">
+			<?php echo $label['total_words'];?>: <span id="counter">0</span>
+		</div>
 	</p>
-	
+
 	<p>
 		<kbd><?php echo $label['tags'];?></kbd>
 		<?php echo text_output($label['tags_sep'], 'span', 'fontSmall gray bold');?><br />
 		<?php echo form_input($inputs['tags']);?>
 		<?php echo img($images['help']);?>
 	</p><br />
-	
+
 	<p>
 		<?php echo form_button($inputs['post']);?>
 		&nbsp;
 		<?php echo form_button($inputs['save']);?>
-		
-		<?php if ($this->uri->segment(3) !== FALSE): ?>
+
+		<?php if ($this->uri->segment(3) !== false): ?>
 			&nbsp;
 			<?php echo form_button($inputs['delete']);?>
 		<?php endif; ?>
