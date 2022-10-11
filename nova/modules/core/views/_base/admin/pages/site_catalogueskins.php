@@ -7,13 +7,13 @@
 <?php if (count($uninstalled) > 0): ?>
 	<?php echo text_output($label['install_skins'], 'h3', 'orange');?>
 	<?php echo text_output($label['quick_install'], 'p', 'fontSmall gray');?>
-	
+
 	<table class="table100 zebra UITheme">
 		<tbody>
 		<?php foreach ($uninstalled as $u): ?>
 			<tr class="height_40">
-				<td><strong><?php echo ucfirst($u);?></strong></td>
-				<td class="gray">views/<?php echo $u;?></td>
+				<td><strong><?php echo $u;?></strong></td>
+				<td class="gray">application/views/<?php echo $u;?></td>
 				<td class="col_75 align_right">
 					<?php echo form_open('site/catalogueskins/install');?>
 						<?php echo form_hidden('install_skin', $u);?>
@@ -50,7 +50,7 @@
 						</a>
 					</td>
 				</tr>
-				
+
 				<?php if (isset($c['sec'])): ?>
 					<?php foreach ($c['sec'] as $sec): ?>
 						<tr>
@@ -59,7 +59,7 @@
 								<?php if ($sec['default'] == 'y'): ?>
 									<?php echo img($images['default']);?>
 								<?php endif;?>
-								
+
 								<strong><?php echo ucfirst($sec['name']);?></strong>
 							</td>
 							<td class="align_center">
@@ -70,7 +70,7 @@
 								<?php elseif ($sec['status'] == 'development'): ?>
 									<span class="orange bold">
 								<?php endif;?>
-								
+
 								<?php echo ucfirst($sec['status']);?></span>
 							</td>
 							<td class="col_75 align_right">

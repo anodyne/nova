@@ -1,5 +1,5 @@
 skin: Pulsar
-location: pulsar
+location: default
 credits: |
   The Pulsar skin was created by Anodyne. Edits are permissible as long as original credits stay intact. The Pulsar skin includes the jQuery BlockUI plugin by Malsup. More information can be found at <a href="http://malsup.com/jquery/block/">http://malsup.com/jquery/block/</a>.
 version: 4.0

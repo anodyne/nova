@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -26,7 +27,7 @@ abstract class Nova_site extends Nova_controller_admin
                     }
 
                     // pin to level 1 if no radio option was selected
-                    ($insert_array['ban_level'] < 1)? $insert_array['ban_level'] = 1 : '';
+                    ($insert_array['ban_level'] < 1) ? $insert_array['ban_level'] = 1 : '';
 
                     // pop unnecessary items off the array
                     unset($insert_array['submit']);
@@ -54,7 +55,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -82,7 +83,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -265,7 +266,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
@@ -302,7 +303,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     foreach ($_POST as $key => $value) {
@@ -339,7 +340,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'editval':
                     $value = $this->input->post('value_field_value', true);
@@ -376,7 +377,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -420,7 +421,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
                                     $data['join'][$sid]['fields'][$f_id]['id'] = $field->field_id;
-                                break;
+                                    break;
 
                                 case 'textarea':
                                     $input = array(
@@ -433,7 +434,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
                                     $data['join'][$sid]['fields'][$f_id]['id'] = $field->field_id;
-                                break;
+                                    break;
 
                                 case 'select':
                                     $value = false;
@@ -450,7 +451,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
                                     $data['join'][$sid]['fields'][$f_id]['id'] = $field->field_id;
-                                break;
+                                    break;
                             }
                         }
                     }
@@ -690,7 +691,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $old_id = $this->input->post('id', true);
@@ -720,7 +721,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('section_name', true);
@@ -757,7 +758,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -873,7 +874,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $old_id = $this->input->post('id', true);
@@ -903,7 +904,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('tab_name', true);
@@ -942,7 +943,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -1065,7 +1066,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'add':
                     $name = $this->input->post('rank_name', true);
@@ -1119,7 +1120,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $old_id = $this->input->post('id', true);
@@ -1159,7 +1160,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('rank_name', true);
@@ -1214,7 +1215,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -1378,7 +1379,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'skin':
                     switch ($this->uri->segment(4)) {
@@ -1416,7 +1417,7 @@ abstract class Nova_site extends Nova_controller_admin
                                 $flash['status'] = 'error';
                                 $flash['message'] = text_output($message);
                             }
-                        break;
+                            break;
 
                         case 'delete':
                             $id = $this->input->post('id', true);
@@ -1484,7 +1485,7 @@ abstract class Nova_site extends Nova_controller_admin
                                 $flash['status'] = 'error';
                                 $flash['message'] = text_output($message);
                             }
-                        break;
+                            break;
 
                         case 'edit':
                             $name = $this->input->post('skin_name', true);
@@ -1521,9 +1522,9 @@ abstract class Nova_site extends Nova_controller_admin
                                 $flash['status'] = 'error';
                                 $flash['message'] = text_output($message);
                             }
-                        break;
+                            break;
                     }
-                break;
+                    break;
 
                 case 'section':
                     switch ($this->uri->segment(4)) {
@@ -1574,7 +1575,7 @@ abstract class Nova_site extends Nova_controller_admin
                                 $flash['status'] = 'error';
                                 $flash['message'] = text_output($message);
                             }
-                        break;
+                            break;
 
                         case 'delete':
                             // theme section we're handling
@@ -1630,7 +1631,7 @@ abstract class Nova_site extends Nova_controller_admin
                                 $flash['status'] = 'error';
                                 $flash['message'] = text_output($message);
                             }
-                        break;
+                            break;
 
                         case 'edit':
                             $section = $this->input->post('section', true);
@@ -1680,9 +1681,9 @@ abstract class Nova_site extends Nova_controller_admin
                                 $flash['status'] = 'error';
                                 $flash['message'] = text_output($message);
                             }
-                        break;
+                            break;
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -1702,7 +1703,7 @@ abstract class Nova_site extends Nova_controller_admin
 
         $check = array();
 
-        $viewdirs = directory_map(APPPATH .'views/', true);
+        $viewdirs = directory_map(APPPATH .'views/', 1);
 
         $skins = $this->sys->get_all_skins();
 
@@ -1714,7 +1715,7 @@ abstract class Nova_site extends Nova_controller_admin
                 $data['catalogue'][$sloc]['name'] = $skin->skin_name;
                 $data['catalogue'][$sloc]['location'] = $skin->skin_location;
 
-                $key = array_search($skin->skin_location, $viewdirs);
+                $key = array_search($skin->skin_location . DIRECTORY_SEPARATOR, $viewdirs);
 
                 if ($key !== false) {
                     unset($viewdirs[$key]);
@@ -1739,7 +1740,7 @@ abstract class Nova_site extends Nova_controller_admin
         }
 
         // create an array of items that shouldn't be included in the dir listing
-        $pop = array('_base_override', 'index.html', 'template.php');
+        $pop = array('_base_override', 'index.html', 'template.php', 'errors');
 
         // make sure the items aren't in the listing
         foreach ($pop as $value) {
@@ -1896,7 +1897,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
@@ -1933,7 +1934,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     foreach ($_POST as $key => $value) {
@@ -1968,7 +1969,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'editval':
                     foreach ($_POST as $key => $value) {
@@ -2014,7 +2015,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -2050,7 +2051,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_input($input);
                                     $data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-                                break;
+                                    break;
 
                                 case 'textarea':
                                     $input = array(
@@ -2063,7 +2064,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_textarea($input);
                                     $data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-                                break;
+                                    break;
 
                                 case 'select':
                                     $value = false;
@@ -2080,7 +2081,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['docking']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_dropdown($field->field_id, $input);
                                     $data['docking']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-                                break;
+                                    break;
                             }
                         }
                     }
@@ -2309,7 +2310,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $old_id = $this->input->post('id', true);
@@ -2339,7 +2340,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     foreach ($_POST as $key => $value) {
@@ -2374,7 +2375,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -2476,7 +2477,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -2561,7 +2562,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'edit':
                     // get the ID
@@ -2605,7 +2606,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -2866,7 +2867,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -2895,7 +2896,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('menu_name', true);
@@ -2965,7 +2966,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -2983,7 +2984,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $data['menus'][$m->menu_type][$m->menu_id]['name'] = $m->menu_name;
                         $data['menus'][$m->menu_type][$m->menu_id]['link'] = $m->menu_link;
                         $data['menus'][$m->menu_type][$m->menu_id]['display'] = $m->menu_display;
-                    break;
+                        break;
 
                     case 'sub':
                         $data['menus'][$m->menu_type][$m->menu_cat]['category'] = ucfirst($m->menu_cat);
@@ -2991,7 +2992,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['name'] = $m->menu_name;
                         $data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['link'] = $m->menu_link;
                         $data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['display'] = $m->menu_display;
-                    break;
+                        break;
 
                     case 'adminsub':
                         $cat = $this->menu_model->get_menu_category($m->menu_cat);
@@ -3001,7 +3002,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['name'] = $m->menu_name;
                         $data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['link'] = $m->menu_link;
                         $data['menus'][$m->menu_type][$m->menu_cat]['items'][$m->menu_id]['display'] = $m->menu_display;
-                    break;
+                        break;
                 }
             }
         }
@@ -3117,7 +3118,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -3145,7 +3146,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('menucat_name', true);
@@ -3196,7 +3197,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -3325,7 +3326,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -3353,7 +3354,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $label = $this->input->post('message_label', true);
@@ -3404,7 +3405,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -3415,15 +3416,15 @@ abstract class Nova_site extends Nova_controller_admin
             switch ($type) {
                 case 'title':
                     $js_data['tab'] = 0;
-                break;
+                    break;
 
                 case 'message':
                     $js_data['tab'] = 1;
-                break;
+                    break;
 
                 case 'other':
                     $js_data['tab'] = 2;
-                break;
+                    break;
             }
         } else {
             $js_data['tab'] = 0;
@@ -3542,7 +3543,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -3576,7 +3577,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('group_name', true);
@@ -3623,7 +3624,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -3745,7 +3746,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -3796,7 +3797,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('page_name', true);
@@ -3849,7 +3850,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -3971,7 +3972,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -4006,7 +4007,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('role_name', true);
@@ -4049,7 +4050,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'duplicate':
                     $new_name = $this->input->post('name', true);
@@ -4087,7 +4088,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -4159,17 +4160,17 @@ abstract class Nova_site extends Nova_controller_admin
             case 'add':
                 $data['header'] = ucwords(lang('actions_add') .' '. lang('labels_role'));
                 $data['text'] = lang('text_roles');
-            break;
+                break;
 
             case 'edit':
                 $data['header'] = ucwords(lang('actions_edit') .' '. lang('labels_role'));
                 $data['text'] = lang('text_roles');
-            break;
+                break;
 
             default:
                 $data['header'] = ucfirst(lang('labels_roles'));
                 $data['text'] = lang('text_roles');
-            break;
+                break;
         }
 
         $data['images'] = array(
@@ -4719,7 +4720,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $array = array();
@@ -4768,7 +4769,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -4927,7 +4928,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
@@ -4964,7 +4965,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $type = $this->input->post('field_type', true);
@@ -5015,7 +5016,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'editval':
                     $value = $this->input->post('value_field_value', true);
@@ -5052,7 +5053,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -5088,7 +5089,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['specs']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_input($input);
                                     $data['specs']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-                                break;
+                                    break;
 
                                 case 'textarea':
                                     $input = array(
@@ -5101,7 +5102,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['specs']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_textarea($input);
                                     $data['specs']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-                                break;
+                                    break;
 
                                 case 'select':
                                     $value = false;
@@ -5118,7 +5119,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                                     $data['specs']['sections'][$sec->section_id]['fields'][$fid]['input'] = form_dropdown($field->field_id, $input);
                                     $data['specs']['sections'][$sec->section_id]['fields'][$fid]['id'] = $field->field_id;
-                                break;
+                                    break;
                             }
                         }
                     }
@@ -5352,7 +5353,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $old_id = $this->input->post('id', true);
@@ -5382,7 +5383,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $name = $this->input->post('section_name', true);
@@ -5417,7 +5418,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -5569,7 +5570,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = (is_numeric($this->input->post('id', true))) ? $this->input->post('id', true) : 0;
@@ -5606,7 +5607,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $type = $this->input->post('field_type', true);
@@ -5655,7 +5656,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'editval':
                     $value = $this->input->post('value_field_value', true);
@@ -5692,7 +5693,7 @@ abstract class Nova_site extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -5722,7 +5723,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                             $data['tour'][$fid]['input'] = form_input($input);
                             $data['tour'][$fid]['id'] = $field->field_id;
-                        break;
+                            break;
 
                         case 'textarea':
                             $input = array(
@@ -5735,7 +5736,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                             $data['tour'][$fid]['input'] = form_textarea($input);
                             $data['tour'][$fid]['id'] = $field->field_id;
-                        break;
+                            break;
 
                         case 'select':
                             $value = false;
@@ -5752,7 +5753,7 @@ abstract class Nova_site extends Nova_controller_admin
 
                             $data['tour'][$fid]['input'] = form_dropdown($field->field_id, $input);
                             $data['tour'][$fid]['id'] = $field->field_id;
-                        break;
+                            break;
                     }
                 }
             }
@@ -5990,7 +5991,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -6029,7 +6030,7 @@ abstract class Nova_site extends Nova_controller_admin
                             $flash['message'] = lang_output('flash_settings_delete_nonuser');
                         }
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $label = $this->input->post('setting_label', true);
@@ -6089,7 +6090,7 @@ abstract class Nova_site extends Nova_controller_admin
                             }
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
