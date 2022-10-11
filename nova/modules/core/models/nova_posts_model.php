@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -133,12 +134,12 @@ abstract class Nova_posts_model extends CI_Model
                 case 'next':
                     $this->db->where('post_date >', $fetch->post_date);
                     $this->db->order_by('post_date', 'asc');
-                break;
+                    break;
 
                 case 'prev':
                     $this->db->where('post_date <', $fetch->post_date);
                     $this->db->order_by('post_date', 'desc');
-                break;
+                    break;
             }
 
             $this->db->limit(1);
@@ -394,7 +395,7 @@ abstract class Nova_posts_model extends CI_Model
             switch ($count_pref) {
                 case 'single':
                     $count = $query->num_rows();
-                break;
+                    break;
 
                 case 'multiple':
                     $array = array();
@@ -412,7 +413,7 @@ abstract class Nova_posts_model extends CI_Model
                     }
 
                     $count = count($array);
-                break;
+                    break;
             }
         }
 
@@ -438,7 +439,7 @@ abstract class Nova_posts_model extends CI_Model
             switch ($count_pref) {
                 case 'single':
                     $count = $query->num_rows();
-                break;
+                    break;
 
                 case 'multiple':
                     $array = array();
@@ -456,7 +457,7 @@ abstract class Nova_posts_model extends CI_Model
                     }
 
                     $count = count($array);
-                break;
+                    break;
             }
         }
 
@@ -489,13 +490,15 @@ abstract class Nova_posts_model extends CI_Model
         $this->db->where('post_status', $status);
 
         if (! empty($id)) {
+            $string = "";
+            $string2 = "";
+            $or = '';
+            $and = '';
+
             if (is_array($id)) {
                 $id = array_values($id);
 
                 $count = count($id);
-
-                $string = "";
-                $string2 = "";
 
                 for ($i=0; $i < $count; $i++) {
                     $or = ($i > 0) ? ' OR ' : '';
@@ -577,7 +580,9 @@ abstract class Nova_posts_model extends CI_Model
 
     public function create_mission_entry($data = '')
     {
-        $this->db->insert('posts', $data);
+        $this->db->insert('posts', array_merge($data, [
+            'post_words' => str_word_count($data['post_content']),
+        ]));
 
         return $this->db->affected_rows();
     }
@@ -585,7 +590,10 @@ abstract class Nova_posts_model extends CI_Model
     public function update_post($id = '', $data = '')
     {
         $this->db->where('post_id', $id);
-        $query = $this->db->update('posts', $data);
+
+        $query = $this->db->update('posts', array_merge($data, [
+            'post_words' => str_word_count($data['post_content']),
+        ]));
 
         $this->dbutil->optimize_table('posts');
 

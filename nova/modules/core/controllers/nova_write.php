@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -417,7 +418,7 @@ abstract class Nova_write extends Nova_controller_admin
                     lang('global_character'),
                     lang('global_character')
                 );
-            break;
+                break;
         }
 
         $data['header'] = lang('head_admin_error');
@@ -580,7 +581,7 @@ abstract class Nova_write extends Nova_controller_admin
                                 // add an automatic redirect
                                 $this->_regions['_redirect'] = Template::add_redirect('write/index');
                             }
-                        break;
+                            break;
 
                         case 'save':
                             // set the participants field to be blank by default
@@ -623,7 +624,6 @@ abstract class Nova_write extends Nova_controller_admin
                                     'post_participants' => $participants,
                                     'post_lock_user' => 0,
                                     'post_lock_date' => 0,
-                                    'post_words' => str_word_count($content),
                                 );
 
                                 $update = $this->posts->update_post($id, $update_array);
@@ -666,7 +666,6 @@ abstract class Nova_write extends Nova_controller_admin
                                     'post_participants' => $participants,
                                     'post_lock_user' => 0,
                                     'post_lock_date' => 0,
-                                    'post_words' => str_word_count($content),
                                 );
 
                                 $insert = $this->posts->create_mission_entry($insert_array);
@@ -723,7 +722,7 @@ abstract class Nova_write extends Nova_controller_admin
                             $timeline = false;
                             $location = false;
                             $mission = false;
-                        break;
+                            break;
 
                         case 'post':
                             // check the moderation status
@@ -794,7 +793,6 @@ abstract class Nova_write extends Nova_controller_admin
                                     'post_saved' => $this->session->userdata('main_char'),
                                     'post_lock_user' => 0,
                                     'post_lock_date' => 0,
-                                    'post_words' => str_word_count($content),
                                 );
 
                                 $update = $this->posts->update_post($id, $update_array);
@@ -863,7 +861,6 @@ abstract class Nova_write extends Nova_controller_admin
                                     'post_mission' => $mission,
                                     'post_lock_user' => 0,
                                     'post_lock_date' => 0,
-                                    'post_words' => str_word_count($content),
                                 );
 
                                 $insert = $this->posts->create_mission_entry($insert_array);
@@ -924,12 +921,12 @@ abstract class Nova_write extends Nova_controller_admin
                                     $flash['message'] = text_output($message);
                                 }
                             }
-                        break;
+                            break;
 
                         default:
                             $flash['status'] = 'error';
                             $flash['message'] = lang_output('error_generic', '');
-                        break;
+                            break;
                     }
                 }
 
@@ -1280,7 +1277,7 @@ abstract class Nova_write extends Nova_controller_admin
                         // add an automatic redirect
                         $this->_regions['_redirect'] = Template::add_redirect('write/index');
                     }
-                break;
+                    break;
 
                 case 'save':
                     if ($id !== false) {
@@ -1371,7 +1368,7 @@ abstract class Nova_write extends Nova_controller_admin
                         // add an automatic redirect
                         $this->_regions['_redirect'] = Template::add_redirect('write/newsitem/'.$insert_id);
                     }
-                break;
+                    break;
 
                 case 'post':
                     // check the moderation status
@@ -1488,12 +1485,12 @@ abstract class Nova_write extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
 
                 default:
                     $flash['status'] = 'error';
                     $flash['message'] = lang_output('error_generic', '');
-                break;
+                    break;
             }
 
             // set the flash message
@@ -1681,7 +1678,7 @@ abstract class Nova_write extends Nova_controller_admin
                             // add an automatic redirect
                             $this->_regions['_redirect'] = Template::add_redirect('write/index');
                         }
-                    break;
+                        break;
 
                     case 'save':
                         if ($id !== false) {
@@ -1694,7 +1691,6 @@ abstract class Nova_write extends Nova_controller_admin
                                 'log_status' => 'saved',
                                 'log_last_update' => now(),
                                 'log_date' => now(),
-                                'log_words' => str_word_count($content),
                             );
 
                             $update = $this->logs->update_log($id, $update_array);
@@ -1730,7 +1726,6 @@ abstract class Nova_write extends Nova_controller_admin
                                 'log_status' => 'saved',
                                 'log_last_update' => now(),
                                 'log_date' => now(),
-                                'log_words' => str_word_count($content),
                             );
 
                             $insert = $this->logs->create_personal_log($insert_array);
@@ -1770,7 +1765,7 @@ abstract class Nova_write extends Nova_controller_admin
                             // add an automatic redirect
                             $this->_regions['_redirect'] = Template::add_redirect('write/personallog/'.$insert_id);
                         }
-                    break;
+                        break;
 
                     case 'post':
                         // check the moderation status
@@ -1786,7 +1781,6 @@ abstract class Nova_write extends Nova_controller_admin
                                 'log_tags' => $tags,
                                 'log_status' => $status,
                                 'log_last_update' => now(),
-                                'log_words' => str_word_count($content),
                             );
 
                             $update = $this->logs->update_log($id, $update_array);
@@ -1841,7 +1835,6 @@ abstract class Nova_write extends Nova_controller_admin
                                 'log_tags' => $tags,
                                 'log_status' => $status,
                                 'log_last_update' => now(),
-                                'log_words' => str_word_count($content),
                             );
 
                             $insert = $this->logs->create_personal_log($insert_array);
@@ -1892,12 +1885,12 @@ abstract class Nova_write extends Nova_controller_admin
                                 $flash['message'] = text_output($message);
                             }
                         }
-                    break;
+                        break;
 
                     default:
                         $flash['status'] = 'error';
                         $flash['message'] = lang_output('error_generic', '');
-                    break;
+                        break;
                 }
             }
 
@@ -2075,7 +2068,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $subject);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'news_pending':
                 // set some variables
@@ -2118,7 +2111,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. lang('email_subject_news_pending'));
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'log':
                 // set some variables
@@ -2156,7 +2149,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $subject);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'log_pending':
                 // set some variables
@@ -2197,7 +2190,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. lang('email_subject_log_pending'));
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'post':
                 // set some variables
@@ -2252,7 +2245,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $subject);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'post_delete':
                 // set some variables
@@ -2310,7 +2303,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $subject);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'post_pending':
                 // get an array of authors
@@ -2360,7 +2353,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. lang('email_subject_post_pending'));
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'post_save':
                 // set some variables
@@ -2427,7 +2420,7 @@ abstract class Nova_write extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $subject);
                 $this->mail->message($message);
-            break;
+                break;
         }
 
         // send the email

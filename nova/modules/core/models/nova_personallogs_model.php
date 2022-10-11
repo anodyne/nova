@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -81,12 +82,12 @@ abstract class Nova_personallogs_model extends CI_Model
                 case 'next':
                     $this->db->where('log_date >', $fetch->log_date);
                     $this->db->order_by('log_date', 'asc');
-                break;
+                    break;
 
                 case 'prev':
                     $this->db->where('log_date <', $fetch->log_date);
                     $this->db->order_by('log_date', 'desc');
-                break;
+                    break;
             }
 
             $this->db->limit(1);
@@ -395,7 +396,9 @@ abstract class Nova_personallogs_model extends CI_Model
 
     public function create_personal_log($data = '')
     {
-        $query = $this->db->insert('personallogs', $data);
+        $query = $this->db->insert('personallogs', array_merge($data, [
+            'log_words' => str_word_count($data['log_content']),
+        ]));
 
         return $query;
     }
@@ -403,7 +406,10 @@ abstract class Nova_personallogs_model extends CI_Model
     public function update_log($id = '', $data = '', $identifier = 'log_id')
     {
         $this->db->where($identifier, $id);
-        $query = $this->db->update('personallogs', $data);
+
+        $query = $this->db->update('personallogs', array_merge($data, [
+            'log_words' => str_word_count($data['log_content']),
+        ]));
 
         $this->dbutil->optimize_table('personallogs');
 
