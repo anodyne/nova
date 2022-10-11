@@ -106,10 +106,14 @@
 		<?php endif;?>
 
 		const textArea = document.getElementById('content-textarea');
+		const counter = document.getElementById('counter');
+
+		counter.innerHTML = getWordCount(textArea.value);
+
 		textArea.addEventListener('input', function () {
 			let textLn = textArea.value;
 
-			document.getElementById('counter').innerHTML = getWordCount(textLn);
+			counter.innerHTML = getWordCount(textLn);
 		});
 
 		function getWordCount(str) {

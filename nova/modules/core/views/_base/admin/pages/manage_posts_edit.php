@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -14,7 +16,7 @@
 			<?php echo form_hidden('post_status', $inputs['status']);?>
 		<?php endif;?>
 	</p>
-	
+
 	<?php if (isset($all_characters) and is_array($all_characters)): ?>
 		<p>
 			<kbd><?php echo $label['authors'];?></kbd>
@@ -22,7 +24,7 @@
 			<?php echo form_multiselect('authors[]', $all_characters, $authors_selected, 'id="all" class="chosen" title="'.$label['select'].'"');?>
 		</p>
 	<?php endif;?>
-	
+
 	<p>
 		<kbd><?php echo $label['mission'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
@@ -47,12 +49,15 @@
 	<p>
 		<kbd><?php echo $label['content'];?></kbd>
 		<?php echo form_textarea($inputs['content']);?>
+		<div class="counter fontSmall">
+			<?php echo $label['total_words'];?>: <span id="counter">0</span>
+		</div>
 	</p>
 	<p>
 		<kbd><?php echo $label['tags'];?></kbd>
 		<?php echo text_output($label['tags_inst'], 'span', 'fontSmall gray bold');?><br />
 		<?php echo form_input($inputs['tags']);?>
 	</p><br />
-	
+
 	<p><?php echo form_button($buttons['update']);?></p>
 <?php echo form_close();?>

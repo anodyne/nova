@@ -1699,7 +1699,8 @@ abstract class Nova_manage extends Nova_controller_admin
                 'tags' => ucfirst(lang('labels_tags')),
                 'tags_inst' => ucfirst(lang('tags_separated')),
                 'addauthor' => ucwords(lang('actions_add') .' '. lang('labels_author')),
-                'author' => ucwords(lang('labels_author'))
+                'author' => ucwords(lang('labels_author')),
+                'total_words' => ucwords(lang('global_wordcount')),
             );
 
             $js_data['tab'] = 0;
@@ -3433,6 +3434,7 @@ abstract class Nova_manage extends Nova_controller_admin
                 'date' => ucfirst(lang('labels_date')),
                 'chosen_incompat' => lang('chosen_incompat'),
                 'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
+                'total_words' => ucwords(lang('global_wordcount')),
             );
 
             // figure out where the view should be coming from
