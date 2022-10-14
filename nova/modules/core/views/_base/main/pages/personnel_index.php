@@ -29,19 +29,28 @@
 
 	<!-- manifest navigation table -->
 	<div class="fontSmall line_height_18">
-		<strong><?php echo $label['show'];?></strong> &mdash;
-			<?php echo anchor('#', $label['all_chars'], array('id' => 'all'));?> &middot;
-			<?php echo anchor('#', $label['playing_chars'], array('id' => 'active'));?> &middot;
-			<?php echo anchor('#', $label['npcs'], array('id' => 'npc'));?> &middot;
-			<?php echo anchor('#', $label['open'], array('id' => 'open'));?> &middot;
-			<?php echo anchor('#', $label['inactive_chars'], array('id' => 'inactive'));?>
+		<strong><?php echo $label['show'];?></strong>
+		<span class="pill-inline-container">
+			&mdash;
+			<?php echo anchor('#', $label['all_chars'], array('id' => 'all', 'class' => 'pill'));?> &middot;
+			<?php echo anchor('#', $label['playing_chars'], array('id' => 'active', 'class' => 'pill'));?> &middot;
+			<?php echo anchor('#', $label['npcs'], array('id' => 'npc', 'class' => 'pill'));?> &middot;
+			<?php echo anchor('#', $label['open'], array('id' => 'open', 'class' => 'pill'));?> &middot;
+			<?php echo anchor('#', $label['inactive_chars'], array('id' => 'inactive', 'class' => 'pill'));?>
+		</span>
 
-		<br /><strong><?php echo $label['toggle'];?></strong> &mdash;
-			<?php if ($display == 'open'): ?>
-			<?php else: ?>
-				<?php echo anchor('#', $label['open'], array('id' => 'toggle_open'));?> &middot;
-			<?php endif; ?>
-			<?php echo anchor('#', $label['npcs'], array('id' => 'toggle_npc'));?>
+		<br />
+		<div class="top_1em">
+			<strong><?php echo $label['toggle'];?></strong>
+			<span class="pill-inline-container">
+				&mdash;
+				<?php if ($display == 'open'): ?>
+				<?php else: ?>
+					<?php echo anchor('#', $label['open'], array('id' => 'toggle_open', 'class' => 'pill'));?> &middot;
+				<?php endif; ?>
+				<?php echo anchor('#', $label['npcs'], array('id' => 'toggle_npc', 'class' => 'pill'));?>
+			</span>
+		</div>
 	</div>
 
 	<?php if (isset($top)): ?>
