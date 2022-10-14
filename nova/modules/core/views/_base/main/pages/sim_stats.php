@@ -23,142 +23,142 @@
 
 			<tbody>
 				<tr>
-					<td class="align_center"><?php echo $users['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $users['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['users'];?></td>
-					<td class="align_center"><?php echo $users['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $users['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $characters['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $characters['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['playing_chars'];?></td>
-					<td class="align_center"><?php echo $characters['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $characters['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $npcs['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $npcs['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['npcs'];?></td>
-					<td class="align_center"><?php echo $npcs['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $npcs['current'];?></td>
 				</tr>
 
 				<?php echo table_row_spacer(3, 30);?>
 
 				<tr>
-					<td class="align_center"><?php echo $posts['total']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['total']['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['posts'];?></td>
-					<td class="align_center"><?php echo $posts['total']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['total']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $posts['words']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['words']['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['postsWords'];?></td>
-					<td class="align_center"><?php echo $posts['words']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['words']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $posts['average']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['average']['previous'];?></td>
 					<td class="align_center bold">
 						<?php echo $label['postsAverage'];?><span class="fontSmall">&dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $posts['average']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['average']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $posts['wordsAverage']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['wordsAverage']['previous'];?></td>
 					<td class="align_center bold">
 						<?php echo $label['postsWordsAverage'];?><span class="fontSmall">&dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $posts['wordsAverage']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['wordsAverage']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo NDASH;?></td>
+					<td class="align_center fontLarge"><?php echo NDASH;?></td>
 					<td class="align_center bold">
 						<?php echo $label['postsPace'];?><span class="fontSmall">&Dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $posts['pace'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['pace'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo NDASH;?></td>
+					<td class="align_center fontLarge"><?php echo NDASH;?></td>
 					<td class="align_center bold">
 						<?php echo $label['postsWordsPace'];?><span class="fontSmall">&Dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $posts['wordsPace'];?></td>
+					<td class="align_center fontLarge"><?php echo $posts['wordsPace'];?></td>
 				</tr>
 
 				<?php echo table_row_spacer(3, 30);?>
 
 				<tr>
-					<td class="align_center"><?php echo $logs['total']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['total']['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['logs'];?></td>
-					<td class="align_center"><?php echo $logs['total']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['total']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $logs['words']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['words']['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['logsWords'];?></td>
-					<td class="align_center"><?php echo $logs['words']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['words']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $logs['average']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['average']['previous'];?></td>
 					<td class="align_center bold">
 						<?php echo $label['logsAverage'];?><span class="fontSmall">&dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $logs['average']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['average']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $logs['wordsAverage']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['wordsAverage']['previous'];?></td>
 					<td class="align_center bold">
 						<?php echo $label['logsWordsAverage'];?><span class="fontSmall">&dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $logs['wordsAverage']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['wordsAverage']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo NDASH;?></td>
+					<td class="align_center fontLarge"><?php echo NDASH;?></td>
 					<td class="align_center bold">
 						<?php echo $label['logsPace'];?><span class="fontSmall">&Dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $logs['pace'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['pace'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo NDASH;?></td>
+					<td class="align_center fontLarge"><?php echo NDASH;?></td>
 					<td class="align_center bold">
 						<?php echo $label['logsWordsPace'];?><span class="fontSmall">&Dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $logs['wordsPace'];?></td>
+					<td class="align_center fontLarge"><?php echo $logs['wordsPace'];?></td>
 				</tr>
 
 				<?php echo table_row_spacer(3, 30);?>
 
 				<tr>
-					<td class="align_center"><?php echo $entries['total']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['total']['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['entries'];?></td>
-					<td class="align_center"><?php echo $entries['total']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['total']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $entries['words']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['words']['previous'];?></td>
 					<td class="align_center bold"><?php echo $label['entriesWords'];?></td>
-					<td class="align_center"><?php echo $entries['words']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['words']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $entries['average']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['average']['previous'];?></td>
 					<td class="align_center bold">
 						<?php echo $label['entriesAverage'];?><span class="fontSmall">&dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $entries['average']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['average']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo $entries['wordsAverage']['previous'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['wordsAverage']['previous'];?></td>
 					<td class="align_center bold">
 						<?php echo $label['entriesWordsAverage'];?><span class="fontSmall">&dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $entries['wordsAverage']['current'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['wordsAverage']['current'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo NDASH;?></td>
+					<td class="align_center fontLarge"><?php echo NDASH;?></td>
 					<td class="align_center bold">
 						<?php echo $label['entriesPace'];?><span class="fontSmall">&Dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $entries['pace'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['pace'];?></td>
 				</tr>
 				<tr>
-					<td class="align_center"><?php echo NDASH;?></td>
+					<td class="align_center fontLarge"><?php echo NDASH;?></td>
 					<td class="align_center bold">
 						<?php echo $label['entriesWordsPace'];?><span class="fontSmall">&Dagger;</span>
 					</td>
-					<td class="align_center"><?php echo $entries['wordsPace'];?></td>
+					<td class="align_center fontLarge"><?php echo $entries['wordsPace'];?></td>
 				</tr>
 			</tbody>
 		</table>
