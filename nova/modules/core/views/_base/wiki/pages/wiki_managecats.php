@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -12,19 +14,19 @@
 			<kbd><?php echo $label['name'];?></kbd>
 			<?php echo form_input($inputs['name']);?>
 		</p>
-		
+
 		<p>
 			<kbd><?php echo $label['desc'];?></kbd>
 			<?php echo form_textarea($inputs['desc']);?>
 		</p>
-		
+
 		<p><?php echo form_button($buttons['add']);?></p>
 	<?php echo form_close();?>
 </div><br />
 
 <?php if (isset($categories)): ?>
 	<hr size="1" /><br />
-	
+
 	<table class="zebra table100">
 		<thead>
 			<tr>
@@ -39,9 +41,9 @@
 				<td class="col_30pct"><?php echo text_output($c['name'], 'strong');?></td>
 				<td class="fontSmall gray"><?php echo $c['desc'];?></td>
 				<td class="col_75 align_right">
-					<a href="#" rel="facebox" myAction="delete" myID="<?php echo $c['id'];?>" class="image"><?php echo img($images['delete']);?></a>
+					<a href="#" rel="facebox" myAction="delete" myID="<?php echo $c['id'];?>" class="image delete"><?php echo img($images['delete']);?></a>
 					&nbsp;
-					<a href="#" rel="facebox" myAction="edit" myID="<?php echo $c['id'];?>" class="image"><?php echo img($images['edit']);?></a>
+					<a href="#" rel="facebox" myAction="edit" myID="<?php echo $c['id'];?>" class="image edit"><?php echo img($images['edit']);?></a>
 				</td>
 			</tr>
 		<?php endforeach;?>
