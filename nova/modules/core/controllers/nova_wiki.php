@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -233,7 +234,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'delete':
                     $id = $this->input->post('id', true);
@@ -261,7 +262,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $id = $this->input->post('id', true);
@@ -295,7 +296,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // write the flash message to its region
@@ -322,9 +323,11 @@ abstract class Nova_wiki extends Nova_controller_wiki
                 'class' => 'image inline_img_left'),
             'delete' => array(
                 'src' => Location::img('icon-delete.png', $this->skin, 'wiki'),
+                'class' => 'image',
                 'alt' => ''),
             'edit' => array(
                 'src' => Location::img('icon-edit.png', $this->skin, 'wiki'),
+                'class' => 'image',
                 'alt' => ''),
         );
 
@@ -410,7 +413,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                             $flash['status'] = 'error';
                             $flash['message'] = text_output($message);
                         }
-                    break;
+                        break;
 
                     case 'deletedraft':
                         $id = $this->input->post('id', true);
@@ -438,7 +441,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                             $flash['status'] = 'error';
                             $flash['message'] = text_output($message);
                         }
-                    break;
+                        break;
 
                     case 'cleanup':
                         // get the timeframe
@@ -501,7 +504,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                             $flash['status'] = 'info';
                             $flash['message'] = text_output($message);
                         }
-                    break;
+                        break;
 
                     case 'revert':
                         // get the POST variables
@@ -572,7 +575,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                             $flash['status'] = 'error';
                             $flash['message'] = text_output($message);
                         }
-                    break;
+                        break;
                 }
 
                 // set the region
@@ -769,7 +772,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'edit':
                     $categories = (isset($_POST['categories'])) ? explode(',', $_POST['categories']) : array();
@@ -838,7 +841,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the region
@@ -1024,7 +1027,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                 }
 
                 $data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_updated'));
-            break;
+                break;
 
             case 'created':
                 // grab the recently created items
@@ -1044,7 +1047,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                 }
 
                 $data['header'] = ucwords(lang('global_wiki') .' - '. lang('status_recently') .' '. lang('actions_created'));
-            break;
+                break;
         }
 
         $data['label'] = array(
@@ -1155,11 +1158,11 @@ abstract class Nova_wiki extends Nova_controller_wiki
         switch ($action) {
             case 'comment':
                 $js_data['tab'] = 2;
-            break;
+                break;
 
             default:
                 $js_data['tab'] = 0;
-            break;
+                break;
         }
 
         // set the date format
@@ -1497,7 +1500,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'comment_pending':
                 // run the methods
@@ -1530,7 +1533,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
         }
 
         // send the email
