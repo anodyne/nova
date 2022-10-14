@@ -233,14 +233,21 @@ input[type=file] {
 	@apply file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-100 file:text-primary-600 hover:file:bg-primary-200 hover:file:text-primary-700;
 }
 
-input.small {
+input.small,
+select.small {
     @apply w-12;
 }
-input.medium {
+input.medium,
+select.medium {
     @apply w-24;
 }
-input.medium-large {
+input.medium-large,
+select.medium-large {
     @apply w-36;
+}
+input.large,
+select.large {
+    @apply w-56;
 }
 
 kbd {
@@ -512,4 +519,17 @@ ul.padding1 { @apply py-2 px-4; }
 
 .ui-datepicker-trigger {
 	@apply block float-left py-3 px-2;
+}
+
+.pill-container {
+	@apply block mt-3 text-transparent;
+}
+.pill-inline-container {
+	@apply text-transparent;
+}
+.pill {
+	@apply rounded-full py-0.5 px-2.5 font-medium text-gray-500 bg-gray-100 border border-gray-200 transition;
+}
+a.pill {
+	@apply hover:bg-primary-100 hover:border-primary-200 hover:text-primary-600;
 }
