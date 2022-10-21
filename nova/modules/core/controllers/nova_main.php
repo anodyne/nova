@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -450,7 +451,7 @@ abstract class Nova_main extends Nova_controller_main
                                     );
 
                                     $data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-                                break;
+                                    break;
 
                                 case 'textarea':
                                     $input = array(
@@ -462,7 +463,7 @@ abstract class Nova_main extends Nova_controller_main
                                     );
 
                                     $data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-                                break;
+                                    break;
 
                                 case 'select':
                                     $value = false;
@@ -478,7 +479,7 @@ abstract class Nova_main extends Nova_controller_main
                                     }
 
                                     $data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
-                                break;
+                                    break;
                             }
                         }
                     }
@@ -918,7 +919,7 @@ abstract class Nova_main extends Nova_controller_main
                     'feed' => array(
                         'src' => Location::img('feed.png', $this->skin, 'main'),
                         'alt' => lang('labels_subscribe'),
-                        'class' => 'image'),
+                        'class' => 'inline_img_left image'),
                     'comment' => array(
                         'src' => Location::img('comment-add.png', $this->skin, 'main'),
                         'alt' => '',
@@ -965,6 +966,7 @@ abstract class Nova_main extends Nova_controller_main
                     'error_private_news' => lang('error_private_news'),
                     'edit' => '[ '. ucfirst(lang('actions_edit')) .' ]',
                     'nonactivenews' => ucwords(lang("status_{$status}")." ".lang('global_newsitem')),
+                    'rss_feed' => lang('misc_rss_feed'),
                 );
 
                 $this->_regions['title'].= ucwords(lang('actions_view').' '.lang('global_news'));
@@ -1037,7 +1039,7 @@ abstract class Nova_main extends Nova_controller_main
                 $this->mail->bcc($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $data['subject']);
                 $this->mail->message($parsedMessage, $message);
-            break;
+                break;
 
             case 'news_comment':
                 // Load the resources
@@ -1074,7 +1076,7 @@ abstract class Nova_main extends Nova_controller_main
                 $this->mail->bcc($to);
                 $this->mail->subject($this->options['email_subject'].' '.$emailData['email_subject']);
                 $this->mail->message($message, $content);
-            break;
+                break;
 
             case 'news_comment_pending':
                 // load the resources
@@ -1113,7 +1115,7 @@ abstract class Nova_main extends Nova_controller_main
                 $this->mail->bcc($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $emailData['email_subject']);
                 $this->mail->message($message, $content);
-            break;
+                break;
 
             case 'join_user':
                 // build the content of the message
@@ -1142,7 +1144,7 @@ abstract class Nova_main extends Nova_controller_main
                 $this->mail->bcc($data['email']);
                 $this->mail->subject($this->options['email_subject'] .' '. $emailData['email_subject']);
                 $this->mail->message($message, $content);
-            break;
+                break;
 
             case 'join_gm':
                 // load the resources
@@ -1229,7 +1231,7 @@ abstract class Nova_main extends Nova_controller_main
                 $this->mail->bcc($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $emailData['email_subject']);
                 $this->mail->message($message, $content);
-            break;
+                break;
         }
 
         $email = $this->mail->send();

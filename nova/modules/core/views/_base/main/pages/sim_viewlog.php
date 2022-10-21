@@ -1,11 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php if (isset($next) || isset($prev)): ?>
 	<div class="float_right">
 		<?php if (isset($prev)): ?>
 			<?php echo anchor('sim/viewlog/'. $prev, img($images['prev']), array('class' => 'image'));?>
 		<?php endif; ?>
-		
+
 		<?php if (isset($next)): ?>
 			<?php echo anchor('sim/viewlog/'. $next, img($images['next']), array('class' => 'image'));?>
 		<?php endif; ?>
@@ -23,7 +25,7 @@
 <p class="fontSmall bold gray">
 	<?php echo $label['posted'] .' '. $date;?>
 	<?php echo $label['by'] .' '. $author;?>
-	
+
 	<?php if (isset($update)): ?>
 		<br />
 		<?php echo $label['edited'] .' '. $update;?><br />
@@ -39,7 +41,7 @@
 		<?php if (isset($prev)): ?>
 			<?php echo anchor('sim/viewlog/'. $prev, img($images['prev']), array('class' => 'image'));?>
 		<?php endif; ?>
-		
+
 		<?php if (isset($next)): ?>
 			<?php echo anchor('sim/viewlog/'. $next, img($images['next']), array('class' => 'image'));?>
 		<?php endif; ?>
@@ -52,7 +54,9 @@
 	<?php endif; ?>
 </p>
 
-<p><?php echo anchor('feed/logs', img($images['feed']), array('class' => 'image'));?></p>
+<p class="bold">
+	<?php echo anchor('feed/logs', img($images['feed']) . ' ' . $label['rss_feed'], array('class' => 'image'));?>
+</p>
 
 <?php if (Auth::is_logged_in()): ?>
 	<p class="bold">
@@ -64,7 +68,7 @@
 
 <?php if (isset($comments) and is_array($comments)): ?>
 	<a name="comments"></a><h2 class="gray"><?php echo $label['comments'] . ' (' . $comment_count . ')';?></h2>
-	
+
 	<div id="comments">
 	<?php foreach ($comments as $value): ?>
 		<p>

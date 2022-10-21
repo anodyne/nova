@@ -1,4 +1,6 @@
-<?php if (! defined('BASEPATH')) {
+<?php
+
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 /**
@@ -191,6 +193,7 @@ $lang['misc_login_y']			= 'Must be logged in';
 $lang['misc_login_n']			= 'Must be logged out';
 $lang['misc_level1_only']		= 'Level 1 Only';
 $lang['misc_draft_cleanup']		= 'All drafts not associated with a page';
+$lang['misc_rss_feed']	    	= 'RSS Feed';
 
 /*
 |---------------------------------------------------------------

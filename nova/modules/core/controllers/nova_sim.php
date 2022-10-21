@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -96,15 +97,15 @@ abstract class Nova_sim extends Nova_controller_main
                 switch ($award_row->award_cat) {
                     case 'both':
                         $data['cat'] = ucfirst($award_row->award_cat);
-                    break;
+                        break;
 
                     case 'ic':
                         $data['cat'] = ucfirst(lang('labels_ic'));
-                    break;
+                        break;
 
                     case 'ooc':
                         $data['cat'] = ucfirst(lang('labels_ooc'));
-                    break;
+                        break;
                 }
 
                 if ($awardees->num_rows() > 0) {
@@ -120,15 +121,15 @@ abstract class Nova_sim extends Nova_controller_main
                         switch ($award_row->award_cat) {
                             case 'both':
                                 $data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character, true, false, true);
-                            break;
+                                break;
 
                             case 'ic':
                                 $data['awardees'][$i]['person'] = $this->char->get_character_name($item->awardrec_character, true, false, true);
-                            break;
+                                break;
 
                             case 'ooc':
                                 $data['awardees'][$i]['person'] = $this->user->get_user($item->awardrec_user, 'name');
-                            break;
+                                break;
                         }
 
                         ++$i;
@@ -572,7 +573,7 @@ abstract class Nova_sim extends Nova_controller_main
                                 );
 
                                 $data['docking'][$sid]['fields'][$f_id]['input'] = form_input($input);
-                            break;
+                                break;
 
                             case 'textarea':
                                 $input = array(
@@ -584,7 +585,7 @@ abstract class Nova_sim extends Nova_controller_main
                                 );
 
                                 $data['docking'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-                            break;
+                                break;
 
                             case 'select':
                                 $value = false;
@@ -600,7 +601,7 @@ abstract class Nova_sim extends Nova_controller_main
                                 }
 
                                 $data['docking'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
-                            break;
+                                break;
                         }
                     }
                 }
@@ -972,7 +973,7 @@ abstract class Nova_sim extends Nova_controller_main
                         $this->_regions['title'].= lang('error_pagetitle');
                     }
                 }
-            break;
+                break;
 
             case 'group':
                 if ($id === false) {
@@ -1123,7 +1124,7 @@ abstract class Nova_sim extends Nova_controller_main
                     // set the page title
                     $this->_regions['title'].= $title;
                 }
-            break;
+                break;
 
             default:
                 $missions = $this->mis->get_all_missions();
@@ -1173,7 +1174,7 @@ abstract class Nova_sim extends Nova_controller_main
 
                 // write the data to the template
                 $this->_regions['title'].= $title;
-            break;
+                break;
         }
 
         $data['label'] += array(
@@ -1938,7 +1939,7 @@ abstract class Nova_sim extends Nova_controller_main
                     'feed' => array(
                         'src' => Location::img('feed.png', $this->skin, 'main'),
                         'alt' => lang('labels_subscribe'),
-                        'class' => 'image'),
+                        'class' => 'inline_img_left image'),
                     'comment' => array(
                         'src' => Location::img('comment-add.png', $this->skin, 'main'),
                         'alt=' => '',
@@ -1972,6 +1973,7 @@ abstract class Nova_sim extends Nova_controller_main
                     'tags' => ucfirst(lang('labels_tags')) .':',
                     'title' => ucfirst(lang('labels_title')),
                     'view_log' => ucwords(lang('actions_view') .' '. lang('global_log')),
+                    'rss_feed' => lang('misc_rss_feed'),
                 );
 
                 $this->_regions['title'].= $data['title'];
@@ -2176,8 +2178,8 @@ abstract class Nova_sim extends Nova_controller_main
                         'class' => 'image'),
                     'feed' => array(
                         'src' => Location::img('feed.png', $this->skin, 'main'),
-                        'alt' => lang('labels_subscribe'),
-                        'class' => 'image'),
+                        'alt' => lang('misc_rss_feed'),
+                        'class' => 'inline_img_left image'),
                     'comment' => array(
                         'src' => Location::img('comment-add.png', $this->skin, 'main'),
                         'alt=' => '',
@@ -2230,6 +2232,7 @@ abstract class Nova_sim extends Nova_controller_main
             'nonactivepost' => ucwords(lang("status_{$status}")." ".lang('global_missionpost')),
             'on' => lang('labels_on'),
             'posted' => ucfirst(lang('actions_posted') .' '. lang('labels_on')),
+            'rss_feed' => lang('misc_rss_feed'),
             'tags' => ucfirst(lang('labels_tags')) .':',
             'timeline' => ucfirst(lang('labels_timeline')) .':',
             'title' => ucfirst(lang('labels_title')),
@@ -2289,7 +2292,7 @@ abstract class Nova_sim extends Nova_controller_main
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'log_comment_pending':
                 // load the models
@@ -2328,7 +2331,7 @@ abstract class Nova_sim extends Nova_controller_main
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'post_comment':
                 // load the models
@@ -2384,7 +2387,7 @@ abstract class Nova_sim extends Nova_controller_main
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'post_comment_pending':
                 // load the models
@@ -2423,7 +2426,7 @@ abstract class Nova_sim extends Nova_controller_main
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'docking_user':
                 // set the content
@@ -2450,7 +2453,7 @@ abstract class Nova_sim extends Nova_controller_main
                 $this->mail->to($data['email']);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'docking_gm':
                 // load the models
@@ -2531,7 +2534,7 @@ abstract class Nova_sim extends Nova_controller_main
                         $this->mail->message($message);
                     }
                 }
-            break;
+                break;
         }
 
         // send the email

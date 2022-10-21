@@ -1,11 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php if (isset($next) || isset($prev)): ?>
 	<div class="float_right">
 		<?php if (isset($prev)): ?>
 			<?php echo anchor('sim/viewpost/'. $prev, img($images['prev']), array('class' => 'image'));?>
 		<?php endif; ?>
-		
+
 		<?php if (isset($next)): ?>
 			<?php echo anchor('sim/viewpost/'. $next, img($images['next']), array('class' => 'image'));?>
 		<?php endif; ?>
@@ -19,7 +21,7 @@
 <?php endif;?>
 
 <p>
-	<?php echo link_to_if(in_array(TRUE, $valid), 'manage/posts/edit/'. $post_id, $label['edit'], array('class' => 'edit fontSmall bold'));?>
+	<?php echo link_to_if(in_array(true, $valid), 'manage/posts/edit/'. $post_id, $label['edit'], array('class' => 'edit fontSmall bold'));?>
 </p>
 
 <p class="fontSmall bold gray">
@@ -34,15 +36,15 @@
 <p class="fontSmall gray">
 	<strong><?php echo $label['mission'];?></strong>
 	<?php echo anchor('sim/missions/id/'. $mission_id, $mission);?>
-	
+
 	<?php if (!empty($location)): ?>
 		<br /><strong><?php echo $label['location'] .'</strong> '. $location;?>
 	<?php endif; ?>
-	
+
 	<?php if (!empty($timeline)): ?>
 		<br /><strong><?php echo $label['timeline'] .'</strong> '. $timeline;?>
 	<?php endif; ?>
-	
+
 	<?php if (!empty($tags)): ?>
 		<br /><strong><?php echo $label['tags'] .'</strong> '. $tags;?>
 	<?php endif; ?>
@@ -57,14 +59,16 @@
 		<?php if (isset($prev)): ?>
 			<?php echo anchor('sim/viewpost/'. $prev, img($images['prev']), array('class' => 'image'));?>
 		<?php endif; ?>
-		
+
 		<?php if (isset($next)): ?>
 			<?php echo anchor('sim/viewpost/'. $next, img($images['next']), array('class' => 'image'));?>
 		<?php endif; ?>
 	</div>
 <?php endif; ?>
 
-<p><?php echo anchor('feed/posts', img($images['feed']), array('class' => 'image'));?></p>
+<p class="bold">
+	<?php echo anchor('feed/posts', img($images['feed']) . ' ' . $label['rss_feed'], array('class' => 'image'));?>
+</p>
 
 <?php if (Auth::is_logged_in()): ?>
 	<p class="bold">

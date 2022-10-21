@@ -59,7 +59,9 @@
 		<?php endif; ?>
 	</p>
 
-	<p><?php echo anchor('feed/news', img($images['feed']), array('class' => 'image'));?></p>
+	<p class="bold">
+		<?php echo anchor('feed/news', img($images['feed']) . ' ' . $label['rss_feed'], array('class' => 'image'));?>
+	</p>
 
 	<?php if (Auth::is_logged_in()): ?>
 		<p class="bold">
