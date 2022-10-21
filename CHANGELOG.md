@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Word count display below mission post and personal log content text areas. (Note: due the differences between how Javascript calculates words and how PHP calculates words, there may be slight differences between the count displayed and what is stored in the database.)
 - Contact page "honeypot" for attempting to limit spam.
 - `actions_cancel` language key.
+- `misc_rss_feed` language key.
 
 ### Changed
 - Upgraded CodeIgniter from version 2.2.3 to version 3.1.13 for better PHP 8 compatibility.
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - For the word counter used when writing different types of posts, we've added a new `counter` class. Everything will display correctly without this class, but you can use it in your own skins to control the distance from the content textarea.
 - New classes `pill-container`, `pill-inline-container`, and `pill` have been added to the HTML in several places. Everything will display correctly without these classes in your skin stylesheets, but you can use them in your own skins to control the look of "pill" elements. This is in use in the follow pages now: main/news, main/viewnews, personnel/index.
 - New class `large` targeting inputs and selects has been added. Everything will display correct without this class in your skin stylesheets, but you can use it to control the size of text inputs and select menus that should be wider.
+- The RSS feed links when viewing a post, log, or news item now have a text label to make them more visible.
 
 ### Removed
 - The ability to install a separate genre from the Installation Center.
