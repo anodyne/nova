@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -171,7 +172,7 @@ abstract class Nova_login extends CI_Controller
                     );
 
                     $flash['message'] = text_output($message);
-                break;
+                    break;
 
                 case 7:
                     $message = sprintf(
@@ -181,11 +182,11 @@ abstract class Nova_login extends CI_Controller
                     );
 
                     $flash['message'] = text_output($message);
-                break;
+                    break;
 
                 default:
                     $flash['message'] = lang_output('error_login_'.$this->uri->segment(4));
-                break;
+                    break;
             }
 
             $this->_regions['flash_message'] = Location::view('flash', $this->skin, 'login', $flash);
@@ -195,13 +196,14 @@ abstract class Nova_login extends CI_Controller
             'email' => array(
                 'name' => 'email',
                 'id' => 'email',
-                'autocomplete' => 'off',
+                'autocomplete' => 'username',
                 'tabindex' => 1,
                 'placeholder' => ucfirst(lang('labels_email_address')),
                 'type' => 'email'),
             'password' => array(
                 'name' => 'password',
                 'id' => 'password',
+                'autocomplete' => 'current-password',
                 'tabindex' => 2,
                 'placeholder' => ucfirst(lang('labels_password'))),
             'remember_me' => array(
@@ -346,6 +348,7 @@ abstract class Nova_login extends CI_Controller
             'email' => array(
                 'name' => 'email',
                 'id' => 'email',
+                'autocomplete' => 'username',
                 'placeholder' => ucfirst(lang('labels_email_address'))),
         );
 
@@ -408,7 +411,7 @@ abstract class Nova_login extends CI_Controller
                 $this->mail->to($data['email']);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
         }
 
         // send the email

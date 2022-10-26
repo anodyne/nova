@@ -499,10 +499,14 @@ abstract class Nova_main extends Nova_controller_main
                     'id' => 'name'),
                 'email' => array(
                     'name' => 'email',
-                    'id' => 'email'),
+                    'id' => 'email',
+                    'autocomplete' => 'username',
+                ),
                 'password' => array(
                     'name' => 'password',
-                    'id' => 'password'),
+                    'id' => 'password',
+                    'autocomplete' => 'new-password',
+                ),
                 'dob' => array(
                     'name' => 'date_of_birth',
                     'id' => 'date_of_birth'),
