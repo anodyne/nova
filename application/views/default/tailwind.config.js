@@ -32,10 +32,10 @@ module.exports = {
   ],
   theme: {
     colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      black: '#000',
-      white: '#fff',
+      transparent: colors.transparent,
+      current: colors.current,
+      black: colors.black,
+      white: colors.white,
       gray: colors.gray,
       ...createColorScale('primary'),
       ...createColorScale('success'),

@@ -374,14 +374,44 @@ table.acp {
 	@apply float-right font-semibold text-xs rounded-full p-1;
 }
 
-#panel .panel-body {
-	@apply p-4 rounded-md shadow-xl bg-gradient-to-b from-gray-500 to-gray-600 text-white text-left border border-gray-900/10;
+.panel-wrapper {
+	@apply relative z-20;
 }
-.panel-body a {
-	@apply inline-block my-px pb-px text-white border-b border-white/25;
+.panel-overlay {
+	@apply fixed inset-0 bg-gray-500 bg-opacity-25 backdrop-blur backdrop-filter transition-all;
+}
+#panel {
+	@apply fixed inset-0 z-10 overflow-y-auto p-20;
+}
+.panel-close {
+	@apply absolute -right-10 -top-2 text-gray-500 hover:text-gray-600 p-2;
+}
+.panel-close > svg {
+	@apply w-6 h-6 text-gray-500 hover:text-gray-600;
+}
+#panel .panel-body {
+	@apply relative mx-auto max-w-xl transform divide-y divide-gray-500 divide-opacity-10 rounded-lg bg-white shadow-2xl ring-1 ring-black ring-opacity-5;
+}
+.panel-body h4 {
+	@apply mt-4 mb-2 px-3 text-xs font-semibold text-gray-900;
+}
+.panel-body > ul {
+	@apply scroll-py-2 divide-y divide-gray-500 divide-opacity-20;
+}
+.panel-body > ul > li {
+	@apply p-2;
+}
+.panel-body > ul > li > ul {
+	@apply p-0 text-sm;
+}
+.panel-body > ul > li > ul > li {
+	@apply flex w-full cursor-default select-none items-center justify-between;
+}
+.panel-body > ul > li > ul > li > a {
+	@apply flex w-full text-gray-700 border-none rounded-md px-3 py-2 hover:bg-gray-900/5 hover:text-gray-900;
 }
 .panel-body a.edit {
-	@apply my-0 border-b-0 font-semibold text-gray-300 hover:text-gray-100;
+	@apply shrink w-24 justify-end hover:bg-transparent;
 }
 .panel-handle a,
 .panel-handle a:hover {

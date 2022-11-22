@@ -56,43 +56,21 @@ $alternateLogoSvg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.svg';
 		<?php echo link_tag($stylesheet);?>
 		<?php echo link_tag($colors);?>
 
-		<?php include_once($this->config->item('include_head_main'));?>
-
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/dist/js/jquery.blockUI.js"></script>
+		<?php include_once MODFOLDER.'/assets/include_head_main_next.php';?>
 
 		<?php echo $javascript;?>
 
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$('body').click(function(event){
-					if (! $(event.target).closest('div').hasClass('signin-panel')) {
-						$.unblockUI();
-					}
-				});
-
-				$('a#userpanel').unbind('click').click(function(){
-					$.blockUI({
-						message: $('#panel'),
-						css: {
-							border: '0',
-							cursor: 'cursor',
-							background: 'transparent',
-							width: '800px',
-							top: '10%',
-							left: '50%',
-							margin: '0 0 0 -400px'
-						}
-					});
-
+				$('#userpanel').click(function(){
+					$('.panel-wrapper').toggleClass('hidden');
 					return false;
 				});
-			});
 
-			// if the escape key is pressed, close the menu
-			$(document).keyup(function(event) {
-				if (event.keyCode == 27) {
-					$.unblockUI();
-				}
+                $('.panel-close').click(function(){
+					$('.panel-wrapper').toggleClass('hidden');
+					return false;
+				});
 			});
 		</script>
 	</head>
@@ -102,22 +80,25 @@ $alternateLogoSvg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.svg';
 		</noscript>
 
 		<?php if (Auth::is_logged_in()): ?>
-			<div id="panel" class="hidden">
-				<div class="panel-body">
-					<table class="table100">
-						<tbody>
-							<tr>
-								<td class="panel_1 align_top"><?php echo $panel_1;?></td>
-								<td class="panel_spacer"></td>
-								<td class="panel_2 align_top"><?php echo $panel_2;?></td>
-								<td class="panel_spacer"></td>
-								<td class="panel_3 align_top"><?php echo $panel_3;?></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		<?php endif;?>
+            <div class="panel-wrapper hidden">
+                <div class="panel-overlay"></div>
+
+                <!-- USER PANEL -->
+                <div id="panel">
+                    <div class="panel-body">
+                        <button type="button" class="panel-close">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+
+                        <ul>
+                            <li><?php echo $panel_1;?></li>
+                            <li><?php echo $panel_2;?></li>
+                            <li><?php echo $panel_3;?></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <?php endif;?>
 
 		<header>
 			<div class="wrapper">

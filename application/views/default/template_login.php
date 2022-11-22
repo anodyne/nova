@@ -48,9 +48,7 @@ $alternateLogoSvg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.svg';
 		<?php echo link_tag($stylesheet);?>
 		<?php echo link_tag($colors);?>
 
-		<?php include_once($this->config->item('include_head_login'));?>
-
-		<script type="text/javascript" src="<?php echo base_url() . APPFOLDER;?>/views/<?php echo $current_skin;?>/dist/js/jquery.blockUI.js"></script>
+		<?php include_once MODFOLDER.'/assets/include_head_login_next.php';?>
 
 		<?php echo $javascript;?>
 	</head>
