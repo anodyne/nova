@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Contact page "honeypot" for attempting to limit spam.
 - `actions_cancel` language key.
 - `misc_rss_feed` language key.
+- New versions of the `include_head` files (all suffixed with `_next`). This allowed us to fix some significant issues with jQuery bugs by removing some code. Existing skins will continue to work as expected, but the Pulsar and Titan skins now use the newer versions.
 
 ### Changed
 - Upgraded CodeIgniter from version 2.2.3 to version 3.1.13 for better PHP 8 compatibility.
@@ -25,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - HTML markup around several field labels in Site Settings have been updated. This mainly involves wrapping several labels in `span` tags and should not impact any existing skins.
 - A `span` tag has been added around the label and page name on the Manage Wiki Pages screen.
 - A `span` tag has been added around the text inside the Show Filters link in the wiki screens.
+- A `span` tag has been added around the text inside the sub navigation links in the wiki screens.
 - The Edit Categories link on the wiki/categories page has been given the `edit` class to be consistent with other similar edit links.
 - The `versions_redirect` language item now links to the Nova 2 source code repository changelog instead of Anodyne Help.
 - Provided a link to manage uploads directly from the upload screen.
@@ -33,6 +35,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - New classes `pill-container`, `pill-inline-container`, and `pill` have been added to the HTML in several places. Everything will display correctly without these classes in your skin stylesheets, but you can use them in your own skins to control the look of "pill" elements. This is in use in the follow pages now: main/news, main/viewnews, personnel/index.
 - New class `large` targeting inputs and selects has been added. Everything will display correct without this class in your skin stylesheets, but you can use it to control the size of text inputs and select menus that should be wider.
 - The RSS feed links when viewing a post, log, or news item now have a text label to make them more visible.
+- Added some `autocomplete` attributes to email and password fields on the login, reset password, and join forms.
+- The wiki page content wrapping element has been changed from a `p` tag to a `div` and given a class of `prose` (this applies to both published and draft pages). This allows for the removal of overly greedy CSS selectors in the `include_head_wiki_next` file and moving those styles into the `wiki.css` file in the Pulsar and Titan skins. Existing skins will continue to work as expected.
 
 ### Removed
 - The ability to install a separate genre from the Installation Center.
