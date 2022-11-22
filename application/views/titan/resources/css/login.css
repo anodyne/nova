@@ -1,0 +1,124 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+	@apply bg-gray-900;
+}
+
+body {
+	@apply text-gray-200 antialiased text-base leading-6 font-sans;
+}
+
+header {
+    @apply overflow-hidden;
+}
+header .background {
+	@apply absolute left-0 -top-32 -z-10 transform rotate-180 opacity-75;
+}
+header .gradient {
+	@apply absolute bottom-0 h-full w-full bg-gradient-to-b from-transparent to-gray-900 z-0;
+}
+
+.wrapper {
+    @apply relative min-h-full flex flex-col justify-center items-center py-12 px-8 z-[999];
+}
+
+.head {
+    @apply mx-auto w-full max-w-md;
+}
+.head .logo svg,
+.head .logo img {
+    @apply mx-auto h-12 w-auto;
+}
+.head .title {
+    @apply mt-6 text-center text-3xl font-extrabold text-primary-700;
+}
+
+.body {
+    @apply rounded-xl mt-8 mx-auto w-full max-w-lg shadow-xl shadow-primary-600/20;
+}
+.body .card {
+    @apply rounded-xl overflow-hidden bg-gray-800/50 backdrop-blur highlight-white/10 py-8 px-10;
+}
+.body .card form {
+    @apply space-y-6;
+}
+
+.body .page-head { @apply text-primary-500; }
+
+h1, h2, h3, h4, p {
+	@apply mb-4;
+}
+h1 {
+	@apply text-4xl font-extrabold tracking-tight;
+}
+h2 {
+	@apply text-3xl font-bold;
+}
+h3 {
+	@apply text-2xl font-semibold;
+}
+h4 {
+	@apply text-xl font-medium;
+}
+p {
+	@apply text-base leading-6;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+textarea,
+select {
+	@apply rounded-lg border border-gray-600 bg-gray-700 ring-1 ring-transparent shadow-sm focus:border-primary-600 focus:ring-primary-600 focus:text-white focus:outline-none focus:bg-gray-700/50 w-full;
+}
+input[type=checkbox] {
+	@apply rounded bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-white checked:hover:bg-primary-600 focus:text-primary-600;
+}
+
+kbd {
+	@apply block mb-1 text-sm font-semibold font-sans;
+}
+
+.controls {
+    @apply flex items-center justify-between;
+}
+.controls > a {
+    @apply text-sm text-primary-700 hover:text-primary-600 font-medium;
+}
+
+.checkbox {
+    @apply flex items-center space-x-2;
+}
+
+label {
+    @apply leading-none;
+}
+label > strong {
+    @apply font-medium text-sm;
+}
+
+.button-main {
+    @apply block w-full py-1.5 px-6 bg-primary-600 text-white font-semibold border-2 border-transparent rounded-full transition hover:bg-gray-800 hover:text-primary-600 hover:border-primary-600 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.button-sec {
+    @apply block w-full py-0.5 px-6 bg-transparent text-gray-300 font-medium text-sm transition hover:text-gray-500 text-center;
+}
+
+.flash_message {
+	@apply -mx-10 -mt-8 mb-6 font-semibold border-b;
+}
+.flash_message p {
+	@apply m-0 px-6 py-3;
+}
+.flash-success {
+	@apply bg-success-100 border-success-200 text-success-600;
+}
+.flash-error {
+	@apply bg-danger-100 border-danger-200 text-danger-600;
+}
+.flash-info {
+	@apply bg-info-100 border-info-200 text-info-600;
+}
