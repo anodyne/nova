@@ -103,3 +103,20 @@
 .tag-active:hover {
 	@apply bg-primary-500 text-white;
 }
+
+.prose ul,
+.prose ol {
+	@apply mx-3 mb-3 pl-3;
+}
+
+.prose ul {
+	@apply list-disc;
+}
+.prose ol {
+	@apply list-decimal;
+}
+
+.prose ul li,
+.prose ol li {
+	@apply m-0.5;
+}

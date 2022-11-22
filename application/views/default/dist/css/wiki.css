@@ -609,3 +609,31 @@
 
 	color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+
+.prose ul,
+.prose ol {
+
+	margin-left: 0.75rem;
+
+	margin-right: 0.75rem;
+
+	margin-bottom: 0.75rem;
+
+	padding-left: 0.75rem;
+}
+
+.prose ul {
+
+	list-style-type: disc;
+}
+
+.prose ol {
+
+	list-style-type: decimal;
+}
+
+.prose ul li,
+.prose ol li {
+
+	margin: 0.125rem;
+}
