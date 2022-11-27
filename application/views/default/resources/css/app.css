@@ -1,28 +1,7 @@
 @import 'tailwindcss/base';
-
 @import 'tailwindcss/components';
-
 @import 'jquery.ui.tabs.css';
-
 @import 'tailwindcss/utilities';
-
-@font-face {
-    font-family: 'Inter var';
-    font-style: normal;
-    font-weight: 100 900;
-    font-display: swap;
-    src: url('../fonts/Inter-roman.woff2?v=3.18') format('woff2');
-    font-named-instance: 'Regular';
-}
-
-@font-face {
-    font-family: 'Inter var';
-    font-style: italic;
-    font-weight: 100 900;
-    font-display: swap;
-    src: url('../fonts/Inter-italic.woff2?v=3.18') format('woff2');
-    font-named-instance: 'Italic';
-}
 
 html {
 	@apply bg-gray-100;
@@ -30,8 +9,6 @@ html {
 
 body {
 	@apply text-gray-500 antialiased text-base leading-6 font-sans;
-
-	font-feature-settings: 'ss01', 'ss03', 'cv11', 'zero';
 }
 
 .wrapper {
@@ -252,16 +229,6 @@ select.large {
 
 kbd {
 	@apply flex items-center text-sm font-bold font-sans space-x-2 mb-1.5;
-}
-
-div.chzn-container ul.chzn-choices {
-	@apply !rounded-md !border-gray-300 shadow !px-3 !py-2;
-}
-div.chzn-container input {
-	@apply !font-sans !text-base;
-}
-div.chzn-container ul.chzn-choices li.search-field input {
-	@apply !p-0 !m-0 !w-full;
 }
 
 .cell-label {
@@ -552,13 +519,13 @@ ul.padding1 { @apply py-2 px-4; }
 }
 
 .pill-container {
-	@apply block mt-3 text-transparent;
+	@apply flex flex-wrap mt-3 text-transparent;
 }
 .pill-inline-container {
 	@apply text-transparent;
 }
 .pill {
-	@apply rounded-full py-0.5 px-2.5 font-medium text-gray-500 bg-gray-100 border border-gray-200 transition;
+	@apply rounded-full py-0.5 px-2.5 font-medium text-gray-500 bg-gray-100 border border-gray-200 transition my-1;
 }
 a.pill {
 	@apply hover:bg-primary-100 hover:border-primary-200 hover:text-primary-600;

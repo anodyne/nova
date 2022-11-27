@@ -253,10 +253,12 @@ abstract class Nova_manage extends Nova_controller_admin
             'delete' => array(
                 'src' => Location::img('icon-delete.png', $this->skin, 'admin'),
                 'alt' => lang('actions_delete'),
-                'title' => ucfirst(lang('actions_delete'))),
+                'class' => 'inline_img_left',
+                'title' => ucfirst(lang('actions_delete')),),
             'edit' => array(
                 'src' => Location::img('icon-edit.png', $this->skin, 'admin'),
                 'alt' => lang('actions_edit'),
+                'class' => 'inline_img_left',
                 'title' => ucfirst(lang('actions_add'))),
             'upload' => array(
                 'src' => Location::img('image-upload.png', $this->skin, 'admin'),
@@ -2180,10 +2182,10 @@ abstract class Nova_manage extends Nova_controller_admin
                     'value' => ($item === false) ? 99 : $item->mission_order),
                 'start' => array(
                     'name' => 'mission_start',
-                    'class' => 'medium datepick'),
+                    'class' => 'large datepick'),
                 'end' => array(
                     'name' => 'mission_end',
-                    'class' => 'medium datepick'),
+                    'class' => 'large datepick'),
                 'desc' => array(
                     'name' => 'mission_desc',
                     'rows' => 6,

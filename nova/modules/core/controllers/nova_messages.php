@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -705,7 +706,7 @@ abstract class Nova_messages extends Nova_controller_admin
                     'date' => mdate($this->options['date_format'], $date),
                     'content' => $row->privmsgs_content
                 );
-            break;
+                break;
 
             case 'replyall':
                 // add the author to the recipients list
@@ -741,7 +742,7 @@ abstract class Nova_messages extends Nova_controller_admin
                     'date' => mdate($this->options['date_format'], $date),
                     'content' => $row->privmsgs_content
                 );
-            break;
+                break;
 
             case 'forward':
                 // set the hidden TO field
@@ -778,12 +779,12 @@ abstract class Nova_messages extends Nova_controller_admin
                 $data['inputs']['subject']['value'] = $subj;
 
                 $data['header'] = ucfirst(lang('actions_forward')) .' '. ucwords(lang('global_privatemessage'));
-            break;
+                break;
 
             default:
                 $data['to'] = 0;
                 $data['header'] = ucwords(lang('actions_write') .' '. lang('global_privatemessage'));
-            break;
+                break;
         }
 
         $data['label'] = array(
@@ -794,7 +795,7 @@ abstract class Nova_messages extends Nova_controller_admin
             'subject' => ucfirst(lang('labels_subject')),
             'to' => ucfirst(lang('labels_to')),
             'wrote' => lang('actions_wrote') .':',
-            'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_recipients')),
+            'select' => ucfirst(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.lang('labels_recipients'),
             'chosen_incompat' => lang('chosen_incompat'),
         );
 

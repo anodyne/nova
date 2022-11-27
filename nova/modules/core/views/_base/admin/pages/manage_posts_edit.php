@@ -28,7 +28,7 @@
 	<p>
 		<kbd><?php echo $label['mission'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('post_mission', $missions, $inputs['mission'], 'class="chosen"');?>
+			<?php echo form_dropdown('post_mission', $missions, $inputs['mission'], 'class="large chosen"');?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['mission_name']), ''); ?>
 			<?php echo form_hidden('post_mission', $inputs['mission']);?>

@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Word counts for mission posts and personal logs.
 - Word count display below mission post and personal log content text areas. (Note: due the differences between how Javascript calculates words and how PHP calculates words, there may be slight differences between the count displayed and what is stored in the database.)
+- Word count display and reading time shown when viewing a mission post or personal log.
 - Contact page "honeypot" for attempting to limit spam.
 - `actions_cancel` language key.
 - `misc_rss_feed` language key.
@@ -32,11 +33,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Provided a link to manage uploads directly from the upload screen.
 - The `ui-datepicker-trigger` styling has been moved out of the Javascript files and into the stylesheets. If you are overriding the `mange_missions_js.php` file, your changes will remain intact. If you're using the Pulsar or Titan skins, you will get the new styling. If you are using a custom skin, you will need to copy the styling from `application/views/default/dist/css/app.css` for `.ui-datepicker-trigger` and move it into your own skin.
 - For the word counter used when writing different types of posts, we've added a new `counter` class. Everything will display correctly without this class, but you can use it in your own skins to control the distance from the content textarea.
-- New classes `pill-container`, `pill-inline-container`, and `pill` have been added to the HTML in several places. Everything will display correctly without these classes in your skin stylesheets, but you can use them in your own skins to control the look of "pill" elements. This is in use in the follow pages now: main/news, main/viewnews, personnel/index.
+- New classes `pill-container`, `pill-inline-container`, and `pill` have been added to the HTML in several places. Everything will display correctly without these classes in your skin stylesheets, but you can use them in your own skins to control the look of "pill" elements. This is in use in the follow pages now: main/news, main/viewnews, personnel/index, manage/positions.
 - New class `large` targeting inputs and selects has been added. Everything will display correct without this class in your skin stylesheets, but you can use it to control the size of text inputs and select menus that should be wider.
 - The RSS feed links when viewing a post, log, or news item now have a text label to make them more visible.
 - Added some `autocomplete` attributes to email and password fields on the login, reset password, and join forms.
 - The wiki page content wrapping element has been changed from a `p` tag to a `div` and given a class of `prose` (this applies to both published and draft pages). This allows for the removal of overly greedy CSS selectors in the `include_head_wiki_next` file and moving those styles into the `wiki.css` file in the Pulsar and Titan skins. Existing skins will continue to work as expected.
+- The manage positions departments wrapping element has been changed from a `p` tag to a `div` and given an additional class of `pill-container` (see above for pill changes).
+- Updated some casings of different labels throughout the system.
 
 ### Removed
 - The ability to install a separate genre from the Installation Center.
@@ -49,6 +52,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - The blank genre will now use `blank` for the genre code instead of previous uses of `bln` and `blk` (impacts fresh installs only).
 - Tags were displaying on the view news page even when there weren't any tags specified.
 - The search field in the Active Users tab of the Posting Levels report was above the header. It's been moved to be below the header to be consistent with the other tabs on the page.
+- Removed extra closing `div` tag on the site/simtypes page that resulted in broken layouts.
+- Date fields cut off the text when managing missions.
+- Mission field cut off the text when managing mission posts.
 
 ## [2.6.2] - 2021-07-08
 ### Security

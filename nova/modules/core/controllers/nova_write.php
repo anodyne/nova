@@ -1189,7 +1189,7 @@ abstract class Nova_write extends Nova_controller_admin
             'timeline' => ucfirst(lang('labels_timeline')),
             'title' => ucfirst(lang('labels_title')),
             'total_words' => ucwords(lang('global_wordcount')),
-            'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.ucfirst(lang('labels_authors')),
+            'select' => ucfirst(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_the').' '.lang('labels_authors'),
             'chosen_incompat' => lang('chosen_incompat'),
             'locked' => sprintf(lang('post_locked'), lang('global_missionpost'), lang('global_user')),
             'updated' => strtoupper(lang('actions_updated')),
@@ -1902,8 +1902,8 @@ abstract class Nova_write extends Nova_controller_admin
         $char = $this->session->userdata('characters');
 
         if (count($char) > 1) {
-            $data['characters'][0] = ucwords(lang('labels_please').' '.lang('actions_select'))
-                .' '.lang('labels_an').' '.ucfirst(lang('labels_author'));
+            $data['characters'][0] = ucfirst(lang('labels_please').' '.lang('actions_select'))
+                .' '.lang('labels_an').' '.lang('labels_author');
 
             foreach ($char as $item) {
                 $type = $this->char->get_character($item, 'crew_type');
@@ -2010,7 +2010,7 @@ abstract class Nova_write extends Nova_controller_admin
             'tags_sep' => lang('tags_separated'),
             'title' => ucwords(lang('labels_title')),
             'total_words' => ucwords(lang('global_wordcount')),
-            'select' => ucwords(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_an').' '.ucfirst(lang('labels_author')),
+            'select' => ucfirst(lang('labels_please').' '.lang('actions_select')).' '.lang('labels_an').' '.lang('labels_author'),
         );
 
         $this->_regions['content'] = Location::view('write_personallog', $this->skin, 'admin', $data);

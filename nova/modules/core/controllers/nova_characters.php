@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -122,7 +123,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'pending':
                     $id = $this->input->post('id', true);
@@ -296,7 +297,7 @@ abstract class Nova_characters extends Nova_controller_admin
                             $flash['message'] = text_output($message);
                         }
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -436,15 +437,15 @@ abstract class Nova_characters extends Nova_controller_admin
         switch ($this->uri->segment(3)) {
             case 'inactive':
                 $js_data['tab'] = 1;
-            break;
+                break;
 
             case 'pending':
                 $js_data['tab'] = 2;
-            break;
+                break;
 
             default:
                 $js_data['tab'] = 0;
-            break;
+                break;
         }
 
         $js_data['tab'] = ($data['count']['pending'] > 0) ? 2 : $js_data['tab'];
@@ -696,7 +697,7 @@ abstract class Nova_characters extends Nova_controller_admin
         switch ($level) {
             case 1:
                 $allowed = (in_array($id, $this->session->userdata('characters'))) ? true : false;
-            break;
+                break;
 
             case 2:
                 $type = $this->char->get_character($data['id'], 'crew_type');
@@ -704,11 +705,11 @@ abstract class Nova_characters extends Nova_controller_admin
                 if (in_array($id, $this->session->userdata('characters')) or $type == 'npc') {
                     $allowed = true;
                 }
-            break;
+                break;
 
             case 3:
                 $allowed = true;
-            break;
+                break;
         }
 
         if (! $allowed) {
@@ -820,7 +821,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = ($update > 0) ? 'success' : 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'activate':
                     if ($level == 3) {
@@ -875,7 +876,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = ($update_char > 0) ? 'success' : 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'deactivate':
                     if ($level == 3) {
@@ -928,7 +929,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = ($update_char > 0) ? 'success' : 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'makenpc':
                     if ($level == 3) {
@@ -984,7 +985,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = ($update_char > 0) ? 'success' : 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
 
                 case 'makeplaying':
                     if ($level == 3) {
@@ -1038,7 +1039,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = ($update_char > 0) ? 'success' : 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -1082,7 +1083,7 @@ abstract class Nova_characters extends Nova_controller_admin
                                 );
 
                                 $data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-                            break;
+                                break;
 
                             case 'textarea':
                                 $input = array(
@@ -1094,7 +1095,7 @@ abstract class Nova_characters extends Nova_controller_admin
                                 );
 
                                 $data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-                            break;
+                                break;
 
                             case 'select':
                                 $value = false;
@@ -1111,7 +1112,7 @@ abstract class Nova_characters extends Nova_controller_admin
                                 }
 
                                 $data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input, $data_val);
-                            break;
+                                break;
                         }
                     }
                 }
@@ -1507,7 +1508,7 @@ abstract class Nova_characters extends Nova_controller_admin
                                 );
 
                                 $data['join'][$sid]['fields'][$f_id]['input'] = form_input($input);
-                            break;
+                                break;
 
                             case 'textarea':
                                 $input = array(
@@ -1519,7 +1520,7 @@ abstract class Nova_characters extends Nova_controller_admin
                                 );
 
                                 $data['join'][$sid]['fields'][$f_id]['input'] = form_textarea($input);
-                            break;
+                                break;
 
                             case 'select':
                                 $value = false;
@@ -1535,7 +1536,7 @@ abstract class Nova_characters extends Nova_controller_admin
                                 }
 
                                 $data['join'][$sid]['fields'][$f_id]['input'] = form_dropdown($field->field_id, $input);
-                            break;
+                                break;
                         }
                     }
                 }
@@ -1682,7 +1683,7 @@ abstract class Nova_characters extends Nova_controller_admin
                         $flash['status'] = 'error';
                         $flash['message'] = text_output($message);
                     }
-                break;
+                    break;
             }
 
             // set the flash message
@@ -1714,7 +1715,7 @@ abstract class Nova_characters extends Nova_controller_admin
 
                 // get all the NPCs
                 $all = $this->char->get_all_characters('npc');
-            break;
+                break;
 
             case 2:
                 // get the user's main character information
@@ -1746,7 +1747,7 @@ abstract class Nova_characters extends Nova_controller_admin
 
                 // get all the NPCs
                 $all = $this->char->get_all_characters('npc');
-            break;
+                break;
 
             case 3:
                 // get all the departments
@@ -1761,7 +1762,7 @@ abstract class Nova_characters extends Nova_controller_admin
 
                 // get all the NPCs
                 $all = $this->char->get_all_characters('npc');
-            break;
+                break;
         }
 
         $data['count'] = 0;
@@ -1801,8 +1802,8 @@ abstract class Nova_characters extends Nova_controller_admin
                         'name' => parse_name($name),
                         'position_1' => ($pos !== false) ? $pos->pos_name : '',
                         'position_2' => (! empty($a->position_2)) ? $this->pos->get_position($a->position_2, 'pos_name') : '',
-                        'pstatus' => $p['status'],
-                        'email' => $p['email']
+                        'pstatus' => $p['status'] ?? '',
+                        'email' => $p['email'] ?? ''
                     );
                 }
 
@@ -1936,7 +1937,7 @@ abstract class Nova_characters extends Nova_controller_admin
                 $this->mail->bcc($cc);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'reject':
                 $cc = implode(',', $this->user->get_emails_with_access('characters/index'));
@@ -1956,7 +1957,7 @@ abstract class Nova_characters extends Nova_controller_admin
                 $this->mail->cc($cc);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
 
             case 'pending':
                 // load the models
@@ -2042,7 +2043,7 @@ abstract class Nova_characters extends Nova_controller_admin
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $email_data['email_subject']);
                 $this->mail->message($message);
-            break;
+                break;
         }
 
         // send the email

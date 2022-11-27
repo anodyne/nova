@@ -6,7 +6,10 @@
         "build:login": "cross-env ENV_BUILD=dev postcss resources/css/login.css --dir dist/css --verbose",
         "build:app": "cross-env ENV_BUILD=dev postcss resources/css/app.css --dir dist/css --verbose",
         "build:wiki": "cross-env ENV_BUILD=dev postcss resources/css/wiki.css --dir dist/css --verbose",
-        "css": "concurrently \"npm run build:colors\" \"npm run build:app\" \"npm run build:wiki\" \"npm run build:login\""
+        "build:ui-theme-main": "cross-env ENV_BUILD=dev postcss resources/css/jquery.ui.theme.css --dir main/css --verbose",
+        "build:ui-theme-admin": "cross-env ENV_BUILD=dev postcss resources/css/jquery.ui.theme.css --dir admin/css --verbose",
+        "build:chosen": "cross-env ENV_BUILD=dev postcss resources/css/jquery.chosen.css --dir admin/css --verbose",
+        "css": "concurrently \"npm run build:colors\" \"npm run build:app\" \"npm run build:wiki\" \"npm run build:login\" \"npm run build:ui-theme-main\" \"npm run build:ui-theme-admin\"  \"npm run build:chosen\""
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.3",

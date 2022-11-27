@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -6,22 +8,22 @@
 
 <div class="info-full">
 	<?php echo text_output($label['depts'], 'h3');?>
-	
+
 	<?php if (isset($depts)): ?>
 		<?php foreach ($depts as $d): ?>
 			<p><strong><?php echo $d['name'];?></strong></p>
-			
-			<p class="fontSmall">
+
+			<div class="fontSmall pill-container">
 			<?php $count = count($d['items']);?>
 			<?php $i = 1;?>
 			<?php foreach ($d['items'] as $key => $value): ?>
-				<nobr><?php echo anchor('manage/positions/'.$key, $value['name'], array('rel' => 'twipsy', 'title' => $value['desc']));?></nobr>
+				<?php echo anchor('manage/positions/'.$key, $value['name'], array('rel' => 'twipsy', 'class' => 'pill', 'title' => $value['desc']));?>
 				<?php if ($i != $count): ?>
 					&middot;
 				<?php endif;?>
 				<?php ++$i;?>
 			<?php endforeach;?>
-			</p>
+			</div>
 		<?php endforeach;?>
 	<?php endif;?>
 </div>
@@ -38,7 +40,7 @@
 	<?php echo text_output($deptnames[$g_dept], 'h2');?>
 	<div class="zebra">
 	<?php echo form_open('manage/positions/'. $g_dept .'/edit');?>
-	
+
 		<?php foreach ($positions as $p): ?>
 			<div id="<?php echo $p['id'];?>" class="padding_p5_0_p5_0">
 				<table class="table100">
@@ -75,7 +77,7 @@
 				</table>
 			</div>
 		<?php endforeach;?>
-		
+
 		<br />
 		<?php echo form_button($buttons['update']);?>
 	<?php echo form_close();?>

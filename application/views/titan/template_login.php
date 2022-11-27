@@ -47,6 +47,10 @@ $backgroundImage = APPFOLDER.'/views/'.$current_skin.'/dist/images/background.jp
 
 		<?php echo $_redirect;?>
 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 		<?php echo link_tag($stylesheet);?>
 		<?php echo link_tag($colors);?>
 

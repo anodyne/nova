@@ -1961,6 +1961,8 @@ abstract class Nova_sim extends Nova_controller_main
                     }
                 }
 
+                $minutes = round($logs->log_words / 200);
+
                 $data['label'] = array(
                     'addcomment' => ucfirst(lang('actions_add')).' '.lang('labels_a').' '.ucfirst(lang('labels_comment')),
                     'by' => lang('labels_by'),
@@ -1974,6 +1976,13 @@ abstract class Nova_sim extends Nova_controller_main
                     'title' => ucfirst(lang('labels_title')),
                     'view_log' => ucwords(lang('actions_view') .' '. lang('global_log')),
                     'rss_feed' => lang('misc_rss_feed'),
+                    'reading_time' => sprintf(
+                        lang('word_count_with_read_time'),
+                        $logs->log_words,
+                        lang('global_words'),
+                        $minutes < 1 ? 1 : $minutes,
+                        lang('time_minute')
+                    ),
                 );
 
                 $this->_regions['title'].= $data['title'];
@@ -2221,6 +2230,8 @@ abstract class Nova_sim extends Nova_controller_main
             $data['valid'][] = false;
         }
 
+        $minutes = round($row->post_words / 200);
+
         $data['label'] = array(
             'addcomment' => ucfirst(lang('actions_add')).' '.lang('labels_a').' '.ucfirst(lang('labels_comment')),
             'by' => lang('labels_by'),
@@ -2237,6 +2248,13 @@ abstract class Nova_sim extends Nova_controller_main
             'timeline' => ucfirst(lang('labels_timeline')) .':',
             'title' => ucfirst(lang('labels_title')),
             'view_log' => ucwords(lang('actions_view') .' '. lang('global_log')),
+            'reading_time' => sprintf(
+                lang('word_count_with_read_time'),
+                $row->post_words,
+                lang('global_words'),
+                $minutes < 1 ? 1 : $minutes,
+                lang('time_minute')
+            ),
         );
 
         $this->_regions['content'] = Location::view($view_loc, $this->skin, 'main', $data);

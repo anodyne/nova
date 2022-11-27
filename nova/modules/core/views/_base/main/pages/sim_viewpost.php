@@ -33,6 +33,10 @@
 	<?php endif;?>
 </p>
 
+<p class="fontSmall bold gray">
+	<?php echo $label['reading_time'];?>
+</p>
+
 <p class="fontSmall gray">
 	<strong><?php echo $label['mission'];?></strong>
 	<?php echo anchor('sim/missions/id/'. $mission_id, $mission);?>

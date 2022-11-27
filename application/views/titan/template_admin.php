@@ -76,6 +76,9 @@ $backgroundImage = APPFOLDER.'/views/'.$current_skin.'/dist/images/background.jp
 					$('.panel-wrapper').toggleClass('hidden');
 					return false;
 				});
+
+				// make sure the control panel item is always shown as active
+				$('a:contains("Control Panel")').addClass('active');
 			});
 		</script>
 

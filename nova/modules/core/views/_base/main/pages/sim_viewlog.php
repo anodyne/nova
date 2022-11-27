@@ -32,6 +32,10 @@
 	<?php endif;?>
 </p>
 
+<p class="fontSmall bold gray">
+	<?php echo $label['reading_time'];?>
+</p>
+
 <?php echo text_output($content);?>
 
 <p>&nbsp;</p>

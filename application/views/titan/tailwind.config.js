@@ -22,14 +22,13 @@ const createColorScale = (color) => ({
 });
 
 module.exports = {
-  content: [
-    './template_main.php',
-  ],
+  content: [],
   safelist: [
     'italic',
     'uppercase',
     'lowercase',
     'hidden',
+    'text-primary-400',
     'text-primary-600',
     'text-primary-700',
   ],

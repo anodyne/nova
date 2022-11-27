@@ -195,13 +195,13 @@ textarea {
 	@apply w-[500px];
 }
 input[type=checkbox] {
-	@apply rounded bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-white checked:hover:bg-primary-600 focus:text-primary-600;
+	@apply rounded bg-gray-700 checked:bg-primary-600 border-gray-600 focus:ring-primary-900 focus:ring-offset-gray-800 checked:hover:bg-primary-600 focus:text-primary-600;
 }
 input[type=radio] {
-	@apply rounded-full bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-white checked:hover:bg-primary-600 focus:text-primary-600;
+	@apply rounded-full bg-gray-700 checked:bg-primary-600 border-gray-600 focus:ring-primary-900 focus:ring-offset-gray-800 checked:hover:bg-primary-600 focus:text-primary-600;
 }
 input[type=file] {
-	@apply file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-100 file:text-primary-600 hover:file:bg-primary-200 hover:file:text-primary-700;
+	@apply file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-900 file:text-primary-400 hover:file:bg-primary-800 hover:file:text-primary-300;
 }
 
 input.small,
@@ -223,16 +223,6 @@ select.large {
 
 kbd {
 	@apply flex items-center text-sm font-bold font-sans space-x-2 mb-1.5;
-}
-
-div.chzn-container ul.chzn-choices {
-	@apply !rounded-lg !border-gray-700 shadow !px-3 !py-2;
-}
-div.chzn-container input {
-	@apply !font-sans !text-base;
-}
-div.chzn-container ul.chzn-choices li.search-field input {
-	@apply !p-0 !m-0 !w-full;
 }
 
 .cell-label {
@@ -523,13 +513,13 @@ ul.padding1 { @apply py-2 px-4; }
 }
 
 .pill-container {
-	@apply block mt-3 text-transparent;
+	@apply flex flex-wrap mt-3 text-transparent;
 }
 .pill-inline-container {
 	@apply text-transparent;
 }
 .pill {
-	@apply rounded-full py-0.5 px-2.5 font-medium text-gray-300 bg-gray-900 border border-gray-700 transition;
+	@apply rounded-full py-0.5 px-2.5 font-medium text-gray-300 bg-gray-900 border border-gray-700 transition my-1;
 }
 a.pill {
 	@apply hover:bg-primary-900 hover:border-primary-700 hover:text-primary-300;

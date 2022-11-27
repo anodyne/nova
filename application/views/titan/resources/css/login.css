@@ -74,7 +74,7 @@ select {
 	@apply rounded-lg border border-gray-600 bg-gray-700 ring-1 ring-transparent shadow-sm focus:border-primary-600 focus:ring-primary-600 focus:text-white focus:outline-none focus:bg-gray-700/50 w-full;
 }
 input[type=checkbox] {
-	@apply rounded bg-white checked:bg-primary-600 border-gray-300 focus:ring-primary-400 focus:ring-offset-white checked:hover:bg-primary-600 focus:text-primary-600;
+	@apply rounded bg-gray-700 checked:bg-primary-600 border-gray-600 focus:ring-primary-900 focus:ring-offset-gray-800 checked:hover:bg-primary-600 focus:text-primary-600;
 }
 
 kbd {
@@ -108,17 +108,17 @@ label > strong {
 }
 
 .flash_message {
-	@apply -mx-10 -mt-8 mb-6 font-semibold border-b;
+	@apply -mx-10 -mt-8 mb-6 font-semibold border-b highlight-white/10 rounded-t-xl;
 }
 .flash_message p {
 	@apply m-0 px-6 py-3;
 }
 .flash-success {
-	@apply bg-success-100 border-success-200 text-success-600;
+	@apply bg-success-900 border-success-800 text-success-300;
 }
 .flash-error {
-	@apply bg-danger-100 border-danger-200 text-danger-600;
+	@apply bg-danger-900 border-danger-800 text-danger-300;
 }
 .flash-info {
-	@apply bg-info-100 border-info-200 text-info-600;
+	@apply bg-info-900 border-info-800 text-info-300;
 }

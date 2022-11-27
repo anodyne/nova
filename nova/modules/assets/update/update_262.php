@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -180,4 +181,34 @@ if ($drop_column !== null) {
     foreach ($drop_column as $key => $value) {
         $this->dbforge->drop_column($key, $value[0]);
     }
+}
+
+$posts = $this->db->get('posts');
+
+if ($posts->num_rows() > 0) {
+    $postsData = [];
+
+    foreach ($posts->result() as $post) {
+        $postsData[] = [
+            'post_id' => $post->post_id,
+            'post_words' => str_word_count($post->post_content),
+        ];
+    }
+
+    $this->db->update_batch('posts', $postsData, 'post_id');
+}
+
+$logs = $this->db->get('personallogs');
+
+if ($logs->num_rows() > 0) {
+    $logsData = [];
+
+    foreach ($logs->result() as $log) {
+        $logsData[] = [
+            'log_id' => $log->log_id,
+            'log_words' => str_word_count($log->log_content),
+        ];
+    }
+
+    $this->db->update_batch('personallogs', $logsData, 'log_id');
 }
