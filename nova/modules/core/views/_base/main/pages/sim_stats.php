@@ -189,12 +189,12 @@
 		<h2 class="page-subhead"><?php echo $label['posting'];?></h2>
 
 		<p><strong><?php echo $label['total_posts'];?>:</strong> <?php echo number_format($posts['total']['all']);?></p>
-		<p><strong><?php echo $label['total_posts'];?>:</strong> <?php echo number_format($posts['total']['all']);?></p>
+		<p><strong><?php echo $label['total_posts_words'];?>:</strong> <?php echo number_format($words['posts']);?></p>
 
 		<p><strong><?php echo $label['total_logs'];?>:</strong> <?php echo number_format($logs['total']['all']);?></p>
-		<p><strong><?php echo $label['total_logs'];?>:</strong> <?php echo number_format($logs['total']['all']);?></p>
+		<p><strong><?php echo $label['total_logs_words'];?>:</strong> <?php echo number_format($words['logs']);?></p>
 
 		<p><strong><?php echo $label['total_posting'];?>:</strong> <?php echo number_format($entries['total']['all']);?></p>
-		<p><strong><?php echo $label['total_posting'];?>:</strong> <?php echo number_format($entries['total']['all']);?></p>
+		<p><strong><?php echo $label['total_words'];?>:</strong> <?php echo number_format($words['total']);?></p>
 	</div>
 </div>

@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -693,6 +694,12 @@ abstract class Nova_report extends Nova_controller_admin
             'wordsPace' => round((($totalCurrentEntryWords) / ($today['mday'])) * $days, 2),
         ];
 
+        $data['words'] = [
+            'posts' => $totalPostWords = $this->posts->count_all_post_words(),
+            'logs' => $totalLogWords = $this->logs->count_all_log_words(),
+            'total' => $totalPostWords + $totalLogWords,
+        ];
+
         $data['start'] = mdate(
             $datestring,
             gmt_to_local(
@@ -805,6 +812,20 @@ abstract class Nova_report extends Nova_controller_admin
             'total_posts' => ucwords(lang('labels_total').' '.lang('global_posts')),
             'total_logs' => ucwords(lang('labels_total').' '.lang('global_logs')),
             'total_posting' => ucwords(lang('labels_total').' '.lang('labels_posting').' '.lang('labels_entries')),
+            'total_posts_words' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('global_post'),
+                lang('global_words'),
+            ])),
+            'total_logs_words' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('global_log'),
+                lang('global_words'),
+            ])),
+            'total_words' => ucwords(join(' ', [
+                lang('labels_total'),
+                lang('global_words'),
+            ])),
         );
 
         $this->_regions['content'] = Location::view('report_stats', $this->skin, 'admin', $data);
