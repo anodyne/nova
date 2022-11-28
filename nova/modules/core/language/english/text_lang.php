@@ -194,7 +194,7 @@ $lang['versions_redirect'] = "For a full version history of Nova, please visit t
 $lang['components_redirect'] = "For a full listing of third-party components and plugins in Nova, please visit the <a href='https://help.anodyne-productions.com/product/nova-2' target='_blank'>Anodyne Help Center</a>.";
 $lang['tags_explain'] = "Tags (i.e. keywords) are a form of meta-data to classify items and help find them later using Nova's search capabilities (e.g. klingon, peace summit, Khitomer)";
 $lang['metadata_explain'] = "You can specify additional information to be displayed on the manifest by entering the field's <strong>HTML name</strong> (found under HTML Attributes when editing a bio form field) and separating fields with a pipe (|). Information will be displayed in the order specified. (i.e. species|gender)";
-$lang['word_count_with_read_time'] = '%d %s, about a %d %s read';
+$lang['word_count_with_read_time'] = '%s %s; about a %s %s read';
 
 /*
 |---------------------------------------------------------------

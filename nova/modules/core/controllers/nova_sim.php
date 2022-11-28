@@ -1998,7 +1998,7 @@ abstract class Nova_sim extends Nova_controller_main
                     'rss_feed' => lang('misc_rss_feed'),
                     'reading_time' => sprintf(
                         lang('word_count_with_read_time'),
-                        $logs->log_words,
+                        number_format($logs->log_words),
                         lang('global_words'),
                         $minutes < 1 ? 1 : $minutes,
                         lang('time_minute')
@@ -2270,7 +2270,7 @@ abstract class Nova_sim extends Nova_controller_main
             'view_log' => ucwords(lang('actions_view') .' '. lang('global_log')),
             'reading_time' => sprintf(
                 lang('word_count_with_read_time'),
-                $row->post_words,
+                number_format($row->post_words),
                 lang('global_words'),
                 $minutes < 1 ? 1 : $minutes,
                 lang('time_minute')
