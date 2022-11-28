@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Minimum Internet Explorer requirement has been raised from version 7 to version 11.
 - The System Information and Version History page now displays the server's version of PHP.
 - Reorganized the Sim Statistics report to include word count stats in most categories.
+- Updated the Sim Statistics report to include lifetime totals for word counts.
 - Renamed the departments database table from `departments_{genre}` to `departments`.
 - Renamed the positions database table from `positions_{genre}` to `positions`.
 - Renamed the ranks database table from `ranks_{genre}` to `ranks`.
