@@ -25,6 +25,45 @@ $system_info = [
 
 /*
 |---------------------------------------------------------------
+| TABLES TO DROP
+|
+| $drop_tables = array('table_name');
+|---------------------------------------------------------------
+*/
+
+if ($drop_tables !== null) {
+    foreach ($drop_tables as $tableToDrop) {
+        if ($this->db->table_exists($tableToDrop)) {
+            $this->dbforge->drop_table($tableToDrop);
+        }
+    }
+}
+
+/*
+|---------------------------------------------------------------
+| TABLES TO RENAME
+|
+| $rename_tables = array('old_table_name' => 'new_table_name');
+|---------------------------------------------------------------
+*/
+
+$rename_tables = [
+    'departments_'.GENRE => 'departments',
+    'positions_'.GENRE => 'positions',
+    'ranks_'.GENRE => 'ranks',
+    'sessions' => 'sessions_ci2',
+];
+
+if ($rename_tables !== null) {
+    foreach ($rename_tables as $oldTableName => $newTableName) {
+        if ($this->db->table_exists($oldTableName)) {
+            $this->dbforge->rename_table($oldTableName, $newTableName);
+        }
+    }
+}
+
+/*
+|---------------------------------------------------------------
 | TABLES TO ADD
 |
 | $add_tables = array(
@@ -50,47 +89,18 @@ $system_info = [
 |---------------------------------------------------------------
 */
 
+$add_tables = [];
+
 if ($add_tables !== null) {
-    foreach ($add_tables as $key => $value) {
-        $this->dbforge->add_field($$value['fields']);
-        $this->dbforge->add_key($value['id'], true);
-        $this->dbforge->create_table($key, true);
+    foreach ($add_tables as $tableName => $tableData) {
+        if (! $this->db->table_exists($tableName)) {
+            $this->dbforge->add_field($$tableData['fields']);
+            $this->dbforge->add_key($tableData['id'], true);
+            $this->dbforge->create_table($tableName, true);
+        }
     }
 }
 
-/*
-|---------------------------------------------------------------
-| TABLES TO DROP
-|
-| $drop_tables = array('table_name');
-|---------------------------------------------------------------
-*/
-
-if ($drop_tables !== null) {
-    foreach ($drop_tables as $value) {
-        $this->dbforge->drop_table($value);
-    }
-}
-
-/*
-|---------------------------------------------------------------
-| TABLES TO RENAME
-|
-| $rename_tables = array('old_table_name' => 'new_table_name');
-|---------------------------------------------------------------
-*/
-
-$rename_tables = [
-    'departments_'.GENRE => 'departments',
-    'positions_'.GENRE => 'positions',
-    'ranks_'.GENRE => 'ranks',
-];
-
-if ($rename_tables !== null) {
-    foreach ($rename_tables as $key => $value) {
-        $this->dbforge->rename_table($key, $value);
-    }
-}
 
 /*
 |---------------------------------------------------------------
@@ -123,8 +133,12 @@ $add_column = [
 ];
 
 if ($add_column !== null) {
-    foreach ($add_column as $key => $value) {
-        $this->dbforge->add_column($key, $value);
+    foreach ($add_column as $tableName => $columns) {
+        foreach ($columns as $columnName => $columnData) {
+            if (! $this->db->field_exists($columnName, $tableName)) {
+                $this->dbforge->add_column($tableName, $columns);
+            }
+        }
     }
 }
 
@@ -142,21 +156,6 @@ if ($add_column !== null) {
 |---------------------------------------------------------------
 */
 
-$modify_column = [
-    'sessions' => [
-        'session_id' => [
-            'name' => 'id',
-        ],
-        'user_data' => [
-            'name' => 'data',
-            'type' => 'BLOB',
-        ],
-        'last_activity' => [
-            'name' => 'timestamp',
-        ],
-    ],
-];
-
 if ($modify_column !== null) {
     foreach ($modify_column as $key => $value) {
         $this->dbforge->modify_column($key, $value);
@@ -173,13 +172,9 @@ if ($modify_column !== null) {
 |---------------------------------------------------------------
 */
 
-$drop_column = [
-    'sessions' => ['user_agent'],
-];
-
 if ($drop_column !== null) {
-    foreach ($drop_column as $key => $value) {
-        $this->dbforge->drop_column($key, $value[0]);
+    foreach ($drop_column as $tableName => $columns) {
+        $this->dbforge->drop_column($tableName, $columns[0]);
     }
 }
 
@@ -189,10 +184,12 @@ if ($posts->num_rows() > 0) {
     $postsData = [];
 
     foreach ($posts->result() as $post) {
-        $postsData[] = [
-            'post_id' => $post->post_id,
-            'post_words' => str_word_count($post->post_content),
-        ];
+        if ($post->post_words === null) {
+            $postsData[] = [
+                'post_id' => $post->post_id,
+                'post_words' => str_word_count($post->post_content),
+            ];
+        }
     }
 
     $this->db->update_batch('posts', $postsData, 'post_id');
@@ -204,10 +201,12 @@ if ($logs->num_rows() > 0) {
     $logsData = [];
 
     foreach ($logs->result() as $log) {
-        $logsData[] = [
-            'log_id' => $log->log_id,
-            'log_words' => str_word_count($log->log_content),
-        ];
+        if ($log->log_words === null) {
+            $logsData[] = [
+                'log_id' => $log->log_id,
+                'log_words' => str_word_count($log->log_content),
+            ];
+        }
     }
 
     $this->db->update_batch('personallogs', $logsData, 'log_id');
