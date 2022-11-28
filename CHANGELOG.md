@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Contact page "honeypot" for attempting to limit spam.
 - `actions_cancel` language key.
 - `misc_rss_feed` language key.
+- `word_count_with_read_time` language key.
 - New versions of the `include_head` files (all suffixed with `_next`). This allowed us to fix some significant issues with jQuery bugs by removing some code. Existing skins will continue to work as expected, but the Pulsar and Titan skins now use the newer versions.
 
 ### Changed
