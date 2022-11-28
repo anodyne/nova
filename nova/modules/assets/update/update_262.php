@@ -89,12 +89,38 @@ if ($rename_tables !== null) {
 |---------------------------------------------------------------
 */
 
-$add_tables = [];
+
+$add_tables = [
+    'sessions' => [
+        'id' => 'id',
+        'fields' => 'fields_sessions',
+    ],
+];
+
+$fields_sessions = [
+    'id' => [
+        'type' => 'VARCHAR',
+        'constraint' => 128
+    ],
+    'ip_address' => [
+        'type' => 'VARCHAR',
+        'constraint' => 45
+    ],
+    'timestamp' => [
+        'type' => 'INT',
+        'constraint' => 10,
+        'unsigned' => true,
+        'default' => 0
+    ],
+    'data' => [
+        'type' => 'BLOB'
+    ],
+];
 
 if ($add_tables !== null) {
     foreach ($add_tables as $tableName => $tableData) {
         if (! $this->db->table_exists($tableName)) {
-            $this->dbforge->add_field($$tableData['fields']);
+            $this->dbforge->add_field(${$tableData['fields']});
             $this->dbforge->add_key($tableData['id'], true);
             $this->dbforge->create_table($tableName, true);
         }
