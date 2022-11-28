@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -367,7 +368,7 @@ abstract class Nova_update extends CI_Controller
                 $this->_regions['controls'] = form_open('update/step/2').form_button($next).form_close();
                 $this->_regions['title'].= lang('upd_step1_title');
                 $this->_regions['label'] = lang('upd_step1_title');
-            break;
+                break;
 
             case 2:
                 $this->load->helper('directory');
@@ -427,7 +428,7 @@ abstract class Nova_update extends CI_Controller
                 $data['label'] = array(
                     'text' => sprintf(
                         lang('upd_step2_success'),
-                        $system_info['sys_version_major'].$system_info['sys_version_minor'].$system_info['sys_version_update']
+                        APP_VERSION
                     ),
                     'back' => lang('upd_step2_site')
                 );
@@ -445,7 +446,7 @@ abstract class Nova_update extends CI_Controller
                 $this->_regions['controls'] = form_open('main/index').form_button($next).form_close();
                 $this->_regions['title'].= lang('upd_step2_title');
                 $this->_regions['label'] = lang('upd_step2_title');
-            break;
+                break;
         }
 
         Template::assign($this->_regions);
