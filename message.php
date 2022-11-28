@@ -10,7 +10,9 @@ switch ($type) {
         $headerClass = 'text-rose-600';
         $message = 'Your server is using an incompatible version of PHP. In order to run Nova 2.7, your server must be running <span class="font-bold text-slate-800">PHP 7.0</span> or higher, but it looks it\'s only running <span class="font-bold text-rose-600">PHP '.PHP_VERSION.'</span>. Please contact your host to resolve this issue.';
         $additionalHelp = true;
-    break;
+        $additionalHelpLink = null;
+        $additionalHelpLinkTitle = null;
+        break;
 
     case 'maintenance':
         $title = 'Site down for maintenance';
@@ -18,7 +20,9 @@ switch ($type) {
         $headerClass = 'text-sky-500';
         $message = "We're doing some maintenance on the site right now and it isn't available. This shouldn't take very long, so please try again in a little while.";
         $additionalHelp = false;
-    break;
+        $additionalHelpLink = null;
+        $additionalHelpLinkTitle = null;
+        break;
 
     case 'banned':
         $title = 'Entry disallowed';
@@ -26,7 +30,9 @@ switch ($type) {
         $headerClass = 'text-rose-600';
         $message = "The Game Master has issue a complete ban against your account. <a href=\"index.php/main/contact\" class='pb-px border-b border-slate-300 hover:border-slate-400'>Contact the Game Master</a> to discuss lifting the ban. You will not be able to access the site until the ban has been removed.";
         $additionalHelp = false;
-    break;
+        $additionalHelpLink = null;
+        $additionalHelpLinkTitle = null;
+        break;
 
     case 'browser':
         $title = 'Unsupported browser version';
@@ -34,7 +40,19 @@ switch ($type) {
         $headerClass = 'text-sky-500';
         $message = "You're running a version of Internet Explorer that isn't supported. In order to use Nova 2.7, you need to be running Internet Explorer 11 or higher (we recommend Microsoft Edge). You can find updates to Internet Explorer in Windows Update or from <a href=\"https://microsoft.com/windows/internet-explorer/default.aspx\" target=\"_blank\" class='pb-px border-b border-slate-300 hover:border-slate-400'>microsoft.com</a>. Or better yet, switch to <a href=\"https://getfirefox.com\" target=\"_blank\" class='pb-px border-b border-slate-300 hover:border-slate-400'>Firefox</a> or <a href=\"https://google.com/chrome\" target=\"_blank\" class='pb-px border-b border-slate-300 hover:border-slate-400'>Google Chrome</a> for a better experience.";
         $additionalHelp = true;
-    break;
+        $additionalHelpLink = null;
+        $additionalHelpLinkTitle = null;
+        break;
+
+    case 'nova27':
+        $title = 'Update required';
+        $header = 'Update required';
+        $headerClass = 'text-sky-500';
+        $message = "It appears you're running the Nova 2.7 files, but haven't yet run the database update. This version of Nova 2 introduces changes to the database structure and Nova will not run correctly without applying the database update. Please proceed to the Update Center to run the database update.";
+        $additionalHelp = true;
+        $additionalHelpLink = 'index.php/update/index';
+        $additionalHelpLinkTitle = 'Go to the Update Center';
+        break;
 }
 
 ?><!DOCTYPE html>
@@ -55,10 +73,17 @@ switch ($type) {
 
 					<?php if ($additionalHelp === true) { ?>
                         <div class="bg-slate-50 border-t border-slate-900/5 py-4 px-6">
-                            <a href="https://discord.gg/7WmKUks" target="_blank" class="inline-flex items-center group space-x-1 rounded-md py-2 px-4 bg-white text-slate-500 ring-1 ring-gray-900/5 hover:bg-slate-100 hover:ring-gray-900/10 hover:text-slate-600 font-semibold">
-                                <span>Get additional help from Anodyne</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                            </a>
+                            <?php if ($additionalHelpLink !== null) { ?>
+                                <a href="<?php echo $additionalHelpLink;?>" class="inline-flex items-center group space-x-1 rounded-md py-2 px-4 bg-white text-slate-500 ring-1 ring-gray-900/5 hover:bg-slate-100 hover:ring-gray-900/10 hover:text-slate-600 font-semibold">
+                                    <span><?php echo $additionalHelpLinkTitle ?: 'Go';?></span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </a>
+                            <?php } else { ?>
+                                <a href="https://discord.gg/7WmKUks" target="_blank" class="inline-flex items-center group space-x-1 rounded-md py-2 px-4 bg-white text-slate-500 ring-1 ring-gray-900/5 hover:bg-slate-100 hover:ring-gray-900/10 hover:text-slate-600 font-semibold">
+                                    <span>Get additional help from Anodyne</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </a>
+                            <?php } ?>
                         </div>
 					<?php } ?>
 				</div>

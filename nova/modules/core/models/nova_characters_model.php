@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -16,6 +17,11 @@ abstract class Nova_characters_model extends CI_Model
     {
         parent::__construct();
 
+        if (! $this->db->table_exists('ranks')) {
+            header('Location: message.php?type=nova27');
+            exit();
+        }
+
         $this->load->dbutil();
     }
 
@@ -26,36 +32,36 @@ abstract class Nova_characters_model extends CI_Model
         switch ($status) {
             case 'active':
                 $this->db->where('crew_type', 'active');
-            break;
+                break;
 
             case 'inactive':
                 $this->db->where('crew_type', 'inactive');
-            break;
+                break;
 
             case 'npc':
                 $this->db->where('crew_type', 'npc');
-            break;
+                break;
 
             case 'user_npc':
                 $this->db->where('crew_type', 'active');
                 $this->db->or_where('crew_type', 'npc');
-            break;
+                break;
 
             case 'pending':
                 $this->db->where('crew_type', 'pending');
-            break;
+                break;
 
             case 'has_user':
                 $this->db->where('user >', '');
-            break;
+                break;
 
             case 'no_user':
                 $this->db->where('user', null);
                 $this->db->or_where('user', 0);
-            break;
+                break;
 
             case 'all':
-            break;
+                break;
         }
 
         if (empty($order)) {
@@ -385,23 +391,23 @@ abstract class Nova_characters_model extends CI_Model
                 case 'active':
                 default:
                     $string = "`crew_type` = 'active'";
-                break;
+                    break;
 
                 case 'inactive':
                     $string = "`crew_type` = 'inactive'";
-                break;
+                    break;
 
                 case 'pending':
                     $string = "`crew_type` = 'pending'";
-                break;
+                    break;
 
                 case 'npc':
                     $string = "`crew_type` = 'npc'";
-                break;
+                    break;
 
                 case 'active_npc':
                     $string = "`crew_type` = 'active' OR `crew_type` = 'npc'";
-                break;
+                    break;
             }
 
             $this->db->where("($string)", null);
