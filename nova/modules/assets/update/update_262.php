@@ -184,7 +184,7 @@ if ($posts->num_rows() > 0) {
     $postsData = [];
 
     foreach ($posts->result() as $post) {
-        if ($post->post_words === null) {
+        if ((int) $post->post_words === 0) {
             $postsData[] = [
                 'post_id' => $post->post_id,
                 'post_words' => str_word_count($post->post_content),
@@ -192,7 +192,9 @@ if ($posts->num_rows() > 0) {
         }
     }
 
-    $this->db->update_batch('posts', $postsData, 'post_id');
+    if (count($postsData) > 0) {
+        $this->db->update_batch('posts', $postsData, 'post_id');
+    }
 }
 
 $logs = $this->db->get('personallogs');
@@ -201,7 +203,7 @@ if ($logs->num_rows() > 0) {
     $logsData = [];
 
     foreach ($logs->result() as $log) {
-        if ($log->log_words === null) {
+        if ((int) $log->log_words === 0) {
             $logsData[] = [
                 'log_id' => $log->log_id,
                 'log_words' => str_word_count($log->log_content),
@@ -209,5 +211,7 @@ if ($logs->num_rows() > 0) {
         }
     }
 
-    $this->db->update_batch('personallogs', $logsData, 'log_id');
+    if (count($logsData) > 0) {
+        $this->db->update_batch('personallogs', $logsData, 'log_id');
+    }
 }
