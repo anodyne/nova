@@ -316,6 +316,23 @@ abstract class Nova_personallogs_model extends CI_Model
         return $query->num_rows();
     }
 
+    public function count_all_log_words($status = 'activated')
+    {
+        $this->db->select_sum('log_words', 'word_count');
+
+        if (! empty($status)) {
+            $this->db->where('log_status', $status);
+        }
+
+        $result = $this->db->get('personallogs')->row();
+
+        if ($result->word_count !== null) {
+            return (int) $result->word_count;
+        }
+
+        return 0;
+    }
+
     public function count_log_words($start = '', $end = '', $status = 'activated')
     {
         $this->db->select_sum('log_words', 'word_count');

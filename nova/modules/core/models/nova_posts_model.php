@@ -464,6 +464,23 @@ abstract class Nova_posts_model extends CI_Model
         return $count;
     }
 
+    public function count_all_post_words($status = 'activated')
+    {
+        $this->db->select_sum('post_words', 'word_count');
+
+        if (! empty($status)) {
+            $this->db->where('post_status', $status);
+        }
+
+        $result = $this->db->get('posts')->row();
+
+        if ($result->word_count !== null) {
+            return (int) $result->word_count;
+        }
+
+        return 0;
+    }
+
     public function count_post_words($start = '', $end = '', $status = 'activated')
     {
         $this->db->select_sum('post_words', 'word_count');
