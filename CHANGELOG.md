@@ -1,9 +1,13 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [2.7.0] - 2022-12-02
+
 ### Added
 - Word counts for mission posts and personal logs.
 - Word count display below mission post and personal log content text areas. (Note: due the differences between how Javascript calculates words and how PHP calculates words, there may be slight differences between the count displayed and what is stored in the database.)

@@ -2,7 +2,7 @@ version: 2.7.0
 version_major: 2
 version_minor: 7
 version_update: 0
-severity: update
-notes: Nova 2.7 provides compatibility updates for PHP 8+...
-date: 8 July 2021
+severity: minor
+notes: Nova 2.7 provides compatibility updates for PHP 8, new word count features for mission posts and personal logs, refreshed versions of the Pulsar and Titan skins, a multitude of quality of life improvements, and bug fixes.
+date: 2 December 2022
 link: https://anodyne-productions.com/nova
