@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.1] - 2022-12-04
+
+### Fixed
+- Misconfigured base URL would redirect users to an external domain during the update process.
+
 ## [2.7.0] - 2022-12-02
 
 ### Added
