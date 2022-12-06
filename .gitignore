@@ -5,13 +5,8 @@ application/cache/*/
 application/logs/
 application/modules/*/
 sessions
-application/views/
 
 application/config/database.php
-
-!application/views/default/*
-!application/views/titan/*
-!application/views/_base_override/*
 
 application/assets/common/*
 
