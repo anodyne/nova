@@ -5,7 +5,7 @@ application/cache/*/
 application/logs/
 application/modules/*/
 sessions
-#application/views/
+application/views/
 
 application/config/database.php
 
@@ -14,8 +14,6 @@ application/config/database.php
 !application/views/_base_override/*
 
 application/assets/common/*
-
-app/*
 
 # General
 *~
