@@ -188,22 +188,6 @@ $backgroundImage = APPFOLDER.'/views/'.$current_skin.'/dist/images/background.jp
 					</div>
 				</div>
 			</main>
-
-			<footer>
-				<div class="inner">
-					<div class="content">
-						<span>
-							Powered by <strong><?php echo APP_NAME;?></strong> from <a href="https://anodyne-productions.com" target="_blank">Anodyne Productions</a>
-						</span>
-						<span>
-							<?php echo anchor('main/credits', 'Site Credits');?>
-						</span>
-						<span>
-							<?php echo anchor('main/policies', 'Privacy Policy'); ?>
-						</span>
-					</div>
-				</div>
-			</footer>
 		</div>
 	</body>
 </html>

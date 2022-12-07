@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Missing background image from jQuery UI library on the admin control panel in the Pulsar skin.
 - Missing background image from jQuery UI library on the admin control panel in the Titan skin.
+- Footer appears twice in the main section of Titan skin.
 
 ## [2.7.1] - 2022-12-04
 
