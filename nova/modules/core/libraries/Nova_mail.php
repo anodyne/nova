@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -7,8 +8,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @author		Anodyne Productions
  * @copyright	2015 Anodyne Productions
  */
-
-require_once MODFOLDER.'/swiftmailer/swift_required.php';
 
 abstract class Nova_mail
 {
@@ -56,10 +55,10 @@ abstract class Nova_mail
         $transport = $this->createTransport();
 
         // Create the mailer
-        $this->originalMailer = $this->mailer = Swift_Mailer::newInstance($transport);
+        $this->originalMailer = $this->mailer = new Swift_Mailer($transport);
 
         // Create the message
-        $this->originalMessage = $this->message = Swift_Message::newInstance();
+        $this->originalMessage = $this->message = new Swift_Message();
 
         // Set the config items from the email config file
         $this->useragent = $this->config->item('useragent');
@@ -200,9 +199,7 @@ abstract class Nova_mail
                     unset($recipients[$key]);
                 }
 
-                if ($this->validateEmailAddress($clean)) {
-                    $recipients[$key] = $clean;
-                }
+                $recipients[$key] = $clean;
             }
 
             if (count($recipients) > 0) {
@@ -211,7 +208,7 @@ abstract class Nova_mail
         } else {
             $clean = trim($recipients);
 
-            if (! empty($clean) and $this->validateEmailAddress($clean)) {
+            if (! empty($clean)) {
                 return $clean;
             }
         }
@@ -224,24 +221,24 @@ abstract class Nova_mail
         switch ($this->config->item('protocol')) {
             case 'mail':
             default:
-                $transport = Swift_MailTransport::newInstance();
-            break;
+                $transport = new Swift_MailTransport();
+                break;
 
             case 'sendmail':
-                $transport = Swift_SendmailTransport::newInstance($this->config->item('mailpath'));
-            break;
+                $transport = new Swift_SendmailTransport($this->config->item('mailpath'));
+                break;
 
             case 'smtp':
                 $smtpCrypto = $this->config->item('smtp_crypto');
                 $encryptionType = ($smtpCrypto) ? $smtpCrypto : null;
 
-                $transport = Swift_SmtpTransport::newInstance(
+                $transport = (new Swift_SmtpTransport(
                     $this->config->item('smtp_host'),
                     $this->config->item('smtp_port'),
                     $encryptionType
-                )->setUsername($this->config->item('smtp_user'))
+                ))->setUsername($this->config->item('smtp_user'))
                 ->setPassword($this->config->item('smtp_pass'));
-            break;
+                break;
         }
 
         return $transport;

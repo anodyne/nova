@@ -1,0 +1,26 @@
+{
+    "name": "anodyne/nova",
+    "type": "project",
+    "description": "Nova 2 RPG Management",
+    "keywords": [
+        "cms",
+        "anodyne",
+        "nova",
+        "rpg"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.0|^8.0",
+        "swiftmailer/swiftmailer": "^6.3"
+    },
+    "autoload": {},
+    "config": {
+        "bin-dir": "nova/vendor/bin",
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "vendor-dir": "nova/vendor"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
