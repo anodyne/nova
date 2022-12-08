@@ -2,5 +2,4 @@
 !.gitignore
 !_base_override/*
 !default/*
-!errors/*
 !titan/*
