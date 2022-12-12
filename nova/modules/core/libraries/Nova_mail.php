@@ -219,12 +219,8 @@ abstract class Nova_mail
     protected function createTransport()
     {
         switch ($this->config->item('protocol')) {
-            case 'mail':
-            default:
-                $transport = new Swift_MailTransport();
-                break;
-
             case 'sendmail':
+            default:
                 $transport = new Swift_SendmailTransport($this->config->item('mailpath'));
                 break;
 
