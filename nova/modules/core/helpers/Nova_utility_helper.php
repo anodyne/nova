@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -323,7 +324,7 @@ if (! function_exists('verify_server')) {
         // build the specs array
         $specs = array(
             'php' => array(
-                'req'	=> '7.0',
+                'req'	=> '7.4',
                 'act'	=> phpversion()),
             'db' => array(
                 'req'	=> ['mysqli'],

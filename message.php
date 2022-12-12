@@ -8,7 +8,7 @@ switch ($type) {
         $title = 'Incompatible PHP version';
         $header = 'Incompatible PHP version';
         $headerClass = 'text-rose-600';
-        $message = 'Your server is using an incompatible version of PHP. In order to run Nova 2.7, your server must be running <span class="font-bold text-slate-800">PHP 7.0</span> or higher, but it looks it\'s only running <span class="font-bold text-rose-600">PHP '.PHP_VERSION.'</span>. Please contact your host to resolve this issue.';
+        $message = 'Your server is using an incompatible version of PHP. In order to run Nova 2.7, your server must be running <span class="font-bold text-slate-800">PHP 7.4</span> or higher, but it looks it\'s only running <span class="font-bold text-rose-600">PHP '.PHP_VERSION.'</span>. Please contact your host to resolve this issue.';
         $additionalHelp = true;
         $additionalHelpLink = null;
         $additionalHelpLinkTitle = null;
