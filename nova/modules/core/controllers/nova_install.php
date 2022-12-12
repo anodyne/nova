@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -127,7 +128,7 @@ abstract class Nova_install extends CI_Controller
                                     $this->db->dbprefix.$table
                                 );
                             }
-                        break;
+                            break;
 
                         case 'field':
                             $table = $this->input->post('table_name', true);
@@ -173,7 +174,7 @@ abstract class Nova_install extends CI_Controller
                                 $flash['status'] = 'error';
                                 $flash['message'] = lang_output('install_changedb_field_notable');
                             }
-                        break;
+                            break;
                     }
 
                     // set the flash message
@@ -191,7 +192,7 @@ abstract class Nova_install extends CI_Controller
                     );
 
                     $this->_regions['controls'] = form_button($submit).form_close();
-                break;
+                    break;
 
                 case 'verify':
                     $this->load->model('system_model', 'sys');
@@ -245,7 +246,7 @@ abstract class Nova_install extends CI_Controller
 
                         $this->_regions['controls'] = form_button($submit).form_close();
                     }
-                break;
+                    break;
             }
         } else {
             // the view file to use
@@ -386,7 +387,7 @@ abstract class Nova_install extends CI_Controller
                     );
 
                     $this->_regions['controls'] = form_button($submit).form_close();
-                break;
+                    break;
 
                 case 'verify':
                     $email = $this->input->post('email', true);
@@ -450,7 +451,7 @@ abstract class Nova_install extends CI_Controller
 
                         $this->_regions['controls'] = form_button($submit).form_close();
                     }
-                break;
+                    break;
             }
         } else {
             // set the view
@@ -676,7 +677,7 @@ abstract class Nova_install extends CI_Controller
                     APPFOLDER.'/config'
                 );
             } else {
-                if (version_compare(PHP_VERSION, '7.0', '<')) {
+                if (version_compare(PHP_VERSION, '7.4', '<')) {
                     $data['message'] = sprintf(
                         lang('setup.text.php'),
                         PHP_VERSION
@@ -706,7 +707,7 @@ abstract class Nova_install extends CI_Controller
 
                                 $this->_regions['flash_message'] = Location::view('flash', '_base', 'install', $flash);
                             }
-                        break;
+                            break;
 
                         case 1:
                             $next = array(
@@ -720,7 +721,7 @@ abstract class Nova_install extends CI_Controller
                             $data['message'] = lang('setup.text.connection');
 
                             $this->_regions['controls'] = form_button($next).form_close();
-                        break;
+                            break;
 
                         case 2:
                             // set the variables to use
@@ -831,27 +832,27 @@ abstract class Nova_install extends CI_Controller
                                     switch (substr($line, 16, 8)) {
                                         case "hostname":
                                             $file[$line_num] = str_replace("localhost", $this->session->userdata('dbHost'), $line);
-                                        break;
+                                            break;
 
                                         case "username":
                                             $file[$line_num] = str_replace("novauser", $this->session->userdata('dbUser'), $line);
-                                        break;
+                                            break;
 
                                         case "password":
                                             $file[$line_num] = str_replace("novapass", $this->session->userdata('dbPass'), $line);
-                                        break;
+                                            break;
 
                                         case "database":
                                             $file[$line_num] = str_replace("novadb", $this->session->userdata('dbName'), $line);
-                                        break;
+                                            break;
 
                                         case "dbdriver":
                                             $file[$line_num] = str_replace("mysqli", $this->session->userdata('dbDriver'), $line);
-                                        break;
+                                            break;
 
                                         case "dbprefix":
                                             $file[$line_num] = str_replace("nova_", $this->session->userdata('prefix'), $line);
-                                        break;
+                                            break;
                                     }
                                 }
 
@@ -955,7 +956,7 @@ abstract class Nova_install extends CI_Controller
 
                                 $this->_regions['controls'] = form_open('install/setupconfig/4').form_button($next).form_close();
                             }
-                        break;
+                            break;
 
                         case 4:
                             // set the temporary db config
@@ -1096,7 +1097,7 @@ abstract class Nova_install extends CI_Controller
                 $this->_regions['controls'] = form_open('install/step/2').form_button($next).form_close();
                 $this->_regions['title'].= lang('install_step1_title');
                 $this->_regions['label'] = lang('install_step1_label');
-            break;
+                break;
 
             case 2:
                 // pull in the install data asset file
@@ -1159,7 +1160,7 @@ abstract class Nova_install extends CI_Controller
                 $this->_regions['controls'] = form_open('install/step/3').form_button($next).form_close();
                 $this->_regions['title'].= lang('install_step2_title');
                 $this->_regions['label'] = lang('install_step2_label');
-            break;
+                break;
 
             case 3:
                 // pull in the install genre data asset file
@@ -1274,7 +1275,7 @@ abstract class Nova_install extends CI_Controller
                 $this->_regions['controls'] = form_button($next).form_close();
                 $this->_regions['title'].= lang('install_step3_title');
                 $this->_regions['label'] = lang('install_step3_label');
-            break;
+                break;
 
             case 4:
                 // set the variables
@@ -1460,7 +1461,7 @@ abstract class Nova_install extends CI_Controller
                 $this->_regions['controls'] = form_button($next).form_close();
                 $this->_regions['title'].= lang('install_step4_title');
                 $this->_regions['label'] = lang('install_step4_label');
-            break;
+                break;
 
             case 5:
                 $this->load->library('ftp');
@@ -1535,7 +1536,7 @@ abstract class Nova_install extends CI_Controller
                 $this->_regions['controls'] = form_open('main/index').form_button($next).form_close();
                 $this->_regions['title'].= lang('install_step5_title');
                 $this->_regions['label'] = lang('install_step5_label');
-            break;
+                break;
         }
 
         $this->_regions['content'] = Location::view($view_loc, '_base', 'install', $data);
