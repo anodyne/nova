@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Upgraded Swiftmailer to version 6.3.
+- Moved the errors directory from `application/views` into the Nova core.
 
 ### Fixed
 - Missing background image from jQuery UI library on the admin control panel in the Pulsar skin.
