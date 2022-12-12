@@ -221,7 +221,10 @@ abstract class Nova_mail
         switch ($this->config->item('protocol')) {
             case 'sendmail':
             default:
-                $transport = new Swift_SendmailTransport($this->config->item('mailpath'));
+                $path = $this->config->item('mailpath');
+                $path = $path !== '/usr/sbin/sendmail' ? $path : '/usr/sbin/sendmail -t -i';
+
+                $transport = new Swift_SendmailTransport($path);
                 break;
 
             case 'smtp':
@@ -238,10 +241,5 @@ abstract class Nova_mail
         }
 
         return $transport;
-    }
-
-    protected function validateEmailAddress($address)
-    {
-        return (! empty($address) and Swift_Validate::email($address));
     }
 }
