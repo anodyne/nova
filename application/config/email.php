@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
@@ -16,12 +17,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 
 $config['useragent']		= 'CodeIgniter';
-$config['protocol']			= 'mail';
-$config['mailpath']			= '/usr/sbin/sendmail';
+$config['protocol']			= 'sendmail';
+$config['mailpath']			= '/usr/sbin/sendmail -t -i';
 $config['smtp_host']		= '';
 $config['smtp_user']		= '';
 $config['smtp_pass']		= '';
-$config['smtp_port']		= '25';
+$config['smtp_port']		= 25;
 $config['smtp_timeout']		= 5;
 $config['smtp_crypto']		= false;
 $config['wordwrap']			= false;
