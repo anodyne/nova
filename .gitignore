@@ -1,14 +1,9 @@
 # Nova
 
-application/assets/images/*/
 application/cache/*/
-application/logs/
-application/modules/*/
 sessions
 
 application/config/database.php
-
-application/assets/common/*
 
 nova/vendor
 
