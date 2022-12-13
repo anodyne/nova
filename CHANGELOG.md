@@ -9,13 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Minimum PHP version requirement has been raised from 7.0 to 7.4.
 - Upgraded Swiftmailer to version 6.3.
-- PHP's built-in `mail()` function can no longer be used. Anyone using the `mail` protocol will now use Sendmail instead.
+- PHP's built-in `mail()` function can no longer be used. When using the `mail` protocol, Sendmail will be used instead.
 - Moved the errors directory from `application/views` into the Nova core.
 
 ### Fixed
 - Missing background image from jQuery UI library on the admin control panel in the Pulsar skin.
 - Missing background image from jQuery UI library on the admin control panel in the Titan skin.
 - Footer appears twice in the main section of Titan skin.
+- Missing folders in the zip files.
 
 ## [2.7.1] - 2022-12-04
 
