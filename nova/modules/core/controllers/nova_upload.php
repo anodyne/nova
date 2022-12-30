@@ -379,6 +379,10 @@ abstract class Nova_upload extends Nova_controller_admin
                 break;
         }
 
+        if (! is_dir($path)) {
+            mkdir($path);
+        }
+
         $this->upload->initialize([
             'upload_path' => $path,
         ], false);
