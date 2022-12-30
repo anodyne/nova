@@ -416,7 +416,7 @@ abstract class Nova_update extends CI_Controller
                 }
 
                 // update the system info table
-                $this->sys->update_system_info($system_info);
+                $this->sys->update_system_info();
 
                 //$this->_register();
 
