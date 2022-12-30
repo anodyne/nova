@@ -3,6 +3,6 @@ version_major: 2
 version_minor: 7
 version_update: 2
 severity: update
-notes: Nova 2.7.2 upgrades Swiftmailer to version 6.3 (from 4.x) to address several potential issues with PHP 8+. Additionally, some minor design issues with the Pulsar and Titan skins have been fixed. (If you are using either skin, we recommend grabbing the updated versions from the zip archive and replacing the versions on your server.)
-date: 4 December 2022
+notes: Nova 2.7.2 upgrades Swiftmailer to version 6.3 (from 4.x) to address several potential issues with PHP 8+. This update removes the ability to use PHP's built-in mail function. Any users configured to use that email driver will now use Sendmail. Additionally, some minor design issues with the Pulsar and Titan skins have been fixed. (If you are using either skin, we recommend grabbing the updated versions from the zip archive and replacing the versions on your server.)
+date: 1 January 2023
 link: https://anodyne-productions.com/nova
