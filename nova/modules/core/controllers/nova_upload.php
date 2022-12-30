@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -20,6 +21,7 @@ abstract class Nova_upload extends Nova_controller_admin
 
         // load the resources
         $this->load->library('upload');
+        $this->load->config('upload');
     }
 
     public function index()
@@ -168,23 +170,23 @@ abstract class Nova_upload extends Nova_controller_admin
                 switch ($info->upload_resource_type) {
                     case 'bio':
                         $location = 'images/characters';
-                    break;
+                        break;
 
                     case 'award':
                         $location = 'images/awards';
-                    break;
+                        break;
 
                     case 'mission':
                         $location = 'images/missions';
-                    break;
+                        break;
 
                     case 'specs':
                         $location = 'images/specs';
-                    break;
+                        break;
 
                     case 'tour':
                         $location = 'images/tour';
-                    break;
+                        break;
                 }
 
                 $delete += $this->sys->delete_upload_record($r);
@@ -238,23 +240,23 @@ abstract class Nova_upload extends Nova_controller_admin
                 switch ($d->upload_resource_type) {
                     case 'bio':
                         $location = 'images/characters';
-                    break;
+                        break;
 
                     case 'award':
                         $location = 'images/awards';
-                    break;
+                        break;
 
                     case 'mission':
                         $location = 'images/missions';
-                    break;
+                        break;
 
                     case 'specs':
                         $location = 'images/specs';
-                    break;
+                        break;
 
                     case 'tour':
                         $location = 'images/tour';
-                    break;
+                        break;
                 }
 
                 $user = $this->user->get_user($d->upload_user, array('name', 'email'));
@@ -289,23 +291,23 @@ abstract class Nova_upload extends Nova_controller_admin
             case 'bio':
             default:
                 $js_data['tab'] = 0;
-            break;
+                break;
 
             case 'awards':
                 $js_data['tab'] = 1;
-            break;
+                break;
 
             case 'missions':
                 $js_data['tab'] = 2;
-            break;
+                break;
 
             case 'specs':
                 $js_data['tab'] = 3;
-            break;
+                break;
 
             case 'tour':
                 $js_data['tab'] = 4;
-            break;
+                break;
         }
 
         $data['access'] = array(
@@ -358,26 +360,28 @@ abstract class Nova_upload extends Nova_controller_admin
         switch ($data['type']) {
             case 'award':
                 $path = APPPATH.'assets/images/awards/';
-            break;
+                break;
 
             case 'bio':
                 $path = APPPATH.'assets/images/characters/';
-            break;
+                break;
 
             case 'mission':
                 $path = APPPATH.'assets/images/missions/';
-            break;
+                break;
 
             case 'specs':
                 $path = APPPATH.'assets/images/specs/';
-            break;
+                break;
 
             case 'tour':
                 $path = APPPATH.'assets/images/tour/';
-            break;
+                break;
         }
 
-        $this->upload->upload_path = $path;
+        $this->upload->initialize([
+            'upload_path' => $path,
+        ], false);
 
         // do the upload
         $upload = $this->upload->do_upload($data['field']);
