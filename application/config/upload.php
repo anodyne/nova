@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
@@ -12,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $config['upload_path'] = './assets/images/';
 $config['allowed_types'] = 'gif|jpg|jpeg|png';
-$config ['file_ext_tolower'] = true;
+$config['file_ext_tolower'] = true;
 $config['overwrite'] = false;
 $config['max_size'] = '500';
 $config['max_width'] = '1024';
