@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -142,28 +143,16 @@ if ($drop_column !== null) {
     }
 }
 
-/**
- * Add the new settings fields
- */
-$this->db->insert('settings', array(
-    'setting_key' => 'hosting_company',
-    'setting_value' => '',
-    'setting_user_created' => 'n'
-));
+$insertSettingsData = [
+    ['setting_key' => 'hosting_company', 'setting_value' => '', 'setting_user_created' => 'n'],
+    ['setting_key' => 'access_log_purge', 'setting_value' => '24 hours', 'setting_user_created' => 'n'],
+];
 
-$this->db->insert('settings', array(
-    'setting_key' => 'access_log_purge',
-    'setting_value' => '24 hours',
-    'setting_user_created' => 'n'
-));
-
-/**
- * Add the new messages
- */
-$this->db->insert('messages', array(
-    'message_key' => 'policy-privacy',
-    'message_label' => 'Privacy Policy',
-    'message_content' => "The #sim_name# (\"Service\" or \"We\") collects and uses personal information solely for the purpose of providing an online collaborative writing environment. Where feasible, We collect personal information only with the knowledge and consent of the individual concerned (\"Individual\"), and, if the Individual notifies us that they wish to revoke their consent, We will make a best effort to remove all personal information related to the Individual from our Service.
+$insertMessagesData = [
+    [
+        'message_key' => 'policy-privacy',
+        'message_label' => 'Privacy Policy',
+        'message_content' => "The #sim_name# (\"Service\" or \"We\") collects and uses personal information solely for the purpose of providing an online collaborative writing environment. Where feasible, We collect personal information only with the knowledge and consent of the individual concerned (\"Individual\"), and, if the Individual notifies us that they wish to revoke their consent, We will make a best effort to remove all personal information related to the Individual from our Service.
 
 This Privacy Policy, along with our Cookie Policy, Do Not Track Policy, and Your California Privacy Rights page, define in full how the Service collects, manages and processes an Individual's personal information.
 
@@ -220,30 +209,48 @@ An Member may submit a request to <strong>#admin_email#</strong> to have their a
 The Service cannot ensure that other Members do not personally retain Required Member Information or Optional Member Information shared to these other Members through the Service as described in this Policy.
 
 The Service routinely deletes all Access Logs, so an Individual does not need to request its removal explicitly.",
-    'message_type' => 'message'
-));
-
-$this->db->insert('messages', array(
-    'message_key' => 'policy-cookie',
-    'message_label' => 'Cookie Policy',
-    'message_content' => "The #sim_name# (\"Service\" or \"We\") uses cookies solely for the purpose of providing an online collaborative writing environment.
+        'message_type' => 'message'
+    ],
+    [
+        'message_key' => 'policy-cookie',
+        'message_label' => 'Cookie Policy',
+        'message_content' => "The #sim_name# (\"Service\" or \"We\") uses cookies solely for the purpose of providing an online collaborative writing environment.
 
 Cookies are small pieces of text sent back and forth between your web browser and a website you visit. A cookie file is stored in your web browser and allows the Service to recognize you and make your next visit easier and the Service more useful to you. Cookies can be \"persistent\" or \"session\" cookies.
 
 When an Individual accesses or uses the Service, the Service may place a number of cookies in the Individual's web browser. We use both session and persistent cookies. Specifically, We use cookies to authenticate Individuals and prevent fraudulent use of accounts, and We use cookies to remember an Individual's email address when prompting the Individual to log in again.",
-    'message_type' => 'message'
-));
+        'message_type' => 'message'
+    ],
+    [
+        'message_key' => 'policy-do-not-track',
+        'message_label' => 'Do Not Track Policy',
+        'message_content' => "The #sim_name# (\"Service\" or \"We\") does not track Individuals over time to provide targeted advertising and therefore does not respond to Do Not Track (\"DNT\") signals.",
+        'message_type' => 'message'
+    ],
+    [
+        'message_key' => 'policy-california',
+        'message_label' => 'California Privacy Rights Policy',
+        'message_content' => "If you are a California resident, California Civil Code Section 1798.83 permits you to request information regarding the disclosure of your personal information by #sim_name# to third parties for the third parties' direct marketing purposes. To make such a request, please email <strong>#admin_email#</strong>.",
+        'message_type' => 'message'
+    ],
+];
 
-$this->db->insert('messages', array(
-    'message_key' => 'policy-do-not-track',
-    'message_label' => 'Do Not Track Policy',
-    'message_content' => "The #sim_name# (\"Service\" or \"We\") does not track Individuals over time to provide targeted advertising and therefore does not respond to Do Not Track (\"DNT\") signals.",
-    'message_type' => 'message'
-));
+foreach ($insertSettingsData as $settingsData) {
+    $count = $this->db->where('setting_key', $settingsData['setting_key'])
+        ->from('settings')
+        ->count_all_results();
 
-$this->db->insert('messages', array(
-    'message_key' => 'policy-california',
-    'message_label' => 'California Privacy Rights Policy',
-    'message_content' => "If you are a California resident, California Civil Code Section 1798.83 permits you to request information regarding the disclosure of your personal information by #sim_name# to third parties for the third parties' direct marketing purposes. To make such a request, please email <strong>#admin_email#</strong>.",
-    'message_type' => 'message'
-));
+    if ($count === 0) {
+        $this->db->insert('settings', $settingsData);
+    }
+}
+
+foreach ($insertMessagesData as $messageData) {
+    $count = $this->db->where('message_key', $messageData['message_key'])
+        ->from('messages')
+        ->count_all_results();
+
+    if ($count === 0) {
+        $this->db->insert('messages', $messageData);
+    }
+}
