@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Updated Nova license to include 2023.
+
 ## [2.7.2] - 2023-01-01
 
 ### Changed
