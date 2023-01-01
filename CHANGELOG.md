@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.2] - 2023-01-01
+
 ### Changed
 - Minimum PHP version requirement has been raised from 7.0 to 7.4.
 - Upgraded Swiftmailer to version 6.3.
