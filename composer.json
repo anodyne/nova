@@ -10,7 +10,9 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/http": "^8.0",
         "swiftmailer/swiftmailer": "^6.3"
     },
     "autoload": {},
@@ -19,7 +21,10 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
-        "vendor-dir": "nova/vendor"
+        "vendor-dir": "nova/vendor",
+        "platform": {
+            "php": "7.4"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

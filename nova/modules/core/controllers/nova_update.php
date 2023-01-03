@@ -418,7 +418,7 @@ abstract class Nova_update extends CI_Controller
                 // update the system info table
                 $this->sys->update_system_info();
 
-                //$this->_register();
+                $this->_register();
 
                 // update the users to be first launch
                 $this->load->model('users_model', 'user');
@@ -572,5 +572,21 @@ abstract class Nova_update extends CI_Controller
         }
 
         return false;
+    }
+
+    private function _register()
+    {
+        $http = new \Illuminate\Http\Client\Factory();
+
+        $http->post(REGISTER_URL, [
+            'name' => $this->settings->get_setting('sim_name'),
+            'url' => base_url(),
+            'genre' => GENRE,
+            'version' => APP_VERSION,
+            'php_version' => phpversion(),
+            'db_driver' => $this->db->platform(),
+            'db_version' => $this->db->version(),
+            'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+        ]);
     }
 }

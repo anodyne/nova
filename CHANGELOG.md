@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Updated Nova license to include 2023.
+- Install and update processes will now report analytics back to Anodyne.
 
 ## [2.7.2] - 2023-01-01
 

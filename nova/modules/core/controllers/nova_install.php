@@ -1497,7 +1497,7 @@ abstract class Nova_install extends CI_Controller
                     $this->_install_skins();
 
                     // do the product registration
-                    //$this->_register();
+                    $this->_register();
 
                     if ($this->ftp->hostname != 'ftp.example.com') {
                         $this->ftp->connect();
@@ -1740,124 +1740,21 @@ abstract class Nova_install extends CI_Controller
         }
     }
 
-    /**
-     * Register Nova
-     *
-     * @access	private
-     * @return	void
-     */
     private function _register()
     {
-        $this->load->library('xmlrpc');
-        $this->load->library('mail');
+        $this->load->model('settings_model', 'settings');
 
-        // set up the server and method for the request
-        $this->xmlrpc->server(REGISTER, 80);
-        $this->xmlrpc->method('Do_Registration');
+        $http = new \Illuminate\Http\Client\Factory();
 
-        // build the request
-        $request = array(
-            APP_NAME,
-            APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
-            base_url(),
-            $_SERVER['REMOTE_ADDR'],
-            $_SERVER['SERVER_ADDR'],
-            phpversion(),
-            $this->db->platform(),
-            $this->db->version(),
-            'install'
-        );
-
-        // compile the request
-        $this->xmlrpc->request($request);
-
-        if (extension_loaded('xmlrpc')) {
-            if (! $this->xmlrpc->send_request()) {
-                log_message('error', $this->xmlrpc->display_error());
-            }
-        } else {
-            $insert = "INSERT INTO www_installs (product, version, url, ip_client, ip_server, php, db_platform, db_version, type, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
-
-            $message = sprintf(
-                $insert,
-                $this->db->escape($request[0]),
-                $this->db->escape($request[1]),
-                $this->db->escape($request[2]),
-                $this->db->escape($request[3]),
-                $this->db->escape($request[4]),
-                $this->db->escape($request[5]),
-                $this->db->escape($request[6]),
-                $this->db->escape($request[7]),
-                $this->db->escape($request[8]),
-                $this->db->escape(now())
-            );
-
-            $this->mail->from(Util::email_sender());
-            $this->mail->to('anodyne.nova@gmail.com');
-            $this->mail->subject('Nova Registration');
-            $this->mail->message($message);
-
-            $email = $this->mail->send();
-        }
-
-        $items = array(
-            'php'					=> PHP_VERSION,
-            'pcre_utf8'				=> (bool) @preg_match('/^.$/u', 'ñ'),
-            'pcre_unicode'			=> (bool) @preg_match('/^\pL$/u', 'ñ'),
-            'spl'					=> (bool) function_exists('spl_autoload_register'),
-            'reflection'			=> (bool) class_exists('ReflectionClass'),
-            'filters'				=> (bool) function_exists('filter_list'),
-            'iconv'					=> (bool) extension_loaded('iconv'),
-            'mbstring'				=> (bool) extension_loaded('mbstring'),
-            'mb_overload'			=> (bool) ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING,
-            'curl'					=> (bool) extension_loaded('curl'),
-            'mcrypt'				=> (bool) extension_loaded('mcrypt'),
-            'gd'					=> (bool) function_exists('gd_info'),
-            'pdo'					=> (bool) class_exists('PDO'),
-            'fopen'					=> (bool) ini_get('allow_url_fopen'),
-            'url_include'			=> (bool) ini_get('allow_url_include'),
-            'register_globals'		=> (bool) ini_get('register_globals'),
-            'memory'				=> ini_get('memory_limit'),
-            'xmlrpc'				=> (bool) extension_loaded('xmlrpc'),
-            'disabled_functions'	=> ini_get('disable_functions'),
-            'disabled_classes'		=> ini_get('disable_classes'),
-            'server_os'				=> PHP_OS,
-        );
-
-        $insert = "INSERT INTO www_nova2_survey (url, php, pcre_utf8, pcre_unicode, spl, reflection, filters, iconv, mbstring, mb_overload, curl, mcrypt, gd, pdo, fopen, url_include, register_globals, memory, xmlrpc, disabled_functions, disabled_classes, server_os, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d);";
-
-        $message = sprintf(
-            $insert,
-            $this->db->escape(base_url()),
-            $this->db->escape($items['php']),
-            $this->db->escape($items['pcre_utf8']),
-            $this->db->escape($items['pcre_unicode']),
-            $this->db->escape($items['spl']),
-            $this->db->escape($items['reflection']),
-            $this->db->escape($items['filters']),
-            $this->db->escape($items['iconv']),
-            $this->db->escape($items['mbstring']),
-            $this->db->escape($items['mb_overload']),
-            $this->db->escape($items['curl']),
-            $this->db->escape($items['mcrypt']),
-            $this->db->escape($items['gd']),
-            $this->db->escape($items['pdo']),
-            $this->db->escape($items['fopen']),
-            $this->db->escape($items['url_include']),
-            $this->db->escape($items['register_globals']),
-            $this->db->escape($items['memory']),
-            $this->db->escape($items['xmlrpc']),
-            $this->db->escape($items['disabled_functions']),
-            $this->db->escape($items['disabled_classes']),
-            $this->db->escape($items['server_os']),
-            $this->db->escape(now())
-        );
-
-        $this->mail->from(Util::email_sender());
-        $this->mail->to('anodyne.nova@gmail.com');
-        $this->mail->subject('Nova 2 Survey');
-        $this->mail->message($message);
-
-        $email = $this->mail->send();
+        $http->post(REGISTER_URL, [
+            'name' => $this->settings->get_setting('sim_name'),
+            'url' => base_url(),
+            'genre' => GENRE,
+            'version' => APP_VERSION,
+            'php_version' => phpversion(),
+            'db_driver' => $this->db->platform(),
+            'db_version' => $this->db->version(),
+            'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+        ]);
     }
 }
