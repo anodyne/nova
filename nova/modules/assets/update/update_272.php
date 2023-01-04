@@ -152,3 +152,17 @@ if ($drop_column !== null) {
         $this->dbforge->drop_column($tableName, $columns[0]);
     }
 }
+
+foreach (['blk', 'bln', 'blank'] as $blankGenre) {
+    if ($this->db->table_exists("departments_{$blankGenre}")) {
+        $this->dbforge->rename_table("departments_{$blankGenre}", 'departments');
+    }
+
+    if ($this->db->table_exists("positions_{$blankGenre}")) {
+        $this->dbforge->rename_table("positions_{$blankGenre}", 'positions');
+    }
+
+    if ($this->db->table_exists("ranks_{$blankGenre}")) {
+        $this->dbforge->rename_table("ranks_{$blankGenre}", 'ranks');
+    }
+}

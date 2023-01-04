@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Updated Nova license to include 2023.
 - Install and update processes will now report analytics back to Anodyne.
 
+### Fixed
+- Some games running the blank genre were not able to get to their site after successfully updating.
+
 ## [2.7.2] - 2023-01-01
 
 ### Changed
