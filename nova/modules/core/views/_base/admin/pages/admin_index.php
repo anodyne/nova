@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -11,7 +13,7 @@
 	<div id="acp-panel">
 		<div class="panelnav">
 			<ul id="panelmenu" class="UITheme ui-widget">
-				<?php if ($update !== FALSE): ?>
+				<?php if ($update['version'] !== null): ?>
 					<li><a href="#" id="update"><span>
 						<?php if ($update['severity'] == 'red'): ?>
 							<div class="count ui-state-error"><div class="ui-icon ui-icon-notice"></div></div>
@@ -22,13 +24,13 @@
 				<?php if ($notifycount > 0): ?>
 					<div class="count ui-state-highlight"><?php echo $notifycount;?></div>
 				<?php endif;?><?php echo $label['mynotify'];?></span></a></li>
-				
+
 				<?php if (Auth::is_gamemaster($this->session->userdata('userid')) and $activitycount > 0): ?>
 					<li><a href="#" id="activity"><span>
 						<div class="count ui-state-highlight"><?php echo $activitycount;?></div>
 						<?php echo $label['activity'];?></span></a></li>
 				<?php endif;?>
-				
+
 				<li><a href="#" id="milestones"><span>
 					<?php if ($milestonecount > 0): ?>
 						<div class="count ui-state-highlight"><?php echo $milestonecount;?></div>
@@ -36,28 +38,34 @@
 			</ul>
 		</div>
 		<div class="panel">
-			<?php if ($update !== FALSE): ?>
+			<?php if ($update['version'] !== null): ?>
 				<div class="update hidden">
 					<span class="bold fontMedium <?php echo $update['severity'];?>"><?php echo $update['version'];?></span>
-					
+
 					<?php echo text_output($update['desc'], 'p', 'fontSmall gray');?>
-					
+
 					<?php if ($update['status'] == 1): ?>
 						<p class="fontSmall">
-							<a href="<?php echo $update['link'];?>" target="_blank"><?php echo $label['getupdate'];?></a>
+							<a href="<?php echo $update['link'];?>" target="_blank" class="button-main"><?php echo $label['getupdate'];?></a>
 						</p>
-						
+
 						<p class="fontSmall">
 							<a href="<?php echo $update['link'];?>" class="ignore" target="_blank" myVersion="<?php echo $update['version_only'];?>"><?php echo $label['ignore'];?></a>
 						</p>
 					<?php elseif ($update['status'] == 2): ?>
 						<p class="fontSmall">
-							<a href="<?php echo $update['link'];?>" target="_blank"><?php echo $label['runupdate'];?></a>
+							<a href="<?php echo $update['link'];?>" target="_blank" class="button-main"><?php echo $label['runupdate'];?></a>
+						</p>
+					<?php endif;?>
+
+					<?php if ($update['upgrade_guide_link'] !== 'none'): ?>
+						<p class="fontSmall">
+							<a href="<?php echo $update['upgrade_guide_link'];?>" target="_blank"><?php echo $label['updateguide'];?></a>
 						</p>
 					<?php endif;?>
 				</div>
 			<?php endif;?>
-			
+
 			<div class="stats hidden">
 				<table class="table100 zebra">
 					<tbody>
@@ -94,7 +102,7 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div class="notifications hidden">
 				<?php if ($notifycount > 0): ?>
 					<table class="table100 zebra">
@@ -106,7 +114,7 @@
 									<td class="col2"><?php echo anchor('write/index', $label['s_posts']);?></td>
 								</tr>
 							<?php endif; ?>
-								
+
 							<?php if ($notification['saved_logs'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['saved_logs'];?></td>
@@ -114,7 +122,7 @@
 									<td class="col2"><?php echo anchor('write/index', $label['s_logs']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['saved_news'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['saved_news'];?></td>
@@ -122,7 +130,7 @@
 									<td class="col2"><?php echo anchor('write/index', $label['s_news']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['unread_pms'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['unread_pms'];?></td>
@@ -130,7 +138,7 @@
 									<td class="col2"><?php echo anchor('messages/index', $label['pm']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_users'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_users'];?></td>
@@ -138,7 +146,7 @@
 									<td class="col2"><?php echo anchor('characters/index/pending', $label['p_users']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_posts'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_posts'];?></td>
@@ -146,7 +154,7 @@
 									<td class="col2"><?php echo anchor('manage/posts/pending', $label['p_posts']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_logs'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_logs'];?></td>
@@ -154,7 +162,7 @@
 									<td class="col2"><?php echo anchor('manage/logs/pending', $label['p_logs']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_news'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_news'];?></td>
@@ -162,7 +170,7 @@
 									<td class="col2"><?php echo anchor('manage/news/pending', $label['p_news']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_comments'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_comments'];?></td>
@@ -170,7 +178,7 @@
 									<td class="col2"><?php echo anchor('manage/comments', $label['p_comments']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_awards'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_awards'];?></td>
@@ -178,7 +186,7 @@
 									<td class="col2"><?php echo anchor('user/nominate/queue', $label['p_awards']);?></td>
 								</tr>
 							<?php endif; ?>
-							
+
 							<?php if ($notification['pending_docked'] > 0): ?>
 								<tr>
 									<td class="col1"><?php echo $notification['pending_docked'];?></td>
@@ -192,7 +200,7 @@
 					<?php echo text_output($label['nonotifications'], 'h4', 'orange');?>
 				<?php endif;?>
 			</div>
-			
+
 			<div class="activity hidden">
 				<?php if ($activitycount > 0): ?>
 					<table class="table100 zebra">
@@ -209,7 +217,7 @@
 										<?php else: ?>
 											<?php echo text_output($a['post'], 'span', 'orange bold');?>
 										<?php endif;?><br />
-										
+
 										&nbsp;&nbsp;<strong><?php echo $label['last_login'];?></strong>
 										<?php if (is_numeric($a['login'])): ?>
 											<?php echo timespan($a['login'], now()) .' '. $label['ago'];?>
@@ -226,7 +234,7 @@
 					<?php echo text_output($label['noactivity'], 'h4', 'orange');?>
 				<?php endif;?>
 			</div>
-			
+
 			<div class="milestones hidden">
 				<?php if ($milestonecount > 0): ?>
 					<table class="table100 zebra">
@@ -254,14 +262,14 @@
 	<div id="online" class="fontSmall">
 		<?php echo text_output($label['online'], 'span', 'bold') .' '. whos_online();?>
 	</div>
-	
+
 	<div id="tabs">
 		<ul>
 			<li><a href="#one"><span><?php echo $label['r_posts'];?></span></a></li>
 			<li><a href="#two"><span><?php echo $label['r_logs'];?></span></a></li>
 			<li><a href="#three"><span><?php echo $label['r_news'];?></span></a></li>
 		</ul>
-		
+
 		<div id="one">
 			<?php echo text_output($label['posts'], 'h2');?>
 			<?php if (isset($posts_all)): ?>
@@ -272,7 +280,7 @@
 							<th><?php echo $label['date'];?></th>
 						</tr>
 					</thead>
-					
+
 					<tbody>
 					<?php foreach ($posts_all as $p): ?>
 						<tr>
@@ -294,7 +302,7 @@
 				<?php echo text_output($label['noposts'], 'h3', 'orange');?>
 			<?php endif; ?>
 		</div>
-		
+
 		<div id="two">
 			<?php echo text_output($label['logs'], 'h2');?>
 			<?php if (isset($logs_all)): ?>
@@ -305,7 +313,7 @@
 							<th><?php echo $label['date'];?></th>
 						</tr>
 					</thead>
-					
+
 					<tbody>
 					<?php foreach ($logs_all as $l): ?>
 						<tr>
@@ -325,7 +333,7 @@
 				<?php echo text_output($label['nologs'], 'h3', 'orange');?>
 			<?php endif; ?>
 		</div>
-		
+
 		<div id="three">
 			<?php echo text_output($label['news'], 'h2');?>
 			<?php if (isset($news_all)): ?>
@@ -336,7 +344,7 @@
 							<th><?php echo $label['date'];?></th>
 						</tr>
 					</thead>
-					
+
 					<tbody>
 					<?php foreach ($news_all as $n): ?>
 						<tr>

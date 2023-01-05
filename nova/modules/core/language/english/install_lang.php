@@ -267,6 +267,7 @@ $lang['update_your_version'] = " You are running %s %s.";
 $lang['update_required'] = 'Update Required';
 $lang['update_outofdate_files'] = 'Your system files are running version %s, but your database is running version %s. Please update your system files and try again.';
 $lang['update_outofdate_database'] = 'Your database is running version %s, but your files are running version %s. Please use the link below to update your database.';
+$lang['update_read_guide'] = 'Read the update guide';
 
 /*
  * Index

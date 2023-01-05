@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -310,7 +311,7 @@ abstract class Nova_admin extends Nova_controller_admin
         |---------------------------------------------------------------
         */
 
-        $data['update'] = false;
+        $data['update'] = [];
 
         if (Auth::is_sysadmin($this->session->userdata('userid')) and $this->options['updates'] != 'none') {
             // load the install file
@@ -322,31 +323,43 @@ abstract class Nova_admin extends Nova_controller_admin
             // go check the version
             $check = $this->_check_version();
 
+            $data['update'] = [
+                'version' => null,
+                'version_only' => null,
+                'desc' => null,
+                'link' => null,
+                'status' => null,
+                'upgrade_guide_link' => null,
+                'severity' => null,
+            ];
+
             if (isset($check['update']['version']) && trim($check['update']['version']) != trim($ignore)) {
                 $data['update']['version'] = $check['flash']['header'];
                 $data['update']['version_only'] = $check['update']['version'];
                 $data['update']['desc'] = $check['flash']['message'];
                 $data['update']['link'] = ($check['flash']['status'] == 1) ? $check['update']['link'] : site_url('update/index');
                 $data['update']['status'] = $check['flash']['status'];
+                $data['update']['upgrade_guide_link'] = $check['update']['upgrade_guide_link'];
 
                 switch ($check['update']['severity']) {
                     case 'critical':
                         $data['update']['severity'] = 'red';
-                    break;
+                        break;
 
                     case 'major':
                         $data['update']['severity'] = 'orange';
-                    break;
+                        break;
 
                     case 'minor':
+                    case 'update':
                         $data['update']['severity'] = 'blue';
-                    break;
+                        break;
                 }
             }
         }
 
         // set the panel
-        $js_data['panel'] = ($data['update'] !== false) ? 'update' : $js_data['panel'];
+        $js_data['panel'] = ($data['update']['version'] !== null) ? 'update' : $js_data['panel'];
 
         // view data
         $data['header'] = lang('head_admin_index');
@@ -403,8 +416,9 @@ abstract class Nova_admin extends Nova_controller_admin
             'nologs' => sprintf(lang('error_not_found'), lang('global_logs')),
             'nonews' => sprintf(lang('error_not_found'), lang('global_news')),
             'update' => ucwords(APP_NAME .' '. lang('actions_update')),
-            'getupdate' => ucfirst(lang('actions_get') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
-            'runupdate' => ucfirst(lang('actions_run') .' '. lang('labels_the') .' '. lang('actions_update')) .' '. RARROW,
+            'getupdate' => ucfirst(lang('actions_get') .' '. lang('labels_the') .' '. lang('actions_update')),
+            'runupdate' => ucfirst(lang('actions_run') .' '. lang('labels_the') .' '. lang('actions_update')),
+            'updateguide' => lang('update_read_guide'),
             'ignore' => ucfirst(lang('actions_ignore') .' '. lang('labels_this') .' '. lang('labels_version')),
             'loading' => ucfirst(lang('actions_loading')) .'...',
             'nonotifications' => ucfirst(lang('labels_no') .' '. lang('labels_notifications') .' '. lang('labels_available')),
@@ -503,48 +517,58 @@ abstract class Nova_admin extends Nova_controller_admin
             $type = $this->options['updates'];
             //$type = 'all';
 
-            $update = false;
+            $update = [
+                'version' => null,
+                'notes' => null,
+                'severity' => null,
+                'link' => null,
+                'upgrade_guide_link' => null,
+            ];
 
             switch ($type) {
                 case 'major':
 
                     if (version_compare($array['version_major'], $version['files']['major'], '>') || version_compare($array['version_major'], $version['database']['major'], '>')) {
-                        $update['version']		= $array['version'];
-                        $update['notes']		= $array['notes'];
-                        $update['severity']		= $array['severity'];
-                        $update['link']			= $array['link'];
+                        $update['version'] = $array['version'];
+                        $update['notes'] = $array['notes'];
+                        $update['severity'] = $array['severity'];
+                        $update['link'] = $array['link'];
+                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
                     }
-                break;
+                    break;
 
                 case 'minor':
 
                     if (version_compare($array['version_minor'], $version['files']['minor'], '>') || version_compare($array['version_minor'], $version['database']['minor'], '>')) {
-                        $update['version']		= $array['version'];
-                        $update['notes']		= $array['notes'];
-                        $update['severity']		= $array['severity'];
-                        $update['link']			= $array['link'];
+                        $update['version'] = $array['version'];
+                        $update['notes'] = $array['notes'];
+                        $update['severity'] = $array['severity'];
+                        $update['link'] = $array['link'];
+                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
                     }
-                break;
+                    break;
 
                 case 'update':
 
                     if (version_compare($array['version_update'], $version['files']['update'], '>') || version_compare($array['version_update'], $version['database']['update'], '>')) {
-                        $update['version']		= $array['version'];
-                        $update['notes']		= $array['notes'];
-                        $update['severity']		= $array['severity'];
-                        $update['link']			= $array['link'];
+                        $update['version'] = $array['version'];
+                        $update['notes'] = $array['notes'];
+                        $update['severity'] = $array['severity'];
+                        $update['link'] = $array['link'];
+                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
                     }
-                break;
+                    break;
 
                 case 'all':
 
                     if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<')) {
-                        $update['version']		= $array['version'];
-                        $update['notes']		= $array['notes'];
-                        $update['severity']		= $array['severity'];
-                        $update['link']			= $array['link'];
+                        $update['version'] = $array['version'];
+                        $update['notes'] = $array['notes'];
+                        $update['severity'] = $array['severity'];
+                        $update['link'] = $array['link'];
+                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
                     }
-                break;
+                    break;
             }
 
             if (version_compare($version['database']['full'], $version['files']['full'], '>')) {

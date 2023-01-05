@@ -6,3 +6,4 @@ severity: update
 notes: Nova 2.7.3 addresses issues that games with the BLANK genre have had doing the update to 2.7. We've also added some analytics gathering to the install and update processes to help with future support and product decisions.
 date: 1 January 2023
 link: https://anodyne-productions.com/nova
+upgrade_guide_link: none
