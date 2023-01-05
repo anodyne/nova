@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Updated Nova license to include 2023.
 - Install and update processes will now report analytics back to Anodyne.
+- In the production environment, Nova will only log errors and follow best practices for displaying errors and what it reports for logging.
+- In the development environment, Nova will be more verbose in its logging.
+
+### Removed
+- Testing environment code. This mirrored what is used for the production environment, so it was unnecessary.
 
 ### Fixed
 - Some games running the BLANK genre were not able to get to their site after successfully updating.
