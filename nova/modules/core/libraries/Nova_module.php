@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -28,7 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @author		ExiteCMS Dev Team
  * @link
  */
-
+#[AllowDynamicProperties]
 class CI_Module
 {
     // use a generic class name in controllers to access its own module classes
@@ -296,10 +297,9 @@ class CI_Module
 // END Module CLASS
 
 // --------------------------------------------------------------------
-
+#[AllowDynamicProperties]
 class Module_Library
 {
-
     // storage for manually loaded configs
     private $_config = array();
 
@@ -369,7 +369,7 @@ class Module_Library
         if ($config !== null) {
             $this->$class = new $class($config);
         } else {
-            $this->$class = new $class;
+            $this->$class = new $class();
         }
 
         // do we need a generic name for the parent?
@@ -397,7 +397,7 @@ class Module_Library
 // END Module_Library CLASS
 
 // --------------------------------------------------------------------
-
+#[AllowDynamicProperties]
 class Module_Controller
 {
     public $__instances = array();
@@ -469,10 +469,10 @@ class Module_Controller
                     $reflector = new ReflectionClass($class);
                     $this->$class = $reflector->newInstanceArgs($config[1]);
                 } else {
-                    $this->$class = new $class;
+                    $this->$class = new $class();
                 }
             } else {
-                $this->$class = new $class;
+                $this->$class = new $class();
             }
 
             log_message('debug', 'Dynamically load the module controller '.$class);
@@ -507,7 +507,7 @@ class Module_Controller
 // END Module_Controller CLASS
 
 // --------------------------------------------------------------------
-
+#[AllowDynamicProperties]
 class Module_Model
 {
     public function __construct($parent, $path, $class, $generic)
@@ -587,10 +587,10 @@ class Module_Model
                 $reflector = new ReflectionClass($class);
                 $this->$class = $reflector->newInstanceArgs($config[1]);
             } else {
-                $this->$class = new $class;
+                $this->$class = new $class();
             }
         } else {
-            $this->$class = new $class;
+            $this->$class = new $class();
         }
 
         // do we need a generic name for the parent?
@@ -615,7 +615,7 @@ class Module_Model
 // END Module_Model CLASS
 
 // --------------------------------------------------------------------
-
+#[AllowDynamicProperties]
 class Module_Lang
 {
     private $_class;
