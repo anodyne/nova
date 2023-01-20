@@ -1,7 +1,7 @@
 name: nova2
 recipe: lamp
 config:
-  php: '8.0'
+  php: '8.2'
   webroot: .
   database: mysql:5.7
   xdebug: false
