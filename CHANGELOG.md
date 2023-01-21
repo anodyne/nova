@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.4] - 2023-01-22
+
 ### Changed
 - Updated all fields marked as `nullable` in the install process as `nullable` in the update process.
 - Better support for PHP 8.2.
