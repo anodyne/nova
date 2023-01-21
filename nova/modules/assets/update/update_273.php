@@ -161,7 +161,10 @@ $modify_column = [
         'position_2' => $nullable,
         'last_post' => $nullable,
     ],
-    'characters_data' => ['data_value' => $nullable],
+    'characters_data' => [
+        'data_user' => $nullable,
+        'data_value' => $nullable,
+    ],
     'characters_fields' => [
         'field_type' => $nullable,
         'field_class' => $nullable,

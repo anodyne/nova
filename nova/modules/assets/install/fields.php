@@ -763,7 +763,8 @@ $fields_characters_data = [
     ],
     'data_user' => [
         'type' => $user_id_type,
-        'constraint' => $user_id_constraint
+        'constraint' => $user_id_constraint,
+        'null' => true,
     ],
     'data_value' => [
         'type' => 'TEXT',
