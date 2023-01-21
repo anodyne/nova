@@ -576,6 +576,8 @@ abstract class Nova_update extends CI_Controller
 
     private function _register()
     {
+        $info = $this->sys->get_system_info();
+
         $http = new \Illuminate\Http\Client\Factory();
 
         $http->post(REGISTER_URL, [
@@ -587,6 +589,7 @@ abstract class Nova_update extends CI_Controller
             'db_driver' => $this->db->platform(),
             'db_version' => $this->db->version(),
             'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+            'install_date' => $info ? $info->sys_install_date : null,
         ]);
     }
 }
