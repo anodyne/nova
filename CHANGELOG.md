@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Updated all fields marked as `nullable` in the install process as `nullable` in the update process.
 - Better support for PHP 8.2.
 
+### Fixed
+- Could not delete any site messages.
+
 ## [2.7.3] - 2023-01-07
 
 ### Added
