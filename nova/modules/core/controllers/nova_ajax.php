@@ -4729,6 +4729,8 @@ abstract class Nova_ajax extends CI_Controller
         $allowed = Auth::check_access('site/messages', false);
 
         if ($allowed) {
+            $this->load->model('messages_model', 'msgs');
+
             $head = sprintf(
                 lang('fbx_head'),
                 ucwords(lang('actions_delete')),
