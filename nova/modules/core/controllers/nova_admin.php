@@ -471,16 +471,6 @@ abstract class Nova_admin extends Nova_controller_admin
         Template::render();
     }
 
-    public function feedback()
-    {
-        $this->_regions['content'] = Location::view('admin_feedback', $this->skin, 'admin', $data);
-        $this->_regions['title'].= 'Submit Feedback to Anodyne';
-
-        Template::assign($this->_regions);
-
-        Template::render();
-    }
-
     protected function _check_version()
     {
         if (ini_get('allow_url_fopen')) {
