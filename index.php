@@ -49,9 +49,9 @@ define('INSTALL_ROOT', str_replace('\\', '/', realpath(dirname(__FILE__))).'/nov
  *
  * This can be set to anything, but default usage is:
  *
- *     development
- *     testing
- *     production
+ *     development - displays and logs all errors, reporting everything
+ *     staging - displays and logs all errors, reporting everything except deprecations and strict
+ *     production - logs all errors, reporting everything except deprecations and strict
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
@@ -72,6 +72,14 @@ switch (ENVIRONMENT) {
         ini_set('html_errors', 1);
         ini_set('log_errors', 1);
         error_reporting(E_ALL);
+        break;
+
+    case 'staging':
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        ini_set('html_errors', 1);
+        ini_set('log_errors', 1);
+        error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
         break;
 
     case 'production':
