@@ -58,7 +58,7 @@
 						</p>
 					<?php endif;?>
 
-					<?php if ($update['upgrade_guide_link'] !== 'none'): ?>
+					<?php if ($update['upgrade_guide_link'] !== null): ?>
 						<p class="fontSmall">
 							<a href="<?php echo $update['upgrade_guide_link'];?>" target="_blank"><?php echo $label['updateguide'];?></a>
 						</p>

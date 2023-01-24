@@ -473,133 +473,115 @@ abstract class Nova_admin extends Nova_controller_admin
 
     protected function _check_version()
     {
-        if (ini_get('allow_url_fopen')) {
-            // load the resources
-            $this->load->helper('yayparser');
+        $http = new \Illuminate\Http\Client\Factory();
 
-            // get the contents of the file
-            $contents = file_get_contents(VERSION_FEED);
-            //$contents = file_get_contents('nova/modules/assets/version.yml');
+        $upstream = $http->get(LATEST_VERSION_URL)->json();
 
-            // parse the contents of the yaml file
-            $array = yayparser($contents);
+        [
+            $upstreamVersionMajor,
+            $upstreamVersionMinor,
+            $upstreamVersionUpdate
+        ] = explode('.', $upstream['version']);
 
-            // get the system information
-            $system = $this->sys->get_system_info();
+        // get the system information
+        $system = $this->sys->get_system_info();
 
-            // build the array of version info
-            $version = array(
-                'files' => array(
-                    'full'		=> APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
-                    'major'		=> APP_VERSION_MAJOR,
-                    'minor'		=> APP_VERSION_MINOR,
-                    'update'	=> APP_VERSION_UPDATE
-                ),
-                'database' => array(
-                    'full'		=> $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
-                    'major'		=> $system->sys_version_major,
-                    'minor'		=> $system->sys_version_minor,
-                    'update'	=> $system->sys_version_update
-                ),
-            );
+        // build the array of version info
+        $version = [
+            'files' => [
+                'full' => APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+                'major' => APP_VERSION_MAJOR,
+                'minor' => APP_VERSION_MINOR,
+                'update' => APP_VERSION_UPDATE
+            ],
+            'database' => [
+                'full' => $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
+                'major' => (int) $system->sys_version_major,
+                'minor' => (int) $system->sys_version_minor,
+                'update' => (int) $system->sys_version_update
+            ],
+        ];
 
-            // grab the updates setting
-            $type = $this->options['updates'];
-            //$type = 'all';
+        $update = [
+            'version' => null,
+            'notes' => null,
+            'severity' => null,
+            'link' => null,
+            'upgrade_guide_link' => null,
+        ];
 
-            $update = [
-                'version' => null,
-                'notes' => null,
-                'severity' => null,
-                'link' => null,
-                'upgrade_guide_link' => null,
-            ];
+        switch ($this->options['updates']) {
+            case 'major':
+                if (
+                    version_compare($upstreamVersionMajor, $version['files']['major'], '>') ||
+                    version_compare($upstreamVersionMajor, $version['database']['major'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
 
-            switch ($type) {
-                case 'major':
+            case 'minor':
+                if (
+                    version_compare($upstreamVersionMinor, $version['files']['minor'], '>') ||
+                    version_compare($upstreamVersionMinor, $version['database']['minor'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
 
-                    if (version_compare($array['version_major'], $version['files']['major'], '>') || version_compare($array['version_major'], $version['database']['major'], '>')) {
-                        $update['version'] = $array['version'];
-                        $update['notes'] = $array['notes'];
-                        $update['severity'] = $array['severity'];
-                        $update['link'] = $array['link'];
-                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
-                    }
-                    break;
+            case 'update':
+                if (
+                    version_compare($upstreamVersionUpdate, $version['files']['update'], '>') ||
+                    version_compare($upstreamVersionUpdate, $version['database']['update'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
 
-                case 'minor':
-
-                    if (version_compare($array['version_minor'], $version['files']['minor'], '>') || version_compare($array['version_minor'], $version['database']['minor'], '>')) {
-                        $update['version'] = $array['version'];
-                        $update['notes'] = $array['notes'];
-                        $update['severity'] = $array['severity'];
-                        $update['link'] = $array['link'];
-                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
-                    }
-                    break;
-
-                case 'update':
-
-                    if (version_compare($array['version_update'], $version['files']['update'], '>') || version_compare($array['version_update'], $version['database']['update'], '>')) {
-                        $update['version'] = $array['version'];
-                        $update['notes'] = $array['notes'];
-                        $update['severity'] = $array['severity'];
-                        $update['link'] = $array['link'];
-                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
-                    }
-                    break;
-
-                case 'all':
-
-                    if (version_compare($version['files']['full'], $array['version'], '<') || version_compare($version['database']['full'], $array['version'], '<')) {
-                        $update['version'] = $array['version'];
-                        $update['notes'] = $array['notes'];
-                        $update['severity'] = $array['severity'];
-                        $update['link'] = $array['link'];
-                        $update['upgrade_guide_link'] = $array['upgrade_guide_link'];
-                    }
-                    break;
-            }
-
-            if (version_compare($version['database']['full'], $version['files']['full'], '>')) {
-                $flash['header'] = lang('update_required');
-                $flash['message'] = sprintf(
-                    lang('update_outofdate_files'),
-                    $version['files']['full'],
-                    $version['database']['full']
-                );
-                $flash['status'] = 2;
-            } elseif (version_compare($version['database']['full'], $version['files']['full'], '<')) {
-                $flash['header'] = lang('update_required');
-                $flash['message'] = sprintf(
-                    lang('update_outofdate_database'),
-                    $version['database']['full'],
-                    $version['files']['full']
-                );
-                $flash['status'] = 2;
-            } elseif (isset($update)) {
-                $flash['header'] = sprintf(
-                    lang('update_available'),
-                    APP_NAME,
-                    $update['version'],
-                    ''
-                );
-                $flash['message'] = $update['notes'];
-                $flash['status'] = 1;
-            } else {
-                $flash['header'] = '';
-                $flash['message'] = '';
-                $flash['status'] = '';
-            }
-
-            $retval = array(
-                'flash' => $flash,
-                'update' => $update
-            );
-
-            return $retval;
+            case 'all':
+                if (
+                    version_compare($upstream['version'], $version['files']['full'], '>') ||
+                    version_compare($upstream['version'], $version['database']['full'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
         }
 
-        return false;
+        if (version_compare($version['database']['full'], $version['files']['full'], '>')) {
+            $flash['header'] = lang('update_required');
+            $flash['message'] = sprintf(
+                lang('update_outofdate_files'),
+                $version['files']['full'],
+                $version['database']['full']
+            );
+            $flash['status'] = 2;
+        } elseif (version_compare($version['database']['full'], $version['files']['full'], '<')) {
+            $flash['header'] = lang('update_required');
+            $flash['message'] = sprintf(
+                lang('update_outofdate_database'),
+                $version['database']['full'],
+                $version['files']['full']
+            );
+            $flash['status'] = 2;
+        } elseif (isset($update)) {
+            $flash['header'] = sprintf(
+                lang('update_available'),
+                APP_NAME,
+                $update['version'],
+                ''
+            );
+            $flash['message'] = $update['notes'];
+            $flash['status'] = 1;
+        } else {
+            $flash['header'] = '';
+            $flash['message'] = '';
+            $flash['status'] = '';
+        }
+
+        return [
+            'flash' => $flash,
+            'update' => $update
+        ];
     }
 }

@@ -18,6 +18,7 @@ define('SMS_UPGRADE_VERSION', '2.6.9');
 
 // define('VERSION_FEED', MODPATH.'assets/version.yml');
 define('VERSION_FEED', 'https://anodyne-productions.com/feeds/version_nova.yml');
+define('LATEST_VERSION_URL', 'https://admin.anodyne-productions.com/api/nova/latest-version');
 
 define('REGISTER_URL', 'https://admin.anodyne-productions.com/api/games');
 
