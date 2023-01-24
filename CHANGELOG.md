@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Updated all fields marked as `nullable` in the install process as `nullable` in the update process.
 - Better support for PHP 8.2.
+- Analytics will properly report initial install date during the update process.
 - Version checking uses an API endpoint on the Anodyne servers instead of parsing a YAML file.
 
 ### Fixed
