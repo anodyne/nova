@@ -343,6 +343,7 @@ abstract class Nova_admin extends Nova_controller_admin
 
                 switch ($check['update']['severity']) {
                     case 'critical':
+                    case 'security':
                         $data['update']['severity'] = 'red';
                         break;
 
@@ -473,9 +474,15 @@ abstract class Nova_admin extends Nova_controller_admin
 
     protected function _check_version()
     {
-        $http = new \Illuminate\Http\Client\Factory();
+        $this->load->driver('cache', ['adapter' => 'file']);
 
-        $upstream = $http->get(LATEST_VERSION_URL)->json();
+        if (! $upstream = $this->cache->get('nova-version-check')) {
+            $http = new \Illuminate\Http\Client\Factory();
+
+            $upstream = $http->get(LATEST_VERSION_URL)->json();
+
+            $this->cache->save('nova-version-check', $upstream, 86400);
+        }
 
         [
             $upstreamVersionMajor,
