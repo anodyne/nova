@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Better support for PHP 8.2.
 - Analytics will properly report initial install date during the update process.
 - Version checking uses an API endpoint on the Anodyne servers instead of parsing a YAML file.
+- The response from the version check will be cached for 24 hours.
 
 ### Fixed
 - Could not delete any site messages.
