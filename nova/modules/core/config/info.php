@@ -6,10 +6,10 @@ if (! defined('BASEPATH')) {
 
 define('APP_NAME', 'Nova');
 
-define('APP_VERSION', '2.7.4');
+define('APP_VERSION', '2.7.5');
 define('APP_VERSION_MAJOR', 2);
 define('APP_VERSION_MINOR', 7);
-define('APP_VERSION_UPDATE', 4);
+define('APP_VERSION_UPDATE', 5);
 
 define('WIKI_NAME', 'Thresher');
 define('WIKI_VERSION', 'Release 2');
@@ -18,9 +18,9 @@ define('SMS_UPGRADE_VERSION', '2.6.9');
 
 // define('VERSION_FEED', MODPATH.'assets/version.yml');
 define('VERSION_FEED', 'https://anodyne-productions.com/feeds/version_nova.yml');
-define('LATEST_VERSION_URL', 'https://admin.anodyne-productions.com/api/nova/latest-version');
+define('LATEST_VERSION_URL', 'https://anodyne-productions.com/api/nova/latest-version');
 
-define('REGISTER_URL', 'https://admin.anodyne-productions.com/api/games');
+define('REGISTER_URL', 'https://anodyne-productions.com/api/games');
 
 // figure out whether to install the bare essentials or the dev stuff
 define('APP_DATA_SRC', 'basic');
