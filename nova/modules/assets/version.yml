@@ -1,9 +1,9 @@
-version: 2.7.4
+version: 2.7.5
 version_major: 2
 version_minor: 7
-version_update: 4
+version_update: 5
 severity: update
-notes: Nova 2.7.4 addresses issues with some databases throwing errors with fields that are not marked as nullable. In addition, we've improved support for PHP 8.2 with this release.
+notes: Nova 2.7.5 updates URLs for version checking and registration.
 date: 27 January 2023
 link: https://anodyne-productions.com/nova
 upgrade_guide_link: none
