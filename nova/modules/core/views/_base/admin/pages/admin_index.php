@@ -13,7 +13,7 @@
 	<div id="acp-panel">
 		<div class="panelnav">
 			<ul id="panelmenu" class="UITheme ui-widget">
-				<?php if ($update['version'] !== null): ?>
+				<?php if (isset($update['version']) && $update['version'] !== null): ?>
 					<li><a href="#" id="update"><span>
 						<?php if ($update['severity'] == 'red'): ?>
 							<div class="count ui-state-error"><div class="ui-icon ui-icon-notice"></div></div>
@@ -38,7 +38,7 @@
 			</ul>
 		</div>
 		<div class="panel">
-			<?php if ($update['version'] !== null): ?>
+			<?php if (isset($update['version']) && $update['version'] !== null): ?>
 				<div class="update hidden">
 					<span class="bold fontMedium <?php echo $update['severity'];?>"><?php echo $update['version'];?></span>
 

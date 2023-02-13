@@ -360,7 +360,7 @@ abstract class Nova_admin extends Nova_controller_admin
         }
 
         // set the panel
-        $js_data['panel'] = ($data['update']['version'] !== null) ? 'update' : $js_data['panel'];
+        $js_data['panel'] = (isset($data['update']['version']) && $data['update']['version'] !== null) ? 'update' : $js_data['panel'];
 
         // view data
         $data['header'] = lang('head_admin_index');
