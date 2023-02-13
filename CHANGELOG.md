@@ -6,8 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Security
+- Updated Composer dependencies to address CVE-2022-24894: Prevent storing cookie headers in HttpCache.
+
 ### Changed
 - Version check and registration URLs were changed.
+
+### Fixed
+- Errors while checking for a new version of Nova in certain circumstances.
 
 ## [2.7.4] - 2023-01-27
 
