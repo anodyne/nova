@@ -11,6 +11,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.4",
+        "fakerphp/faker": "^1.21",
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/http": "^8.0",
         "swiftmailer/swiftmailer": "^6.3"
