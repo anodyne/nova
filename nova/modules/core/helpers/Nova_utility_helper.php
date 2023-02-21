@@ -80,6 +80,10 @@ if (! function_exists('whos_online')) {
     {
         $ci =& get_instance();
 
+        if ($ci->config->item('sess_driver') !== 'database') {
+            return sprintf('<span class="red">This feature requires using the database session driver. You are currently using the %s driver. Please follow the directions in the Nova 2.7 update guide to update your configuration and see users who are online now.</span>', $ci->config->item('sess_driver'));
+        }
+
         $ci->load->model('users_model', 'user');
         $ci->load->model('characters_model', 'char');
 
@@ -98,7 +102,7 @@ if (! function_exists('whos_online')) {
             return $string;
         }
 
-        return false;
+        return 'No users online';
     }
 }
 
