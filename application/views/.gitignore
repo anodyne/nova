@@ -1,5 +1,7 @@
 *
 !.gitignore
 !_base_override/*
-!default/*
-!titan/*
+!default/
+!default/**/*
+!titan/
+!titan/**/*
