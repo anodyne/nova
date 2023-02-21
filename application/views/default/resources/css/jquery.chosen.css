@@ -1,0 +1,153 @@
+div.chzn-container input {
+    @apply rounded-md shadow;
+
+	border: 1px solid #1f2124;
+	color: #9FA4A8;
+	background: #2b2e31;
+}
+div.chzn-container textarea:focus {
+	border-color: #058cf5;
+	-moz-box-shadow: 0px 0px 3px #aaa;
+	-webkit-box-shadow: 0px 0px 3px #aaa;
+	box-shadow: 0px 0px 3px #aaa;
+}
+
+/**
+ * Styles for the dropdown container in single selects
+ */
+div.chzn-container div.chzn-drop {
+    @apply z-20;
+}
+div.chzn-container-single {
+	@apply relative;
+}
+div.chzn-container-single div.chzn-drop {
+    @apply bg-white p-2 rounded-md shadow !top-auto mt-2 ring-1 ring-gray-900/5;
+}
+
+/**
+ * Styles for the single selects
+ */
+div.chzn-container a.chzn-single {
+    @apply flex items-center bg-white border border-gray-300 rounded-md shadow-sm text-gray-500 px-3 py-2 h-auto leading-normal;
+}
+
+div.chzn-container a.chzn-single span {
+    @apply !m-0;
+}
+
+/**
+ * Styles for the arrow dropdown for the single selects
+ */
+div.chzn-container a.chzn-single div {
+    @apply bg-transparent w-10 h-10;
+}
+
+/**
+ * Arrow for the dropdown for single selects
+ */
+div.chzn-container a.chzn-single div b {
+	@apply pr-3 bg-no-repeat;
+
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+	background-position: right 0.5rem center;
+	background-size: 1.5em 1.5em;
+}
+
+/**
+ * Text field in the dropdown for single selects
+ */
+div.chzn-container div.chzn-search input {
+    @apply rounded-md bg-white border border-gray-300 focus:border-primary-400 focus:ring-1 focus:ring-primary-400;
+}
+
+/**
+ * Styles for the multi selects
+ */
+div.chzn-container ul.chzn-choices {
+    @apply bg-white border border-gray-300 rounded-md shadow text-gray-500 px-3 py-2;
+}
+
+/**
+ * No idea...
+ */
+div.chzn-container ul.chzn-choices:focus {
+	border-color: #058cf5;
+	-moz-box-shadow: 0px 0px 5px #999;
+	-webkit-box-shadow: 0px 0px 5px #999;
+	box-shadow: 0px 0px 5px #999;
+}
+
+/**
+ * No idea...
+ */
+div.chzn-container ul.chzn-choices li.search-field {
+    @apply w-full;
+}
+
+div.chzn-container ul.chzn-choices li.search-field input {
+    @apply !w-full p-0 m-0 bg-transparent border-none shadow-none text-gray-500 focus:outline-none rounded-none focus:ring-transparent;
+}
+
+/**
+ * No idea...
+ */
+div.chzn-container ul.chzn-choices li.search-choice {
+    @apply flex items-center space-x-1.5 py-1 !px-3 rounded-md bg-gray-100 border border-gray-200 text-gray-500 font-medium;
+}
+div.chzn-container ul.chzn-choices li.search-choice.search-choice-focus {
+	@apply bg-gray-200 border border-gray-300 text-gray-600;
+}
+div.chzn-container ul.chzn-choices li.search-choice a.search-choice-close {
+	@apply !relative !top-auto !right-auto bg-no-repeat h-4 w-4;
+
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239ca3af'%3E%3Cpath d='M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z' /%3E%3C/svg%3E");
+	background-position: right top;
+}
+div.chzn-container ul.chzn-choices li.search-choice a.search-choice-close:hover {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath d='M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z' /%3E%3C/svg%3E");
+	background-position: right top !important;
+}
+
+/* Results */
+div.chzn-container-multi ul.chzn-results {
+	@apply bg-white rounded-md shadow ring-1 ring-gray-900/5 mt-2 p-2;
+}
+div.chzn-container ul.chzn-results {}
+div.chzn-container-multi ul.chzn-results li,
+div.chzn-container ul.chzn-results li {
+    @apply px-3 py-2 !leading-normal text-sm text-gray-700 rounded-md;
+}
+div.chzn-container ul.chzn-results li em {
+	font-style: normal;
+	background: #FEFFDC;
+}
+div.chzn-container ul.chzn-results li.highlighted {
+    @apply bg-gray-900/5 text-gray-900;
+}
+div.chzn-container ul.chzn-results li.highlighted em {
+    @apply bg-transparent;
+}
+div.chzn-container ul.chzn-results li.no-results {
+	@apply bg-transparent;
+}
+div.chzn-container ul.chzn-results li.group-result {
+    @apply text-xs font-semibold text-gray-900;
+}
+
+/* Active */
+div.chzn-container-active a.chzn-single {
+    @apply border border-primary-400 ring-1 ring-primary-400;
+}
+div.chzn-container-active a.chzn-single-with-drop {
+	@apply bg-white;
+}
+div.chzn-container-active a.chzn-single-with-drop div {
+	@apply bg-transparent;
+}
+div.chzn-container-active ul.chzn-choices {
+    @apply border border-primary-400 ring-1 ring-primary-400 bg-white;
+}
+div.chzn-container-active ul.chzn-choices input {
+	color: #eee !important;
+}

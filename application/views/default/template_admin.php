@@ -32,9 +32,9 @@ $this->load->helper('panel');
 
 // set up the locations of the icons
 $panel = [
-    'inbox' => ['src' => APPFOLDER.'/views/'.$current_skin.'/dist/images/panel-mail.png'],
-    'writing' => ['src' => APPFOLDER.'/views/'.$current_skin.'/dist/images/panel-writing.png'],
-    'dashboard' => ['src' => APPFOLDER.'/views/'.$current_skin.'/dist/images/panel-dashboard.png'],
+    'inbox' => ['src' => APPFOLDER.'/views/'.$current_skin.'/dist/images/panel-inbox.svg'],
+    'writing' => ['src' => APPFOLDER.'/views/'.$current_skin.'/dist/images/panel-writing.svg'],
+    'dashboard' => ['src' => APPFOLDER.'/views/'.$current_skin.'/dist/images/panel-dashboard.svg'],
 ];
 
 $alternateLogoJpg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.jpg';
@@ -129,13 +129,13 @@ $alternateLogoSvg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.svg';
 					<?php if (Auth::is_logged_in()): ?>
 						<div class="logged-in-controls">
 							<span>
-								<?php echo panel_inbox(true, true, false, '(x)', img($panel['inbox']));?>
+								<?php echo panel_inbox(true, true, false, '(x)', img($panel['inbox'], false, 'class="icon"'));?>
 							</span>
 							<span>
-								<?php echo panel_writing(true, true, false, '(x)', img($panel['writing']));?>
+								<?php echo panel_writing(true, true, false, '(x)', img($panel['writing'], false, 'class="icon"'));?>
 							</span>
 							<span>
-								<?php echo panel_dashboard(false, img($panel['dashboard']));?>
+								<?php echo panel_dashboard(false, img($panel['dashboard'], false, 'class="icon"'));?>
 							</span>
 						</div>
 

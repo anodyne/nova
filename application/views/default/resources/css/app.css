@@ -39,6 +39,9 @@ header .signin-container .logged-in-controls {
 header .signin-container .logged-in-controls span {
 	@apply flex items-center space-x-1.5;
 }
+header .signin-container .logged-in-controls img.icon {
+	@apply h-6 w-6;
+}
 header .signin-container .logged-in-controls a {
 	@apply border-none;
 }
