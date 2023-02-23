@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 $active_group = 'default';
@@ -11,6 +12,7 @@ $db['default']['password'] = 'novapass';
 $db['default']['database'] = 'novadb';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = 'nova_';
+$db['default']['port'] = 3306;
 $db['default']['pconnect'] = false;
 $db['default']['db_debug'] = (ENVIRONMENT !== 'production');
 $db['default']['cache_on'] = false;
