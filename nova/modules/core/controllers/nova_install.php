@@ -1291,7 +1291,7 @@ abstract class Nova_install extends CI_Controller
 
                 $insert = array();
 
-                if ($submit !== false) {
+                if ($submit !== false && APP_DATA_DEV === false) {
                     // build the create user array
                     $create_user = array(
                         'name'				=> $this->input->post('real_name', true),
