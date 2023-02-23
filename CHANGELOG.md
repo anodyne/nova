@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Version check and registration URLs were changed.
+- Updated the colors of the Titan workflow icons (upper right corner) to match the color scheme better.
+- Updated the Pulsar workflow icons (upper right corner) to match Titan's icons.
+- Updated database configuration stub to include port.
 
 ### Fixed
 - Errors while checking for a new version of Nova in certain circumstances.
