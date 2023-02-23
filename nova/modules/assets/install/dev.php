@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -38,6 +39,8 @@ $data = array(
     'tour_data',
     'tour_decks'
 );
+
+$faker = Faker\Factory::create();
 
 /*
 |---------------------------------------------------------------
@@ -636,48 +639,54 @@ $personallogs_comments = array(
         'lcomment_date' => 1229484143)
 );
 
-$users = array(
-    array(
-        'name' => 'John Doe',
-        'email' => 'john@example.com',
-        'password' => '2825652a8bfb76b05548e2cb40076c1b3a586dfb',
+$users = [
+    [
+        'name' => $faker->name(),
+        'email' => 'admin@admin.com',
+        'password' => Auth::hash('password'),
+        'main_char' => 1,
+        'access_role' => 1,
+        'join_date' => Carbon\Carbon::now()->subMonths($faker->numberBetween(6, 24))->unix(),
+        'timezone' => 'UTC',
+    ],
+    [
+        'name' => $faker->name(),
+        'email' => 'basic-admin@basic-admin.com',
+        'password' => Auth::hash('password'),
         'main_char' => 2,
-        'access_role' => 4,
-        'join_date' => now(),
-        'timezone' => 'UTC'),
-    array(
-        'name' => 'Jane Doe',
-        'email' => 'jane@example.com',
-        'password' => '2825652a8bfb76b05548e2cb40076c1b3a586dfb',
+        'access_role' => 2,
+        'join_date' => Carbon\Carbon::now()->subMonths($faker->numberBetween(6, 24))->unix(),
+        'timezone' => 'UTC',
+    ],
+    [
+        'name' => $faker->name(),
+        'email' => 'power-user@power-user.com',
+        'password' => Auth::hash('password'),
         'main_char' => 3,
-        'access_role' => 4,
-        'join_date' => now(),
-        'timezone' => 'UM8'),
-    array(
-        'name' => 'Bill Doe',
-        'email' => 'bill@example.com',
-        'password' => '2825652a8bfb76b05548e2cb40076c1b3a586dfb',
+        'access_role' => 3,
+        'join_date' => Carbon\Carbon::now()->subMonths($faker->numberBetween(6, 24))->unix(),
+        'timezone' => 'UTC',
+    ],
+    [
+        'name' => $faker->name(),
+        'email' => 'user@user.com',
+        'password' => Auth::hash('password'),
         'main_char' => 4,
         'access_role' => 4,
-        'join_date' => now(),
-        'timezone' => 'UM3'),
-    array(
-        'name' => 'Deb Doe',
-        'email' => 'deb@example.com',
-        'password' => '2825652a8bfb76b05548e2cb40076c1b3a586dfb',
+        'join_date' => Carbon\Carbon::now()->subMonths($faker->numberBetween(6, 24))->unix(),
+        'timezone' => 'UTC',
+    ],
+    [
+        'name' => $faker->name(),
+        'email' => 'inactive@inactive.com',
+        'password' => Auth::hash('password'),
         'main_char' => 5,
-        'access_role' => 4,
-        'join_date' => now(),
-        'timezone' => 'UM10'),
-    array(
-        'name' => 'Joe Doe',
-        'email' => 'joe@example.com',
-        'password' => '2825652a8bfb76b05548e2cb40076c1b3a586dfb',
-        'main_char' => 5,
-        'access_role' => 4,
-        'join_date' => now(),
-        'timezone' => 'UM2'),
-);
+        'access_role' => 5,
+        'join_date' => Carbon\Carbon::now()->subMonths($faker->numberBetween(6, 24))->unix(),
+        'timezone' => 'UTC',
+        'status' => 'inactive',
+    ],
+];
 
 $posts = array(
     array(
