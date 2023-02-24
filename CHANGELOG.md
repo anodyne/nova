@@ -14,6 +14,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Updated the colors of the Titan workflow icons (upper right corner) to match the color scheme better.
 - Updated the Pulsar workflow icons (upper right corner) to match Titan's icons.
 - Updated database configuration stub to include port.
+- When updating Nova, it will no longer attempt to backup the database.
+- When updating Nova, it will no longer update the `is_firstlaunch` field on every user record.
+- Updated the `upd_step2_title` language item.
+- Updated the `upd_step2_success` language item.
+- Update Center will now correctly use the new version check API.
 
 ### Fixed
 - Errors while checking for a new version of Nova in certain circumstances.

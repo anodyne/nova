@@ -172,7 +172,7 @@ abstract class Nova_update extends CI_Controller
                     'files_go' => $update['update']['link'],
                     'start' => lang('upd_check_header_start'),
                     'start_text' => lang('upd_check_text_start'),
-                    'start_go' => anchor('update/step/1', lang('upd_check_go_start'), array('id' => 'next')),
+                    'start_go' => anchor('update/run', lang('upd_check_go_start'), array('id' => 'next')),
                 );
 
                 // the view files
@@ -309,6 +309,83 @@ abstract class Nova_update extends CI_Controller
         $this->_regions['content'] = Location::view('readme', '_base', 'install', 'foo');
         $this->_regions['title'].= APP_NAME.' '.lang('global_readme_title');
         $this->_regions['label'] = APP_NAME.' '.lang('global_readme_title');
+
+        Template::assign($this->_regions);
+
+        Template::render();
+    }
+
+    public function run()
+    {
+        $this->load->dbforge();
+
+        $this->load->helper('directory');
+
+        $item = $this->sys->get_item('system_info', 'sys_id', 1);
+
+        $version = $item->sys_version_major.$item->sys_version_minor.$item->sys_version_update;
+
+        $dir = directory_map(MODFOLDER.'/assets/update');
+
+        if (is_array($dir)) {
+            sort($dir);
+
+            foreach ($dir as $key => $value) {
+                if ($value == 'index.html' or $value == 'versions.php') {
+                    unset($dir[$key]);
+                } else {
+                    $file = substr($value, 7, -4);
+
+                    if ($file < $version) {
+                        unset($dir[$key]);
+                    }
+                }
+            }
+
+            foreach ($dir as $d) {
+                include_once(MODPATH.'assets/update/'.$d);
+
+                sleep(1);
+            }
+        } else {
+            include_once(MODPATH.'assets/update/versions.php');
+
+            foreach ($version_array as $k => $v) {
+                if ($v < $version) {
+                    unset($version_array[$k]);
+                }
+            }
+
+            foreach ($version_array as $value) {
+                include_once(MODPATH.'assets/update/update_' .$value.'.php');
+
+                sleep(1);
+            }
+        }
+
+        // update the system info table
+        $this->sys->update_system_info();
+
+        $this->_register();
+
+        $data['label'] = [
+            'text' => sprintf(lang('upd_step2_success'), APP_VERSION),
+            'back' => lang('upd_step2_site')
+        ];
+
+        $next = [
+            'name' => 'next',
+            'type' => 'submit',
+            'class' => 'btn-main',
+            'id' => 'next',
+            'content' => lang('upd_step2_site'),
+        ];
+
+        $this->_regions['content'] = Location::view('update_step_2', '_base', 'update', $data);
+        $this->_regions['javascript'] = Location::js('update_step_2_js', '_base', 'update');
+        $this->_regions['controls'] = form_open('main/index').form_button($next).form_close();
+        $this->_regions['title'].= lang('upd_step2_title');
+        $this->_regions['label'] = lang('upd_step2_title');
 
         Template::assign($this->_regions);
 
@@ -484,94 +561,124 @@ abstract class Nova_update extends CI_Controller
         Template::render();
     }
 
-    /**
-     * Check for the latest version of the system
-     *
-     * @access	private
-     * @return	array 	the array of version information and messages
-     */
-    private function _check_version()
+    protected function _check_version()
     {
-        if (ini_get('allow_url_fopen')) {
-            $this->load->helper('yayparser');
+        $this->load->driver('cache', ['adapter' => 'file']);
 
-            $contents = file_get_contents(VERSION_FEED);
+        if (! $upstream = $this->cache->get('nova-version-check')) {
+            $http = new \Illuminate\Http\Client\Factory();
 
-            $array = yayparser($contents);
+            $upstream = $http->get(LATEST_VERSION_URL)->json();
 
-            $system = $this->sys->get_system_info();
-
-            $version = array(
-                'files' => array(
-                    'full'		=> APP_VERSION_MAJOR.'.'.APP_VERSION_MINOR.'.'.APP_VERSION_UPDATE,
-                    'major'		=> APP_VERSION_MAJOR,
-                    'minor'		=> APP_VERSION_MINOR,
-                    'update'	=> APP_VERSION_UPDATE
-                ),
-                'database' => array(
-                    'full'		=> $system->sys_version_major.'.'.$system->sys_version_minor.'.'.$system->sys_version_update,
-                    'major'		=> $system->sys_version_major,
-                    'minor'		=> $system->sys_version_minor,
-                    'update'	=> $system->sys_version_update
-                ),
-            );
-
-            $update = [
-                'version' => '',
-                'notes' => '',
-                'severity' => '',
-                'link' => '',
-            ];
-
-            if (version_compare($version['files']['full'], $array['version'], '<') or version_compare($version['database']['full'], $array['version'], '<')) {
-                $update['version']		= $array['version'];
-                $update['notes']		= $array['notes'];
-                $update['severity']		= $array['severity'];
-                $update['link']			= $array['link'];
-            }
-
-            if (version_compare($version['database']['full'], $version['files']['full'], '>')) {
-                $flash['status'] = 'info';
-                $flash['message'] = sprintf(
-                    lang('update_outofdate_files'),
-                    $version['files']['full'],
-                    $version['database']['full']
-                );
-            } elseif (version_compare($version['database']['full'], $version['files']['full'], '<')) {
-                $flash['status'] = 'info';
-                $flash['message'] = sprintf(
-                    lang('update_outofdate_database'),
-                    $version['database']['full'],
-                    $version['files']['full']
-                );
-            } elseif ($update !== false) {
-                $yourversion = sprintf(
-                    lang('update_your_version'),
-                    APP_NAME,
-                    $version['files']['full']
-                );
-
-                $flash['status'] = 'info';
-                $flash['message'] = sprintf(
-                    lang('update_available'),
-                    APP_NAME,
-                    $update['version'],
-                    $yourversion
-                );
-            } else {
-                $flash['status'] = '';
-                $flash['message'] = '';
-            }
-
-            $retval = array(
-                'flash' => $flash,
-                'update' => $update
-            );
-
-            return $retval;
+            $this->cache->save('nova-version-check', $upstream, 86400);
         }
 
-        return false;
+        [
+            $upstreamVersionMajor,
+            $upstreamVersionMinor,
+            $upstreamVersionUpdate
+        ] = explode('.', $upstream['version']);
+
+        // get the system information
+        $system = $this->sys->get_system_info();
+
+        // build the array of version info
+        $version = [
+            'files' => [
+                'full' => APP_VERSION_MAJOR .'.'. APP_VERSION_MINOR .'.'. APP_VERSION_UPDATE,
+                'major' => APP_VERSION_MAJOR,
+                'minor' => APP_VERSION_MINOR,
+                'update' => APP_VERSION_UPDATE
+            ],
+            'database' => [
+                'full' => $system->sys_version_major .'.'. $system->sys_version_minor .'.'. $system->sys_version_update,
+                'major' => (int) $system->sys_version_major,
+                'minor' => (int) $system->sys_version_minor,
+                'update' => (int) $system->sys_version_update
+            ],
+        ];
+
+        $update = [
+            'version' => null,
+            'notes' => null,
+            'severity' => null,
+            'link' => null,
+            'upgrade_guide_link' => null,
+        ];
+
+        switch ($this->options['updates']) {
+            case 'major':
+                if (
+                    version_compare($upstreamVersionMajor, $version['files']['major'], '>') ||
+                    version_compare($upstreamVersionMajor, $version['database']['major'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
+
+            case 'minor':
+                if (
+                    version_compare($upstreamVersionMinor, $version['files']['minor'], '>') ||
+                    version_compare($upstreamVersionMinor, $version['database']['minor'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
+
+            case 'update':
+                if (
+                    version_compare($upstreamVersionUpdate, $version['files']['update'], '>') ||
+                    version_compare($upstreamVersionUpdate, $version['database']['update'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
+
+            case 'all':
+                if (
+                    version_compare($upstream['version'], $version['files']['full'], '>') ||
+                    version_compare($upstream['version'], $version['database']['full'], '>')
+                ) {
+                    $update = $upstream;
+                }
+                break;
+        }
+
+        if (version_compare($version['database']['full'], $version['files']['full'], '>')) {
+            $flash['header'] = lang('update_required');
+            $flash['message'] = sprintf(
+                lang('update_outofdate_files'),
+                $version['files']['full'],
+                $version['database']['full']
+            );
+            $flash['status'] = 2;
+        } elseif (version_compare($version['database']['full'], $version['files']['full'], '<')) {
+            $flash['header'] = lang('update_required');
+            $flash['message'] = sprintf(
+                lang('update_outofdate_database'),
+                $version['database']['full'],
+                $version['files']['full']
+            );
+            $flash['status'] = 2;
+        } elseif (isset($update)) {
+            $flash['header'] = sprintf(
+                lang('update_available'),
+                APP_NAME,
+                $update['version'],
+                ''
+            );
+            $flash['message'] = $update['notes'];
+            $flash['status'] = 1;
+        } else {
+            $flash['header'] = '';
+            $flash['message'] = '';
+            $flash['status'] = '';
+        }
+
+        return [
+            'flash' => $flash,
+            'update' => $update
+        ];
     }
 
     private function _register()

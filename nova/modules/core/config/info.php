@@ -16,8 +16,6 @@ define('WIKI_VERSION', 'Release 2');
 
 define('SMS_UPGRADE_VERSION', '2.6.9');
 
-// define('VERSION_FEED', MODPATH.'assets/version.yml');
-define('VERSION_FEED', 'https://anodyne-productions.com/feeds/version_nova.yml');
 define('LATEST_VERSION_URL', 'https://anodyne-productions.com/api/nova/latest-version');
 
 define('REGISTER_URL', 'https://anodyne-productions.com/api/games');

@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php if ($label['notes'] > ''): ?>
 	<?php echo text_output($label['whatsnew'], 'h2');?>
@@ -12,7 +14,7 @@
 	<em><?php echo $label['files_text'];?></em>
 </a>
 
-<a href="<?php echo site_url('update/step/1');?>" id="next" class="install-options">
+<a href="<?php echo site_url('update/run');?>" id="next" class="install-options">
 	<span><?php echo $label['start'];?></span>
 	<em><?php echo $label['start_text'];?></em>
 </a>
