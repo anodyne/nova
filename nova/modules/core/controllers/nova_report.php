@@ -848,6 +848,69 @@ abstract class Nova_report extends Nova_controller_admin
             'php' => PHP_VERSION,
         );
 
+        $data['nova3'] = [
+            'php' => [
+                'label' => 'PHP 8.2+',
+                'result' => version_compare(PHP_VERSION, '8.2', '>='),
+            ],
+            'database' => [
+                'label' => 'MySQL PDO driver',
+                'result' => in_array('mysql', PDO::getAvailableDrivers()),
+            ],
+            'ctype' => [
+                'label' => 'Ctype PHP extension enabled',
+                'result' => extension_loaded('ctype'),
+            ],
+            'curl' => [
+                'label' => 'cURL PHP extension enabled',
+                'result' => extension_loaded('curl'),
+            ],
+            'dom' => [
+                'label' => 'DOM PHP extension enabled',
+                'result' => extension_loaded('dom'),
+            ],
+            'fileinfo' => [
+                'label' => 'Fileinfo PHP extension enabled',
+                'result' => extension_loaded('fileinfo'),
+            ],
+            'filter' => [
+                'label' => 'Filter PHP extension enabled',
+                'result' => extension_loaded('filter'),
+            ],
+            'hash' => [
+                'label' => 'Hash PHP extension enabled',
+                'result' => extension_loaded('hash'),
+            ],
+            'mbstring' => [
+                'label' => 'Mbstring PHP extension enabled',
+                'result' => extension_loaded('mbstring'),
+            ],
+            'openssl' => [
+                'label' => 'OpenSSL PHP extension enabled',
+                'result' => extension_loaded('openssl'),
+            ],
+            'pcre' => [
+                'label' => 'PCRE PHP extension enabled',
+                'result' => extension_loaded('pcre'),
+            ],
+            'pdo' => [
+                'label' => 'PDO PHP extension enabled',
+                'result' => extension_loaded('pdo'),
+            ],
+            'session' => [
+                'label' => 'Session PHP extension enabled',
+                'result' => extension_loaded('session'),
+            ],
+            'tokenizer' => [
+                'label' => 'Tokenizer PHP extension enabled',
+                'result' => extension_loaded('tokenizer'),
+            ],
+            'xml' => [
+                'label' => 'XML PHP extension enabled',
+                'result' => extension_loaded('xml'),
+            ],
+        ];
+
         $data['header'] = lang('head_report_system');
 
         $data['images'] = array(
