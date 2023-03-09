@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Errors while checking for a new version of Nova in certain circumstances.
 - Incorrect method of checking for the latest version of Nova in the Update Center.
+- Missing information caused the `nullable` field updates to silently fail.
 
 ### Security
 - Updated Composer dependencies to address CVE-2022-24894: Prevent storing cookie headers in HttpCache.
