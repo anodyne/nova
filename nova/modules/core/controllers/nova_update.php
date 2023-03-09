@@ -317,6 +317,8 @@ abstract class Nova_update extends CI_Controller
 
     public function run()
     {
+        ini_set('max_execution_time', -1);
+
         $this->load->dbforge();
 
         $this->load->helper('directory');
