@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Page to generate updated colors for the new Pulsar and Titan skins.
 - Tailwind utilities module. This is intended to allow existing skins to add CSS utility classes to their skin in a non-breaking fashion. More details are available in the docs.
+- System setting to disable the contact form.
+- `flash_contact_form_off_disabled` language key.
+- `labels_contact_enabled` language key.
 
 ### Changed
 
