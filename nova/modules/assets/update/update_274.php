@@ -422,3 +422,17 @@ if ($drop_column !== null) {
         $this->dbforge->drop_column($tableName, $columns[0]);
     }
 }
+
+$insertSettingsData = [
+    ['setting_key' => 'contact_form_enabled', 'setting_value' => 'y', 'setting_user_created' => 'n'],
+];
+
+foreach ($insertSettingsData as $settingsData) {
+    $count = $this->db->where('setting_key', $settingsData['setting_key'])
+        ->from('settings')
+        ->count_all_results();
+
+    if ($count === 0) {
+        $this->db->insert('settings', $settingsData);
+    }
+}

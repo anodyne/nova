@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -2082,6 +2083,10 @@ $settings = array(
     array(
         'setting_key' => 'access_log_purge',
         'setting_value' => '24 hours',
+        'setting_user_created' => 'n'),
+    array(
+        'setting_key' => 'contact_form_enabled',
+        'setting_value' => 'y',
         'setting_user_created' => 'n'),
 );
 
