@@ -4435,6 +4435,16 @@ abstract class Nova_site extends Nova_controller_admin
                     'id' => 'participants_n',
                     'value' => 'n',
                     'checked' => ($setting['use_post_participants'] == 'n') ? true : false),
+                'contact_form_y' => array(
+                    'name' => 'contact_form_enabled',
+                    'id' => 'contact_form_y',
+                    'value' => 'y',
+                    'checked' => ($setting['contact_form_enabled'] == 'y') ? true : false),
+                'contact_form_n' => array(
+                    'name' => 'contact_form_enabled',
+                    'id' => 'contact_form_n',
+                    'value' => 'n',
+                    'checked' => ($setting['contact_form_enabled'] == 'n') ? true : false),
             );
 
             $data['values']['updates'] = array(
@@ -4672,6 +4682,8 @@ abstract class Nova_site extends Nova_controller_admin
             'access_log_purge' => 'Access Log Purge Timeframe',
             'tt_hosting_company' => lang('info_hosting_company'),
             'tt_access_log_purge' => lang('info_access_log_purge'),
+
+            'contact_form_enabled' => lang('labels_contact_enabled'),
         );
 
         // set the js data

@@ -134,6 +134,11 @@
 					<?php echo form_radio($inputs['participants_y']) .' '. form_label($label['yes'], 'participants_y');?>
 					<?php echo form_radio($inputs['participants_n']) .' '. form_label($label['no'], 'participants_n');?>
 				</p>
+				<p>
+					<kbd><?php echo $label['contact_form_enabled'];?></kbd>
+					<?php echo form_radio($inputs['contact_form_y']) .' '. form_label($label['yes'], 'contact_form_y');?>
+					<?php echo form_radio($inputs['contact_form_n']) .' '. form_label($label['no'], 'contact_form_n');?>
+				</p>
 			</div><br />
 
 			<?php echo text_output($label['header_email'], 'h2', 'page-subhead');?>
