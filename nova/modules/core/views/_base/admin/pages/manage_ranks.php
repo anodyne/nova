@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -7,16 +9,16 @@
 <div class="info-full">
 	<?php if (isset($allranks)): ?>
 		<?php echo text_output($label['sets'] . '&nbsp;&nbsp;', 'p', 'float_left bold gray');?>
-		<p>
+		<p class="pill-container">
 			<?php foreach ($allranks as $a => $b): ?>
 				<?php echo anchor('manage/ranks/'. $a, img($b), array('class' => 'image'));?> &nbsp;
 			<?php endforeach;?>
 		</p>
 	<?php endif;?>
-	
+
 	<?php if (isset($allclasses)): ?>
 		<?php echo text_output($label['classes'] . '&nbsp;&nbsp;', 'p', 'float_left bold gray');?>
-		<p>
+		<p class="pill-container">
 			<?php foreach ($allclasses as $k => $v): ?>
 				<?php echo anchor('manage/ranks/'. $set .'/'. $k, img($v), array('class' => 'image'));?> &nbsp;
 			<?php endforeach;?>
@@ -35,7 +37,7 @@
 <?php if (isset($ranks)): ?>
 	<div class="zebra">
 	<?php echo form_open('manage/ranks/'. $set .'/'. $class .'/edit');?>
-	
+
 		<?php foreach ($ranks as $r): ?>
 			<div id="<?php echo $r['id'];?>" class="padding_p5_0_p5_0">
 				<table class="table100">
@@ -55,7 +57,7 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				<div id="tr_<?php echo $r['id'];?>" class="hidden">
 					<table class="table100">
 						<tr>
@@ -80,7 +82,7 @@
 						</tr>
 					</table>
 				</div>
-				
+
 				<table class="table100">
 					<tr>
 						<td class="align_right fontSmall UITheme">
@@ -93,7 +95,7 @@
 				</table>
 			</div>
 		<?php endforeach;?>
-		
+
 		<br />
 		<?php echo form_button($buttons['update']);?>
 	<?php echo form_close();?>
