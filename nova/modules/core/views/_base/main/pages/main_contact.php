@@ -11,9 +11,9 @@
 </style>
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($this->options['system_email'] == 'on' && $this->options['contact_form_enabled'] == 'y'): ?>
-	<?php echo text_output($msg);?>
+<?php echo text_output($msg);?>
 
+<?php if ($this->options['system_email'] == 'on' && $this->options['contact_form_enabled'] == 'y'): ?>
 	<?php echo form_open('main/contact');?>
 		<p>
 			<kbd><?php echo $label['name'];?></kbd>
