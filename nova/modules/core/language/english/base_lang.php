@@ -358,6 +358,7 @@ $lang['labels_classes'] 		= 'classes';
 $lang['labels_comment'] 		= 'comment';
 $lang['labels_comments'] 		= 'comments';
 $lang['labels_contact']			= 'contact form';
+$lang['labels_contact_enabled']	= 'Contact Form Enabled';
 $lang['labels_content'] 		= 'content';
 $lang['labels_controlpanel'] 	= 'Control Panel';
 $lang['labels_count']			= 'count';
@@ -605,6 +606,7 @@ $lang['flash_reset_no_question'] = 'You must select a security question and prov
 
 $lang['flash_system_email_off'] = 'System email has been disabled. You will be able to submit this form, but its data will not be emailed to the appropriate parties!';
 $lang['flash_system_email_off_disabled'] = 'System email has been disabled and you cannot submit this form.';
+$lang['flash_contact_form_off_disabled'] = 'The contact form has been disabled.';
 $lang['flash_contact_recipient'] = 'You must specify a recipient for this email!';
 $lang['flash_add_comment_empty_body'] = 'You cannot submit an empty comment! Please try again.';
 $lang['flash_error_skin_sections'] = 'You cannot delete a skin until all sections have first been removed! Please delete all skin sections from the skin then try again.';
