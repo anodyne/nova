@@ -10,7 +10,15 @@ If you want to change the logo used in the header of the skin or at the top of t
 
 Sometimes you don't need to make wholesale changes to a skin and just want to update the colors. The skin leverages CSS variables to make it simple to change the different colors used throughout the skin.
 
-### Generating a new color palette
+### Automate generating a new color palette
+
+Nova 2.7.5 includes a page that will allow you to generate a color palette from a list of pre-defined colors or by using a custom hex color. You can access the page at the `site/skincolors`. You have the ability to generate colors for primary, success, danger, warning, and info colors from the page.
+
+Once you have selected a color or entered a custom color and generated the colors, you can copy/paste the CSS variables into the skin's `dist/css/colors.css` file.
+
+### Manually generating a new color palette
+
+While automating the process can be handy, sometimes it won't give you the results you're looking. You can manually generate your color palette and do the process manually.
 
 There are a lot of websites that allow you to create color palettes. We recommend using [UIColors.app](https://uicolors.app/create) since it's simple to use and will output colors in a way that is compatible with Tailwind CSS.
 

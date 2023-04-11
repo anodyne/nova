@@ -19,6 +19,14 @@ $stylesheet = [
     'charset' => 'utf-8'
 ];
 
+$utilities = [
+    'href' => MODFOLDER.'/tailwind/utilities.css',
+    'rel' => 'stylesheet',
+    'type' => 'text/css',
+    'media' => 'screen',
+    'charset' => 'utf-8'
+];
+
 $colors = [
     'href' => APPFOLDER.'/views/'.$current_skin.'/dist/css/colors.css',
     'rel' => 'stylesheet',
@@ -58,6 +66,7 @@ $alternateLogoSvg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.svg';
         <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 		<?php echo link_tag($stylesheet);?>
+		<?php echo link_tag($utilities);?>
 		<?php echo link_tag($colors);?>
 
 		<?php include_once MODFOLDER.'/assets/include_head_admin_next.php';?>
