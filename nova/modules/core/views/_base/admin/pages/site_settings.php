@@ -185,6 +185,13 @@
 					<?php echo form_dropdown('skin_wiki', $themes['wiki'], $default['skin_wiki'], 'class="skins" myType="wiki"');?>
 					&nbsp;<a href="#" class="image preview-wiki" rel="prettyPhoto"><?php echo img($images['view']);?></a>
 				</p>
+				<p>
+					<kbd>
+						<span>Generate new color scheme</span>
+						<a href="#" rel="tooltip" class="fontTiny image" title="Generate the necessary CSS to update colors in certain skins"><?php echo img($images['help']);?></a>
+					</kbd>
+					<a href="<?php echo site_url('site/skincolors');?>" class="button-sec">Generate new color scheme</a>
+				</p>
 			</div><br />
 
 			<?php echo text_output($label['header_options'], 'h2', 'page-subhead');?>

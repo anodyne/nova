@@ -10,6 +10,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @copyright	2022 Anodyne Productions
  */
 
+define('HEAD_NEXT_GEN', true);
+
 $modFolder = base_url().MODFOLDER.'/';
 
 $faceboxcss = (! is_file(APPPATH.'views/'.$current_skin.'/admin/css/jquery.facebox.css'))

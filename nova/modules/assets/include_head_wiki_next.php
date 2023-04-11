@@ -10,6 +10,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @copyright	2022 Anodyne Productions
  */
 
+define('HEAD_NEXT_GEN', true);
+
 // pull in the config file
 $this->load->config('thresher');
 

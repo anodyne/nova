@@ -4839,6 +4839,68 @@ abstract class Nova_site extends Nova_controller_admin
         Template::render();
     }
 
+    public function skincolors()
+    {
+        Auth::check_access('site/settings');
+
+        require_once MODPATH.'core/libraries/Colors.php';
+
+        if (isset($_POST['submit'])) {
+            $data['generatedType'] = $this->input->post('color_type', true);
+
+            $colorScale = $this->input->post('color_scale', true);
+
+            if ($colorScale === 'custom') {
+                $customColor = $this->input->post('custom_color', true);
+                $customColor = ($customColor[0] !== '#') ? '#'.$customColor : $customColor;
+                $data['generatedStyles'] = Colors::hex($customColor);
+            } else {
+                $data['generatedStyles'] = constant('Colors::'.$colorScale);
+            }
+
+            $flash['status'] = 'success';
+            $flash['message'] = text_output('Colors were successfully generated.');
+
+            // set the flash message
+            $this->_regions['flash_message'] = Location::view('flash', $this->skin, 'admin', $flash);
+        }
+
+        $data['buttons'] = [
+            'generate' => [
+                'type' => 'submit',
+                'class' => 'button-main',
+                'name' => 'submit',
+                'value' => 'generate',
+                'content' => 'Generate',
+            ]
+        ];
+
+        $data['inputs'] = [
+            'colors' => [],
+            'custom' => [
+                'name' => 'custom_color',
+                'id' => 'custom_color',
+            ],
+        ];
+
+        $data['header'] = ucwords(lang('global_sim') .' '. lang('labels_types'));
+        $data['text'] = lang('text_site_simtypes');
+
+        $data['label'] = array(
+            'name' => ucfirst(lang('labels_name')),
+            'add' => ucwords(lang('actions_add') .' '. lang('global_sim') .' '. lang('labels_type') .' '. RARROW),
+            'delete' => ucfirst(lang('actions_delete'))
+        );
+
+        $this->_regions['content'] = Location::view('site_skincolors', $this->skin, 'admin', $data);
+        $this->_regions['javascript'] = Location::js('site_skincolors_js', $this->skin, 'admin');
+        $this->_regions['title'].= $data['header'];
+
+        Template::assign($this->_regions);
+
+        Template::render();
+    }
+
     public function specsform()
     {
         Auth::check_access();
