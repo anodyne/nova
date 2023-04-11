@@ -10,7 +10,7 @@
 	<p>
 		<kbd><?php echo $label['status'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('post_status', $status, $inputs['status']);?>
+			<?php echo form_dropdown('post_status', $status, $inputs['status'], 'class="w-1/4"');?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['status']), ''); ?>
 			<?php echo form_hidden('post_status', $inputs['status']);?>

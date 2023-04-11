@@ -644,11 +644,13 @@ abstract class Nova_messages extends Nova_controller_admin
             'subject' => array(
                 'name' => 'subject',
                 'id' => 'subject',
+                'class' => 'w-1/2',
                 'value' => $subject),
             'message' => array(
                 'name' => 'message',
                 'id' => 'message-textarea',
-                'rows' => 20,
+                'class' => 'w-full',
+                'rows' => 10,
                 'value' => $message),
             'submit' => array(
                 'type' => 'submit',

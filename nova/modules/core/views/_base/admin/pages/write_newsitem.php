@@ -18,12 +18,12 @@
 
 	<p>
 		<kbd><?php echo $label['category'];?></kbd>
-		<?php echo form_dropdown('newscat', $values['category'], $key['cat']);?>
+		<?php echo form_dropdown('newscat', $values['category'], $key['cat'], 'class="w-1/4"');?>
 	</p>
 
 	<p>
 		<kbd><?php echo $label['type'];?></kbd>
-		<?php echo form_dropdown('private', $values['private'], $key['private']);?>
+		<?php echo form_dropdown('private', $values['private'], $key['private'], 'class="w-1/4"');?>
 	</p>
 
 	<p>

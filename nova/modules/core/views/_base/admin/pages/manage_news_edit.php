@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}?>
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
@@ -8,13 +10,13 @@
 	<p>
 		<kbd><?php echo $label['status'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('news_status', $status, $inputs['status']);?>
+			<?php echo form_dropdown('news_status', $status, $inputs['status'], 'class="w-1/4"');?>
 		<?php else: ?>
 			<?php echo text_output(ucfirst($inputs['status']), ''); ?>
 			<?php echo form_hidden('news_status', $inputs['status']);?>
 		<?php endif; ?>
 	</p>
-	
+
 	<p>
 		<kbd><?php echo $label['author'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
@@ -31,7 +33,7 @@
 	<p>
 		<kbd><?php echo $label['category'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('news_cat', $categories, $inputs['category']);?>
+			<?php echo form_dropdown('news_cat', $categories, $inputs['category'], 'class="w-1/4"');?>
 		<?php else: ?>
 			<?php echo text_output($inputs['category_name'], ''); ?>
 			<?php echo form_hidden('news_cat', $inputs['category']);?>
@@ -40,7 +42,7 @@
 	<p>
 		<kbd><?php echo $label['private'];?></kbd>
 		<?php if (Auth::get_access_level() == 2): ?>
-			<?php echo form_dropdown('news_private', $private, $inputs['private']);?>
+			<?php echo form_dropdown('news_private', $private, $inputs['private'], 'class="w-1/4"');?>
 		<?php else: ?>
 			<?php echo text_output($inputs['private_long'], ''); ?>
 			<?php echo form_hidden('news_private', $inputs['private']);?>
@@ -55,6 +57,6 @@
 		<?php echo text_output($label['tags_inst'], 'span', 'fontSmall gray bold');?><br />
 		<?php echo form_input($inputs['tags']);?>
 	</p><br />
-	
+
 	<p><?php echo form_button($buttons['update']);?></p>
 <?php echo form_close();?>
