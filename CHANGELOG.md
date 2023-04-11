@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Page to generate updated colors for the new Pulsar and Titan skins.
+- Tailwind utilities module. This is intended to allow existing skins to add CSS utility classes to their skin in a non-breaking fashion. More details are available in the docs.
 
 ### Changed
 
@@ -18,6 +19,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Database configuration file stub now includes the database port.
 - Updated the `upd_step2_title` language item.
 - Updated the `upd_step2_success` language item.
+- Mission post fields have been updated with additional CSS classes: title (`w-1/2`), tags (`w-1/2`), timeline (`w-1/2`), location (`w-1/2`), content (`w-full`), status (`w-1/4` - management mode only).
+- Personal log fields have been updated with additional CSS classes: title (`w-1/2`), tags (`w-1/2`), timeline (`w-1/2`), location (`w-1/2`), content (`w-full`), status (`w-1/4` - management mode only).
+- News item fields have been updated with additional CSS classes: title (`w-1/2`), tags (`w-1/2`), newscat (`w-1/4`), private (`w-1/4`), content (`w-full`), status (`w-1/4` - management mode only).
+- Private message compose fields have been updated with additional CSS classes: subject (`w-1/2`), content (`w-full`).
+- Contact form fields have been updated with additional CSS classes: name (`w-1/2`), email (`w-1/2`), subject (`w-1/2`), message (`w-full`).
 
 ### Removed
 
