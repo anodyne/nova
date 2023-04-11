@@ -11,7 +11,7 @@
 </style>
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<?php if ($this->options['system_email'] == 'on'): ?>
+<?php if ($this->options['system_email'] == 'on' && $this->options['contact_form_enabled'] == 'y'): ?>
 	<?php echo text_output($msg);?>
 
 	<?php echo form_open('main/contact');?>
@@ -45,5 +45,11 @@
 		</p>
 	<?php echo form_close();?>
 <?php else: ?>
-	<?php echo text_output($label['nosubmit'], 'h4', 'orange');?>
+	<?php if ($this->options['system_email'] == 'off'): ?>
+		<?php echo text_output($label['nosubmit'], 'h4', 'orange');?>
+	<?php endif;?>
+
+	<?php if ($this->options['system_email'] == 'on' && $this->options['contact_form_enabled'] == 'n'): ?>
+		<?php echo text_output($label['nosubmit_contact_form_disabled'], 'h4', 'orange');?>
+	<?php endif;?>
 <?php endif;?>

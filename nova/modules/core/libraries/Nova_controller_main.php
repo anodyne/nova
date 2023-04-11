@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -96,6 +97,7 @@ class Nova_controller_main extends CI_Controller
             'post_count_format',
             'access_log_purge',
             'hosting_company',
+            'contact_form_enabled',
         );
 
         // set the options

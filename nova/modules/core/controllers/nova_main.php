@@ -139,7 +139,7 @@ abstract class Nova_main extends Nova_controller_main
                 'content' => ucwords(lang('actions_submit'))),
         );
 
-        if ($this->options['system_email'] == 'off') {
+        if ($this->options['system_email'] == 'off' || $this->options['contact_form_enabled'] == 'n') {
             $data['button']['submit']['disabled'] = 'disabled';
         }
 
@@ -178,6 +178,7 @@ abstract class Nova_main extends Nova_controller_main
             'subject' => ucwords(lang('labels_subject')),
             'message' => ucwords(lang('labels_message')),
             'nosubmit' => lang('flash_system_email_off_disabled'),
+            'nosubmit_contact_form_disabled' => lang('flash_contact_form_off_disabled'),
         );
 
         $this->_regions['content'] = Location::view('main_contact', $this->skin, 'main', $data);
