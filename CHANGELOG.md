@@ -40,6 +40,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Incorrect method of checking for the latest version of Nova in the Update Center.
 - Missing information caused the `nullable` field updates to silently fail.
 - Ranks management displayed sets and classes vertically instead of horizontally.
+- Errors about incorrect return types from inside extensions.
+- Extension controllers not working.
 
 ### Security
 
