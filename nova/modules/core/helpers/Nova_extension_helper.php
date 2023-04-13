@@ -85,7 +85,7 @@ class Nova_extension_container implements ArrayAccess
     {
         $ci =& get_instance();
 
-        $obj = new stdClass;
+        $obj = new stdClass();
         $obj->view = $view;
         $obj->sec = 'extensions/'.$this->name.'/'.$section;
         $obj->skin = '_base';
@@ -163,7 +163,7 @@ class Nova_extension_container implements ArrayAccess
         unset($this->facades[$offset]);
     }
 
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return isset($this->facades[$offset]) ? $this->facades[$offset] : null;
     }

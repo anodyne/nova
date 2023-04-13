@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -49,7 +50,7 @@ abstract class Nova_extension implements ArrayAccess
         unset($this->facades[$offset]);
     }
 
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return isset($this->facades[$offset]) ? $this->facades[$offset] : null;
     }
