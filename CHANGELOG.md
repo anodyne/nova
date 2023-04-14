@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Private message compose fields have been updated with additional CSS classes: subject (`w-1/2`), content (`w-full`).
 - Contact form fields have been updated with additional CSS classes: name (`w-1/2`), email (`w-1/2`), subject (`w-1/2`), message (`w-full`).
 - The contact form message (configurable in Site Messages) will always be shown on the contact form, even if system email is off or the contact form has been disabled.
+- Sub navigation items now include a class to indicate whether they're the actively viewed page or not.
 
 ### Removed
 
