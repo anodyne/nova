@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -44,15 +45,15 @@ abstract class Nova_menu
         switch (self::$type) {
             case 'main':
                 self::_build_main();
-            break;
+                break;
 
             case 'sub':
                 self::_build_sub();
-            break;
+                break;
 
             case 'adminsub':
                 self::_build_sub_admin();
-            break;
+                break;
         }
 
         return self::$output;
@@ -170,6 +171,7 @@ abstract class Nova_menu
                 } else {
                     $target = null;
                     $link = site_url($item->menu_link);
+                    $active = $item->menu_link === $ci->uri->rsegment(1) . '/' . $ci->uri->rsegment(2) ? 'class="active"' : null;
                 }
 
                 if (($item->menu_need_login == 'y' && Auth::is_logged_in()) || ($item->menu_need_login == 'n' && Auth::is_logged_in() === false) || $item->menu_need_login == 'none') {
@@ -186,7 +188,7 @@ abstract class Nova_menu
                 }
 
                 if ($display === true) {
-                    self::$output.= '<li><a href="' . $link .'"' . $target . '><span>' . $item->menu_name . '</span></a></li>';
+                    self::$output.= '<li><a href="' . $link .'"'.$target.' '.$active.'><span>' . $item->menu_name . '</span></a></li>';
                 }
             } /* close the item foreach */
 
