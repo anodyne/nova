@@ -163,7 +163,8 @@ class Nova_extension_container implements ArrayAccess
         unset($this->facades[$offset]);
     }
 
-    public function offsetGet($offset)
+    #[ReturnTypeWillChange]
+    public function offsetGet($offset): mixed
     {
         return isset($this->facades[$offset]) ? $this->facades[$offset] : null;
     }
@@ -179,6 +180,10 @@ class Nova_extension_container implements ArrayAccess
 class Nova_extension_initialization_context
 {
     public $ci;
+
+    public $name;
+
+    public $path;
 
     protected $_extensionContainer;
 

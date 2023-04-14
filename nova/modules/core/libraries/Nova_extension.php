@@ -50,7 +50,8 @@ abstract class Nova_extension implements ArrayAccess
         unset($this->facades[$offset]);
     }
 
-    public function offsetGet($offset)
+    #[ReturnTypeWillChange]
+    public function offsetGet($offset): mixed
     {
         return isset($this->facades[$offset]) ? $this->facades[$offset] : null;
     }
