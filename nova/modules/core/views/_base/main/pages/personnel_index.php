@@ -78,7 +78,7 @@
 	<?php endif;?>
 
 	<?php if (isset($depts)): ?>
-		<br /><table class="table100" cellpadding="3" border="0">
+		<br /><table class="table100 manifest_table" cellpadding="3" border="0">
 
 		<?php foreach ($depts as $dept): ?>
 			<tr>
