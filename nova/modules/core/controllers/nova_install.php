@@ -865,20 +865,28 @@ abstract class Nova_install extends CI_Controller
                                 $code = htmlentities("<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 \$active_group = 'default';
-\$active_record = true; /** DO NOT CHANGE THIS - DOING SO WILL BREAK THE SYSTEM! **/
+\$query_builder = true;
 
+\$db['default']['dsn'] = '';
 \$db['default']['hostname'] = '".$this->session->userdata('dbHost')."';
 \$db['default']['username'] = '".$this->session->userdata('dbUser')."';
 \$db['default']['password'] = '".$this->session->userdata('dbPass')."';
 \$db['default']['database'] = '".$this->session->userdata('dbName')."';
 \$db['default']['dbdriver'] = '".$this->session->userdata('dbDriver')."';
 \$db['default']['dbprefix'] = '".$this->session->userdata('prefix')."';
-\$db['default']['pconnect'] = true;
-\$db['default']['db_debug'] = NOVA_DB_DEBUG;
+\$db['default']['port'] = 3306;
+\$db['default']['pconnect'] = false;
+\$db['default']['db_debug'] = false;
 \$db['default']['cache_on'] = false;
 \$db['default']['cachedir'] = '';
 \$db['default']['char_set'] = 'utf8';
 \$db['default']['dbcollat'] = 'utf8_general_ci';
+\$db['default']['swap_pre'] = '';
+\$db['default']['encrypt'] = false;
+\$db['default']['compress'] = false;
+\$db['default']['stricton'] = false;
+\$db['default']['failover'] = [];
+\$db['default']['save_queries'] = true;
 ");
                             }
 
