@@ -43,10 +43,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Ranks management displayed sets and classes vertically instead of horizontally.
 - Errors about incorrect return types from inside extensions.
 - Extension controllers not working.
+- Personnel main navigation item hides when show/hiding certain types of characters on the manifest.
 
 ### Security
 
 - Updated Composer dependencies to address CVE-2022-24894: Prevent storing cookie headers in HttpCache.
+- Updated Composer dependencies to address CVE-2023-29197: Improper header validation.
 
 ## [2.7.4] - 2023-01-27
 
