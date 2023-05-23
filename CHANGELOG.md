@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.5] - 2023-05-23
+
 ### Added
 
 - Page to generate updated colors for the new Pulsar and Titan skins.
@@ -39,7 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Errors while checking for a new version of Nova in certain circumstances.
 - Incorrect method of checking for the latest version of Nova in the Update Center.
-- Missing information caused the `nullable` field updates to silently fail.
+- Missing information caused the `nullable` field updates in 2.7.4 to silently fail.
 - Ranks management displayed sets and classes vertically instead of horizontally.
 - Errors about incorrect return types from inside extensions.
 - Extension controllers not working.
