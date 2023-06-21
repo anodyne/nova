@@ -733,7 +733,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                     $draft_array = array(
                         'draft_author_user' => $this->session->userdata('userid'),
                         'draft_author_character' => $this->session->userdata('main_char'),
-                        'draft_content' => $this->input->post('content', true),
+                        'draft_content' => $this->input->post('content'),
                         'draft_title' => $this->input->post('title', true),
                         'draft_created_at' => now(),
                         'draft_page' => $pageid,
@@ -789,7 +789,7 @@ abstract class Nova_wiki extends Nova_controller_wiki
                     $draft_array = array(
                         'draft_author_user' => $this->session->userdata('userid'),
                         'draft_author_character' => $this->session->userdata('main_char'),
-                        'draft_content' => $this->input->post('content', true),
+                        'draft_content' => $this->input->post('content'),
                         'draft_title' => $this->input->post('title', true),
                         'draft_created_at' => now(),
                         'draft_page' => $id,

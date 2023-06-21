@@ -471,7 +471,7 @@ abstract class Nova_write extends Nova_controller_admin
             // define the POST variables
             $tags = $this->input->post('tags', true);
             $title = $this->input->post('title', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $mission = $this->input->post('mission', true);
             $timeline = $this->input->post('timeline', true);
             $location = $this->input->post('location', true);
@@ -1236,7 +1236,7 @@ abstract class Nova_write extends Nova_controller_admin
 
         if (isset($_POST['submit'])) {
             $title = $this->input->post('title', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $author = $this->input->post('author', true);
             $tags = $this->input->post('tags', true);
             $action = strtolower($this->input->post('submit', true));
@@ -1638,7 +1638,7 @@ abstract class Nova_write extends Nova_controller_admin
 
         if (isset($_POST['submit'])) {
             $title = $this->input->post('title', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $author = $this->input->post('author', true);
             $tags = $this->input->post('tags', true);
             $action = strtolower($this->input->post('submit', true));

@@ -154,7 +154,7 @@ abstract class Nova_ajax extends CI_Controller
             $this->load->model('characters_model', 'char');
 
             $value = $this->input->post('value', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $field = $this->input->post('field', true);
             $order = 0;
 
@@ -1011,7 +1011,7 @@ abstract class Nova_ajax extends CI_Controller
             $this->load->model('docking_model', 'docking');
 
             $value = $this->input->post('value', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $field = $this->input->post('field', true);
 
             $values = $this->docking->get_docking_values($field);
@@ -2002,7 +2002,7 @@ abstract class Nova_ajax extends CI_Controller
             $this->load->model('specs_model', 'specs');
 
             $value = $this->input->post('value', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $field = $this->input->post('field', true);
 
             $values = $this->specs->get_spec_values($field);
@@ -2202,7 +2202,7 @@ abstract class Nova_ajax extends CI_Controller
             $this->load->model('tour_model', 'tour');
 
             $value = $this->input->post('value', true);
-            $content = $this->input->post('content', true);
+            $content = $this->input->post('content');
             $field = $this->input->post('field', true);
 
             $values = $this->tour->get_tour_values($field);
@@ -7441,7 +7441,7 @@ abstract class Nova_ajax extends CI_Controller
 
         // set the variables
         $post = $this->input->post('post', true);
-        $content = $this->input->post('content', true);
+        $content = $this->input->post('content');
         $time = now();
         $user = $this->session->userdata('userid');
 
