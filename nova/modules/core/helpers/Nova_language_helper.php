@@ -80,20 +80,15 @@ if (! function_exists('lang_output')) {
 if (! function_exists('text_output')) {
     function text_output($text = '', $element = 'p', $class = null, $nl2br = true)
     {
-        /* set the class variable */
-        $class_var = (isset($class)) ? ' class="' . $class . '"' : null;
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
 
-        /* set the content */
-        $content = ($nl2br == true) ? nl2br($text) : $text;
-
-        /* set the elements */
-        $start_element = ($element == '') ? null : '<'. $element . $class_var .'>';
-        $end_element = ($element == '') ? null : '</'. $element .'>';
-
-        /* set up the entire element */
-        $retval = $start_element . $content . $end_element;
-
-        /* return the element */
-        return $retval;
+        return sprintf(
+            '<%s%s>%s</%s>',
+            $element,
+            _stringify_attributes(['class' => $class]),
+            $purifier->purify(($nl2br == true) ? nl2br($text) : $text),
+            $element
+        );
     }
 }
