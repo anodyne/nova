@@ -1,9 +1,9 @@
-version: 2.7.5
+version: 2.7.6
 version_major: 2
 version_minor: 7
-version_update: 5
+version_update: 6
 severity: update
-notes: Nova 2.7.5 adds a useful utility page for customizing the Pulsar and Titan skins as well as adding the ability to shut off the contact form. We've adjusted the telemetry URLs after the launch of the new Anodyne site, fixed several issues, and patched several security vulnerabilities in dependencies.
+notes: Nova 2.7.6 changes the way we handle potential XSS attacks with content fields to prevent unnecessarily stripping or encoding content.
 date: 23 May 2023
 link: https://anodyne-productions.com/nova
 upgrade_guide_link: none

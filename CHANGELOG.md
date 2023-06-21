@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- [HTML Purifier](http://htmlpurifier.org/) package
+
+### Changed
+
+- Removed XSS filtering from content fields
+- `text_output` helper will now run content through HTML Purifier to address potential XSS attacks
+
 ## [2.7.5] - 2023-05-23
 
 ### Added
