@@ -97,6 +97,12 @@ $backgroundImage = APPFOLDER.'/views/'.$current_skin.'/dist/images/background.jp
 					return false;
 				});
 			});
+
+			$(document).keyup(function (e) {
+				if (e.keyCode == 27) {
+					$('.panel-wrapper').addClass('hidden');
+				}
+			});
 		</script>
 	</head>
 	<body>

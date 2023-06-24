@@ -88,6 +88,12 @@ $alternateLogoSvg = APPFOLDER.'/views/'.$current_skin.'/dist/images/logo.svg';
 				// make sure the control panel item is always shown as active
 				$('a:contains("Control Panel")').addClass('active');
 			});
+
+			$(document).keyup(function (e) {
+				if (e.keyCode == 27) {
+					$('.panel-wrapper').addClass('hidden');
+				}
+			});
 		</script>
 	</head>
 	<body>

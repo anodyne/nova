@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Removed XSS filtering from content fields
 - `text_output` helper will now run content through HTML Purifier to address potential XSS attacks
+- When active, the escape key will close the user panel
 
 ## [2.7.5] - 2023-05-23
 
