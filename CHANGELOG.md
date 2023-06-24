@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Removed XSS filtering from content fields
 - `text_output` helper will now run content through HTML Purifier to address potential XSS attacks
 - When active, the escape key will close the user panel
+- Better error message when there is a misnamed extension that Nova attempts to load
 
 ## [2.7.5] - 2023-05-23
 

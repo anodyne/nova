@@ -119,7 +119,7 @@ abstract class Nova_utility
 
         foreach ($extensions['enabled'] as $extensionName) {
             if (!is_dir(APPPATH.'extensions/'.$extensionName.'/')) {
-                show_error('Extension missing: '.$extensionName);
+                show_error('Extension missing: '.$extensionName.'. We could not find a folder called '.$extensionName.' in the application/extensions directory. Make sure that the name of the extension\'s folder matches the name added to the config file.');
             }
 
             $ci->extension[$extensionName] = new Extension_container($extensionName);
