@@ -17,6 +17,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - When active, the escape key will close the user panel
 - Better error message when there is a misnamed extension that Nova attempts to load
 
+### Removed
+
+- Message entry for the wiki main page intro paragraph in Titles & Messages for fresh installs. (Beginning with Nova 2.0, this was moved into the wiki itself under Manage Pages.)
+
 ## [2.7.5] - 2023-05-23
 
 ### Added
