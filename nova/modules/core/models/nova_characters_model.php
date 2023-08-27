@@ -306,6 +306,7 @@ abstract class Nova_characters_model extends CI_Model
     public function get_characters_for_position($position = '', $order = '')
     {
         $this->db->from('characters');
+        $this->db->join('ranks', 'ranks.rank_id = characters.rank');
         $this->db->where('crew_type !=', 'pending');
         $this->db->where('position_1', $position);
         $this->db->or_where('position_2', $position);

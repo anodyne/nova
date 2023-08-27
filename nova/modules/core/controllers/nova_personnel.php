@@ -95,7 +95,7 @@ abstract class Nova_personnel extends Nova_controller_main
                                     $data['depts'][$dept]['sub'][$a]['pos'][$b]['blank_img'] = $blank_img;
 
                                     // get any characters in a position in a sub dept
-                                    $characters = $this->char->get_characters_for_position($pos->pos_id, array('rank' => 'asc'));
+                                    $characters = $this->char->get_characters_for_position($pos->pos_id, ['ranks.rank_order' => 'asc']);
 
                                     if ($characters->num_rows() > 0) {
                                         $c = 1;
@@ -186,7 +186,7 @@ abstract class Nova_personnel extends Nova_controller_main
                             $data['depts'][$dept]['pos'][$b]['blank_img'] = $blank_img;
 
                             // get any characters in a position in the dept
-                            $characters = $this->char->get_characters_for_position($pos->pos_id, array('rank' => 'asc'));
+                            $characters = $this->char->get_characters_for_position($pos->pos_id, ['ranks.rank_order' => 'asc']);
 
                             if ($characters->num_rows() > 0) {
                                 $c = 1;
