@@ -143,7 +143,11 @@ $lang['text_skins_global'] = "These options control the skins for the site when 
 
 $lang['text_skins_user'] = "These options control the skins for the site when you are logged in. If you want to change the skin that visitors who are not logged in see, you will need to use the <a href='%s'>Site Settings</a> page.";
 
-$lang['text_user_del_confirm'] = "Are you sure you wish to delete your user account and all personal information associated with it? This action is permanent and cannot be undone!";
+$lang['text_user_del_confirm'] = "Are you sure you wish to delete your user account and all personal information associated with it?
+
+Your characters and any posts you've contributed will remain with the game and available on the site. The only thing that will be deleted is your user account. You will no longer be able to log in to this site and the game master(s) will be notified of the deletion.
+
+This action is permanent and cannot be undone!";
 
 $lang['text_admin_del'] = "Users with system administrator privileges cannot delete their accounts. Please give another user system administrator privileges and have them delete your account.";
 
