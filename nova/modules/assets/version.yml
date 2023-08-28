@@ -3,7 +3,7 @@ version_major: 2
 version_minor: 7
 version_update: 6
 severity: update
-notes: Nova 2.7.6 changes the way we handle potential XSS attacks with content fields to prevent unnecessarily stripping or encoding content.
-date: 23 May 2023
+notes: Nova 2.7.6 changes the way we handle potential XSS attacks with content fields to prevent unnecessarily stripping or encoding content. We have also added an email notification when a user deletes their account, fixed an issue with ordering characters by rank on the manifest, and updated package dependencies across the app.
+date: 28 August 2023
 link: https://anodyne-productions.com/nova
 upgrade_guide_link: none
