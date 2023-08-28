@@ -92,6 +92,7 @@ class Nova_controller_admin extends CI_Controller
             'post_count_format',
             'allowed_chars_playing',
             'allowed_chars_npc',
+            'default_email_name',
             'default_email_address',
             'use_post_participants',
             'access_log_purge',

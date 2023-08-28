@@ -40,6 +40,7 @@ $lang['email_subject_docking_user'] 		= 'Docking Request Received';
 $lang['email_subject_docking_gm'] 			= 'Docking Request Received';
 $lang['email_subject_docking_approved']		= 'Docking Request Approved';
 $lang['email_subject_docking_rejected']		= 'Docking Request Rejected';
+$lang['email_subject_user_account_deleted']	= 'User Has Deleted Their Account';
 
 /*
 |---------------------------------------------------------------
@@ -155,3 +156,7 @@ This is an automatically generated email, do not reply to this message.";
 $lang['email_content_docking_gm'] = "There is currently a docking request waiting for your review. The content of the application is displayed below. You can log in to Nova to approve and reject this request.
 
 This is an automatically generated email, do not reply to this message.";
+
+$lang['email_content_user_account_deleted'] = "%s has deleted their user account.
+
+Any characters linked to their account have been unlinked. Any posts they've added or contributed to are still available on the site.";

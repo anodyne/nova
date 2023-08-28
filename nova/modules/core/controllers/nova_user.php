@@ -666,6 +666,8 @@ abstract class Nova_user extends Nova_controller_admin
                 }
             }
 
+            $this->_email('delete', ['user' => $this->user->get_user($id, 'name')]);
+
             // delete user account
             $this->user->delete_user($id);
 
@@ -2023,6 +2025,38 @@ abstract class Nova_user extends Nova_controller_admin
 
                 // set the parameters for sending the email
                 $this->mail->from(Util::email_sender(), $from_name);
+                $this->mail->to($to);
+                $this->mail->subject($this->options['email_subject'] .' '. $subject);
+                $this->mail->message($message);
+            break;
+
+            case 'delete':
+                // set some variables
+                $subject = lang('email_subject_user_account_deleted');
+
+                // set the content
+                $content = sprintf(
+                    lang('email_content_user_account_deleted'),
+                    $data['user']
+                );
+
+                // set the email data
+                $email_data = array(
+                    'email_content' => ($this->mail->mailtype == 'html') ? nl2br($content) : $content,
+                    'email_subject' => $subject,
+                );
+
+                // where should the email be coming from
+                $em_loc = Location::email('user_deleted_account', $this->mail->mailtype);
+
+                // parse the message
+                $message = $this->parser->parse_string($em_loc, $email_data, false);
+
+                // make a string of email addresses
+                $to = implode(',', $this->user->get_gm_emails());
+
+                // set the parameters for sending the email
+                $this->mail->from(Util::email_sender(), $this->options['default_email_name']);
                 $this->mail->to($to);
                 $this->mail->subject($this->options['email_subject'] .' '. $subject);
                 $this->mail->message($message);
