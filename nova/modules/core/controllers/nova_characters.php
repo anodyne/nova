@@ -346,8 +346,8 @@ abstract class Nova_characters extends Nova_controller_admin
                         'name' => parse_name($name),
                         'position_1' => ($pos !== false) ? $pos->pos_name : '',
                         'position_2' => $this->pos->get_position($a->position_2, 'pos_name'),
-                        'pstatus' => $p['status'],
-                        'email' => $p['email']
+                        'pstatus' => $p['status'] ?? null,
+                        'email' => $p['email'] ?? null
                     );
 
                     ++$data['count'][$a->crew_type];
