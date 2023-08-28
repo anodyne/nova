@@ -22,6 +22,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Characters are now ordered by their rank's order rather than their rank's ID
 - Default email name is available through the `$options` array in the admin system
 - `text_user_del_confirm` language item to provide more information about what is deleted and what stays
+- Updated package dependencies
+- Updated package dependencies for the Pulsar theme
+- Updated package dependencies for the Titan theme
 
 ### Fixed
 
