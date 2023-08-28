@@ -9,13 +9,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - [HTML Purifier](http://htmlpurifier.org/) package
+- Email notification to GMs when a user account is deleted by the owning user
+- `email_subject_user_account_deleted` language item
+- `email_content_user_account_deleted` language item
 
 ### Changed
 
 - Removed XSS filtering from content fields
 - `text_output` helper will now run content through HTML Purifier to address potential XSS attacks
-- When active, the escape key will close the user panel
+- When the user panel is open, the escape key will close it
 - Better error message when there is a misnamed extension that Nova attempts to load
+- Characters are now ordered by their rank's order rather than their rank's ID
+- Default email name is available through the `$options` array in the admin system
+- `text_user_del_confirm` language item to provide more information about what is deleted and what stays
+
+### Fixed
+
+- Errors thrown when there are pending users in the Pending Characters screen
 
 ### Removed
 
