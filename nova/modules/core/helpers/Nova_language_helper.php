@@ -83,12 +83,48 @@ if (! function_exists('text_output')) {
         $config = HTMLPurifier_Config::createDefault();
         $purifier = new HTMLPurifier($config);
 
+        $content = $purifier->purify(($nl2br == true) ? nl2br($text) : $text);
+
+        if (blank($element)) {
+            return $content;
+        }
+
         return sprintf(
             '<%s%s>%s</%s>',
             $element,
             _stringify_attributes(['class' => $class]),
-            $purifier->purify(($nl2br == true) ? nl2br($text) : $text),
+            $content,
             $element
         );
+    }
+}
+
+if (! function_exists('blank')) {
+    function blank($value)
+    {
+        if (is_null($value)) {
+            return true;
+        }
+
+        if (is_string($value)) {
+            return trim($value) === '';
+        }
+
+        if (is_numeric($value) || is_bool($value)) {
+            return false;
+        }
+
+        if ($value instanceof Countable) {
+            return count($value) === 0;
+        }
+
+        return empty($value);
+    }
+}
+
+if (! function_exists('filled')) {
+    function filled($value)
+    {
+        return ! blank($value);
     }
 }
