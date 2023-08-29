@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.7] - 2023-08-29
+
+### Fixed
+
+- HTML content is shown in cases where no element is passed to the `text_output` helper
+
 ## [2.7.6] - 2023-08-28
 
 ### Added
