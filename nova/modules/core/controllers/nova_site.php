@@ -1234,7 +1234,7 @@ abstract class Nova_site extends Nova_controller_admin
                 $data['catalogue'][$rank->rankcat_id]['status'] = $rank->rankcat_status;
                 $data['catalogue'][$rank->rankcat_id]['default'] = $rank->rankcat_default;
 
-                $key = array_search($rank->rankcat_location, $dir);
+                $key = array_search($rank->rankcat_location.DIRECTORY_SEPARATOR, $dir);
 
                 if ($key !== false) {
                     unset($dir[$key]);
