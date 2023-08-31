@@ -81,6 +81,7 @@ if (! function_exists('text_output')) {
     function text_output($text = '', $element = 'p', $class = null, $nl2br = true)
     {
         $config = HTMLPurifier_Config::createDefault();
+        $config->set('Attr.EnableID', true);
         $purifier = new HTMLPurifier($config);
 
         $content = $purifier->purify(($nl2br == true) ? nl2br($text) : $text);
