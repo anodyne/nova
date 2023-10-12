@@ -9,7 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - Rank catalogue shows installed items in the list of pending rank sets
-- HTML Purifier purged IDs off of HTML elements
+- HTML Purifier purges IDs off of HTML elements
+- Private news items are displayed for un-authenticated users
 
 ## [2.7.7] - 2023-08-29
 
