@@ -30,7 +30,7 @@ abstract class Nova_news_model extends CI_Model
             $this->db->where('news_cat', $c);
         }
 
-        if ($session === false) {
+        if (blank($session)) {
             $this->db->where('news_private', 'n');
         }
 
@@ -111,7 +111,7 @@ abstract class Nova_news_model extends CI_Model
                 break;
             }
 
-            if ($session === false) {
+            if (blank($session)) {
                 $this->db->where('news_private', 'n');
             }
 
@@ -244,7 +244,7 @@ abstract class Nova_news_model extends CI_Model
         $this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
         $this->db->where('news_status', 'activated');
 
-        if ($session === false) {
+        if (blank($session)) {
             $this->db->where('news_private', 'n');
         }
 
