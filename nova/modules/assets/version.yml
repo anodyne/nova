@@ -1,9 +1,9 @@
-version: 2.7.7
+version: 2.7.8
 version_major: 2
 version_minor: 7
-version_update: 7
+version_update: 8
 severity: update
-notes: Nova 2.7.7 addresses an issue where HTML content may be output to the page in certain situations.
+notes: Nova 2.7.8 addresses issues...
 date: 29 August 2023
 link: https://anodyne-productions.com/nova
 upgrade_guide_link: none
