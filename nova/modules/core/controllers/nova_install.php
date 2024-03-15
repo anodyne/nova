@@ -1058,6 +1058,10 @@ abstract class Nova_install extends CI_Controller
             redirect('install/index/error/1', 'refresh');
         }
 
+        if ($this->installed && $step >= 3) {
+            redirect('install/index/error/1', 'refresh');
+        }
+
         switch ($step) {
             case 1:
                 // update the character set and collation
@@ -1763,6 +1767,10 @@ abstract class Nova_install extends CI_Controller
             'db_driver' => $this->db->platform(),
             'db_version' => $this->db->version(),
             'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+            'active_users' => 1,
+            'active_characters' => 1,
+            'total_posts' => 0,
+            'total_post_words' => 0,
         ]);
     }
 }

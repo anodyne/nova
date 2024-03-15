@@ -687,6 +687,11 @@ abstract class Nova_update extends CI_Controller
     {
         $info = $this->sys->get_system_info();
 
+        $userCount = $this->user->count_all_users();
+        $characterCount = $this->char->count_characters();
+        $postsCount = $this->posts->count_all_posts();
+        $postWordsCount = $this->posts->count_post_words();
+
         $http = new \Illuminate\Http\Client\Factory();
 
         $http->post(REGISTER_URL, [
@@ -699,6 +704,10 @@ abstract class Nova_update extends CI_Controller
             'db_version' => $this->db->version(),
             'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
             'install_date' => $info ? $info->sys_install_date : null,
+            'active_users' => $userCount,
+            'active_characters' => $characterCount,
+            'total_posts' => $postsCount,
+            'total_post_words' => $postWordsCount,
         ]);
     }
 }
