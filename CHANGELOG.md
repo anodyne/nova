@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.9] - 2024-03-15
+
+### Security
+
+- Patched an issue where someone could create a user with system admin permissions
+
+### Changed
+
+- Labels used in the update settings reflect current Nova version numbers
+- The base config file now shows a message about how to enable the Who's Online feature (fresh installs only)
+- Telemetry data now includes counts for active users and character
+- Telemetry data now includes counts for total published posts and total published post words
+
 ## [2.7.8] - 2023-10-19
 
 ### Fixed
