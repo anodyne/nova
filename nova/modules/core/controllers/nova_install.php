@@ -19,6 +19,11 @@ abstract class Nova_install extends CI_Controller
     public $installed = false;
 
     /**
+     * @var	bool	Is the system configured?
+     */
+    public $configured = false;
+
+    /**
      * @var	array 	Variable to store all the information about template regions
      */
     protected $_regions = array();
@@ -37,10 +42,12 @@ abstract class Nova_install extends CI_Controller
         if (file_exists(APPPATH.'config/database.php') and $this->uri->segment(2) != 'setupconfig') {
             $this->load->database();
             $this->load->model('system_model', 'sys');
+            $this->load->model('settings_model', 'settings');
 
             $this->sys->prepare_database_session();
 
             $this->installed = $this->sys->check_install_status();
+            $this->configured = $this->installed && filled($this->settings->get_setting('sim_name'));
         } else {
             // change the session class to NOT use the database for now
             $this->config->set_item('sess_use_database', false);
@@ -1058,7 +1065,7 @@ abstract class Nova_install extends CI_Controller
             redirect('install/index/error/1', 'refresh');
         }
 
-        if ($this->installed && $step >= 3) {
+        if ($this->configured) {
             redirect('install/index/error/1', 'refresh');
         }
 
