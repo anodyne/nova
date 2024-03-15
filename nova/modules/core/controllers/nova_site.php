@@ -4449,9 +4449,9 @@ abstract class Nova_site extends Nova_controller_admin
 
             $data['values']['updates'] = array(
                 'all' => ucwords(lang('labels_all') .' '. lang('labels_updates')),
-                'major' => ucwords(lang('status_major') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (1.0, 2.0, etc.)',
-                'minor' => ucwords(lang('status_minor') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (1.1, 1.2, etc.)',
-                'update' => ucwords(lang('status_incremental') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (1.0.1, 1.0.2, etc.)',
+                'major' => ucwords(lang('status_major') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (2.0, 3.0, etc.)',
+                'minor' => ucwords(lang('status_minor') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (2.6, 2.7, etc.)',
+                'update' => ucwords(lang('status_incremental') .' '. lang('labels_updates') .' '. lang('labels_only')) .' (2.7.1, 2.7.2, etc.)',
                 'none' => ucwords(lang('labels_no') .' '. lang('labels_updates'))
             );
 
