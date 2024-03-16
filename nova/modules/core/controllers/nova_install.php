@@ -1143,6 +1143,10 @@ abstract class Nova_install extends CI_Controller {
 			redirect('install/index/error/1', 'refresh');
 		}
 
+		if ($this->configured) {
+            redirect('install/index/error/1', 'refresh');
+        }
+
 		switch ($step)
 		{
 			case 1:
