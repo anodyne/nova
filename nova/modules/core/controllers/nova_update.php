@@ -687,10 +687,17 @@ abstract class Nova_update extends CI_Controller
     {
         $info = $this->sys->get_system_info();
 
+        $this->load->model('characters_model', 'char');
+        $this->load->model('users_model', 'user');
+        $this->load->model('posts_model', 'posts');
+        $this->load->model('missions_model', 'mis');
+
         $userCount = $this->user->count_all_users();
         $characterCount = $this->char->count_characters();
         $postsCount = $this->posts->count_all_posts();
-        $postWordsCount = $this->posts->count_post_words();
+        $postWordsCount = $this->posts->count_all_post_words();
+        $missionsCount = $this->mis->count_missions();
+        $missionGroupsCount = $this->mis->count_mission_groups();
 
         $http = new \Illuminate\Http\Client\Factory();
 
@@ -708,6 +715,8 @@ abstract class Nova_update extends CI_Controller
             'active_characters' => $characterCount,
             'total_posts' => $postsCount,
             'total_post_words' => $postWordsCount,
+            'total_stories' => $missionsCount,
+            'total_story_groups' => $missionGroupsCount,
         ]);
     }
 }

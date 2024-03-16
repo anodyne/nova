@@ -1778,6 +1778,8 @@ abstract class Nova_install extends CI_Controller
             'active_characters' => 1,
             'total_posts' => 0,
             'total_post_words' => 0,
+            'total_stories' => 0,
+            'total_story_groups' => 0,
         ]);
     }
 }
