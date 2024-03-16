@@ -1,8 +1,8 @@
-version: 2.6.2
+version: 2.6.3
 version_major: 2
 version_minor: 6
-version_update: 2
+version_update: 3
 severity: update
-notes: Nova 2.6.2 addresses a critical security issue that could expose a user's password.
+notes: Nova 2.6.3 addresses a critical security issue that could expose a user's password.
 date: 8 July 2021
 link: https://anodyne-productions.com/nova

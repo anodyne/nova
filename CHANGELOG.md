@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [2.6.3] - 2024-03-16
+### Security
+- Patched an issue where someone could create a user with system admin permissions
+
 ### Changed
-- Updated the blank genre to use `blank` for the genre code instead of previous uses of `bln` and `blk`.
+- Updated the blank genre to use `blank` for the genre code instead of previous uses of `bln` and `blk` (fresh install only).
 
 ## [2.6.2] - 2021-07-08
 ### Security
