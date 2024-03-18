@@ -41,7 +41,7 @@ abstract class Nova_feed extends Controller
         // set the head variables
         $head = array(
             'rss_encoding'		=> $this->config->item('rss_encoding'),
-            'rss_feed_name'		=> $this->options['sim_name'],
+            'rss_feed_name'		=> htmlentities($this->options['sim_name']),
             'rss_feed_url'		=> site_url(),
             'rss_description'	=> $this->config->item('rss_description'),
             'rss_feed_lang'		=> $this->config->item('rss_feed_lang'),
