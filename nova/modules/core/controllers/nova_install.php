@@ -47,7 +47,7 @@ abstract class Nova_install extends CI_Controller {
 
 			$this->installed = $this->sys->check_install_status();
 
-			$this->configured = $this->installed && $this->settings->get_setting('sim_name') != '';
+			$this->configured = $this->installed && $this->settings->get_setting('sim_name');
 		}
 		else
 		{
