@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- If a posting requirement is not set, the dashboard would error. It will now default to 1 day.
+
 ## [2.7.9] - 2024-03-15
 
 ### Security
