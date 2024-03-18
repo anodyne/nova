@@ -47,7 +47,7 @@ abstract class Nova_install extends CI_Controller
             $this->sys->prepare_database_session();
 
             $this->installed = $this->sys->check_install_status();
-            $this->configured = $this->installed && filled($this->settings->get_setting('sim_name'));
+            $this->configured = $this->installed && $this->settings->get_setting('sim_name');
         } else {
             // change the session class to NOT use the database for now
             $this->config->set_item('sess_use_database', false);
