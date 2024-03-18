@@ -183,7 +183,7 @@ abstract class Nova_admin extends Nova_controller_admin
         $all = $this->user->get_users();
 
         $now = now();
-        $threshold = $now - ($this->options['posting_requirement'] * 86400);
+        $threshold = $now - ($this->options['posting_requirement'] ?? 1 * 86400);
 
         // set activity as an empty array to avoid errors
         $data['activity'] = array();
