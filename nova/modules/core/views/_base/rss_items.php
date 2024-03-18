@@ -8,7 +8,7 @@
 			<guid><?php echo $entry['link'];?></guid>
 	
 			<description><![CDATA[<?php echo $entry['content'];?>]]></description>
-			<pubDate><?php echo date('r', $entry['date']);?></pubDate>
+			<pubDate><?php echo date('Y-m-d\TH:i:s\Z', $entry['date']);?></pubDate>
 		</item>
 	<?php endforeach; ?>
 <?php endif;?>
