@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- News item pagination for the public site
+- Appearance setting for controlling how many news items appear per page
+
+### Security
+
+- Updated dependencies to address CVE-2024-50345 (this is a low severity security advisory)
+
 ## [2.7.14] - 2024-11-22
 
 ### Added
