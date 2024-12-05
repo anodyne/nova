@@ -19,15 +19,15 @@ abstract class Nova_news_model extends CI_Model
         $this->load->dbutil();
     }
 
-    public function get_category_news($c = '', $session = '')
+    public function get_category_news($category = '', $session = '', $number = 25, $offset = 0)
     {
         $this->db->from('news');
         $this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
         $this->db->join('characters', 'characters.charid = news.news_author_character');
         $this->db->where('news_status', 'activated');
 
-        if ($c > 0) {
-            $this->db->where('news_cat', $c);
+        if ($category > 0) {
+            $this->db->where('news_cat', $category);
         }
 
         if (blank($session)) {
@@ -35,6 +35,7 @@ abstract class Nova_news_model extends CI_Model
         }
 
         $this->db->order_by('news_date', 'desc');
+        $this->db->limit($number, $offset);
 
         $query = $this->db->get();
 
@@ -334,12 +335,17 @@ abstract class Nova_news_model extends CI_Model
         return $count;
     }
 
-    public function count_news_items($status = 'activated')
+    public function count_news_items($status = 'activated', $category = null)
     {
         $this->db->from('news');
+        $this->db->join('news_categories', 'news_categories.newscat_id = news.news_cat');
 
         if (! empty($status)) {
             $this->db->where('news_status', $status);
+        }
+
+        if (filled($category)) {
+            $this->db->where('news_cat', $category);
         }
 
         $count = $this->db->count_all_results();

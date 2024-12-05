@@ -613,25 +613,38 @@ abstract class Nova_main extends Nova_controller_main
         Template::render();
     }
 
-    public function news()
+    public function news($category = 'all', $offset = 0)
     {
+        $this->load->library('pagination');
         $this->load->model('news_model', 'news');
         $this->load->helper('text');
 
-        $category = $this->uri->segment(3, 0, true);
+        // sanity check
+        $offset = (is_numeric($offset)) ? $offset : 0;
+
+        // set the pagination config
+        $config['base_url'] = site_url('main/news/'.$category);
+        $config['total_rows'] = $this->news->count_news_items();
+        $config['per_page'] = $this->options['list_news_num'];
+        $config['full_tag_open'] = '<p>';
+        $config['full_tag_close'] = '</p>';
+
+        // initialize the pagination library
+        $this->pagination->initialize($config);
+
+        // create the page links
+        $data['pagination'] = $this->pagination->create_links('news');
+
+        $category = ($category !== 'all') ? $category : null;
 
         // grab the data from the models
-        $news = $this->news->get_category_news($category, $this->session->userdata('userid'));
+        $news = $this->news->get_category_news($category, $this->session->userdata('userid'), $config['per_page'], $offset);
         $newscat = $this->news->get_news_category($category);
         $categories = $this->news->get_news_categories();
 
-        if ($category >= 1) {
-            foreach ($newscat->result() as $cat) {
-                $data['header'] = lang('global_news') .' '. NDASH .' '. $cat->newscat_name;
-            }
-        } else {
-            $data['header'] = ucwords(lang('labels_all') .' '. lang('global_news'));
-        }
+        $data['header'] = (! is_null($category))
+            ? ucwords(lang('global_news') .': '. $newscat->newscat_name)
+            : ucwords(lang('labels_all') .' '. lang('global_news'));
 
         if ($categories->num_rows() > 0) {
             $j = 1;
@@ -688,7 +701,6 @@ abstract class Nova_main extends Nova_controller_main
         );
 
         $this->_regions['content'] = Location::view('main_news', $this->skin, 'main', $data);
-        $this->_regions['javascript'] = Location::js('main_news_js', $this->skin, 'main');
         $this->_regions['title'].= ucfirst(lang('global_news'));
 
         Template::assign($this->_regions);

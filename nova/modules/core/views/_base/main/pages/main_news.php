@@ -4,20 +4,14 @@
 
 <?php echo text_output($header, 'h1', 'page-head');?>
 
-<div id="loader" class="loader">
-	<?php echo img($loader);?>
-	<?php echo text_output($label['loading'], 'h3', 'gray');?>
-</div>
-
 <?php if (isset($news)): ?>
-	<div id="news" class="hidden">
+	<div id="news">
 		<?php if (isset($categories)): ?>
-			<strong class="fontNormal"><?php echo $label['categories'];?></strong><br />
 			<span class="fontSmall pill-container">
-				<a href="#" class="all pill" myTitle="<?php echo $header;?>"><?php echo $label['all_news'];?></a>
+				<a href="<?php echo site_url('main/news/all');?>" class="all pill" myTitle="<?php echo $header;?>"><?php echo $label['all_news'];?></a>
 
 				<?php foreach ($categories as $cat): ?>
-					&middot; <a href="#" class="show pill" myID="<?php echo $cat['id'];?>" myTitle="<?php echo $header .' '. NDASH .' '. $cat['name'];?>"><?php echo $cat['name'];?></a>
+					&middot; <a href="<?php echo site_url('main/news/'.$cat['id']);?>" class="show pill" myID="<?php echo $cat['id'];?>" myTitle="<?php echo $header .' '. NDASH .' '. $cat['name'];?>"><?php echo $cat['name'];?></a>
 				<?php endforeach; ?>
 			</span>
 		<?php endif; ?>
@@ -39,6 +33,8 @@
 				</p>
 			</div>
 		<?php endforeach; ?>
+
+		<?php echo $pagination;?>
 	</div>
 <?php else: ?>
 	<?php echo text_output($label['nonews'], 'h3', 'orange');?>
