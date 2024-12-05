@@ -8,8 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- News item pagination for the public site
+- News item page now paginates results for the public site
 - Appearance setting for controlling how many news items appear per page
+
+### Changed
+
+- News item page no longer uses the "Categories" label above the list of news categories
+- News item page no longer users the `main_news_js` Javascript file (the file has been left in place for any games or themes that still reference it)
 
 ### Security
 
