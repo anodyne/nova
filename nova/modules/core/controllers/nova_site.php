@@ -4520,6 +4520,11 @@ abstract class Nova_site extends Nova_controller_admin
                     'id' => 'list_posts_num',
                     'class' => 'small',
                     'value' => $setting['list_posts_num']),
+                'list_news_num' => array(
+                    'name' => 'list_news_num',
+                    'id' => 'list_news_num',
+                    'class' => 'small',
+                    'value' => $setting['list_news_num']),
                 'show_news_y' => array(
                     'name' => 'show_news',
                     'id' => 'show_news_y',
@@ -4635,6 +4640,7 @@ abstract class Nova_site extends Nova_controller_admin
             'header_user' => ucwords(lang('labels_user') .'-'. ucfirst(lang('actions_created'))
                 .' '. lang('labels_settings')),
             'logs_num' => ucwords(lang('global_personallogs')) .' '. lang('labels_per') .' '. ucfirst(lang('labels_page')),
+            'news_num' => ucwords(lang('global_newsitems')) .' '. lang('labels_per') .' '. ucfirst(lang('labels_page')),
             'maint' => ucwords(lang('labels_maintanance') .' '. lang('labels_mode')),
             'manageuser' => ucwords(lang('actions_manage') .' '. lang('labels_user') .'-'. ucfirst(lang('actions_created'))
                 .' '. lang('labels_settings') .' '. RARROW),

@@ -218,6 +218,10 @@
 					<?php echo form_input($inputs['list_logs_num']);?>
 				</p>
 				<p>
+					<kbd><?php echo $label['news_num'];?></kbd>
+					<?php echo form_input($inputs['list_news_num']);?>
+				</p>
+				<p>
 					<kbd><?php echo $label['news_show'];?></kbd>
 					<?php echo form_radio($inputs['show_news_y']);?>
 					<?php echo form_label($label['yes'], 'show_news_y');?>
