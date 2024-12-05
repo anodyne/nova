@@ -94,6 +94,7 @@ class Nova_controller_main extends CI_Controller
             'system_email',
             'list_logs_num',
             'list_posts_num',
+            'list_news_num',
             'post_count_format',
             'access_log_purge',
             'hosting_company',
