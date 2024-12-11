@@ -16,7 +16,8 @@
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/http": "^8.0",
         "spatie/color": "^1.5",
-        "swiftmailer/swiftmailer": "^6.3"
+        "swiftmailer/swiftmailer": "^6.3",
+        "xemlock/htmlpurifier-html5": "^0.1.11"
     },
     "autoload": {},
     "config": {

@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - News item page no longer uses the "Categories" label above the list of news categories
 - News item page no longer users the `main_news_js` Javascript file (the file has been left in place for any games or themes that still reference it)
+- HTML Purifier recognizes most HTML5 tags and attributes
 
 ### Security
 

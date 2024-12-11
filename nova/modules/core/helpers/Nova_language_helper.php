@@ -80,14 +80,8 @@ if (! function_exists('lang_output')) {
 if (! function_exists('text_output')) {
     function text_output($text = '', $element = 'p', $class = null, $nl2br = true)
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = HTMLPurifier_HTML5Config::createDefault();
         $config->set('Attr.EnableID', true);
-
-        $definition = $config->getHTMLDefinition(true);
-        $definition->addElement('details', 'Block', 'Flow', 'Common', [
-            'open' => new HTMLPurifier_AttrDef_HTML_Bool(true),
-        ]);
-        $definition->addElement('summary', 'Inline', 'Inline', 'Common');
 
         $purifier = new HTMLPurifier($config);
 
