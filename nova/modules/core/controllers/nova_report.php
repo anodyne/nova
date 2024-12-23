@@ -971,11 +971,14 @@ abstract class Nova_report extends Nova_controller_admin
                     'action' => ucfirst($a->app_action),
                     'date' => mdate($this->options['date_format'], $date),
                     'message' => $a->app_message,
+                    'sample_post' => $a->app_sample_post,
                 );
             }
         }
 
         $data['header'] = lang('head_report_viewapplication');
+
+        $data['use_sample_post'] = $this->options['use_sample_post'] === 'y';
 
         $data['label'] = array(
             'action' => ucwords(lang('actions_action') .' '. lang('actions_taken')),
@@ -983,6 +986,7 @@ abstract class Nova_report extends Nova_controller_admin
             'date' => ucwords(lang('labels_application') .' '. lang('labels_date')),
             'email' => ucwords(lang('labels_email_address')),
             'message' => ucfirst(lang('labels_message')),
+            'sample_post' => ucfirst(lang('labels_sample_post')),
             'none' => ucfirst(lang('labels_no') .' '. lang('labels_applications') .' '. lang('actions_found')),
             'pname' => ucwords(lang('global_user') .' '. lang('labels_name')),
             'position' => ucfirst(lang('global_position')),

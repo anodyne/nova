@@ -107,6 +107,15 @@ if ($add_tables !== null) {
 |---------------------------------------------------------------
 */
 
+$add_column = [
+    'applications' => [
+        'app_sample_post' => [
+            'type' => 'LONGTEXT',
+            'null' => true,
+        ],
+    ]
+];
+
 if ($add_column !== null) {
     foreach ($add_column as $tableName => $columns) {
         foreach ($columns as $columnName => $columnData) {

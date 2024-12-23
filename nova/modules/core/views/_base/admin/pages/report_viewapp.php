@@ -35,13 +35,20 @@
 				<td class="cell-spacer"></td>
 				<td><?php echo $app['action'];?></td>
 			</tr>
-			<tr>
-				<td class="cell-label"><?php echo $label['message'];?></td>
-				<td class="cell-spacer"></td>
-				<td><?php echo text_output($app['message'], '');?></td>
-			</tr>
 		</tbody>
 	</table>
+
+	<div class="my-8">
+		<h4 class="mt-8"><?php echo $label['message'];?></h4>
+		<?php echo text_output($app['message'] ?? '', '');?>
+	</div>
+
+	<?php if ($use_sample_post): ?>
+		<div>
+			<h4><?php echo $label['sample_post'];?></h4>
+			<?php echo text_output($app['sample_post'] ?? '', '');?>
+		</div>
+	<?php endif;?>
 <?php else: ?>
 	<?php echo text_output($label['none'], 'h3', 'orange');?>
 <?php endif;?>

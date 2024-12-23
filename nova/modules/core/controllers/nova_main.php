@@ -349,7 +349,8 @@ abstract class Nova_main extends Nova_controller_main
                         'app_character' => $character_id,
                         'app_character_name' => parse_name($name),
                         'app_position' => $this->pos->get_position($position, 'pos_name'),
-                        'app_date' => now()
+                        'app_date' => now(),
+                        'app_sample_post' => $this->input->post('sample_post', true),
                     );
 
                     // create new application record

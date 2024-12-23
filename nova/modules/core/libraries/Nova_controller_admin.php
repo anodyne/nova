@@ -97,6 +97,7 @@ class Nova_controller_admin extends CI_Controller
             'use_post_participants',
             'access_log_purge',
             'hosting_company',
+            'use_sample_post',
         );
 
         // set the options

@@ -10,12 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - News item page now paginates results for the public site
 - Appearance setting for controlling how many news items appear per page
+- Sample post is now stored in the database and displayed on the View Application page
 
 ### Changed
 
 - News item page no longer uses the "Categories" label above the list of news categories
 - News item page no longer users the `main_news_js` Javascript file (the file has been left in place for any games or themes that still reference it)
 - HTML Purifier recognizes most HTML5 tags and attributes
+- Tailwind module now includes margin utility classes (1, 2, 3, 4, and 8 for mt, mb, mr, ml, my, mx, and m)
+- Minor UI updates to the view application page
 
 ### Security
 
