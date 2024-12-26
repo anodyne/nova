@@ -6,11 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.15] - 2024-12-27
+
 ### Added
 
 - News item page now paginates results for the public site
 - Appearance setting for controlling how many news items appear per page
-- Sample post is now stored in the database and displayed on the View Application page
+- Sample post is now stored in the database during registration
+- Sample post is now displayed on the View Application page
 
 ### Changed
 
