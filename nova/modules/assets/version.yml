@@ -1,9 +1,9 @@
-version: 2.7.14
+version: 2.7.15
 version_major: 2
 version_minor: 7
-version_update: 14
+version_update: 15
 severity: update
-notes: Nova 2.7.14 addresses issues...
-date: 29 August 2023
+notes: Nova 2.7.15 addresses issues...
+date: 27 December 2024
 link: https://anodyne-productions.com/nova
 upgrade_guide_link: none
