@@ -1243,7 +1243,7 @@ abstract class Nova_write extends Nova_controller_admin
             $category = $this->input->post('newscat', true);
             $private = $this->input->post('private', true);
             $status = false;
-            $flash = false;
+            $flash = [];
 
             switch ($action) {
                 case 'delete':
@@ -1643,7 +1643,7 @@ abstract class Nova_write extends Nova_controller_admin
             $tags = $this->input->post('tags', true);
             $action = strtolower($this->input->post('submit', true));
             $status = false;
-            $flash = false;
+            $flash = [];
 
             if ($author == 0) {
                 $flash['status'] = 'error';
