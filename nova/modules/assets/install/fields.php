@@ -422,6 +422,10 @@ $fields_applications = [
         'type' => 'TEXT',
         'null' => true,
     ],
+    'app_sample_post' => [
+        'type' => 'LONGTEXT',
+        'null' => true,
+    ],
 ];
 
 $fields_awards = [

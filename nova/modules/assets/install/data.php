@@ -2020,6 +2020,10 @@ $settings = array(
         'setting_value' => 25,
         'setting_user_created' => 'n'),
     array(
+        'setting_key' => 'list_news_num',
+        'setting_value' => 25,
+        'setting_user_created' => 'n'),
+    array(
         'setting_key' => 'manifest_defaults',
         'setting_value' => "$('tr.active').show();,$('tr.npc').show();",
         'setting_user_created' => 'n'),
