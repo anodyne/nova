@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- HTML Purifier will recognize the `center` and `font` tags again
+- Fixed PHP warnings when writing news items and personal logs
+- Added sample post field for fresh installs (missed in previous update)
+- Added news item paginatino setting for fresh installs (missed in previous update)
+
 ## [2.7.15] - 2024-12-27
 
 ### Added
