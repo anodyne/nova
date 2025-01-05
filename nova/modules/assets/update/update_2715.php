@@ -107,6 +107,15 @@ if ($add_tables !== null) {
 |---------------------------------------------------------------
 */
 
+$add_column = [
+    'applications' => [
+        'app_sample_post' => [
+            'type' => 'LONGTEXT',
+            'null' => true,
+        ],
+    ]
+];
+
 if ($add_column !== null) {
     foreach ($add_column as $tableName => $columns) {
         foreach ($columns as $columnName => $columnData) {
@@ -150,5 +159,19 @@ if ($modify_column !== null) {
 if ($drop_column !== null) {
     foreach ($drop_column as $tableName => $columns) {
         $this->dbforge->drop_column($tableName, $columns[0]);
+    }
+}
+
+$insertSettingsData = [
+    ['setting_key' => 'list_news_num', 'setting_value' => '25', 'setting_user_created' => 'n'],
+];
+
+foreach ($insertSettingsData as $settingsData) {
+    $count = $this->db->where('setting_key', $settingsData['setting_key'])
+        ->from('settings')
+        ->count_all_results();
+
+    if ($count === 0) {
+        $this->db->insert('settings', $settingsData);
     }
 }
