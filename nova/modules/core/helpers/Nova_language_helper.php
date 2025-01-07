@@ -83,7 +83,7 @@ if (! function_exists('text_output')) {
         $config = HTMLPurifier_HTML5Config::createDefault();
         $config->set('Attr.EnableID', true);
         $config->set('HTML.DefinitionID', 'CustomHTML5');
-        $config->set('HTML.DefinitionRev', 5);
+        $config->set('HTML.DefinitionRev', 6);
 
         if ($def = $config->maybeGetRawHTMLDefinition()) {
             $def->addElement('center', 'Inline', 'Inline', 'Common');
@@ -92,6 +92,8 @@ if (! function_exists('text_output')) {
                 'class' => 'Class',
                 'style' => 'Text',
             ]);
+
+            $def->addAttribute('img', 'align', 'Enum#left,right,center,justify');
         }
 
         $purifier = new HTMLPurifier($config);
