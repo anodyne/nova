@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- HTML Purifier will allow the `align` attribute on image tags
+
 ## [2.7.16] - 2025-01-05
 
 ### Changed
