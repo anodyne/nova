@@ -1600,7 +1600,7 @@ abstract class Nova_manage extends Nova_controller_admin
                         $update_array = array(
                             'log_title' => $this->input->post('log_title', true),
                             'log_tags' => $this->input->post('log_tags', true),
-                            'log_content' => $content = $this->input->post('log_content', true),
+                            'log_content' => $content = $this->input->post('log_content'),
                             'log_status' => $this->input->post('log_status', true),
                             'log_author_user' => $this->user->get_userid($this->input->post('log_author')),
                             'log_author_character' => $this->input->post('log_author', true),
@@ -2513,7 +2513,7 @@ abstract class Nova_manage extends Nova_controller_admin
                         $update_array = array(
                             'news_title' => $this->input->post('news_title', true),
                             'news_tags' => $this->input->post('news_tags', true),
-                            'news_content' => $this->input->post('news_content', true),
+                            'news_content' => $this->input->post('news_content'),
                             'news_author_character' => $this->input->post('news_author', true),
                             'news_author_user' => $this->user->get_userid($this->input->post('news_author')),
                             'news_status' => $this->input->post('news_status', true),
@@ -3222,7 +3222,7 @@ abstract class Nova_manage extends Nova_controller_admin
                         'post_location' => $this->input->post('post_location', true),
                         'post_timeline' => $this->input->post('post_timeline', true),
                         'post_tags' => $this->input->post('post_tags', true),
-                        'post_content' => $content = $this->input->post('post_content', true),
+                        'post_content' => $content = $this->input->post('post_content'),
                         'post_mission' => $this->input->post('post_mission', true),
                         'post_status' => $this->input->post('post_status', true),
                         'post_last_update' => now(),
