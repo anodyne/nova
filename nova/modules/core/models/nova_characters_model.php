@@ -18,7 +18,7 @@ abstract class Nova_characters_model extends CI_Model
         parent::__construct();
 
         if (! $this->db->table_exists('ranks')) {
-            header('Location: message.php?type=nova27');
+            header('Location: '.base_url('message.php?type=nova27'));
             exit();
         }
 
