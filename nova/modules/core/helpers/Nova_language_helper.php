@@ -83,17 +83,27 @@ if (! function_exists('text_output')) {
         $config = HTMLPurifier_HTML5Config::createDefault();
         $config->set('Attr.EnableID', true);
         $config->set('HTML.DefinitionID', 'CustomHTML5');
-        $config->set('HTML.DefinitionRev', 6);
+        $config->set('HTML.DefinitionRev', 12);
 
         if ($def = $config->maybeGetRawHTMLDefinition()) {
-            $def->addElement('center', 'Inline', 'Inline', 'Common');
+            $def->addElement('center', 'Block', 'Flow', 'Common');
             $def->addElement('font', 'Inline', 'Inline', 'Common', [
                 'color' => 'Color',
-                'class' => 'Class',
-                'style' => 'Text',
             ]);
+            $def->addElement('style', 'Inline', 'Inline', 'Common');
 
+            $def->addAttribute('p', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h1', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h2', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h3', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h4', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h4', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h5', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('h6', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('hr', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('div', 'align', 'Enum#left,right,center,justify');
             $def->addAttribute('img', 'align', 'Enum#left,right,center,justify');
+            $def->addAttribute('span', 'align', 'Enum#left,right,center,justify');
         }
 
         $purifier = new HTMLPurifier($config);
