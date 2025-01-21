@@ -8,7 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- HTML Purifier will allow the `align` attribute on image tags
+- HTML Purifier will allow the `align` attribute on `p`, `img`, `hr`, `div`, and `span` tags as well as all heading tags
+- HTML Purifier will properly treat the`center` tag as a block-level element
+- HTML Purifier will allow block-level elements inside of the `center` tag
+- HTML Purifier will allow the `style` tag
+- Nova will no longer do XSS filtering for post, log, and news content when updating the records
+
+### Fixed
+
+- In some cases during a Nova 2.6 upgrade, a bad redirect would cause a 404 error
 
 ## [2.7.16] - 2025-01-05
 
