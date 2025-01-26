@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - HTML Purifier will allow the `style` tag
 - Nova will no longer do XSS filtering for post, log, and news content when updating the records
 - Post, log, and news previews on the main page have been increased to 100 words from 50 words (this matches the word limit on search results)
+- Post, log, and news previews will strip `style` tags and their contents for previews
 
 ### Fixed
 
