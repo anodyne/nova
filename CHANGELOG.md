@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Settings to turn off post, log, and news previews for the main page and search results
+
 ### Changed
 
 - HTML Purifier will allow the `align` attribute on `p`, `img`, `hr`, `div`, and `span` tags as well as all heading tags
@@ -13,10 +17,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - HTML Purifier will allow block-level elements inside of the `center` tag
 - HTML Purifier will allow the `style` tag
 - Nova will no longer do XSS filtering for post, log, and news content when updating the records
+- Post, log, and news previews on the main page have been increased to 100 words from 50 words (this matches the word limit on search results)
 
 ### Fixed
 
 - In some cases during a Nova 2.6 upgrade, a bad redirect would cause a 404 error
+- The main page was not properly stripping HTML tags from news item preview content
 
 ## [2.7.16] - 2025-01-05
 
