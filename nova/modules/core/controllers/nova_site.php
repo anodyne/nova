@@ -4555,6 +4555,36 @@ abstract class Nova_site extends Nova_controller_admin
                     'id' => 'show_posts_n',
                     'value' => 'n',
                     'checked' => ($setting['show_posts'] == 'n') ? true : false),
+                'show_news_preview_y' => array(
+                    'name' => 'show_news_preview',
+                    'id' => 'show_news_preview_y',
+                    'value' => 'y',
+                    'checked' => ($setting['show_news_preview'] == 'y') ? true : false),
+                'show_news_preview_n' => array(
+                    'name' => 'show_news_preview',
+                    'id' => 'show_news_preview_n',
+                    'value' => 'n',
+                    'checked' => ($setting['show_news_preview'] == 'n') ? true : false),
+                'show_logs_preview_y' => array(
+                    'name' => 'show_logs_preview',
+                    'id' => 'show_logs_preview_y',
+                    'value' => 'y',
+                    'checked' => ($setting['show_logs_preview'] == 'y') ? true : false),
+                'show_logs_preview_n' => array(
+                    'name' => 'show_logs_preview',
+                    'id' => 'show_logs_preview_n',
+                    'value' => 'n',
+                    'checked' => ($setting['show_logs_preview'] == 'n') ? true : false),
+                'show_posts_preview_y' => array(
+                    'name' => 'show_posts_preview',
+                    'id' => 'show_posts_preview_y',
+                    'value' => 'y',
+                    'checked' => ($setting['show_posts_preview'] == 'y') ? true : false),
+                'show_posts_preview_n' => array(
+                    'name' => 'show_posts_preview',
+                    'id' => 'show_posts_preview_n',
+                    'value' => 'n',
+                    'checked' => ($setting['show_posts_preview'] == 'n') ? true : false),
                 'use_mission_notes_y' => array(
                     'name' => 'use_mission_notes',
                     'id' => 'use_mission_notes_y',
@@ -4690,6 +4720,10 @@ abstract class Nova_site extends Nova_controller_admin
             'tt_access_log_purge' => lang('info_access_log_purge'),
 
             'contact_form_enabled' => lang('labels_contact_enabled'),
+
+            'logs_show_preview' => ucwords(lang('actions_show') .' '. lang('global_personallogs') .' '. lang('labels_preview')) .' '. lang('labels_on') .' '. ucwords(lang('labels_main') .' '. lang('labels_page')),
+            'news_show_preview' => ucwords(lang('actions_show') .' '. lang('global_news') .' '. lang('labels_preview')) .' '. lang('labels_on') .' '. ucwords(lang('labels_main') .' '. lang('labels_page')),
+            'posts_show_preview' => ucwords(lang('actions_show') .' '. lang('global_missionposts') .' '. lang('labels_preview')) .' '. lang('labels_on') .' '. ucwords(lang('labels_main') .' '. lang('labels_page')),
         );
 
         // set the js data

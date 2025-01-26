@@ -166,15 +166,21 @@ abstract class Nova_search extends Nova_controller_main
                 foreach ($result->result() as $item) {
                     switch ($type) {
                         case 'posts':
-                            $data['results'][$i]['content'] = $item->post_content;
+                            $data['results'][$i]['content'] = $this->options['show_posts_preview'] === 'y'
+                                ? word_limiter(strip_tags($item->post_content, '<br><br/><br />'), 100)
+                                : null;
                             $data['results'][$i]['link'] = anchor('sim/viewpost/'. $item->post_id, $item->post_title);
                         break;
                         case 'logs':
-                            $data['results'][$i]['content'] = $item->log_content;
+                            $data['results'][$i]['content'] = $this->options['show_logs_preview'] === 'y'
+                                ? word_limiter(strip_tags($item->log_content, '<br><br/><br />'), 100)
+                                : null;
                             $data['results'][$i]['link'] = anchor('sim/viewlog/'. $item->log_id, $item->log_title);
                         break;
                         case 'news':
-                            $data['results'][$i]['content'] = $item->news_content;
+                            $data['results'][$i]['content'] = $this->options['show_news_preview'] === 'y'
+                                ? word_limiter(strip_tags($item->news_content, '<br><br/><br />'), 100)
+                                : null;
                             $data['results'][$i]['link'] = anchor('main/viewnews/'. $item->news_id, $item->news_title);
                         break;
                         case 'wiki':
@@ -182,7 +188,7 @@ abstract class Nova_search extends Nova_controller_main
                             $row = ($page->num_rows() > 0) ? $page->row() : false;
 
                             if ($row !== false) {
-                                $data['results'][$i]['content'] = $row->draft_content;
+                                $data['results'][$i]['content'] = word_limiter(strip_tags($row->draft_content, '<br><br/><br />'), 100);
                                 $data['results'][$i]['link'] = anchor('wiki/view/page/'. $item->draft_page, $row->draft_title);
                             }
                         break;
@@ -219,6 +225,8 @@ abstract class Nova_search extends Nova_controller_main
             'noresult' => ucfirst(lang('labels_no') .' '. lang('labels_results') .' '.
                 lang('actions_found')),
         );
+
+        $data['options'] = $this->options;
 
         $this->_regions['content'] = Location::view('search_results', $this->skin, 'main', $data);
         $this->_regions['title'].= $data['header'];

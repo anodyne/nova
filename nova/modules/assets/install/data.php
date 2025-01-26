@@ -2087,6 +2087,18 @@ $settings = array(
         'setting_key' => 'contact_form_enabled',
         'setting_value' => 'y',
         'setting_user_created' => 'n'),
+    array(
+        'setting_key' => 'show_logs_preview',
+        'setting_value' => 'y',
+        'setting_user_created' => 'n'),
+    array(
+        'setting_key' => 'show_posts_preview',
+        'setting_value' => 'y',
+        'setting_user_created' => 'n'),
+    array(
+        'setting_key' => 'show_news_preview',
+        'setting_value' => 'y',
+        'setting_user_created' => 'n'),
 );
 
 $sim_type = array(

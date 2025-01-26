@@ -55,6 +55,8 @@ abstract class Nova_main extends Nova_controller_main
             'mission' => ucfirst(lang('global_mission')),
         );
 
+        $data['options'] = $this->options;
+
         $this->_regions['content'] = Location::view('main_index', $this->skin, 'main', $data);
         $this->_regions['javascript'] = Location::js('main_index_js', $this->skin, 'main');
         $this->_regions['title'].= ucfirst(lang('labels_main'));
@@ -1299,7 +1301,7 @@ abstract class Nova_main extends Nova_controller_main
 
                 $items[$i]['id'] = $row->log_id;
                 $items[$i]['title'] = $row->log_title;
-                $items[$i]['content'] = word_limiter(strip_tags($row->log_content, '<br><br/><br />'), 50);
+                $items[$i]['content'] = word_limiter(strip_tags($row->log_content, '<br><br/><br />'), 100);
                 $items[$i]['date'] = mdate($datestring, $date);
                 $items[$i]['author'] = $this->char->get_character_name($row->log_author_character, true, false, true);
 
@@ -1317,6 +1319,9 @@ abstract class Nova_main extends Nova_controller_main
         // load the news model
         $this->load->model('news_model', 'news');
 
+        // load the text helper
+        $this->load->helper('text');
+
         // fetch the last 5 news items
         $news = $this->news->get_news_items(5, $this->session->userdata('userid'));
 
@@ -1329,7 +1334,7 @@ abstract class Nova_main extends Nova_controller_main
 
                 $items[$i]['id'] = $row->news_id;
                 $items[$i]['title'] = $row->news_title;
-                $items[$i]['content'] = $row->news_content;
+                $items[$i]['content'] = word_limiter(strip_tags($row->news_content, '<br><br/><br />'), 100);
                 $items[$i]['date'] = mdate($datestring, $date);
                 $items[$i]['category'] = $row->newscat_name;
                 $items[$i]['author'] = $this->char->get_character_name($row->news_author_character, true, false, true);
@@ -1364,7 +1369,7 @@ abstract class Nova_main extends Nova_controller_main
 
                 $items[$i]['id'] = $row->post_id;
                 $items[$i]['title'] = $row->post_title;
-                $items[$i]['content'] = word_limiter(strip_tags($row->post_content, '<br><br/><br />'), 50);
+                $items[$i]['content'] = word_limiter(strip_tags($row->post_content, '<br><br/><br />'), 100);
                 $items[$i]['date'] = mdate($datestring, $date);
                 $items[$i]['authors'] = $this->char->get_authors($row->post_authors, true, true);
                 $items[$i]['mission'] = anchor('sim/missions/id/'.$row->post_mission, $this->mis->get_mission($row->post_mission, 'mission_title'));

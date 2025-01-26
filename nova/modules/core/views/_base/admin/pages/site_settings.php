@@ -245,6 +245,32 @@
 					<?php echo form_radio($inputs['show_posts_n']);?>
 					<?php echo form_label($label['no'], 'show_posts_n');?>
 				</p>
+
+				<p>
+					<kbd><?php echo $label['news_show_preview'];?></kbd>
+					<?php echo form_radio($inputs['show_news_preview_y']);?>
+					<?php echo form_label($label['yes'], 'show_news_preview_y');?>
+
+					<?php echo form_radio($inputs['show_news_preview_n']);?>
+					<?php echo form_label($label['no'], 'show_news_preview_n');?>
+				</p>
+				<p>
+					<kbd><?php echo $label['logs_show_preview'];?></kbd>
+					<?php echo form_radio($inputs['show_logs_preview_y']);?>
+					<?php echo form_label($label['yes'], 'show_logs_preview_y');?>
+
+					<?php echo form_radio($inputs['show_logs_preview_n']);?>
+					<?php echo form_label($label['no'], 'show_logs_preview_n');?>
+				</p>
+				<p>
+					<kbd><?php echo $label['posts_show_preview'];?></kbd>
+					<?php echo form_radio($inputs['show_posts_preview_y']);?>
+					<?php echo form_label($label['yes'], 'show_posts_preview_y');?>
+
+					<?php echo form_radio($inputs['show_posts_preview_n']);?>
+					<?php echo form_label($label['no'], 'show_posts_preview_n');?>
+				</p>
+
 				<p>
 					<kbd><?php echo $label['use_notes'];?></kbd>
 					<?php echo form_radio($inputs['use_mission_notes_y']);?>
