@@ -1286,9 +1286,6 @@ abstract class Nova_main extends Nova_controller_main
         // load the personal logs model
         $this->load->model('personallogs_model', 'logs');
 
-        // load the text helper
-        $this->load->helper('text');
-
         // fetch the last 5 personal logs
         $logs = $this->logs->get_log_list(5);
 
@@ -1301,7 +1298,7 @@ abstract class Nova_main extends Nova_controller_main
 
                 $items[$i]['id'] = $row->log_id;
                 $items[$i]['title'] = $row->log_title;
-                $items[$i]['content'] = word_limiter(strip_tags($row->log_content, '<br><br/><br />'), 100);
+                $items[$i]['content'] = $this->_limit_content($row->log_content);
                 $items[$i]['date'] = mdate($datestring, $date);
                 $items[$i]['author'] = $this->char->get_character_name($row->log_author_character, true, false, true);
 
@@ -1319,9 +1316,6 @@ abstract class Nova_main extends Nova_controller_main
         // load the news model
         $this->load->model('news_model', 'news');
 
-        // load the text helper
-        $this->load->helper('text');
-
         // fetch the last 5 news items
         $news = $this->news->get_news_items(5, $this->session->userdata('userid'));
 
@@ -1334,7 +1328,7 @@ abstract class Nova_main extends Nova_controller_main
 
                 $items[$i]['id'] = $row->news_id;
                 $items[$i]['title'] = $row->news_title;
-                $items[$i]['content'] = word_limiter(strip_tags($row->news_content, '<br><br/><br />'), 100);
+                $items[$i]['content'] = $this->_limit_content($row->news_content);
                 $items[$i]['date'] = mdate($datestring, $date);
                 $items[$i]['category'] = $row->newscat_name;
                 $items[$i]['author'] = $this->char->get_character_name($row->news_author_character, true, false, true);
@@ -1354,9 +1348,6 @@ abstract class Nova_main extends Nova_controller_main
         $this->load->model('missions_model', 'mis');
         $this->load->model('posts_model', 'posts');
 
-        // load the text helper
-        $this->load->helper('text');
-
         // fetch the last 5 posts
         $posts = $this->posts->get_post_list('', 'desc', 5, 0, 'activated');
 
@@ -1369,7 +1360,7 @@ abstract class Nova_main extends Nova_controller_main
 
                 $items[$i]['id'] = $row->post_id;
                 $items[$i]['title'] = $row->post_title;
-                $items[$i]['content'] = word_limiter(strip_tags($row->post_content, '<br><br/><br />'), 100);
+                $items[$i]['content'] = $this->_limit_content($row->post_content);
                 $items[$i]['date'] = mdate($datestring, $date);
                 $items[$i]['authors'] = $this->char->get_authors($row->post_authors, true, true);
                 $items[$i]['mission'] = anchor('sim/missions/id/'.$row->post_mission, $this->mis->get_mission($row->post_mission, 'mission_title'));
@@ -1381,5 +1372,16 @@ abstract class Nova_main extends Nova_controller_main
         }
 
         return false;
+    }
+
+    protected function _limit_content($content, $wordLimit = 100)
+    {
+        $this->load->helper('text');
+
+        $pattern = '/<style\b[^>]*>.*?<\/style>/is';
+
+        $strippedContent = preg_replace($pattern, '', $content);
+
+        return word_limiter(strip_tags($strippedContent, '<br><br/><br />'), $wordLimit);
     }
 }

@@ -167,19 +167,19 @@ abstract class Nova_search extends Nova_controller_main
                     switch ($type) {
                         case 'posts':
                             $data['results'][$i]['content'] = $this->options['show_posts_preview'] === 'y'
-                                ? word_limiter(strip_tags($item->post_content, '<br><br/><br />'), 100)
+                                ? $this->_limit_content($item->post_content)
                                 : null;
                             $data['results'][$i]['link'] = anchor('sim/viewpost/'. $item->post_id, $item->post_title);
                         break;
                         case 'logs':
                             $data['results'][$i]['content'] = $this->options['show_logs_preview'] === 'y'
-                                ? word_limiter(strip_tags($item->log_content, '<br><br/><br />'), 100)
+                                ? $this->_limit_content($item->log_content)
                                 : null;
                             $data['results'][$i]['link'] = anchor('sim/viewlog/'. $item->log_id, $item->log_title);
                         break;
                         case 'news':
                             $data['results'][$i]['content'] = $this->options['show_news_preview'] === 'y'
-                                ? word_limiter(strip_tags($item->news_content, '<br><br/><br />'), 100)
+                                ? $this->_limit_content($item->news_content)
                                 : null;
                             $data['results'][$i]['link'] = anchor('main/viewnews/'. $item->news_id, $item->news_title);
                         break;
@@ -188,7 +188,7 @@ abstract class Nova_search extends Nova_controller_main
                             $row = ($page->num_rows() > 0) ? $page->row() : false;
 
                             if ($row !== false) {
-                                $data['results'][$i]['content'] = word_limiter(strip_tags($row->draft_content, '<br><br/><br />'), 100);
+                                $data['results'][$i]['content'] = $this->_limit_content($row->draft_content);
                                 $data['results'][$i]['link'] = anchor('wiki/view/page/'. $item->draft_page, $row->draft_title);
                             }
                         break;
@@ -234,5 +234,16 @@ abstract class Nova_search extends Nova_controller_main
         Template::assign($this->_regions);
 
         Template::render();
+    }
+
+    protected function _limit_content($content, $wordLimit = 100)
+    {
+        $this->load->helper('text');
+
+        $pattern = '/<style\b[^>]*>.*?<\/style>/is';
+
+        $strippedContent = preg_replace($pattern, '', $content);
+
+        return word_limiter(strip_tags($strippedContent, '<br><br/><br />'), $wordLimit);
     }
 }
