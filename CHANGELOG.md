@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.17] - 2025-01-31
+
 ### Added
 
 - Settings to turn off post, log, and news previews for the main page and search results
