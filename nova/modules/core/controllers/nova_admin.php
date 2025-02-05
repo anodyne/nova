@@ -43,6 +43,10 @@ abstract class Nova_admin extends Nova_controller_admin
                 $password = $this->input->post('password', true);
                 $user = $this->input->post('user', true);
 
+                if (blank($password)) {
+                    redirect('admin/error/8');
+                }
+
                 // make sure the person submitting the form is the person logged in
                 if ($user == $this->session->userdata('userid')) {
                     $update_array = array(
@@ -367,7 +371,7 @@ abstract class Nova_admin extends Nova_controller_admin
 
         // javascript data
         $js_data['first_launch'] = $this->session->flashdata('first_launch');
-        $js_data['password_reset'] = $this->session->flashdata('password_reset');
+        $js_data['password_reset'] = $this->user->get_user($this->session->userdata('userid'), 'password_reset');
         $js_data['version'] = (isset($check['update']['version'])) ? $check['update']['version'] : '';
 
         $data['loader'] = array(

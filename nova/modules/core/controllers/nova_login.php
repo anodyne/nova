@@ -184,6 +184,12 @@ abstract class Nova_login extends CI_Controller
                     $flash['message'] = text_output($message);
                     break;
 
+                case 8:
+                    $message = lang('error_login_8');
+
+                    $flash['message'] = text_output($message);
+                    break;
+
                 default:
                     $flash['message'] = lang_output('error_login_'.$this->uri->segment(4));
                     break;
@@ -241,11 +247,17 @@ abstract class Nova_login extends CI_Controller
     {
         // grab the POST data
         $email = $this->input->post('email');
-        $password = Auth::hash($this->input->post('password'));
+        $password = $this->input->post('password');
         $remember = $this->input->post('remember');
 
+        if (blank($password)) {
+            redirect('login/index/error/8', 'refresh');
+        }
+
+        $hashedPassword = Auth::hash($password);
+
         // do the login
-        $login = Auth::login($email, $password, $remember);
+        $login = Auth::login($email, $hashedPassword, $remember);
 
         if ($login > 0) {
             $this->session->set_flashdata('email', $email);

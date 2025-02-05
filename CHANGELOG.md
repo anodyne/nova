@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Nova 3 announcement in the Control Panel for admins
+- `error_admin_8` language item
+- `error_login_8` language item
+
+### Changed
+
+- System and Versions report contains more information about Nova 3 requirements and migration
+- Nova will continue to prompt users to change their password if required, even if they dismiss the dialog
+
+### Fixed
+
+- Nova would allow resetting your password to a blank string
+- Nova would allow logging in with a blank password
+
 ## [2.7.17] - 2025-01-31
 
 ### Added

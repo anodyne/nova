@@ -38,6 +38,7 @@ $lang['error_login_4'] = 'We have found more than one account with your email ad
 $lang['error_login_5'] = 'Maintenance mode has been activated! Only system administrators are allowed to log in. Please try again later.';
 $lang['error_login_6'] = 'You have attempted to log in more times than the system allows. You must wait %d minutes before attempting to login again! %s';
 $lang['error_login_7'] = 'Your account is currently pending %s review. You will not be allowed to log in until your application has been accepted. Please contact the %s if you have questions.';
+$lang['error_login_8'] = 'You did not enter a password, please try again.';
 
 $lang['error_last_login_time'] = 'Your last log in was %d %s ago. You must wait another %d %s before you can log in again.';
 
@@ -67,6 +68,7 @@ $lang['error_admin_4'] = 'You are only authorized to take action on saved item y
 $lang['error_admin_5'] = 'You are not authorized to take action on items that are pending or have been activated. If you believe you have received this message in error, please contact the game master.';
 $lang['error_admin_6'] = 'You are not authorized to edit entries where you are not one of the authors. If you believe you have received this message in error, please contact the game master.';
 $lang['error_admin_7'] = 'You are not authorized to update any accounts except your own. If you believe you have received this message in error, please contact the game master.';
+$lang['error_admin_8'] = 'Passwords cannot be blank. Please navigate back to the admin control panel and try again.';
 
 $lang['error_wcp_1'] = 'You do not have a %s associated with your account. Without a %s associated with your account, you cannot continue. Please have the system administrator assign a %s to your account, log out, log back in and try again.';
 
