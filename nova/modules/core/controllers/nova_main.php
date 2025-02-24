@@ -254,8 +254,9 @@ abstract class Nova_main extends Nova_controller_main
             $position = $this->input->post('position_1', true);
 
             if ($this->cache->get('spam_detection_timer')) {
-                header("HTTP/1.0 429 Too Many Requests");
-                exit;
+                header("HTTP/1.0 429 Too Many Requests", true, 429);
+                echo 'Rate limit reached. You attempted to submit the join form too quickly.';
+                exit(1);
             }
 
             if ($position == 0 or $first_name == '' or empty($password) or empty($email)) {
