@@ -799,6 +799,8 @@ abstract class Nova_sim extends Nova_controller_main
 
                 $data['posts'][$post->post_id]['id'] = $post->post_id;
                 $data['posts'][$post->post_id]['title'] = $post->post_title;
+                $data['posts'][$post->post_id]['timeline'] = $post->post_timeline;
+                $data['posts'][$post->post_id]['location'] = $post->post_location;
                 $data['posts'][$post->post_id]['author'] = $this->char->get_authors($post->post_authors, true, true);
                 $data['posts'][$post->post_id]['date'] = mdate($datestring, $date);
                 $data['posts'][$post->post_id]['mission'] = $this->mis->get_mission($post->post_mission, 'mission_title');
@@ -850,6 +852,8 @@ abstract class Nova_sim extends Nova_controller_main
             'mission' => ucfirst(lang('global_mission')) .':',
             'noposts' => sprintf(lang('error_not_found'), lang('global_missionposts')),
             'title' => ucfirst(lang('labels_title')),
+            'location' => ucfirst(lang('labels_location')),
+            'timeline' => ucfirst(lang('labels_timeline')),
         );
 
         $this->_regions['content'] = Location::view('sim_listposts', $this->skin, 'main', $data);

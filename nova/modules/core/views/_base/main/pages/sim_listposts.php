@@ -9,10 +9,12 @@
 		<thead>
 			<tr>
 				<th><?php echo $label['title'];?></th>
+				<th><?php echo $label['timeline'];?></th>
+				<th><?php echo $label['location'];?></th>
 				<th><?php echo $label['date'];?></th>
 			</tr>
 		</thead>
-		
+
 		<tbody>
 		<?php foreach ($posts as $post): ?>
 			<tr>
@@ -22,17 +24,19 @@
 					</strong><br />
 					<span class="fontSmall gray">
 						<?php echo $label['by'] .' '. $post['author'];?><br />
-						
+
 						<strong><?php echo $label['mission'];?></strong>
 						<?php echo anchor('sim/missions/id/'. $post['mission_id'], $post['mission']);?>
 					</span>
 				</td>
-				<td class="col_30pct align_center fontSmall"><?php echo $post['date'];?></td>
+				<td class="col_25pct align_center fontSmall"><?php echo $post['timline'];?></td>
+				<td class="col_25pct align_center fontSmall"><?php echo $post['location'];?></td>
+				<td class="col_25pct align_center fontSmall"><?php echo $post['date'];?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-	
+
 	<?php echo $pagination;?>
 <?php else: ?>
 	<?php echo text_output($label['noposts'], 'h3', 'orange');?>
