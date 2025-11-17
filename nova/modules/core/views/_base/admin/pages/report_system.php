@@ -17,9 +17,13 @@
 <?php echo text_output($label['versions'], 'h2', 'page-subhead');?>
 <?php echo text_output($label['versions_redirect']);?>
 
-<?php echo text_output('Nova 3 compatibility report', 'h2', 'page-subhead');?>
+<h1 class="page-head">Nova 3</h1>
 
-<p>Below is a report of Nova 3's current requirements and how your server configuration stands against those requirements. If there's something that doesn't pass, <strong>don't panic</strong>. You can reach out to your web host to discuss the possibility of enabling an extension or updating the version of PHP your site is using. This is provided purely for informational purposes.</p>
+<p>Nova 3 is coming in 2026. Below is some information about your site's readiness to be able to run Nova 3 as well as some basic information about migrating your site's data to Nova 3. More information will be available as Nova 3's release gets closer.</p>
+
+<h2 class="page-subhead">Requirements</h2>
+
+<p>Below is a report of Nova 3's requirements and how your server configuration stands against those requirements. If there's something that doesn't pass you should reach out to your web host to discuss the possibility of enabling the extension or updating the version of PHP your site is using.</p>
 
 <table class="zebra">
 	<tbody>
@@ -38,3 +42,7 @@
 		<?php } ?>
 	</tbody>
 </table>
+
+<h2 class="mt-8 page-subhead">Migrating your site</h2>
+
+<p>Like previous major upgrades to Nova, we'll be providing a migration script that will move as much of your data as possible to Nova 3. To see the migration guide as well as information about what will and will not be migrated, please visit the <a href="https://anodyne-productions.com/docs/3.0/migrating-from-nova2" target="_blank">migration guide</a>.</p>

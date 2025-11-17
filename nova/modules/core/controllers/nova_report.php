@@ -848,14 +848,21 @@ abstract class Nova_report extends Nova_controller_admin
             'php' => PHP_VERSION,
         );
 
+        $dbPlatform = $this->sys->get_db_platform();
+        $dbVersion = $this->db->version();
+
         $data['nova3'] = [
+            'nova' => [
+                'label' => 'Nova 2.7.13',
+                'result' => version_compare($data['version']['database'], '2.7.13', '>'),
+            ],
             'php' => [
-                'label' => 'PHP 8.3+',
-                'result' => version_compare(PHP_VERSION, '8.3', '>='),
+                'label' => 'PHP 8.4+',
+                'result' => version_compare(PHP_VERSION, '8.4', '>='),
             ],
             'database' => [
-                'label' => 'MySQL PDO driver',
-                'result' => in_array('mysql', PDO::getAvailableDrivers()),
+                'label' => 'MySQL 8.0+ or MariaDB 10.0+',
+                'result' => ($dbPlatform === 'mysql' && version_compare($dbVersion, '8.0', '>=')) || ($dbPlatform === 'mariadb' && version_compare($dbVersion, '10.0', '>=')),
             ],
             'ctype' => [
                 'label' => 'Ctype PHP extension enabled',
@@ -939,6 +946,7 @@ abstract class Nova_report extends Nova_controller_admin
         );
 
         $this->_regions['content'] = Location::view('report_system', $this->skin, 'admin', $data);
+        $this->_regions['javascript'] = Location::js('report_system_js', $this->skin, 'admin');
         $this->_regions['title'].= $data['header'];
 
         Template::assign($this->_regions);

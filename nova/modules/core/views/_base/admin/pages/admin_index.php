@@ -35,6 +35,10 @@
 					<?php if ($milestonecount > 0): ?>
 						<div class="count ui-state-highlight"><?php echo $milestonecount;?></div>
 					<?php endif;?><?php echo $label['milestones'];?></span></a></li>
+
+				<?php if (Auth::is_gamemaster($this->session->userdata('userid'))): ?>
+					<li><a href="#" id="nova3"><span>Nova 3</span></a></li>
+				<?php endif;?>
 			</ul>
 		</div>
 		<div class="panel">
@@ -63,6 +67,20 @@
 							<a href="<?php echo $update['upgrade_guide_link'];?>" target="_blank"><?php echo $label['updateguide'];?></a>
 						</p>
 					<?php endif;?>
+				</div>
+			<?php endif;?>
+
+			<?php if (Auth::is_gamemaster($this->session->userdata('userid'))): ?>
+				<div class="nova3 hidden">
+					<div class="bold fontMedium">Nova 3 is coming in 2026!</div>
+
+					<p>We're thrilled to announce that Nova 3 will release in 2026. This has been a long journey, but we're excited for people to experience the next generation of RPG management.</p>
+
+					<p>Naturally, there are going to be a lot of questions about whether your server can run Nova 3 and how to migrate all of your game's data to Nova 3. We're hard at work ensuring that as much of your data as possible moves seamless to Nova 3. In the meantime, you can view the latest requirements as well as see some preliminary information about the migration process.</p>
+
+					<p class="fontSmall">
+						<a href="<?php echo site_url('report/versions');?>" class="button-main">Learn more &rarr;</a>
+					</p>
 				</div>
 			<?php endif;?>
 

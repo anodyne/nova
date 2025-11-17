@@ -716,4 +716,21 @@ abstract class Nova_system_model extends CI_Model
             }
         }
     }
+
+    public function get_db_platform()
+    {
+        $query = $this->db->query('SELECT VERSION() as version');
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+
+            if (strpos($row->version, 'MariaDB') !== false) {
+                return 'mariadb';
+            }
+
+            return 'mysql';
+        }
+
+        return 'unknown';
+    }
 }
