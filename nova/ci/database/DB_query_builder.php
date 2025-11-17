@@ -1649,6 +1649,22 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 	 */
 	public function insert($table = '', $set = NULL, $escape = NULL)
 	{
+		$ci =& get_instance();
+
+		if ($table && $routerClass = $ci->router->fetch_class() && $routerMethod = $ci->router->fetch_method()) {
+			$ci->event->fire([
+				'db',
+				'insert',
+				'prepare',
+				$table,
+				$routerClass,
+				$routerMethod
+			], [
+				'data' => &$set,
+				'table' => &$table,
+			]);
+		}
+
 		if ($set !== NULL)
 		{
 			$this->set($set, '', $escape);
@@ -1823,6 +1839,24 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 	{
 		// Combine any cached components with the current statements
 		$this->_merge_cache();
+
+		$ci =& get_instance();
+
+		if ($table && $routerClass = $ci->router->fetch_class() && $routerMethod = $ci->router->fetch_method()) {
+			$ci->event->fire([
+				'db',
+				'update',
+				'prepare',
+				$table,
+				$routerClass,
+				$routerMethod,
+			], [
+				'data' => &$set,
+				'table' => &$table,
+				'where' => &$where,
+				'limit' => &$limit,
+			]);
+		}
 
 		if ($set !== NULL)
 		{
@@ -2153,6 +2187,31 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 	{
 		// Combine any cached components with the current statements
 		$this->_merge_cache();
+
+		$abort = false;
+
+		$ci =& get_instance();
+
+		if ($table && $routerClass = $ci->router->fetch_class() && $routerMethod = $ci->router->fetch_method()) {
+			$ci->event->fire([
+				'db',
+				'delete',
+				'prepare',
+				$table,
+				$routerClass,
+				$routerMethod,
+			], [
+				'table' => &$table,
+				'where' => &$where,
+				'limit' => &$limit,
+				'resetData' => &$reset_data,
+				'abort' => &$abort,
+			]);
+
+			if ($abort) {
+				return false;
+			}
+		}
 
 		if ($table === '')
 		{
