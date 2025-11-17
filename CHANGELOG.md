@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.18] - 2025-11-17
+
 ### Added
 
 - Nova 3 announcement in the Control Panel for admins
@@ -23,6 +25,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Nova would allow resetting your password to a blank string
 - Nova would allow logging in with a blank password
 - Database events were never fired
+
+### Security
+
+- Updated dependencies to address CVE-2025-64500 (this is a high severity security advisory)
+- Updated dependencies to address CVE-2025-5889 (this is a low severity security advisory)
 
 ## [2.7.17] - 2025-01-31
 
