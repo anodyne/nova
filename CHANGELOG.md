@@ -16,11 +16,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - System and Versions report contains more information about Nova 3 requirements and migration
 - Nova will continue to prompt users to change their password if required, even if they dismiss the dialog
+- List posts page now shows the timeline and location of each post
 
 ### Fixed
 
 - Nova would allow resetting your password to a blank string
 - Nova would allow logging in with a blank password
+- Database events were never fired
 
 ## [2.7.17] - 2025-01-31
 
