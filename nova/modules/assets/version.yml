@@ -1,9 +1,9 @@
-version: 2.7.18
+version: 2.7.19
 version_major: 2
 version_minor: 7
-version_update: 18
+version_update: 19
 severity: update
-notes: Nova 2.7.18 addresses issues...
+notes: Nova 2.7.19 addresses issues...
 date: 27 December 2024
 link: https://anodyne-productions.com/nova
 upgrade_guide_link: none

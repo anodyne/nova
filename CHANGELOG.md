@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.7.19] - 2026-01-05
+
+### Changed
+
+- Version check methods will no longer throw exceptions if the source site cannot be reached
+- Registration methods will no longer throw exceptions if the source site cannot be reached
+
 ## [2.7.18] - 2025-11-17
 
 ### Added

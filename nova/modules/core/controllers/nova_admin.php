@@ -481,11 +481,20 @@ abstract class Nova_admin extends Nova_controller_admin
         $this->load->driver('cache', ['adapter' => 'file']);
 
         if (! $upstream = $this->cache->get('nova-version-check')) {
-            $http = new \Illuminate\Http\Client\Factory();
+            try {
+                $http = new \Illuminate\Http\Client\Factory();
 
-            $upstream = $http->get(LATEST_VERSION_URL)->json();
+                $response = $http->get(LATEST_VERSION_URL);
 
-            $this->cache->save('nova-version-check', $upstream, 86400);
+                if ($response->successful()) {
+                    $upstream = $response->json();
+                    $this->cache->save('nova-version-check', $upstream, 86400);
+                } else {
+                    return $this->_get_default_version_check();
+                }
+            } catch (\Exception $e) {
+                return $this->_get_default_version_check();
+            }
         }
 
         [
@@ -593,6 +602,24 @@ abstract class Nova_admin extends Nova_controller_admin
         return [
             'flash' => $flash,
             'update' => $update
+        ];
+    }
+
+    protected function _get_default_version_check()
+    {
+        return [
+            'flash' => [
+                'header' => '',
+                'message' => '',
+                'status' => ''
+            ],
+            'update' => [
+                'version' => null,
+                'notes' => null,
+                'severity' => null,
+                'link' => null,
+                'upgrade_guide_link' => null,
+            ]
         ];
     }
 }

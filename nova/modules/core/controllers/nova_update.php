@@ -253,11 +253,23 @@ abstract class Nova_update extends CI_Controller
         $this->load->driver('cache', ['adapter' => 'file']);
 
         if (! $upstream = $this->cache->get('nova-version-check')) {
-            $http = new \Illuminate\Http\Client\Factory();
+            try {
+                $http = new \Illuminate\Http\Client\Factory();
 
-            $upstream = $http->get(LATEST_VERSION_URL)->json();
+                $response = $http->get(LATEST_VERSION_URL);
 
-            $this->cache->save('nova-version-check', $upstream, 86_400);
+                // Check if the response was successful (2xx status code)
+                if ($response->successful()) {
+                    $upstream = $response->json();
+                    $this->cache->save('nova-version-check', $upstream, 86_400);
+                } else {
+                    // If we got a 4xx or 5xx error, return a safe default
+                    return $this->_get_default_version_check();
+                }
+            } catch (\Exception $e) {
+                // If any exception occurs (network error, JSON parsing, etc.), return a safe default
+                return $this->_get_default_version_check();
+            }
         }
 
         [
@@ -368,12 +380,43 @@ abstract class Nova_update extends CI_Controller
         ];
     }
 
+    protected function _get_default_version_check()
+    {
+        return [
+            'flash' => [
+                'header' => '',
+                'message' => '',
+                'status' => ''
+            ],
+            'update' => [
+                'version' => null,
+                'notes' => null,
+                'severity' => null,
+                'link' => null,
+                'upgrade_guide_link' => null,
+            ]
+        ];
+    }
+
     private function _register($previousVersion = null)
     {
-        $http = new \Illuminate\Http\Client\Factory();
+        try {
+            $http = new \Illuminate\Http\Client\Factory();
 
-        $response = $http->post(REGISTER_URL, Util::fullHeartbeat($previousVersion));
+            $response = $http->post(REGISTER_URL, Util::fullHeartbeat($previousVersion));
 
-        $this->sys->update_anodyne_game_id($response->json('game_id'));
+            // Check if the response was successful (2xx status code)
+            if ($response->successful()) {
+                $gameId = $response->json('game_id');
+
+                if ($gameId !== null) {
+                    $this->sys->update_anodyne_game_id($gameId);
+                }
+            }
+            // If registration fails, silently continue - it's not critical to the update
+        } catch (\Exception $e) {
+            // If any exception occurs (network error, JSON parsing, etc.), silently continue
+            // Registration failure should not block the update process
+        }
     }
 }

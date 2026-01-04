@@ -1761,10 +1761,19 @@ abstract class Nova_install extends CI_Controller
 
     private function _register()
     {
-        $http = new \Illuminate\Http\Client\Factory();
+        try {
+            $http = new \Illuminate\Http\Client\Factory();
 
-        $response = $http->post(REGISTER_URL, Util::fullHeartbeat());
+            $response = $http->post(REGISTER_URL, Util::fullHeartbeat());
 
-        $this->sys->update_anodyne_game_id($response->json('game_id'));
+            if ($response->successful()) {
+                $gameId = $response->json('game_id');
+
+                if ($gameId !== null) {
+                    $this->sys->update_anodyne_game_id($gameId);
+                }
+            }
+        } catch (\Exception $e) {
+        }
     }
 }
