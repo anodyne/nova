@@ -55,7 +55,7 @@ define('INSTALL_ROOT', str_replace('\\', '/', realpath(dirname(__FILE__))).'/nov
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-define('ENVIRONMENT', 'development');
+define('ENVIRONMENT', 'production');
 
 /*
  *---------------------------------------------------------------
@@ -315,7 +315,6 @@ if (is_dir($modules_folder)) {
 
     define('MODPATH', INSTALL_ROOT.$modules_folder.'/');
 }
-
 
 if (phpversion() < '7.4') {
     header('Location: message.php?type=php');
